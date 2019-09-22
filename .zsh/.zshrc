@@ -1,0 +1,44 @@
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' matcher-list '' ''
+zstyle :compinstall filename '/home/skantify/.zshrc'
+
+# Enabling History
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
+# Opts
+setopt extendedglob 	# Enables wildcards
+setopt notify		# Enables report of status of background jobs
+setopt complete_aliases # Enables completion of aliases
+
+# Allows vi like navigation in shell input
+bindkey -v
+
+# Autoload and call
+autoload -Uz compinit promptinit
+compinit
+promptinit
+
+# Theme
+prompt adam2
+
+# Zsh extensions
+#################
+# Zgen plugin manager
+ZGEN_DIR="$HOME/.local/.zgen"
+
+if [[ ! -f "$ZGEN_DIR/zgen.zsh" ]]; then
+	git clone https://github.com/tarjoilija/zgen.git "$ZGEN_DIR"
+	source "$ZGEN_DIR/zgen.zsh" 
+fi
+
+# Plugins (Zgen)
+#################
+
+# To update
+# zgen update
+if ! zgen saved; then
+	zgen save	
+fi
