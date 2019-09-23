@@ -1,5 +1,5 @@
 # Includes:
-#     core: ufw, zsh, git, nvim
+#     admin: ufw, zsh, git, nvim
 #
 # Should be enough for going onto most new machines and
 # doing basic work
@@ -21,7 +21,7 @@ fi
 
 if [[ "$CUR_DIR" != "$DOT_DIR" ]]; then
     echo ".dot doesn't seems to be mouted at $DOT_DIR, mounted at $CUR_DIR"
-    echo "- If $DOT_DIR doesnt seem correct, try running without sudo '$ ./setup.core.sh'"
+    echo "- If $DOT_DIR doesnt seem correct, try running without sudo '$ ./setup.admin.sh'"
     exit 1
 fi
 
