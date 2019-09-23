@@ -49,10 +49,10 @@ sudo chmod -R u+x $DOT_DIR/installers
 echo "Installation start, may take a while. Please see $SETUP_LOG \
     for progress updates or potential errors"
 
-./installers/ufw.install.sh
-./installers/zsh.install.sh
-./installers/git.install.sh
-./installers/nvim.install.sh
+$DOT_DIR/installers/ufw.install.sh
+$DOT_DIR/installers/zsh.install.sh
+$DOT_DIR/installers/git.install.sh
+$DOT_DIR/installers/nvim.install.sh
 
 # Finally ask to switch to zsh shell
 chsh -s /usr/bin/zsh
