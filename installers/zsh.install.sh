@@ -1,10 +1,10 @@
 if [[ ! "$SETUP_SCRIPT" ]]; then
-	echo "Please run from one of the setup scripts"
-	exit 1
+    echo "Please run from one of the setup scripts"
+    exit 1
 fi
 
 if ! command -v zsh >/dev/null; then
-	sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
+    sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
 fi
 
 # .zshenv specifies a ZDOTDIR to point to our dot files

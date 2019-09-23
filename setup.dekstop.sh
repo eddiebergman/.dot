@@ -1,95 +1,56 @@
-sudo echo "Sudo mode"
-
-# Make sure the script is operating from where intended
-CUR_DIR=$(dirname "$(readlink -f "$0")")
-if [[ "$CUR_DIR" != "$HOME/.dot" ]]; then
-	echo ".dot doesn't seems to be mouted at $HOME/.dot, fix the script and .zshenv interaction \\
-		or mount as needed"
-	exit 1
-fi
+# Includes:
+#       admin: ufw, zsh, git, nvim
+#       display: xorg, gdm, gnome
+# Used for my general desktop working enviornment
+sudo echo "Sudo mode" >/dev/null
 
 ####################
 # Envrionement Setup
 ####################
-source $CUR_DIR/.zsh/.zshenv 
+# Make sure the script is operating from where intended, hence know
+# as $DOT_DIR
+
+CUR_DIR=$(dirname "$(readlink -f "$0")")
+source $CUR_DIR/.zsh/.zshenv
+
+if [[ -z "$DOT_DIR" ]]; then
+    echo ".zshenv did not load properly or is missing \$DOT_DIR, please investigate"
+    exit 1
+fi
+
+if [[ "$CUR_DIR" != "$DOT_DIR" ]]; then
+    echo ".dot doesn't seems to be mouted at $DOT_DIR, mounted at $CUR_DIR"
+    echo "- If $DOT_DIR doesnt seem correct, try running without sudo '$ ./setup.desktop.sh'"
+    exit 1
+fi
+
+SETUP_SCRIPT=true
+SETUP_TYPE="desktop"
 
 SETUP_LOG="$DOT_DIR/log/setuplog.txt"
 if [[ ! -d "$DOT_DIR/log" ]]; then
-	mkdir -p $DOT_DIR/log
-fi
-echo "Setup start" >> $SETUP_LOG 
-
-###############
-# ufw firewall
-###############
-if ! command -v ufw >/dev/null; then
-	sudo pacman -Syu ufw --noconfirm --needed >> "$SETUP_LOG"
-	sudo ufw enable
-	sudo systemctl enable ufw.service
-	echo "ufw: Installed"
-else
-	echo "ufw: Already Installed"
+    mkdir -p $DOT_DIR/log
 fi
 
-#######
-# Zsh
-#######
-if ! command -v zsh >/dev/null; then
-	sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
-	ln -sfn $DOT_DIR/.zsh/.zshenv $HOME/.zshenv
-	echo "Zsh: installed"
-else
-	echo "Zsh: already installed"
-fi
+#echo "Installation began at: $(date -u)" >> "$SETUP_LOG"
 
-######
-# Git
-######
-if ! command -v git >/dev/null; then
-	sudo pacman -Syu git -completions --noconfirm --needed >> "$SETUP_LOG"
-	ln -sfn $HOME/.gitconfig $DOT_DIR/.gitconfig
-	echo "Git: Installed"
-else
-	echo "Git: Already Installed"
-fi
+export SETUP_SCRIPT
+export SETUP_TYPE
+export SETUP_LOG
 
-#######
-# Xorg
-#######
-if ! pacman -Qg xorg >/dev/null; then
-	sudo pacman -Syu xorg --needed -noconfirm
-	echo "Xorg: Installed"
-else
-	echo "Xorg: Already Installed"
-fi	
+# Yes this probably shouldn't be done but for personal
+# use it's not too much of an issue
+sudo chmod -R u+x $DOT_DIR/installers
 
-########
-# Nvim
-########
-if ! command -v nvim >/dev/null; then
-	pacman -Syu nvim --needed -noconfirm
+####################
+# Installation
+####################
+echo "Installation start, may take a while. Please see $SETUP_LOG \
+    for progress updates or potential errors"
 
-else
-fi	
+./installers/ufw.install.sh
+./installers/zsh.install.sh
+./installers/git.install.sh
+./installers/display.install.sh
+./installers/nvim.install.sh
 
-########
-# Gnome
-########
-if ! command -v nvim >/dev/null; then
-else
-fi	
-
-
-
-########
-# Nvim
-########
-if ! command -v nvim >/dev/null; then
-else
-fi	
-# Replace symlinks if already exists and place startup files
-ln -sfn $TEMP_DOT_DIR/.xinitrc $HOME/.xinitrc
-#command -v kitty >/dev/null 2>&1 || ( echo -e "Install: Kitty" \
-#	&& sudo pacman -Syu kitty --no-confirm --needed	>> $LOG )
-
-chsh -s /usr/bin/zsh
