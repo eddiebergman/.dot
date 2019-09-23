@@ -5,9 +5,7 @@ fi
 
 if ! command -v ufw >/dev/null; then
 	sudo pacman -Syu ufw --noconfirm --needed >> "$SETUP_LOG"
-	sudo ufw enable
-	sudo systemctl enable ufw.service
-	echo "ufw: Installed"
-else
-	echo "ufw: Already Installed"
 fi
+
+sudo ufw enable >> "$SETUP_LOG"
+sudo systemctl enable ufw.service >> "$SETUP_LOG"
