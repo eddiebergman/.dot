@@ -3,57 +3,50 @@
 # 
 # Should be enough for going onto most new machines and
 # doing basic work
-
-#####################
-# Prelim. check
-#####################
 sudo echo "Sudo mode" >/dev/null
-
-# Make sure the script is operating from where intended
-CUR_DIR=$(dirname "$(readlink -f "$0")")
-if [[ "$CUR_DIR" != "$HOME/.dot" ]]; then
-	echo ".dot doesn't seems to be mouted at $HOME/.dot, fix the script and .zshenv interaction \\
-		or mount as needed"
-	exit 1
-fi
 
 ####################
 # Envrionement Setup
 ####################
-source $CUR_DIR/.zsh/.zshenv 
+# Make sure the script is operating from where intended, hence know
+# as $DOT_DIR
+CUR_DIR=$(dirname "$(readlink -f "$0")")
+source $CUR_DIR/.zsh/.zshenv # Gets our environment variables
+if [[ -z "$DOT_DIR" ]]; then
+	echo ".zshenv did not load properly or is missing \$DOT_DIR, please investigate"
+	exit 1
+fi
+if [[ "$CUR_DIR" != "$DOT_DIR" ]]; then
+	echo ".dot doesn't seems to be mouted at $DOT_DIR, fix the script and .zshenv interaction \\
+		or mount as needed"
+	exit 1
+fi
 
+SETUP_SCRIPT=true
+SETUP_TYPE="core"
 SETUP_LOG="$DOT_DIR/log/setuplog.txt"
 if [[ ! -d "$DOT_DIR/log" ]]; then
 	mkdir -p $DOT_DIR/log
 fi
-echo "Setup start" >> $SETUP_LOG 
 
-###############
-# ufw firewall
-###############
-if ! command -v ufw >/dev/null; then
-	sudo pacman -Syu ufw --noconfirm --needed >> "$SETUP_LOG"
-	sudo ufw enable
-	sudo systemctl enable ufw.service
-	echo "ufw: Installed"
-else
-	echo "ufw: Already Installed"
-fi
+export SETUP_SCRIPT
+export SETUP_TYPE
+export SETUP_LOG
 
-#######
-# Zsh
-#######
-if ! command -v zsh >/dev/null; then
-	sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
-	ln -sfn $DOT_DIR/.zsh/.zshenv $HOME/.zshenv
-	echo "Zsh: installed"
-else
-	echo "Zsh: already installed"
-fi
+# Yes this probably shouldn't be done but for personal
+# use it's not too much of an issue
+sudo chmod -R u+x $DOT_DIR/installers
 
-######
-# Git
-######
+####################
+# Installation
+####################
+echo "Installation start" >> $SETUP_LOG 
+
+./installers/ufw.install.sh
+./installers/zsh.install.sh
+# ./installers/git.install.sh
+# ./installers/nvim.install.sh
+
 if ! command -v git >/dev/null; then
 	sudo pacman -Syu git -completions --noconfirm --needed >> "$SETUP_LOG"
 	ln -sfn $HOME/.gitconfig $DOT_DIR/.gitconfig
@@ -62,11 +55,8 @@ else
 	echo "Git: Already Installed"
 fi
 
-########
-# Nvim
-########
 if ! command -v nvim >/dev/null; then
-	pacman -Syu nvim --needed -noconfirm
+	pacman -Syu nvim --needed --noconfirm >> "$SETUP_LOG"
 	# TODO
-else
+#else
 fi	
