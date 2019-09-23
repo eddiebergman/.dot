@@ -53,3 +53,6 @@ echo "Installation start, may take a while. Please see $SETUP_LOG \
 ./installers/zsh.install.sh
 ./installers/git.install.sh
 ./installers/nvim.install.sh
+
+# Finally ask to switch to zsh shell
+chsh -s /usr/bin/zsh
