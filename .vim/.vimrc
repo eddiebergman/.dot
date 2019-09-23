@@ -1,9 +1,4 @@
 "=====================
-" System Envirinment
-"=====================
-:let NotesInLatex_dir = "~/Desktop/docs/texstuff/books"
-
-"=====================
 " Plugin Management
 "=====================
 set nocompatible              " be iMproved, required
@@ -96,7 +91,6 @@ let g:tex_conceal='abdmg'
 " Fuzzy find (CtrlP)
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard'] " Ignore anything it finds in a git ignore
 let g:ctrlp_working_path_mode = '' " Only search everything under current working directory
-" let g:ctrlp_root_markers = ['main.tex']
 
 "=====================
 " Key maps
@@ -143,7 +137,3 @@ vnoremap // y/<C-R>"<CR>                        " Search Selected text
 if mapcheck("<esc>", "n") != ""
     nunmap <esc>
 endif
-
-"=====================
-" System help aliases
-"=====================
