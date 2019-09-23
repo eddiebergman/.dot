@@ -7,4 +7,4 @@ if ! command -v git >/dev/null; then
 	sudo pacman -Syu git --noconfirm --needed >> "$SETUP_LOG"
 fi
 
-ln -sfn $HOME/.gitconfig $DOT_DIR/.gitconfig
+ln -sfn $DOT_DIR/.gitconfig $HOME/.gitconfig
