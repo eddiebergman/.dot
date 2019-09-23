@@ -26,11 +26,13 @@ if [[ "$CUR_DIR" != "$DOT_DIR" ]]; then
 fi
 
 SETUP_SCRIPT=true
-SETUP_TYPE="core"
+SETUP_TYPE="admin"
+
 SETUP_LOG="$DOT_DIR/log/setuplog.txt"
 if [[ ! -d "$DOT_DIR/log" ]]; then
 	mkdir -p $DOT_DIR/log
 fi
+
 #echo "Installation began at: $(date -u)" >> "$SETUP_LOG"
 
 export SETUP_SCRIPT

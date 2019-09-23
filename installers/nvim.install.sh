@@ -14,7 +14,7 @@ fi
 
 ln -sfn $DOT_DIR/.vim/.nvim_init.vim $HOME/.config/nvim/init.vim
 
-if [[ "$SETUP_TYPE" == "core" ]]; then
+if [[ "$SETUP_TYPE" == "admin" ]]; then
     ln -sfn $DOT_DIR/.vim/.vimrc_core $HOME/.vimrc
 
 elif [[ "$SETUP_TYPE" == "desktop" ]]; then
