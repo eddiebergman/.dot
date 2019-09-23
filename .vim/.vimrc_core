@@ -1,0 +1,79 @@
+"=====================
+" Plugin Management
+"=====================
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+set rtp+=~/.vim/bundle/Vundle.vim " Adds to runtime path
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+
+" Git
+Plugin 'tpope/vim-fugitive'
+
+" Navigation
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Text manipulation
+Plugin 'Townk/vim-autoclose'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"=====================
+" Vim Settings
+"=====================
+syntax on " Turn on Syntax highlighting
+
+set number " Line Numbers
+
+set autowrite " Autowrite file when leaving modified buffer
+set wrap " Forces line wrap wrap on end of screen
+set modelines=0 " Turns off modelines (vim per file variables)
+set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
+set backspace=indent,eol,start " Apparently fixes general issues with backspaces on different systems
+set smartcase " Search is case-insensitive if is_lowercase(word), else case-sensitive
+set showmode " Shows what mode you're in at the end
+set showtabline=1 " Shows tab stops in files
+set list
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set conceallevel=1
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set termguicolors
+
+" Fuzzy find (CtrlP)
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard'] " Ignore anything it finds in a git ignore
+let g:ctrlp_working_path_mode = '' " Only search everything under current working directory
+
+"=====================
+" Key maps
+"=====================
+" Using Kitty Terminal, it mostly uses ctrl+shift+key for its shortcuts
+" ---
+" Normal
+" ---
+
+" Misc
+nnoremap <C-\> :e ~/.vimrc<CR>                  " Open vimrc in new vertical window
+
+" Text manip.
+nnoremap <leader><space> i<space><esc>          " insert space
+nnoremap <leader>o o<esc>                       " Insert line below
+nnoremap <leader>O O<esc>                       " Insert line above
+
+" ---
+" Command
+" ---
+cnoremap <C-l> source ~/.vimrc
+
+" ---
+" Visual
+" ---
+vnoremap // y/<C-R>"<CR>                        " Search Selected text
+
+" ---
+" Unmap
+" ---
+if mapcheck("<esc>", "n") != ""
+    nunmap <esc>
+endif
