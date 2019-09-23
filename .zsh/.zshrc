@@ -28,11 +28,8 @@ prompt adam2
 #################
 # Zgen plugin manager
 ZGEN_DIR="$HOME/.local/.zgen"
-
-if [[ ! -f "$ZGEN_DIR/zgen.zsh" ]]; then
-	git clone https://github.com/tarjoilija/zgen.git "$ZGEN_DIR"
-	source "$ZGEN_DIR/zgen.zsh" 
-fi
+[[ -f "$ZGEN_DIR/zgen.zsh" ]] || git clone https://github.com/tarjoilija/zgen.git "$ZGEN_DIR"
+source "$ZGEN_DIR/zgen.zsh" 
 
 # Plugins (Zgen)
 #################
