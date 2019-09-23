@@ -3,7 +3,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
-if ! command -v nvim >/dev/null; then
+if ! command -v nvim > /dev/null 2>&1; then
     pacman -Syu neovim --needed --noconfirm >> "$SETUP_LOG"
 fi
 

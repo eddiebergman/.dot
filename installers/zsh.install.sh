@@ -3,7 +3,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
-if ! command -v zsh >/dev/null; then
+if ! command -v zsh > /dev/null 2>&1; then
     sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
 fi
 

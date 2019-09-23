@@ -3,7 +3,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
-if ! command -v git >/dev/null; then
+if ! command -v git > /dev/null 2>&1; then
     sudo pacman -Syu git --noconfirm --needed >> "$SETUP_LOG"
 fi
 

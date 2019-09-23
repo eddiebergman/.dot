@@ -3,7 +3,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
-if ! command -v ufw >/dev/null; then
+if ! command -v ufw > /dev/null 2>&1; then
     sudo pacman -Syu ufw --noconfirm --needed >> "$SETUP_LOG"
 fi
 
