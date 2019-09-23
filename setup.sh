@@ -36,7 +36,7 @@ fi
 #######
 if ! command -v zsh >/dev/null; then
 	sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
-	ln -sfn $TEMP_DOT_DIR/.zsh/.zshenv $HOME/.zshenv
+	ln -sfn $DOT_DIR/.zsh/.zshenv $HOME/.zshenv
 	echo "Zsh: installed"
 else
 	echo "Zsh: already installed"
@@ -47,7 +47,10 @@ fi
 ######
 if ! command -v git >/dev/null; then
 	sudo pacman -Syu git -completions --noconfirm --needed >> "$SETUP_LOG"
-#else
+	ln -sfn $HOME/.gitconfig $DOT_DIR/.gitconfig
+	echo "Git: Installed"
+else
+	echo "Git: Already Installed"
 fi
 
 #######
