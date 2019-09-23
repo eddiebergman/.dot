@@ -64,6 +64,15 @@ else
 fi	
 
 ########
+# Nvim
+########
+if ! command -v nvim >/dev/null; then
+	pacman -Syu nvim --needed -noconfirm
+
+else
+fi	
+
+########
 # Gnome
 ########
 if ! command -v nvim >/dev/null; then
@@ -71,12 +80,6 @@ else
 fi	
 
 
-########
-# Nvim
-########
-if ! command -v nvim >/dev/null; then
-else
-fi	
 
 ########
 # Nvim
