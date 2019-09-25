@@ -24,6 +24,7 @@ filetype plugin indent on    " required
 " Vim Settings
 "=====================
 syntax on " Turn on Syntax highlighting
+colo darkblue
 
 set number " Line Numbers
 
