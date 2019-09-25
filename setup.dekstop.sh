@@ -51,10 +51,13 @@ echo "Installation start, may take a while. Please see $SETUP_LOG \
 $DOT_DIR/installers/ufw.install.sh
 $DOT_DIR/installers/zsh.install.sh
 $DOT_DIR/installers/git.install.sh
-$DOT_DIR/installers/nvim.install.sh
+$DOT_DIR/installers/nvim.desktop.install.sh
 
 $DOT_DIR/installers/kitty.install.sh
 $DOT_DIR/installers/xorg.install.sh
+$DOT_DIR/installers/i3.install.sh
+
+$DOT_DIR/installers/apps.install.sh
 
 # Finally ask to change shell to zsh
 chsh -s /usr/bin/zsh

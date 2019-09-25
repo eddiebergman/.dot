@@ -100,19 +100,6 @@ let g:ctrlp_working_path_mode = '' " Only search everything under current workin
 " Normal
 " ---
 
-" Misc
-nnoremap <C-\> :e ~/.vimrc<CR>                  " Open vimrc in new vertical window
-
-" Buffer/Window/Tab navigation
-nnoremap <silent> <C-l> :bn<CR>                 " Buffer : Next
-nnoremap <silent> <C-h> :bN<CR>                 " Buffer : Previous
-nnoremap <silent> <C-w> :bd<CR>                 " Buffer : Close
-
-nnoremap <A-h> :wincmd h<CR>                    " Window : Left
-nnoremap <A-l> :wincmd l<CR>                    " Window : Right
-nnoremap <A-k> :wincmd k<CR>                    " Window : Up
-nnoremap <A-j> :wincmd j<CR>                    " Window : Down
-
 " Text manip.
 nnoremap <leader><space> i<space><esc>          " insert space
 nnoremap <leader>o o<esc>                       " Insert line below
