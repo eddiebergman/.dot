@@ -52,7 +52,9 @@ $DOT_DIR/installers/ufw.install.sh
 $DOT_DIR/installers/zsh.install.sh
 $DOT_DIR/installers/git.install.sh
 $DOT_DIR/installers/nvim.install.sh
+
 $DOT_DIR/installers/kitty.install.sh
+$DOT_DIR/installers/xorg.install.sh
 
 # Finally ask to change shell to zsh
 chsh -s /usr/bin/zsh
