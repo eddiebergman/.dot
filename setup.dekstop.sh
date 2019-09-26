@@ -11,6 +11,7 @@ sudo echo "Sudo mode" >/dev/null
 # as $DOT_DIR
 
 CUR_DIR=$(dirname "$(readlink -f "$0")")
+sudo sed -i '/DESKTOP_ENV/s/^#*//' $CUR_DIR/.zsh/.zshenv
 source $CUR_DIR/.zsh/.zshenv
 
 if [[ -z "$DOT_DIR" ]]; then
