@@ -7,6 +7,10 @@ if ! command -v nvim > /dev/null 2>&1; then
     sudo pacman -Syu neovim --needed --noconfirm >> "$SETUP_LOG"
 fi
 
+if ! pacman -Qi python > /dev/null 2>&1; then
+    sudo pacman -Syu python-pynvim --needed --noconfirm >> "$SETUP_LOG"
+fi
+
 # Nvim setup to point to placed vimrc
 if [[ ! -d "$HOME/.config/nvim" ]]; then
     mkdir -p $HOME/.config/nvim
