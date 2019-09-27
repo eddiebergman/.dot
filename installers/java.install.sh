@@ -3,6 +3,3 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
-if ! pacman -Qi jdk12-openjdk > /dev/null 2>&1 then;
-    sudo pacman -Syu jdk12-openjdk --noconfirm --needed >> "$SETUP_LOG"
-fi
