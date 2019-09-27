@@ -7,4 +7,4 @@ if ! pacman -Qg xorg > /dev/null 2>&1; then
     sudo pacman -Syu xorg xorg-server xorg-init --noconfirm --needed >> "$SETUP_LOG"
 fi
 
-ln -sfn $DOT_DIR/.xinitrc $HOME/.xinitrc
+ln -sfn $CONFIG_DIR/.xinitrc $HOME/.xinitrc

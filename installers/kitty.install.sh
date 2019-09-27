@@ -7,4 +7,5 @@ if ! command -v kitty > /dev/null 2>&1; then
     sudo pacman -Syu kitty --noconfirm --needed >> "$SETUP_LOG"
 fi
 
-# ln -sfn $DOT_DIR/.zsh/.zshenv $HOME/.zshenv
+[[ -d $HOME/.config/kitty ]] || mkdir -p $HOME/.config/kitty
+ln -sfn $CONFIG_DIR/kitty.conf $HOME/.config/kitty.conf
