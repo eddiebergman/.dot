@@ -8,4 +8,4 @@ if ! command -v kitty > /dev/null 2>&1; then
 fi
 
 [[ -d $HOME/.config/kitty ]] || mkdir -p $HOME/.config/kitty
-ln -sfn $CONFIG_DIR/kitty.conf $HOME/.config/kitty.conf
+ln -sfn $CONFIG_DIR/kitty.conf $HOME/.config/kitty/kitty.conf
