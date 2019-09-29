@@ -3,7 +3,7 @@ source /.dot/arch_install/arch_install_env
 locale-gen
 timedatectl set-ntp true
 hwclock --systohc
-pacman -S grub os-prober intel-ucode efibootmgr wpa_supplicant dialog iw --needed
+pacman -S grub os-prober intel-ucode efibootmgr wpa_supplicant iw NetworkManager --needed
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
