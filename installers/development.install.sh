@@ -19,3 +19,8 @@ fi
 if ! command -v pip > /dev/null 2>&1; then
     sudo pacman -Syu python-pip --noconfirm --needed >> "$SETUP_LOG"
 fi
+
+if [[ ! -d "$HOME/venvs/py" ]]; then
+    mkdir -p "$HOME/venvs"
+    python -m venv $HOME/venvs/py
+fi
