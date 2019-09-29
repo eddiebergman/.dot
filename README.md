@@ -1,52 +1,73 @@
-####################################
-# Setting up wifi 
-####################################
-Find the wireless interface <wlp1s0> 
-    $ ip link
+# .dot
+---
+This is a repo I use for quickly installing Arch Linux and my configuration
+on a drive. This is done in two steps:
 
-Setup to wifi, can use iw but this worked for WPA based encryption
-    $ wifi_menu
+1. **Arch**
+    * Once Arch is booted from drive, everything required is in *arch_install*.
+    This includes help in booting from an Arch EUFI boot and setting up grub,
+    some core system utilities and a sudo user account.
 
-Turn on the network interface
-    $ ip link set <interface> up
+2. **Configuration**
+    * Once you've installed Arch on the drive and booted in, run
+    one of the setup files that you want to install on the drive.
+    See below for the difference.
 
-Check its status
-    $ ip link
+This is done by keeping all configuration files in *.dot* 
+while the scripts go through and download required packages and
+and symlinking our files into where they need to
+go e.g. .vimrc or .gitconfig.
 
-Make sure it works
-    $ ping -c 3 google.com
+## Configurations
+---
 
-####################################
-# Filesystem
-####################################
+#### Admin
+Used for general administrative tasks on arch machines.
+__TODO:__ List packages
 
-# Paritioning
-####################################
-Check how your disks lookm find drive you're installing on
-    $ fdisk -l
+#### Desktop
+User for my general setup, includes most things I would need and is ever expanding.
+__TODO:__ List packages
 
-Assuming /dev/sda/, partition with cfdisk where you can specify
-paritions with Type, Size. Create 4 of them according to Arch
-installation.
-    $ cfdisk /dev/sda/
-        Mount        Type        Size    Name
-        -----        ----        ----    ----
-        /mnt/boot/efi    EFI        260MB    sda1
-        /mnt/        Linux Root    32GB    sda2
-        /mnt/ho        Linux Home    Rest    sda3
-        SWAP        Linux Swap    <?>    sda4
+## Installing Arch
+---
+### Bootloading from USB/disk
+* Download the Arch distribution that you would like to install from [here](https://www.archlinux.org/download/)
 
-Make sure they're all looking good
-    $ fdisk -l
+* Put it on a USB key or cd and boot from it. Each system will have a different
+way to turn them into a bootable device and boot from that device.
 
-# Filesystem creation and mounting
-####################################
-Use thedefault ext4 for our general filesystem
-    $ mkfs.ext4 /dev/sda2
-    $ mkfs.ext4 /dev/sda3
+### Creating your filesystem
 
-Set the /boot/efi drive to a UEFI bootable format, FAT32 is general
-    $ mkfs.vfat -F 32 /dev/sda1 
+* Check how your disks look find drive you're installing on using 
+
+    `$ fdisk -l`.
+
+* Assuming a drive name `/dev/sda`, start partitioning with `cfdisk` where
+you can specify paritions with Type, Size. We'll create 4 of them according to the
+Arch configuration guide.
+
+    `$ cfdisk /dev/sda`
+
+| Drive | Size | Type |
+| ----- | ---- | ---- |
+| /dev/sda1 | 260M | EFI System |
+| /dev/sda2 | 12G | Linux swap |
+| /dev/sda3 | 32G | Linux root (x86) |
+| /dev/sda4 | 194.2G  | Linux home |
+
+* Make sure they're all looking good 
+
+    `$ fdisk -l`
+
+* Use thedefault ext4 for our general filesystem
+
+    `$ mkfs.ext4 /dev/sda2`
+
+    `$ mkfs.ext4 /dev/sda3`
+
+5. Set the `/boot/efi` drive to a UEFI bootable format, FAT32 is general
+    `:$ mkfs.vfat -F 32 /dev/sda1`
 
 Turn our SWAP partition into a swap  
     $ mkswap /dev/sda4
@@ -96,6 +117,30 @@ Create the hostname file
 
 Add matching entries to hosts
     $ vi /etc/hosts
+
+#### Setting up wifi 
+Find the wireless interface, in my case it was *wlp1s0*
+    $ ip link
+
+Setup to wifi, can use iw but this worked for WPA based encryption
+    $ wifi_menu
+
+Turn on the network interface
+    $ ip link set <interface> up
+
+Check its status
+    $ ip link
+
+Make sure it works
+    $ ping -c 3 google.com
+
+
+####################################
+# Filesystem
+####################################
+
+# Paritioning
+####################################
         127.0.0.1         localhost    
         ::1            localhost
         127.0.1.1        <hostname>.localdomain <hostname>
