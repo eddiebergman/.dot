@@ -15,6 +15,7 @@ fi
 ln -sfn $DOT_DIR/.vim/.nvim_init.vim $HOME/.config/nvim/init.vim
 ln -sfn $DOT_DIR/.vim/.vimrc $HOME/.vimrc
 ln -sfn $DOT_DIR/.vim/snips $HOME/.vim/snips
+ln -sfn $DOT_DIR/.vim/ftplugin $HOME/.vim/ftplugin
 
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLE_DIR" >> "$SETUP_LOG"
