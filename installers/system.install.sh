@@ -3,6 +3,10 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
     exit 1
 fi
 
+if command -v ssh-keygen > /dev/null 2>&1; then
+    sudo pacman -Su openssh --noconfirm --needed >> "$SETUP_LOG"
+fi
+
 if ! pacman -Qg xorg > /dev/null 2>&1; then
     sudo pacman -Su xorg --noconfirm --needed >> "$SETUP_LOG"
 fi
