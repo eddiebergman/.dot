@@ -22,12 +22,17 @@ git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLE_DIR" >> "$SETUP_L
 nvim +PluginInstall +qall >> "$SETUP_LOG"
 
 if [[ "$SETUP_TYPE" == "desktop" ]]; then
+    # General
     ( command -v python > /dev/null 2>&1) || (sudo pacman -Su python --noconfim --needed >> "$SETUP_LOG")
+
+    # YouCompleteMe
     ( command -v node > /dev/null 2>&1) || (sudo pacman -Su nodejs --noconfim --needed >> "$SETUP_LOG")
     ( pacman -Qi jdk12-openjdk > /dev/null 2>&1) || (sudo pacman -Su jdk12-openjdk --noconfim --needed >> "$SETUP_LOG")
     ( command -v npm > /dev/null 2>&1) || (sudo pacman -Su npm --noconfim --needed >> "$SETUP_LOG")
     ( command -v cmake > /dev/null 2>&1) || (sudo pacman -Su cmake --noconfim --needed >> "$SETUP_LOG")
     ( command -v clang > /dev/null 2>&1) || (sudo pacman -Su clang --noconfim --needed >> "$SETUP_LOG")
-
     python3 $HOME/.vim/bundle/YouCompleteMe/install.py --ts-completer --clang-completer --java-completer >> "$SETUP_LOG"
+
+    # CtrlSF
+    ( command -v ack > /dev/null 2>&1) || (sudo pacman -Su ack --noconfim --needed >> "$SETUP_LOG")
 fi

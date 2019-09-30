@@ -13,6 +13,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'Townk/vim-autoclose' !Caused Issue with YouCompleteMe
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
+Plugin 'dyng/ctrlsf.vim'
 
 if ! empty($DESKTOP_ENV)
 Plugin 'ervandew/supertab'
