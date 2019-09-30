@@ -6,7 +6,8 @@ nnoremap <leader>o o<esc>                       " Insert line below
 nnoremap <leader>O O<esc>                       " Insert line above
 
 " Plugins
-nnoremap <leader>m :NERDTree<CR>                " Open NERDTREE
+nnoremap <leader>m :NERDTree<CR>
+nnoremap <leader>c :NERDTreeClose<CR>
 
 " Visual
 " ==========
