@@ -155,7 +155,7 @@ the Arch install wiki and configure as needed.
 
     `$ systemctl --type=service`
 
-    `$ sudo systemctl disable _service\_name_`
+    `$ sudo systemctl disable _servicename_`
 
     * May require a reboot
 
