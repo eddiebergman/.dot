@@ -20,9 +20,11 @@ fi
 [[ -d "$HOME/.config/i3" ]] || mkdir -p $HOME/.config/i3
 ln -sfn $CONFIG_DIR/.i3_config $HOME/.config/i3/config
 
+# Light for brightness control
 if ! command -v light > /dev/null 2>&1; then
     sudo pacman -Syu light --noconfirm --needed >> "$SETUP_LOG"
 fi
+sudo usermod -a -G video "$USER"
 
 if ! command -v nm-applet > /dev/null 2>&1; then
     sudo pacman -Syu network-manager-applet --noconfirm --needed >> "$SETUP_LOG"
