@@ -13,6 +13,10 @@ if ! pacman -Qg i3 > /dev/null 2>&1; then
     sudo pacman -Syu i3 --noconfirm --needed >> "$SETUP_LOG"
 fi
 
+if ! command -v compton > /dev/null 2>&1; then
+    sudo pacman -Syu compton --noconfirm --needed >> "$SETUP_LOG"
+fi
+
 [[ -d "$HOME/.config/i3" ]] || mkdir -p $HOME/.config/i3
 ln -sfn $CONFIG_DIR/.i3_config $HOME/.config/i3/config
 
