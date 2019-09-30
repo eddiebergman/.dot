@@ -141,8 +141,30 @@ the Arch install wiki and configure as needed.
 
 * Log in the tty as your username
 
+* Setting up wifi connection using `NetworkManager` and WPA2 security
+
+    `$ nmcli device wifi list`
+
+    `$ nmcli device wifi connect _SSID_ password _password_`
+
+* Enable this connection on boot
+
+    `$ sudo systemctl enable NetworkManager`
+
+* If there are issues, you make have to disable other network services if thet exist.
+
+    `$ systemctl --type=service`
+
+    `$ sudo systemctl disable _service\_name_`
+
+    * May require a reboot
+
+        `$ sudo reboot now`
+
 * Choose a configuration to install on the system
 
     `$ bash $HOME/.dot/setup.desktop.sh`
 
     `$ bash $HOME/.dot/setup.admin.sh`
+
+
