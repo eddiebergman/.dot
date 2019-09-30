@@ -4,7 +4,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
 fi
 
 if ! command -v kitty > /dev/null 2>&1; then
-    sudo pacman -Syu kitty --noconfirm --needed >> "$SETUP_LOG"
+    sudo pacman -Su kitty --noconfirm --needed >> "$SETUP_LOG"
 fi
 
 [[ -d $HOME/.config/kitty ]] || mkdir -p $HOME/.config/kitty

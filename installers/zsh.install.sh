@@ -4,7 +4,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
 fi
 
 if ! command -v zsh > /dev/null 2>&1; then
-    sudo pacman -Syu zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
+    sudo pacman -Su zsh zsh-completions --noconfirm --needed >> "$SETUP_LOG"
 fi
 
 # .zshenv specifies a ZDOTDIR to point to our dot files

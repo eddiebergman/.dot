@@ -4,8 +4,8 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
 fi
 
 if ! command -v nvim > /dev/null 2>&1; then
-    sudo pacman -Syu neovim --needed --noconfirm >> "$SETUP_LOG"
-    [[ $DESKTOP_ENV ]] && sudo pacman -Syu python-pynvim --needed --noconfirm >> "$SETUP_LOG"
+    sudo pacman -Su neovim --needed --noconfirm >> "$SETUP_LOG"
+    [[ $DESKTOP_ENV ]] && sudo pacman -Su python-pynvim --needed --noconfirm >> "$SETUP_LOG"
 fi
 
 [[ -d "$HOME/.config/nvim" ]] || mkdir -p $HOME/.config/nvim
@@ -22,12 +22,12 @@ git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLE_DIR" >> "$SETUP_L
 nvim +PluginInstall +qall >> "$SETUP_LOG"
 
 if [[ "$SETUP_TYPE" == "desktop" ]]; then
-    ( command -v python > /dev/null 2>&1) || (sudo pacman -Syu python --noconfim --needed >> "$SETUP_LOG")
-    ( command -v node > /dev/null 2>&1) || (sudo pacman -Syu nodejs --noconfim --needed >> "$SETUP_LOG")
-    ( pacman -Qi jdk12-openjdk > /dev/null 2>&1) || (sudo pacman -Syu jdk12-openjdk --noconfim --needed >> "$SETUP_LOG")
-    ( command -v npm > /dev/null 2>&1) || (sudo pacman -Syu npm --noconfim --needed >> "$SETUP_LOG")
-    ( command -v cmake > /dev/null 2>&1) || (sudo pacman -Syu cmake --noconfim --needed >> "$SETUP_LOG")
-    ( command -v clang > /dev/null 2>&1) || (sudo pacman -Syu clang --noconfim --needed >> "$SETUP_LOG")
+    ( command -v python > /dev/null 2>&1) || (sudo pacman -Su python --noconfim --needed >> "$SETUP_LOG")
+    ( command -v node > /dev/null 2>&1) || (sudo pacman -Su nodejs --noconfim --needed >> "$SETUP_LOG")
+    ( pacman -Qi jdk12-openjdk > /dev/null 2>&1) || (sudo pacman -Su jdk12-openjdk --noconfim --needed >> "$SETUP_LOG")
+    ( command -v npm > /dev/null 2>&1) || (sudo pacman -Su npm --noconfim --needed >> "$SETUP_LOG")
+    ( command -v cmake > /dev/null 2>&1) || (sudo pacman -Su cmake --noconfim --needed >> "$SETUP_LOG")
+    ( command -v clang > /dev/null 2>&1) || (sudo pacman -Su clang --noconfim --needed >> "$SETUP_LOG")
 
     python3 $HOME/.vim/bundle/YouCompleteMe/install.py --ts-completer --clang-completer --java-completer >> "$SETUP_LOG"
 fi

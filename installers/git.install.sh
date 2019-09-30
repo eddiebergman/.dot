@@ -4,7 +4,7 @@ if [[ ! "$SETUP_SCRIPT" ]]; then
 fi
 
 if ! command -v git > /dev/null 2>&1; then
-    sudo pacman -Syu git --noconfirm --needed >> "$SETUP_LOG"
+    sudo pacman -Su git --noconfirm --needed >> "$SETUP_LOG"
 fi
 
 ln -sfn $CONFIG_DIR/.gitconfig $HOME/.gitconfig
