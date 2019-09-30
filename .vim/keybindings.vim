@@ -8,12 +8,3 @@ nnoremap <leader>O O<esc>                       " Insert line above
 " Visual
 " ==========
 vnoremap // y/<C-R>"<CR>                        " Search Selected text
-
-" Commands
-" ==========
-
-" Unmap
-" ==========
-if mapcheck("<esc>", "n") != ""
-    nunmap <esc>
-endif

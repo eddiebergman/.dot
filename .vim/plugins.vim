@@ -8,10 +8,10 @@ filetype off " required for Vundle
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Townk/vim-autoclose'
+" Plugin 'Townk/vim-autoclose' !Caused Issue with YouCompleteMe
+Plugin 'Raimondi/delimitMate'
 
 if ! empty($DESKTOP_ENV)
 Plugin 'ervandew/supertab'
