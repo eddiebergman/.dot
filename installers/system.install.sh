@@ -1,10 +1,13 @@
 if [[ ! "$SETUP_SCRIPT" ]]; then
     echo "Please run from one of the setup scripts"
     exit 1
-fi
 
 if command -v ssh-keygen > /dev/null 2>&1; then
     sudo pacman -Su openssh --noconfirm --needed >> "$SETUP_LOG"
+fi
+
+if command -v xclip > /dev/null 2>&1; then
+    sudo pacman -Su xclip --noconfirm --needed >> "$SETUP_LOG"
 fi
 
 if ! pacman -Qg xorg > /dev/null 2>&1; then
