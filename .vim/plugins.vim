@@ -12,6 +12,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'Townk/vim-autoclose' !Caused Issue with YouCompleteMe
 Plugin 'Raimondi/delimitMate'
+Plugin 'tpope/vim-surround'
 
 if ! empty($DESKTOP_ENV)
 Plugin 'ervandew/supertab'
