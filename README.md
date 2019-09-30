@@ -1,5 +1,4 @@
 # .dot
----
 __Note:__ _This installation has not been done on a dry run and may encounter an issue.
 Its main use is as a quick reminder for myself, there will be bugs until properly tested_
 
@@ -22,7 +21,6 @@ and symlinking our files into where they need to
 go e.g. .vimrc or .gitconfig.
 
 ## Configurations
----
 
 #### Admin
 Used for general administrative tasks on arch machines.
@@ -33,7 +31,6 @@ User for my general setup, includes most things I would need and is ever expandi
 __TODO:__ List packages
 
 ## Installing Arch
----
 ### Bootloading from USB/disk
 * Download the Arch distribution that you would like to install from [here](https://www.archlinux.org/download/)
 
