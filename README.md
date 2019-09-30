@@ -30,6 +30,10 @@ __TODO:__ List packages
 User for my general setup, includes most things I would need and is ever expanding.
 __TODO:__ List packages
 
+## Links
+
+* [Github ssh-setup](https://help.github.com/en/articles/connecting-to-github-with-ssh)
+
 ## Installing Arch
 ### Bootloading from USB/disk
 * Download the Arch distribution that you would like to install from [here](https://www.archlinux.org/download/)
