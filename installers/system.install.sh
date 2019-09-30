@@ -10,6 +10,10 @@ if command -v xclip > /dev/null 2>&1; then
     sudo pacman -Su xclip --noconfirm --needed >> "$SETUP_LOG"
 fi
 
+if command -v xdg-mime > /dev/null 2>&1; then
+    sudo pacman -Su xdg-utils --noconfirm --needed >> "$SETUP_LOG"
+fi
+
 if ! pacman -Qg xorg > /dev/null 2>&1; then
     sudo pacman -Su xorg --noconfirm --needed >> "$SETUP_LOG"
 fi
