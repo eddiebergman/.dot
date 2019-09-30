@@ -1,5 +1,5 @@
 syntax on " Turn on Syntax highlighting
-set number " Line Numbers
+set number relativenumber "Hybrid Line Numbers
 set wrap " Forces line wrap wrap on end of screen
 set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
 
