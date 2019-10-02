@@ -1,11 +1,20 @@
-snippet sep "Comment seperator" b
+snippet sep "%%%... % Text... %%%" b
 %%%%%%%%%%%%%%%%%%%%
 % ${1}
 %%%%%%%%%%%%%%%%%%%%
 ${0}
 endsnippet
 
-snippet estore "estore for pgk keys"
-${1}/.estore in = \\k${2}$1,
-${0}
+snippet \\\ "\textbackslash" i
+\\textbackslash ${0}
+endsnippet
+
+snippet \{ "\{ .. \}" i
+\\{${1}\\}${0}
+endsnippet
+
+snippet itemize "\begin{itemize} ... \end{itemize}"
+\\begin{itemize}
+    \\item $1
+\\end{itemize}
 endsnippet
