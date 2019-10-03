@@ -21,12 +21,12 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
-Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline'
 Plugin 'scrooloose/nerdtree'
 
-Plugin 'lervag/vimtex'
+"Plugin 'lervag/vimtex'
 
-Plugin 'sainnhe/vim-color-forest-night'
+"Plugin 'sainnhe/vim-color-forest-night'
 endif
 
 call vundle#end()

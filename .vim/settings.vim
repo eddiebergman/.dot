@@ -20,13 +20,5 @@ set backspace=indent,eol,start " Apparently fixes general issues with backspaces
 set splitbelow
 set splitright
 
-set termguicolors
-
 setf tex " Causes the tex filetype to trigger
 filetype plugin indent on
-
-if ! empty($DESKTOP_ENV)
-    colorscheme forest-night
-else
-    colorscheme darkblue
-endif
