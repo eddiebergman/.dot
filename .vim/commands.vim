@@ -1,5 +1,5 @@
 " Leader
-let mapleader = ""
+let mapleader = ","
 
 "
 " O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
