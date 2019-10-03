@@ -13,4 +13,5 @@ fi
 ( fc-list | grep 'droid' ) || ( sudo pacman -Su ttf-droid --needed --noconfirm >> "$SETUP_LOG" )
 ( fc-list | grep 'noto' ) || ( sudo pacman -Su noto-fonts --needed --noconfirm >> "$SETUP_LOG" )
 ( fc-list | grep 'dejavu' ) || ( sudo pacman -Su  ttf-dejavu --needed --noconfirm >> "$SETUP_LOG" )
-
+( pacman -Qi adobe-source-sans-pro-fonts ) || ( sudo pacman -Su adobe-source-sans-pro-fonts --needed --noconfirm >> "$SETUP_LOG" )
+( pacman -Qi gnu-free-fonts ) || ( sudo pacman -Su adobe-source-sans-pro-fonts --needed --noconfirm >> "$SETUP_LOG" )
