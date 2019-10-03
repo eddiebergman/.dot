@@ -9,3 +9,4 @@ fi
 
 # .zshenv specifies a ZDOTDIR to point to our dot files
 ln -sfn $DOT_DIR/.zsh/.zshenv $HOME/.zshenv
+ln -sfn $DOT_DIR/.zsh/.zshrc $HOME/.zshrc
