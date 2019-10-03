@@ -20,5 +20,5 @@ set backspace=indent,eol,start " Apparently fixes general issues with backspaces
 set splitbelow
 set splitright
 
-setf tex " Causes the tex filetype to trigger
+" setf tex " Causes the tex filetype to trigger
 filetype plugin indent on
