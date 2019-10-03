@@ -64,4 +64,8 @@ let g:tex_flavor = 'latex'
 let g:vimtex_quickfix_mode=0
 let g:tex_conceal='abdmg'
 let g:Imap_UsePlaceHolders=0
+" http://vim-latex.sourceforge.net/documentation/latex-suite.html#latex-folding
+let g:Tex_FoldedSections=""
+let g:Tex_FoldedEnvironments=""
+let g:Tex_FoldedMisc=""
 endif
