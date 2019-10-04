@@ -141,7 +141,7 @@ filetype plugin indent on
 " }}}
 " {{{ S Autocommands
 augroup vimcommand_group
-        autocmd!
+    autocmd!
 " {{{  -i General
 
 " Automatically write an newely opened file
@@ -175,9 +175,9 @@ autocmd FileType javascript nnoremap <buffer> <c-/> I//<esc>
 " }}}
 " {{{ -i Vim
 augroup filetype_vim
-    autocmd!
-    " Set the fold method
-    autocmd FileType vim setlocal foldmethod=marker
+autocmd!
+" Set the fold method
+autocmd FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
 augroup END
@@ -188,9 +188,9 @@ augroup END
 " {{{ +s Fold bar
 " {{{ -f FoldBar - Text to display on fold bar
 function! FoldBar()
-    let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let output = strpart(foldline, 0, (winwidth(0)*2)/3)
-    return output
+let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+let output = strpart(foldline, 0, (winwidth(0)*2)/3)
+return output
 endfunction
 set foldtext=FoldBar()
 " }}}
