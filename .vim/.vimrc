@@ -2,6 +2,7 @@
 " {{{ S Keymaps
 " All the key maps for various things
 "
+let mapleader = ","
 " {{{ L Text Movement
 
 " normal: Go to first character of line
@@ -38,13 +39,21 @@ nnoremap <leader>lf bvu<esc>
 inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
+" {{{ L Searching
+
+" normal: Automatically change to regular expression search
+nnoremap / /\v
+" normal: Grep search selected word
+nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr> : copen<cr>
+
+" }}}
 " {{{ L Commenting
 " normal: Comment Single line
 nnoremap <silent> <localleader>cc :<C-B>silent <C-E>s/^/<C-R> =escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 " normal: Uncomment Single line
 nnoremap <silent> <localleader>cu :<C-B>silent <C-E>s/^\V<C-R> =escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
 " normal: Delete comment on line
-nnoremap <silent> <localleader>cd :<C-B>silent <C-E>s/=escape(b:comment_leader, '\/')<CR>
+" nnoremap <silent> <localleader>cd mc0f=escape(b:comment_leader, '\/')d$`c
 " }}}
 " {{{ L Buffers
 " normal: Opens the previous buffer in a vertical split
@@ -57,6 +66,13 @@ vnoremap <leader>" `<i"v'>a"<esc>v
 
 " visual: Surround selected in ' ' quotes
 vnoremap <leader>' `<i'v'>a'<esc>v
+
+" normal: Surround with " " double quotes
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+
+" normal: Surround with ' ' single quotes
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+
 " }}}
 " {{{ L Quick File
 
@@ -131,19 +147,19 @@ command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 " All globalsettings. Use h: <setting> to find out more
 "
 set nocompatible
-syntax on " Turn on Syntax highlighting
-set number relativenumber "Hybrid Line Numbers
+syntax on
+set number relativenumber
 set hlsearch incsearch
-set wrap " Forces line wrap wrap on end of screen
-set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
-set autowrite " Autowrite file when leaving modified buffer
-set modelines=0 " Turns off modelines (vim per file variables)
-set smartcase " Search is case-insensitive if is_lowercase(word), else case-sensitive
-set showmode " Shows what mode you're in the bar
-set showtabline=1 " Shows tabs at the top
+set wrap
+set scrolloff=10
+set autowrite
+set modelines=0
+set smartcase
+set showmode
+set showtabline=1
 set list
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-set conceallevel=1  " Determines how concealed text should be shown
+set conceallevel=1
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitbelow splitright
@@ -180,7 +196,6 @@ set statusline+=%L " Total Lines
 " {{{  S Extra
 " When you're tired of using the word misc
 "
-let mapleader = ","
 
 " {{{ L Runtime
 " Anything to be loaded
