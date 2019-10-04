@@ -1,35 +1,19 @@
-snippet chapter "O=o= .... O=o="
+snippet section "{{{ Section .. Description }}}"
+" {{{ S ${1:Section}
+" ${2:Description}
 "
-" {{{ ${1}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-${0}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end $1
-endsnippet
-
-snippet section "==== .... ====" b
-" {{{ ${1}
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 ${0}
 " }}}
 endsnippet
 
-snippet subsection "---- .... ----" b
-" {{{ ${1}
-" -------------------------
+snippet item "{{{ Item  "
+" {{{ I ${1:Item}
 ${0}
 " }}}
 endsnippet
 
-snippet subsubsection ".... .. ...." b
-" {{{ ${1}"
-" .........
-${0}
-" }}}
-endsnippet
-
-snippet function ".... .. ...." b
-" {{{ ${1}"
+snippet fixme "{{{ Fix Fixme "
+" {{{ Fix ${1:fixme}
 ${0}
 " }}}
 endsnippet
