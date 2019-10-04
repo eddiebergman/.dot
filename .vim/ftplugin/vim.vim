@@ -1,7 +1,3 @@
-" ===========================
-" Key bindings
-" ===========================
-" Text manipulation
-" ---------------------------
-" Comment line
-nnoremap <c-/> maHi" <esc>'a
+" let maplocalleader='\\' 
+let b:comment_leader = '" '
+setlocal foldmethod=marker
