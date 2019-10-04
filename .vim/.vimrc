@@ -196,7 +196,15 @@ set statusline+=%L " Total Lines
 " {{{  S Extra
 " When you're tired of using the word misc
 "
-
+" {{{ s Quickfix
+augroup filetype_qf
+    autocmd!
+    " normal: quick next
+    autocmd FileType qf :nnoremap <leader>qn :cnext<CR>
+    " normal: quick previous
+    autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
+augroup END
+" }}}
 " {{{ L Runtime
 " Anything to be loaded
 "
