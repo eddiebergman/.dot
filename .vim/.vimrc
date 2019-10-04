@@ -1,6 +1,11 @@
 " {{{ S Keymaps
 " All the key maps for various things
 "
+" {{{ -i Leaders
+" Leader
+let mapleader = ","
+let localleader = ","
+" }}}
 " {{{ +s Text Movement
 
 " Go to first character of line
@@ -88,10 +93,13 @@ inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
-" {{{ -i Leaders
-" Leader
-let mapleader = ","
-let localleader = ","
+" {{{ +s Git
+
+" normal: Open Git Status
+nnoremap <leader>Gs :Gstatus<cr>
+
+" normal: 
+
 " }}}
 " }}}
 " {{{ S Commands
