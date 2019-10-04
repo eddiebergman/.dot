@@ -1,105 +1,7 @@
-set nocompatible
-en
-" {{{ Section: Runtime
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-source $VIM_DIR/plugins.vim
-source $VIM_DIR/settings.vim
-source $VIM_DIR/commands.vim
-" }}}
-
-" Leader
-let mapleader = ","
-let localleader = ","
-" {{{  Functions
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" {{{ VimNeatFoldTex - Controls how our fold text looks
-function! VimNeatFoldText()
-    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let lines_count = v:foldend - v:foldstart + 1
-    let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
-    let foldchar = matchstr(&fillchars, 'fold:\zs.')
-    let foldtextstart = strpart('+' . line, 0, (winwidth(0)*2)/3)
-    let foldtextend = lines_count_text . repeat(foldchar, 8)
-    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-    return foldtextstart
-    ". repeat(foldchar, v:foldlevel*2)
-    ". repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
-endfunction
-" }}}
-" {{{  NextClosedFold - Navigates to the next fold in either the 'j' or 'k'direction
-function! NextClosedFold(dir)
-    let cmd = 'norm!z' . a:dir
-    let view = winsaveview()
-    let [l0, l, open] = [0, view.lnum, 1]
-    while l != l0 && open
-        exe cmd
-        let [l0, l] = [l, line('.')]
-        let open = foldclosed(l) < 0
-    endwhile
-    if open
-        call winrestview(view)
-    endif
-endfunction
-" }}}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end Functions
-" {{{  Autocommands
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-augroup vimcommand_group
-        autocmd!
-" {{{  General
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-" Automatically write an newely opened file
-autocmd BufNewFile * :write
-
-" }}}
-" {{{  HTML
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-" Turn off file wrapping for opened HTML files
-autocmd BufNewFile *.html setlocal nowrap
-
-" }}}
-" {{{  Markdown
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-
-" }}}
-" {{{  Python
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-" Python comment line
-autocmd FileType python nnoremap <buffer> <c-/> I#<esc>
-
-" }}}
-" {{{  Latex
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-
-" }}}
-" {{{  C++
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-
-" }}}
-" {{{  Javascript
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-" Javascript comment line
-autocmd FileType javascript nnoremap <buffer> <c-/> I//<esc>
-
-" }}}
-" {{{  Vim
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-augroup filetype_vim
-    autocmd!
-    " Set the fold method
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-augroup END
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end Autocommands
-" {{{  Normal Mode
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" {{{  Text
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-" {{{  Movement
-" -------------------------
+" {{{ S Keymaps
+" All the key maps for various things
+"
+" {{{ +s Text Movement
 
 " Go to first character of line
 nnoremap H ^
@@ -107,41 +9,43 @@ nnoremap H ^
 " Go to end of line
 nnoremap L $
 
-" Got to the above fold
-nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
-
-" Got to the below fold
-nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
 
 " }}}
-" {{{  Manipulation
-" -------------------------
+" {{{ +s Text Manipulation
 
-" Move Line up
+" normal: Move Line up
 nnoremap <leader>_ dd2kp
 
-" Line down
+" normal: Line down
 nnoremap <leader>- ddp
 
-" Uppercase current word
+" normal: Uppercase current word
 nnoremap <c-u> viwU<esc>
 
-" Surround with " " double quotes
+" normal: Surround with " " double quotes
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 
-" Surround with ' ' single quotes
+" normal: Surround with ' ' single quotes
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
-" Uppercase first letter
+" normal: Uppercase first letter
 nnoremap <leader>uf bvU<esc>
 
-" Lowercase first letter
+" normal: Lowercase first letter
 nnoremap <leader>lf bvu<esc>
+"
+" insert: Uppercase current word
+inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
+" {{{ +s Surrounds
+" Surround selected in " " quotes
+vnoremap <leader>" `<i"v'>a"<esc>v
+
+" Surround selected in ' ' quotes
+vnoremap <leader>' `<i'v'>a'<esc>v
 " }}}
-" {{{  Quick Edit
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+" {{{ +s Quick File
 
 " Edit Settings
 nnoremap <leader>es :vsplit $VIM_DIR/settings.vim<cr>
@@ -165,69 +69,148 @@ nnoremap <leader>ev :vsplit $VIM_DIR/.vimrc<cr>
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
 " }}}
-" {{{  Misc
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+" {{{ +s Fold
 
 " Fold Toggle
 nnoremap <space> za
 
 " }}}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end Normal Mode
-" {{{  Insert Mode
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" {{{  Text
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-
-" Uppercase current word
-inoremap <c-u> <esc>viwU<esc>ei
-
-" }}}
-" {{{  Misc
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+" {{{ +s Extra
 
 " Exit insert mode
 inoremap jk <esc>
 
 " }}}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end Insert Mode
-" {{{  Visual Mode
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" {{{  Text
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-
-" Surround selected in " " quotes
-vnoremap <leader>" `<i"v'>a"<esc>v
-
-" Surround selected in ' ' quotes
-vnoremap <leader>' `<i'v'>a'<esc>v
-
-" }}}
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" }}} end Visual Mode
-" {{{  Command Mode
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-
-" Runs a command silently
-command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
-
-" }}} end Command Mode
-" {{{  Operator Mapsk
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-
-" Some text with ( and (some more)
-onoremap in( :<c-u>normal! f( vi( <cr>
-
-" }}} end Operator Mapsk
-" {{{  Extra
-" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" {{{  Unmappings
-" +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+" {{{ +s Unmappings
 inoremap <esc> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
-" }}} end Extra"
+" {{{ -i Leaders
+" Leader
+let mapleader = ","
+let localleader = ","
+" }}}
+" }}}
+" {{{ S Commands
+" A selection of commands
+"
+" {{{ +s External
+
+" Runs a command silently
+command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
+
+" }}}
+" }}}
+" {{{ S Settings
+" All globalsettings
+"
+set nocompatible
+syntax on " Turn on Syntax highlighting
+set number relativenumber "Hybrid Line Numbers
+set wrap " Forces line wrap wrap on end of screen
+set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
+set foldtext=VimNeatFoldText()
+set autowrite " Autowrite file when leaving modified buffer
+set modelines=0 " Turns off modelines (vim per file variables)
+set smartcase " Search is case-insensitive if is_lowercase(word), else case-sensitive
+set showmode " Shows what mode you're in the bar
+set showtabline=1 " Shows tabs at the top
+set list
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set conceallevel=1  " Determines how concealed text should be shown
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
+set splitbelow splitright
+" setf tex " Causes the tex filetype to trigger
+filetype plugin indent on
+
+
+" }}}
+" {{{ S Autocommands
+augroup vimcommand_group
+        autocmd!
+" {{{  -i General
+
+" Automatically write an newely opened file
+autocmd BufNewFile * :write
+
+" }}}
+" {{{ -i HTML
+" Turn off file wrapping for opened HTML files
+autocmd BufNewFile *.html setlocal nowrap
+
+" }}}
+" {{{  -i Markdown
+
+" }}}
+" {{{  -i Python
+" Python comment line
+autocmd FileType python nnoremap <buffer> <c-/> I#<esc>
+
+" }}}
+" {{{  -i Latex
+
+" }}}
+" {{{  -i C++
+
+" }}}
+" {{{ -i Javascript
+
+" Javascript comment line
+autocmd FileType javascript nnoremap <buffer> <c-/> I//<esc>
+
+" }}}
+" {{{ -i Vim
+augroup filetype_vim
+    autocmd!
+    " Set the fold method
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+augroup END
+" }}}
+" {{{ S View
+" Anything related to how things are presented
+"
+" {{{ +s Fold bar
+" {{{ -f FoldBar - Text to display on fold bar
+function! FoldBar()
+    let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let output = strpart(foldline, 0, (winwidth(0)*2)/3)
+    return output
+endfunction
+set foldtext=FoldBar()
+" }}}
+" }}}
+" {{{ -i Status
+" The status line displayed at the bottom of the screen
+"
+set statusline=%f " path to file
+set statusline+=\|\|
+set statusline+=FileType
+set statusline+=%y " Filetype"
+
+set statusline+=%=
+set statusline+=%l " Current Line
+set statusline+=/
+set statusline+=%L " Total Lines
+" }}}
+" }}}
+" {{{ S Vimscript Helpers
+" A collection of things to help with vimscript
+"
+
+" }}}
+" {{{ S Runtime
+" Anything to be loaded
+"
+source $VIM_DIR/plugins.vim
+source $VIM_DIR/settings.vim
+" }}}
+" {{{  S Extra
+" When you're tired of using the word misc
+"
+" }}}
