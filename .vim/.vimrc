@@ -126,7 +126,7 @@ inoremap <down> <nop>
 nnoremap <leader>gs :Gstatus<cr>
 
 " normal: Create Git Commit
-nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gc :Gcommit<cr>i
 
 " normal: Open Git Diff
 nnoremap <leader>gd :Gdiff<cr>
