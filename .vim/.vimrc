@@ -120,7 +120,6 @@ syntax on " Turn on Syntax highlighting
 set number relativenumber "Hybrid Line Numbers
 set wrap " Forces line wrap wrap on end of screen
 set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
-set foldtext=VimNeatFoldText()
 set autowrite " Autowrite file when leaving modified buffer
 set modelines=0 " Turns off modelines (vim per file variables)
 set smartcase " Search is case-insensitive if is_lowercase(word), else case-sensitive
@@ -216,7 +215,6 @@ set statusline+=%L " Total Lines
 " Anything to be loaded
 "
 source $VIM_DIR/plugins.vim
-source $VIM_DIR/settings.vim
 " }}}
 " {{{  S Extra
 " When you're tired of using the word misc
