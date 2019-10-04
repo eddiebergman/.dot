@@ -43,15 +43,13 @@ inoremap <c-u> <esc>viwU<esc>ei
 
 " normal: Automatically change to regular expression search
 nnoremap / /\v
-" normal: Grep search selected word
-nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr> : copen<cr>
 
 " }}}
 " {{{ L Commenting
 " normal: Comment Single line
-nnoremap <silent> <localleader>cc :<C-B>silent <C-E>s/^/<C-R> =escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
+nnoremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 " normal: Uncomment Single line
-nnoremap <silent> <localleader>cu :<C-B>silent <C-E>s/^\V<C-R> =escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
+nnoremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
 " normal: Delete comment on line
 " nnoremap <silent> <localleader>cd mc0f=escape(b:comment_leader, '\/')d$`c
 " }}}
@@ -199,10 +197,12 @@ set statusline+=%L " Total Lines
 " {{{ s Quickfix
 augroup filetype_qf
     autocmd!
-    " normal: quick next
+    " normal: Quickfix next
     autocmd FileType qf :nnoremap <leader>qn :cnext<CR>
-    " normal: quick previous
+    " normal: Quickfix previous
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
+    " normal: Close quickfix window
+    autocmd FileType qf :nnoremap <leader>qc :cclose<CR>
 augroup END
 " }}}
 " {{{ L Runtime
