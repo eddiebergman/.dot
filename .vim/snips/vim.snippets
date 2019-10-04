@@ -1,25 +1,35 @@
 snippet chapter "O=o= .... O=o="
 "
+" {{{ ${1}
 " O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-" O=o=
-" O=o=          ${1}
-" O=o=
+${0}
 " O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
-"
+" }}} end $1
 endsnippet
 
 snippet section "==== .... ====" b
-" +=+=          ${1}
+" {{{ ${1}
 " +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+${0}
+" }}}
 endsnippet
 
 snippet subsection "---- .... ----" b
-" == ${1}
+" {{{ ${1}
 " -------------------------
+${0}
+" }}}
 endsnippet
 
 snippet subsubsection ".... .. ...." b
-" ${1}"
+" {{{ ${1}"
 " .........
+${0}
+" }}}
 endsnippet
 
+snippet function ".... .. ...." b
+" {{{ ${1}"
+${0}
+" }}}
+endsnippet

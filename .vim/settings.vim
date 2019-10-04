@@ -2,6 +2,8 @@ syntax on " Turn on Syntax highlighting
 set number relativenumber "Hybrid Line Numbers
 set wrap " Forces line wrap wrap on end of screen
 set scrolloff=10 " Shows X lines before or after cursour (thank god this is a feature)
+set foldtext=VimNeatFoldText()
+
 
 set autowrite " Autowrite file when leaving modified buffer
 set modelines=0 " Turns off modelines (vim per file variables)
@@ -22,3 +24,20 @@ set splitright
 
 " setf tex " Causes the tex filetype to trigger
 filetype plugin indent on
+
+"
+" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
+" O=o=
+" O=o=          Status Line
+" O=o=
+" O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=o=O=
+"
+set statusline=%f " path to file
+set statusline+=\|\|
+set statusline+=FileType
+set statusline+=%y " Filetype"
+
+set statusline+=%=
+set statusline+=%l " Current Line
+set statusline+=/
+set statusline+=%L " Total Lines
