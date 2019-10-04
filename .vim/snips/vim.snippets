@@ -7,7 +7,7 @@ ${0}
 endsnippet
 
 snippet subsection "{{{ +s"
-" {{{ +s ${1:Subsection}
+" {{{ s ${1:Subsection}
 ${0}
 " }}}
 endsnippet
@@ -19,13 +19,13 @@ ${0}
 endsnippet
 
 snippet item "{{{ -i"
-" {{{ -i ${1:Item}
+" {{{ i ${1:Item}
 ${0}
 " }}}
 endsnippet
 
 snippet function "{{{ -f"
-" {{{ F ${1:Function}
+" {{{ f ${1:Function}
 ${0}
 " }}}
 endsnippet
@@ -38,7 +38,14 @@ endsnippet
 
 snippet todo "{{{ Todo"
 " {{{ TODO ${1:Short Desc.}
-" ${2}
+" }}}
+${0}
+endsnippet
+
+snippet todod "{{{ Todo with description"
+" {{{ TODO ${1:Short Desc.}
+"       ${2:Description}
+" }}}
 ${0}
 endsnippet
 
