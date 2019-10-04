@@ -1,22 +1,21 @@
 " {{{ S Keymaps
 " All the key maps for various things
 "
-" {{{ -i Leaders
+" {{{ i Leaders
 " Leader
 let mapleader = ","
 let localleader = ","
 " }}}
-" {{{ +s Text Movement
+" {{{ L Text Movement
 
-" Go to first character of line
+" normal: Go to first character of line
 nnoremap H ^
 
-" Go to end of line
+" normal: Go to end of line
 nnoremap L $
 
-
 " }}}
-" {{{ +s Text Manipulation
+" {{{ L Text Manipulation
 
 " normal: Move Line up
 nnoremap <leader>_ dd2kp
@@ -43,72 +42,70 @@ nnoremap <leader>lf bvu<esc>
 inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
-" {{{ +s Surrounds
+" {{{ L Surrounds
 " visual: Surround selected in " " quotes
 vnoremap <leader>" `<i"v'>a"<esc>v
 
 " visual: Surround selected in ' ' quotes
 vnoremap <leader>' `<i'v'>a'<esc>v
 " }}}
-" {{{ +s Quick File
+" {{{ L Quick File
 
-" Edit Settings
+" normal: Edit Settings
 nnoremap <leader>es :vsplit $VIM_DIR/settings.vim<cr>
 
-" Edit Command
+" normal: Edit Command
 nnoremap <leader>ec :vsplit $VIM_DIR/commands.vim<cr>
 
-" Edit Plugins
+" normal: Edit Plugins
 nnoremap <leader>ep :vsplit $VIM_DIR/plugins.vim<cr>
 
-" Edit Filetype specific
+" normal: Edit Filetype specific
 nnoremap <leader>eft :vsplit $VIM_DIR/ftplugin<cr>
 
-" Edit Snippet for filetype
+" normal: Edit Snippet for filetype
 nnoremap <leader>esn :UltiSnipsEdit<cr>
 
-" Edit vimrc
+" normal: Edit vimrc
 nnoremap <leader>ev :vsplit $VIM_DIR/.vimrc<cr>
 
-" Edit todo
+" normal: Edit todo
 nnoremap <leader>et :vsplit $DOT_DIR/todo.vim<cr>
 
-" Source vimrc
+" normal: Source vimrc
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
 " }}}
-" {{{ +s Fold
+" {{{ L Fold
 
 " Fold Toggle
 nnoremap <space> za
 
 " }}}
-" {{{ +s Extra
+" {{{ L Extra
 
 " Exit insert mode
 inoremap jk <esc>
 
 " }}}
-" {{{ +s Unmappings
+" {{{ L Unmappings
 inoremap <esc> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
-" {{{ +s Git
+" {{{ L Git
 
 " normal: Open Git Status
 nnoremap <leader>Gs :Gstatus<cr>
-
-" normal: 
 
 " }}}
 " }}}
 " {{{ S Commands
 " A selection of commands
 "
-" {{{ +s External
+" {{{ L External
 
 " Runs a command silently
 command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
@@ -140,44 +137,46 @@ filetype plugin indent on
 
 " }}}
 " {{{ S Autocommands
+" All the autocommands for different files
+"
 augroup vimcommand_group
-    autocmd!
-" {{{  -i General
+        autocmd!
+" {{{ L General
 
 " Automatically write an newely opened file
 autocmd BufNewFile * :write
 
 " }}}
-" {{{ -i HTML
+" {{{ L HTML
 " Turn off file wrapping for opened HTML files
 autocmd BufNewFile *.html setlocal nowrap
 
 " }}}
-" {{{  -i Markdown
+" {{{ L Markdown
 
 " }}}
-" {{{  -i Python
+" {{{ L Python
 " Python comment line
 autocmd FileType python nnoremap <buffer> <c-/> I#<esc>
 
 " }}}
-" {{{  -i Latex
+" {{{ L Latex
 
 " }}}
-" {{{  -i C++
+" {{{ L C++
 
 " }}}
-" {{{ -i Javascript
+" {{{ L Javascript
 
 " Javascript comment line
 autocmd FileType javascript nnoremap <buffer> <c-/> I//<esc>
 
 " }}}
-" {{{ -i Vim
+" {{{ L Vim
 augroup filetype_vim
-autocmd!
-" Set the fold method
-autocmd FileType vim setlocal foldmethod=marker
+    autocmd!
+    " Set the fold method
+    autocmd FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
 augroup END
@@ -185,17 +184,17 @@ augroup END
 " {{{ S View
 " Anything related to how things are presented
 "
-" {{{ +s Fold bar
-" {{{ -f FoldBar - Text to display on fold bar
+" {{{ s Fold bar
+" {{{ f FoldBar - Text to display on fold bar
 function! FoldBar()
-let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-let output = strpart(foldline, 0, (winwidth(0)*2)/3)
-return output
+    let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let output = strpart(foldline, 0, (winwidth(0)*2)/3)
+    return output
 endfunction
 set foldtext=FoldBar()
 " }}}
 " }}}
-" {{{ -i Status
+" {{{ s Status
 " The status line displayed at the bottom of the screen
 "
 set statusline=%f " path to file
