@@ -123,13 +123,13 @@ inoremap <down> <nop>
 " {{{ L Git
 
 " normal: Open Git Status
-nnoremap <leader>Gs :Gstatus<cr>
+nnoremap <leader>gs :Gstatus<cr>
 
 " normal: Create Git Commit
-nnoremap <leader>Gc :Gcommit<cr>
+nnoremap <leader>gc :Gcommit<cr>
 
 " normal: Open Git Diff
-nnoremap <leader>Gd :Gdiff<cr>
+nnoremap <leader>gd :Gdiff<cr>
 
 " }}}
 " }}}
