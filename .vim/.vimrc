@@ -44,10 +44,10 @@ inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
 " {{{ +s Surrounds
-" Surround selected in " " quotes
+" visual: Surround selected in " " quotes
 vnoremap <leader>" `<i"v'>a"<esc>v
 
-" Surround selected in ' ' quotes
+" visual: Surround selected in ' ' quotes
 vnoremap <leader>' `<i'v'>a'<esc>v
 " }}}
 " {{{ +s Quick File
