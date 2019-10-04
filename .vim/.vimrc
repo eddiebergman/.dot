@@ -100,6 +100,12 @@ inoremap <down> <nop>
 " normal: Open Git Status
 nnoremap <leader>Gs :Gstatus<cr>
 
+" normal: Create Git Commit
+nnoremap <leader>Gc :Gcommit<cr>
+
+" normal: Open Git Diff
+nnoremap <leader>Gd :Gdiff<cr>
+
 " }}}
 " }}}
 " {{{ S Commands
