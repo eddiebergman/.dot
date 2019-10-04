@@ -70,6 +70,9 @@ nnoremap <leader>esn :UltiSnipsEdit<cr>
 " Edit vimrc
 nnoremap <leader>ev :vsplit $VIM_DIR/.vimrc<cr>
 
+" Edit todo
+nnoremap <leader>et :vsplit $DOT_DIR/todo.vim<cr>
+
 " Source vimrc
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
