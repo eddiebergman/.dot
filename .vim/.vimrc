@@ -225,6 +225,7 @@ augroup END
 "
 source $VIM_DIR/plugins.vim
 set runtimepath+=$VIM_DIR/ftplugin
+set runtimepath+=$VIM_DIR/plugin
 " }}}
 " {{{ L Vimscript Helpers
 " A collection of things to help with vimscript
