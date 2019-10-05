@@ -195,14 +195,29 @@ set statusline+=%L " Total Lines
 " When you're tired of using the word misc
 "
 " {{{ s Quickfix
+" normal: Toggle quickfix window
+nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
+
+let g:quickfix_is_open = 0
+
+function! s:QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_ia_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
 augroup filetype_qf
     autocmd!
     " normal: Quickfix next
     autocmd FileType qf :nnoremap <leader>qn :cnext<CR>
     " normal: Quickfix previous
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
-    " normal: Close quickfix window
-    autocmd FileType qf :nnoremap <leader>qc :cclose<CR>
 augroup END
 " }}}
 " {{{ L Runtime
