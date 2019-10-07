@@ -130,6 +130,12 @@ nnoremap <leader>gc :Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
 
 " }}}
+" {{{ NERDTree
+
+" normal: Toggle NERDTree
+nnoremap <leader>nt :NERDTreeToggle<cr>
+
+" }}}
 " }}}
 " {{{ S Commands
 " A selection of commands
@@ -258,7 +264,7 @@ augroup general_group
     autocmd!
 
     " Automatically write an newely opened file
-    autocmd BufNewFile * :write
+    " autocmd BufNewFile * :write
 
 augroup END
 " }}}

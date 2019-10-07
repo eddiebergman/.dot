@@ -10,6 +10,7 @@ call vundle#begin()
     Plugin 'tpope/vim-fugitive'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'dyng/ctrlsf.vim'
+    Plugin 'scrooloose/nerdtree'
 
     if ! empty($DESKTOP_ENV)
         Plugin 'ervandew/supertab'
