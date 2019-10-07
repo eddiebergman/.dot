@@ -25,4 +25,24 @@ function! s:GrepOperator(type)
 endfunction
 " }}}
 " }}}
+" {{{ s Comment Operator
+"
+
+" visual: Comments out the selected lines
+vnoremap <leader>c :<c-u>call <SID>CommentOperator(visualmode())<cr>
+
+" {{{ f CommentOperator(type) - Block comments out the selected text
+function! s:CommentOperator(type)
+    let saved_register = @@
+
+    if a:type ==# 'V'
+        if exists(b:supports_multineline_comment)
+        else
+            echom "Please set b:supports_multiline_comment in ftplugin " . %y
+    endif
+endfunction
+
+" }}}
+
+" }}}
 " }}}

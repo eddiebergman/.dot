@@ -134,10 +134,21 @@ nnoremap <leader>gd :Gdiff<cr>
 " {{{ S Commands
 " A selection of commands
 "
-" {{{ L External
+" {{{ Silent :Silent <shellcmd> " Runs a command silently
 
-" Runs a command silently
 command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
+
+" }}}
+" {{{ Read - :R <shellcmd> " Reads the output of a command to a temp buffer
+" https://vim.fandom.com/wiki/Append_output_of_an_external_command
+
+:command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
+" }}}
+" {{{ Hist - :Hist <shellcmd> " Puts the command history into a temp buffer
+" Some pointers 
+"       - use / to start searching easily, no more grep piping
+:command! -complete=shellcmd Hist new | setlocal buftype=nofile bufhidden=hide noswapfile | r !cat ~/.histfile
 
 " }}}
 " }}}
@@ -162,14 +173,22 @@ set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitbelow splitright
 filetype plugin indent on
+" {{{ Wildignore " Control how file autocompletion works in command mode
+" https://sanctum.geek.nz/arabesque/vim-filename-completion/
 
+set wildignore+=*.a,*.o
+"set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*~,*.swp,*.tmp
+
+" }}}
 " }}}
 " {{{ S View
 " Anything related to how things are presented
 "
 " {{{ s Fold bar
 set foldtext=FoldBar()
-" {{{ f FoldBar - Text to display on fold bar
+" {{{ FoldBar - Text to display on fold bar
 function! FoldBar()
     let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
     let output = strpart(foldline, 0, (winwidth(0)*2)/3)
@@ -190,10 +209,6 @@ set statusline+=%l " Current Line
 set statusline+=/
 set statusline+=%L " Total Lines
 " }}}
-" }}}
-" {{{  S Extra
-" When you're tired of using the word misc
-"
 " {{{ s Quickfix
 " normal: Toggle quickfix window
 nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
@@ -220,6 +235,10 @@ augroup filetype_qf
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
 augroup END
 " }}}
+" }}}
+" {{{  S Extra
+" When you're tired of using the word misc
+"
 " {{{ L Runtime
 " Anything to be loaded
 "
