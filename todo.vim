@@ -22,15 +22,21 @@
 " }}}
 " {{{ TODO Get Vim bindings by default in zsh
 " }}}
-
+" {{{ TODO Fix up linking for config files
+" Moved them in .dot to emulate the actual home directory
 " }}}
 
+" }}}
 " {{{ L Fix me's
 " Description
 "
 " {{{ Fix 'normal: Delete Comment on Line'
 " }}}
-
+" {{{ Fix Local-gen didnt seem to install a UTF-8 font, need to check the
+" uncommenter and local-gen
+" Also need to insert into locale.conf
+" https://wiki.archlinux.org/index.php/Locale
+" }}}
 " }}}
 " {{{ S Completed
 " Like ticking off boxes
