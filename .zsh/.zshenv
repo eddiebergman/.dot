@@ -2,8 +2,10 @@
 export DOT_DIR="$HOME/.dot"
 export ZSH_DIR="$DOT_DIR/.zsh"
 export VIM_DIR="$DOT_DIR/.vim"
-export CONFIG_DIR="$DOT_DIR/configs"
+export CONFIG_DIR="$DOT_DIR/.config"
 export INSTALLER_DIR="$DOT_DIR/installers"
+
+export SHARE_DIR="$HOME/.local/share"
 
 # Zsh required
 export ZDOTDIR="$ZSH_DIR"
