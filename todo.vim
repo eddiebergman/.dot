@@ -19,8 +19,6 @@
 " {{{ TODO Check out tmux
 " Not having to use i3 navigation would be nice while doing vim editing
 " }}}
-" {{{ TODO Get Vim bindings by default in zsh
-" }}}
 " {{{ TODO Fix up linking for config files
 " Moved them in .dot to emulate the actual home directory
 " }}}
@@ -29,7 +27,7 @@
 " {{{ L Fix me's
 " Description
 "
-" {{{ Fix 'normal: Delete Comment on Line'
+" {{{ Fix Command 'normal: Delete Comment on Line'
 " }}}
 " {{{ Fix Local-gen didnt seem to install a UTF-8 font, need to check the
 " uncommenter and local-gen
@@ -42,6 +40,8 @@
 "
 " {{{ TODO Add specific filetype plugings 
 "       Convert language specific things to their own files
+" }}}
+" {{{ TODO Get Vim bindings by default in zsh
 " }}}
 
 " }}}
