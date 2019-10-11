@@ -1,2 +1,6 @@
-alias ls='ls -al --block-size=M'
+alias ls='ls -a'
 alias clipbd='xclip -selection clipboard'
+# alias manim='manim --media_dir "$HOME/manimations/renders"'
+alias pymode='source ~/venvs/py/bin/activate'
+alias evimrc='cd $DOT_DIR && nvim .vim/.vimrc'
+alias ezshrc='cd $DOT_DIR && nvim .zsh/.zshrc'
