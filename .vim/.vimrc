@@ -74,6 +74,9 @@ call vundle#begin()
 " {{{ Vim Skeleton (File Skeleton)
     Plugin 'noahfrederick/vim-skeleton'
 " }}}
+" {{{ Solarized (Colour Theme)
+    Plugin 'lifepillar/vim-solarized8'
+" }}}
 call vundle#end()
 " }}}
 " {{{ Keymaps
@@ -272,7 +275,7 @@ endif
 
 syntax on
 set background=dark
-colorscheme vitaminonec
+colorscheme solarized8
 
 " {{{ Wildignore " Control how file autocompletion works in command mode
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
