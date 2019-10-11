@@ -1,5 +1,82 @@
 " Made to be used as a menu, :setlocal foldmethod=marker, zM
-" {{{ S Keymaps
+" {{{ Runtime
+" Anything to be loaded, Has to be done first for plugins
+"
+set runtimepath+=$VIM_DIR/plugin
+set runtimepath+=$VIM_DIR/ftplugin
+set runtimepath+=$HOME/.vim/bundle/Vundle.vim " Adds to runtime path
+" }}}
+" {{{  Plugins
+filetype off " required for Vundle
+call vundle#begin()
+" {{{ Vundle (Package manager)
+    Plugin 'VundleVim/Vundle.vim'
+" }}}
+" {{{ You Complete Me (Autocompletion)
+    Plugin 'Valloric/YouCompleteMe'
+    let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-p>','<Up>']
+    let g:SuperTabDefaultCompletionType = '<C-n>' " required for Ultsnips
+"
+" }}}
+" {{{ vimtex (Tools for Tex and Latex)
+    " Plugin 'lervag/vimtex'
+
+    let g:tex_flavor = 'latex'
+    let g:vimtex_quickfix_mode=0
+    let g:tex_conceal='abdmg'
+    let g:Imap_UsePlaceHolders=0
+    let g:Tex_FoldedSections=""
+    let g:Tex_FoldedEnvironments=""
+    let g:Tex_FoldedMisc=""
+" }}}
+" {{{ CtrlP (Fuzzy find files)
+    Plugin 'ctrlpvim/ctrlp.vim'
+
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard'] 
+    let g:ctrlp_working_path_mode = '' " Only search everything under current working directory
+" }}}
+" {{{ UltiSnips (Snippet Engine)
+    Plugin 'SirVer/ultisnips'
+
+    let g:UltiSnipsEditSplit = 'vertical'
+    let g:UltiSnipsExpandTrigger = '<tab>'
+    let g:UltiSnipsJumpForwardTrigger = '<tab>'
+    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+    let g:UltiSnipsSnippetsDir='~/.vim/snips'
+    let g:UltiSnipsSnippetDirectories=['UltiSnips', 'snips']
+" }}}
+" {{{ Syntastic (syntax and linter)
+    Plugin 'vim-syntastic/syntastic'
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_python_checkers=['python', 'pylint']
+" }}}
+" {{{ Vim fugitive (git integration)
+    Plugin 'tpope/vim-fugitive'
+" }}}
+" {{{ CtrlSF (search files)
+    Plugin 'dyng/ctrlsf.vim'
+" }}}
+" {{{ NERDTree (file tree)
+    Plugin 'scrooloose/nerdtree'
+" }}}
+" {{{ Supertab (tab completion
+    Plugin 'ervandew/supertab'
+" }}}
+" {{{ Vim Skeleton (File Skeleton)
+    Plugin 'noahfrederick/vim-skeleton'
+" }}}
+call vundle#end()
+" }}}
+" {{{ Keymaps
 " All the key maps for various things
 "
 let mapleader = ","
@@ -136,33 +213,38 @@ nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
 " }}}
+" {{{ Syntastic
+nnoremap <F5> :SyntasticCheck<cr>
 " }}}
-" {{{ S Commands
+
+" }}}
+" {{{ Commands
 " A selection of commands
 "
-" {{{ Silent :Silent <shellcmd> " Runs a command silently
+" {{{ :Silent <shellcmd> " Runs a command silently
 
 command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 
 " }}}
-" {{{ Read - :R <shellcmd> " Reads the output of a command to a temp buffer
+" {{{ :R <shellcmd> " Reads the output of a command to a temp buffer
 " https://vim.fandom.com/wiki/Append_output_of_an_external_command
 
 :command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 " }}}
-" {{{ Hist - :Hist <shellcmd> " Puts the command history into a temp buffer
+" {{{ :Hist <shellcmd> " Puts the command history into a temp buffer
 " Some pointers 
 "       - use / to start searching easily, no more grep piping
 :command! -complete=shellcmd Hist new | setlocal buftype=nofile bufhidden=hide noswapfile | r !cat ~/.histfile
 
 " }}}
 " }}}
-" {{{ L Settings
+" {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
 "
 set nocompatible
-syntax on
+filetype on
+
 set number relativenumber
 set hlsearch incsearch
 set wrap
@@ -173,12 +255,25 @@ set smartcase
 set showmode
 set showtabline=1
 set list
-set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
 set conceallevel=1
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitbelow splitright
 filetype plugin indent on
+
+if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+syntax on
+set background=dark
+colorscheme vitaminonec
+
 " {{{ Wildignore " Control how file autocompletion works in command mode
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
 
@@ -189,7 +284,7 @@ set wildignore+=*~,*.swp,*.tmp
 
 " }}}
 " }}}
-" {{{ S View
+" {{{ View
 " Anything related to how things are presented
 "
 " {{{ s Fold bar
@@ -242,16 +337,9 @@ augroup filetype_qf
 augroup END
 " }}}
 " }}}
-" {{{  S Extra
+" {{{ Extra
 " When you're tired of using the word misc
 "
-" {{{ L Runtime
-" Anything to be loaded
-"
-source $VIM_DIR/plugins.vim
-set runtimepath+=$VIM_DIR/ftplugin
-set runtimepath+=$VIM_DIR/plugin
-" }}}
 " {{{ L Vimscript Helpers
 " A collection of things to help with vimscript
 "
