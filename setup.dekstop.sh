@@ -98,6 +98,7 @@ ln -sfn $VIM_DIR/.vimrc $HOME/.vimrc
 ln -sfn $VIM_DIR/snips $HOME/.vim/snips
 ln -sfn $VIM_DIR/ftplugin $HOME/.vim/ftplugin
 ln -sfn $VIM_DIR/plugin $HOME/.vim/plugin
+ln -sfn $VIM_DIR/template $HOME/.vim/template
 ln -sfn $CONFIG_DIR/nvim/init.vim $HOME/.config/nvim/init.vim
 
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
