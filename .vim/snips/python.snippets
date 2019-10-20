@@ -1,0 +1,32 @@
+# General Python Snippets
+snippet class "class C():" b
+class ${1:Class}(${2})
+    """${3:Description}"""
+
+    def __init(self${3}):
+        ${0}
+endsnippet
+snippet def "def funcname(params):" b
+def ${1:funcname}(${2}):
+    """${3:Description}"""
+    ${0}
+endsnippet
+
+# Python plotting snippets
+snippet plot "fig = plt.figure()" b
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+endsnippet
+snippet contour "ax.contour(...)" b
+contours = ax.contourf($1, $2, $3, levels=10, cmap='viridis', origin='upper')
+endsnippet
+snippet plotpoint "plot and annotate" b
+ax.plot(${1:vec}[0], $1[1], 'bo')
+ax.annotate(${2:label}, $1, textcoords="offset points", xytext=(0, 10), ha='center')
+endsnippet
+snippet meshgrid "np.meshgrid(x, y)" b
+# Square grid from $1 to $2
+x = np.arange(${1:start}, ${2:end}, ${3:step})
+y = np.arange($1, $2, $3)
+X, Y = np.meshgrid(x, y, sparse=False)
+endsnippet

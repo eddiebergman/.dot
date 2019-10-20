@@ -4,9 +4,10 @@
 "
 set runtimepath+=$VIM_DIR/plugin
 set runtimepath+=$VIM_DIR/ftplugin
+set runtimepath+=$VIM_DIR/after
 set runtimepath+=$HOME/.vim/bundle/Vundle.vim " Adds to runtime path
 " }}}
-" {{{  Plugins
+" {{{ Plugins
 filetype off " required for Vundle
 call vundle#begin()
 " {{{ Vundle (Package manager)
@@ -20,15 +21,15 @@ call vundle#begin()
 "
 " }}}
 " {{{ vimtex (Tools for Tex and Latex)
-    " Plugin 'lervag/vimtex'
-
+    Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
     let g:vimtex_quickfix_mode=0
+    let g:Tex_FoldedEnvironments='definition'
     let g:tex_conceal='abdmg'
     let g:Imap_UsePlaceHolders=0
-    let g:Tex_FoldedSections=""
-    let g:Tex_FoldedEnvironments=""
-    let g:Tex_FoldedMisc=""
+    let g:vimtex_compiler_latexmk = {
+        \ 'build_dir' : 'build'
+        \}
 " }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
@@ -54,6 +55,7 @@ call vundle#begin()
     set statusline+=%*
 
     let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
     let g:syntastic_auto_loc_list = 1
     let g:syntastic_check_on_open = 0
     let g:syntastic_check_on_wq = 0
@@ -62,6 +64,10 @@ call vundle#begin()
 " {{{ Vim fugitive (git integration)
     Plugin 'tpope/vim-fugitive'
 " }}}
+" {{{ Vim Skeleton (File Skeleton)
+    Plugin 'noahfrederick/vim-skeleton'
+" }}}
+" {{{ Vim Surround (surround selections)
 " {{{ CtrlSF (search files)
     Plugin 'dyng/ctrlsf.vim'
 " }}}
@@ -71,11 +77,19 @@ call vundle#begin()
 " {{{ Supertab (tab completion
     Plugin 'ervandew/supertab'
 " }}}
-" {{{ Vim Skeleton (File Skeleton)
-    Plugin 'noahfrederick/vim-skeleton'
-" }}}
 " {{{ Solarized (Colour Theme)
     Plugin 'lifepillar/vim-solarized8'
+" }}}
+    Plugin 'tpope/vim-surround'
+" }}}
+" {{{ Vim Repeat (enables some repeat)
+    Plugin 'tpope/vim-repeat'
+" }}}
+" {{{ Vim Autoclose (closes delimeters automatically)
+    Plugin 'townk/vim-autoclose'
+" }}}
+" {{{ Vim Local rc (allows project specific vim stuff)
+    Plugin 'embear/vim-localvimrc'
 " }}}
 call vundle#end()
 " }}}
@@ -91,8 +105,14 @@ nnoremap H ^
 " normal: Go to end of line
 nnoremap L $
 
+" Move line up
+nnoremap <A-k> dd2kp
+
+" Move line down
+nnoremap <A-j> ddp
+
 " }}}
-" {{{ L Text Manipulation
+" {{{ Text Manipulation
 
 " normal: Move Line up
 nnoremap <leader>_ dd2kp
@@ -101,7 +121,7 @@ nnoremap <leader>_ dd2kp
 nnoremap <leader>- ddp
 
 " normal: Uppercase current word
-nnoremap <c-u> viwU<esc>
+" nnoremap <c-u> viwU<esc>
 
 " normal: Surround with " " double quotes
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
@@ -119,13 +139,13 @@ nnoremap <leader>lf bvu<esc>
 inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
-" {{{ L Searching
+" {{{ Searching
 
 " normal: Automatically change to regular expression search
 nnoremap / /\v
 
 " }}}
-" {{{ L Commenting
+" {{{ Commenting
 " normal: Comment Single line
 nnoremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 " normal: Uncomment Single line
@@ -133,12 +153,15 @@ nnoremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leade
 " normal: Delete comment on line
 " nnoremap <silent> <localleader>cd mc0f=escape(b:comment_leader, '\/')d$`c
 " }}}
-" {{{ L Buffers
+" {{{ Line Endings
+nnoremap <silent> <leader>ll mvA<C-r>=b:line_ending<cr><esc>`w
+" }}}
+" {{{ Buffers
 " normal: Opens the previous buffer in a vertical split
 nnoremap <leader>bp :execute "rightbelow vsplit " . bufname("#")<cr>
 
 " }}}
-" {{{ L Surrounds
+" {{{ Surrounds
 " visual: Surround selected in " " quotes
 vnoremap <leader>" `<i"v'>a"<esc>v
 
@@ -152,7 +175,7 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " }}}
-" {{{ L Quick File
+" {{{ Quick File
 
 " normal: Edit Settings
 nnoremap <leader>es :vsplit $VIM_DIR/settings.vim<cr>
@@ -179,26 +202,26 @@ nnoremap <leader>et :vsplit $DOT_DIR/todo.vim<cr>
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
 " }}}
-" {{{ L Fold
+" {{{ Fold
 
 " Fold Toggle
 nnoremap <space> za
 
 " }}}
-" {{{ L Extra
+" {{{ Extra
 " insert: Exit insert mode
 inoremap jk <esc>
 " normal: Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
 " }}}
-" {{{ L Unmappings
+" {{{ Unmappings
 inoremap <esc> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
-" {{{ L Git
+" {{{ Git
 
 " normal: Open Git Status
 nnoremap <leader>gs :Gstatus<cr>
@@ -290,17 +313,16 @@ set wildignore+=*~,*.swp,*.tmp
 " {{{ View
 " Anything related to how things are presented
 "
-" {{{ s Fold bar
+" {{{ Fold bar
 set foldtext=FoldBar()
 " {{{ FoldBar - Text to display on fold bar
 function! FoldBar()
-    let foldline = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let output = strpart(foldline, 0, (winwidth(0)*2)/3)
+    let output = strpart(getline(v:foldstart), 0, (winwidth(0)*2)/3)
     return output
 endfunction
 " }}}
 " }}}
-" {{{ s Status
+" {{{ Status
 " The status line displayed at the bottom of the screen
 "
 set statusline=%f " path to file
@@ -313,7 +335,7 @@ set statusline+=%l " Current Line
 set statusline+=/
 set statusline+=%L " Total Lines
 " }}}
-" {{{ s Quickfix
+" {{{ Quickfix
 " normal: Toggle quickfix window
 nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
 
