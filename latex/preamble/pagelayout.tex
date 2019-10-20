@@ -1,0 +1,25 @@
+% page style
+\renewcommand{\headfont}{}
+\addtolength{\textheight}{3.14cm}
+\setlength{\footskip}{0.5in}
+\setlength{\headsep}{10pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[LE, RO]{\thepage}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\EnvPageHeader}
+
+% Spacing
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.75em}
+
+% TODO: find a better place to put this
+% hyperlinks
+\hypersetup{
+    colorlinks,
+    linkcolor={linkblue},
+    citecolor={linkblue},
+    urlcolor={linkblue}
+}

@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%
+% highlighting
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\vocab}[1]{\textbf{\color{\cVocab} #1}}
+\newcommand{\highlight}[1]{\textbf{\color{\cHighlight} #1}}
+
+%%%%%%%%%%%%%%%%%%%%
+% refs
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\reff}[1]{\textsuperscript{\ref{#1}}}
+
+\newcommand{\defref}[1]{\ref{definition:#1} \vrule \, {\fDefRef #1}}
+\newcommand{\defreff}[1]{\textsuperscript{\ref{definition:#1}}}
+
+\newcommand{\lemmaref}[1]{\ref{lemma:#1} \vrule \, {\fLemmaRef #1}}
+\newcommand{\lemmareff}[1]{\textsuperscript{\ref{lemma:#1}}}
+
+\newcommand{\propref}[1]{\ref{proposition:#1} \vrule \, {\fPropRef #1}}
+\newcommand{\propreff}[1]{\textsuperscript{\ref{proposition:#1}}}
+
+\newcommand{\cororef}[1]{\ref{corollary:#1} \vrule \, {\fCoroRef #1}}
+\newcommand{\cororeff}[1]{\textsuperscript{\ref{corollary:#1}}}
+
+\newcommand{\theoremref}[1]{\ref{theorem:#1} \vrule \, {\fTheoremRef #1}}
+\newcommand{\theoremreff}[1]{\textsuperscript{\ref{theorem:#1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% notation
+%%%%%%%%%%%%%%%%%%%%
+% Sets
+\newcommand{\sN}{\mathbb{N}}
+\newcommand{\sZ}{\mathbb{Z}}
+\newcommand{\sR}{\mathbb{R}}
+\newcommand{\sQ}{\mathbb{Q}}
+\newcommand{\sC}{\mathbb{C}}
+\newcommand{\sEmpty}{\varnothing}
+\newcommand{\sSet}[1]{\{ #1 \}}
+
+% Elements
+\newcommand{\inv}[1]{#1\raisebox{1.15ex}{$\scriptscriptstyle-\!1$}}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+% Groups
+\newcommand{\group}[1]{\langle #1 \rangle}
+\newcommand{\order}[1]{\vert#1\vert}
+
+% Relations
+\newcommand{\subgroup}{\leqslant}
+\newcommand{\normalsubgroup}{\leq}
+
+\newcommand{\listhack}{$\empty$\vspace{-2em}}

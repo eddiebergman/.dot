@@ -1,0 +1,28 @@
+\mdfdefinestyle{mdProof}{%
+	skipabove=1pt,
+    linewidth=0.6pt,
+    rightline=false, leftline=false, topline=false, bottomline=false,
+	linecolor=\cProofLine
+}
+
+\declaretheoremstyle[
+	bodyfont=\normalfont\color{\cProofBodyFont},
+	headfont=\itshape\color{\cProofHeadFont},
+	headpunct={.},
+	spaceabove=12pt,
+	spacebelow=8pt
+]{thmProof}
+
+\declaretheorem[
+	name=Proof, unnumbered, style=thmProof
+]{prooftheorem}
+
+\newenvironment{proof_env}
+{
+    \begin{mdframed}[style=mdProof]
+	\begin{prooftheorem}
+}
+{
+    \end{prooftheorem}
+    \end{mdframed}
+}

@@ -1,0 +1,47 @@
+% eSection
+% #1 {title}
+% #2 [style]
+% #3 [toc-enabled]
+\NewDocumentEnvironment{eSection}{ m O{\EnvSectionStyleDefault} O{\EnvSectionToc} }
+{
+    \newpage
+
+    % If we should add to Toc
+    \ifthenelse{#3 = \True}{
+        \refstepcounter{section}
+        \addcontentsline{toc}{section}{\thesection: #1}
+    }{}
+    \eSectionDraw{#1}{#2}{#3}
+}
+{
+    \newpage
+}
+
+% eSectionDraw
+% {title}{style}{toc-enabled}
+\NewDocumentCommand{\eSectionDraw}{ m m m }
+{
+    {
+        % Style activation
+        \IfStrEqCase{#2}{
+            {default}{\styleSectionDefault}
+            {grind}{\styleSectionGrind}
+        }
+
+        % Before
+        \hookSectionBefore
+        % Number
+        \ifthenelse{#3 = \True}
+        {
+            {\fSectionNumber\sSectionNumber\color{\cSectionNumber}\thesection.}
+        }{}%
+        % Inner Spacing
+        \sSectionInnerSpacing%
+        % Title
+        {\fSectionTitle\sSectionTitle\color{\cSectionTitle}#1\hfill}
+        % Post title spacing
+        \sSectionPostSpacing%
+        % After
+        \hookSectionAfter
+    }
+}

@@ -1,0 +1,24 @@
+% Default Style
+\NewDocumentCommand{\styleChapterDefault}{}
+
+\newcommand{\cChapterTitle}{black}
+\newcommand{\sChapterTitle}{\Huge}
+\newcommand{\fChapterTitle}{\rmfamily\bfseries}
+
+\newcommand{\cChapterNumber}{black}
+\newcommand{\sChapterNumber}{\Huge}
+\newcommand{\fChapterNumber}{\rmfamily\bfseries}
+
+\newcommand{\sChapterInnerSpacing}{\hspace{0.5em}}
+\newcommand{\sChapterPostSpacing}{\vspace{2em}}
+
+\newcommand{\hookChapterBefore}{}
+\newcommand{\hookChapterAfter}{\smallskip}
+
+% Grind style
+\NewDocumentCommand{\styleChapterGrind}{}
+{
+    \renewcommand{\cChapterNumber}{darkpink}
+    \renewcommand{\cChapterTitle}{darkpink}
+    \renewcommand{\hookChapterBefore}{\thispagestyle{empty}}
+}

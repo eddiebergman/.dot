@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%
+% Style
+%%%%%%%%%%%%%%%%%%%%
+\mdfdefinestyle{mdLemma}{%
+	skipabove=8pt,
+	linewidth=0.5pt,
+	rightline=false, leftline=false, topline=false, bottomline=false,
+	linecolor=\cLemmaLine
+}
+
+\declaretheoremstyle[
+	headfont={\fLemmaHead},
+	notefont={\fLemmaNote},
+	bodyfont={\fLemmaBody},
+	headpunct={},
+	spaceabove=12pt,
+	spacebelow=8pt.
+	postheadspace=\newline,
+]{thmLemma}
+
+\declaretheorem[
+    name=Lemma, sibling=chaptercounter, style=thmLemma
+]{lemmatheorem}
+
+%%%%%%%%%%%%%%%%%%%%
+% Env: Lemma
+%%%%%%%%%%%%%%%%%%%%
+% [] #1: pgfkeys [
+%       Bool numbered      % Numbers the Subsection of the lemma
+%       Bool newpage       % Creates a blank page after the Subsection
+%   ]
+% {} #2: lemma name
+\newenvironment{lemma_env}[2][]
+{
+	\begin{subsection_env}[#1]{#2}
+	\begin{mdframed}[style=mdLemma]
+	\begin{lemmatheorem}
+	\label{lemma:#2}
+}
+{
+    \end{lemmatheorem}
+	\end{mdframed}
+	\end{subsection_env}
+}

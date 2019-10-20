@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%
+% Style
+%%%%%%%%%%%%%%%%%%%%
+\mdfdefinestyle{mdCorollary}{%
+	skipabove=8pt,
+	linewidth=0.5pt,
+	rightline=false, leftline=false, topline=false, bottomline=false,
+	linecolor=\cCorollaryLine
+}
+
+\declaretheoremstyle[
+	headfont={\fCorollaryHead},
+	notefont={\fCorollarynNote},
+	bodyfont={\fCorollaryBody},
+	headpunct={},
+	spaceabove=12pt,
+	spacebelow=8pt,
+	postheadspace=\newline
+]{thmCorollary}
+
+\declaretheorem[
+    name=Lemma, sibling=chaptercounter, style=thmCorollary
+]{corollarytheorem}
+
+%%%%%%%%%%%%%%%%%%%%
+% Env: Corollary
+%%%%%%%%%%%%%%%%%%%%
+% [] #1: pgfkeys [
+%       Bool numbered      % Numbers the Subsection of the corollary
+%       Bool newpage       % Creates a blank page after the Subsection
+%   ]
+% {} #2: corollary name
+\newenvironment{corollary_env}[2][]
+{
+	\begin{subsection_env}[#1]{#2}
+    \begin{mdframed}[style=mdCorollary]
+	\begin{corollarytheorem}
+	\label{corollary:#2}
+}
+{
+    \end{corollarytheorem}
+    \end{mdframed}
+	\end{subsection_env}
+}

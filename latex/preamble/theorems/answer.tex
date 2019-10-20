@@ -1,0 +1,56 @@
+% Box
+\mdfdefinestyle{mdAnswer}{
+	skipabove=0.5pt,
+	linewidth=2pt,
+	leftline=false, rightline=true, topline=false, bottomline=false,
+	linecolor=\cAnswerLine,
+}
+
+% Style
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{\cAnswerHeadFont},
+	bodyfont=\color{\cAnswerBodyFont},
+	spaceabove=12pt,
+	spacebelow=8pt
+]{thmAnswer}
+
+% Declaration
+\declaretheorem[
+    name=Answer, numbered=no, style=thmAnswer
+]{answertheorem}
+
+% Environment
+\newif\ifshowanswers
+\showanswersfalse
+\ifshowanswers
+    \newenvironment{answer_env}
+    {
+        \begin{mdframed}[style=mdAnswer]
+        \begin{answertheorem}
+    }
+    {
+        \end{answertheorem}
+        \end{mdframed}
+    }
+\else
+    \excludecomment{answer_env}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%
+% Answer Collector Enviroment
+%%%%%%%%%%%%%%%%%%%%
+% \definecollection{answers}
+% \newcounter{answerCounter}[part]
+
+% \makeatletter
+% \newenvironment{answer}
+% {
+%     \@nameuse{collect}{answers}
+%     {\begin{answerInline} }
+%     {\end{answerInline}}
+% }
+% {\@nameuse{endcollect}}
+% \makeatother
+
+% \pretocmd{\includecollection}{\chapter*{Answers}}{}{}
