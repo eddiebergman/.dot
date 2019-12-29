@@ -1,5 +1,3 @@
-include desktops
-
 # sets
 set $mod Mod4
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -7,7 +5,7 @@ set $refresh_i3status killall -SIGUSR1 i3status
 # keymaps
 bindsym $mod+Return exec "kitty"
 bindsym $mod+d exec "rofi -show"
-bindsym $mod+Shift+q kill #kills current window
+bindsym $mod+Shift+q kill
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
