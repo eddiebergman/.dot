@@ -1,0 +1,8 @@
+# https://i3wm.org/docs/userguide.html
+set $browser firefox
+set $terminal kitty
+set $reader evince
+
+exec workspace 1; $browser;
+exec workspace 2; $terminal;
+exec workspace 3; $evince;
