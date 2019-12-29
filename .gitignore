@@ -1,3 +1,4 @@
 .zsh/.zcompdump
 .vim/bundle
 log
+tags*
