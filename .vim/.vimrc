@@ -14,7 +14,7 @@ call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
 " }}}
 " {{{ You Complete Me (Autocompletion)
-    Plugin 'Valloric/YouCompleteMe'
+"    Plugin 'Valloric/YouCompleteMe'
     let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
     let g:ycm_key_list_previous_completion = ['<C-p>','<Up>']
     let g:SuperTabDefaultCompletionType = '<C-n>' " required for Ultsnips
@@ -44,8 +44,8 @@ call vundle#begin()
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-    let g:UltiSnipsSnippetsDir='~/.vim/snips'
-    let g:UltiSnipsSnippetDirectories=['UltiSnips', 'snips']
+    "let g:UltiSnipsSnippetsDir='~/.vim/snips'
+    let g:UltiSnipsSnippetDirectories=['UltiSnips']
 " }}}
 " {{{ Syntastic (syntax and linter)
     Plugin 'vim-syntastic/syntastic'
@@ -91,6 +91,16 @@ call vundle#begin()
 " {{{ Vim Local rc (allows project specific vim stuff)
     Plugin 'embear/vim-localvimrc'
 " }}}
+" {{{ Gutentags (tag management)
+    Plugin 'ludovicchabant/vim-gutentags'
+" }}}
+" {{{ Off | ZoomWin (zooms in the current window <Ctrl-w>o)
+"    Plugin 'vim-scripts/ZoomWin'
+" }}}
+" {{{ Vim IPython (Ipython integration)
+    Plugin 'ivanov/vim-ipython'
+" }}}
+
 call vundle#end()
 " }}}
 " {{{ Keymaps
@@ -143,6 +153,8 @@ inoremap <c-u> <esc>viwU<esc>ei
 
 " normal: Automatically change to regular expression search
 nnoremap / /\v
+
+nnoremap <leader>sr :%s/
 
 " }}}
 " {{{ Commenting
@@ -201,6 +213,8 @@ nnoremap <leader>et :vsplit $DOT_DIR/todo.vim<cr>
 " normal: Source vimrc
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
+nnoremap <leader>eip :vsplit $HOME/.ipython/profile_default/startup<cr>
+
 " }}}
 " {{{ Fold
 
@@ -209,9 +223,11 @@ nnoremap <space> za
 
 " }}}
 " {{{ Extra
-" insert: Exit insert mode
+" Exit insert mode
 inoremap jk <esc>
-" normal: Toggle Highlighting
+tnoremap jk <c-\><c-n>
+
+" Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
 " }}}
 " {{{ Unmappings
@@ -242,6 +258,10 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 " {{{ Syntastic
 nnoremap <F5> :SyntasticCheck<cr>
 " }}}
+" {{{ Yank And Put
+nnoremap y "yy
+nnoremap P "yp
+" }}}bottom_levbottom_levelbottom_levebottom_level
 
 " }}}
 " {{{ Commands
@@ -259,7 +279,6 @@ command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 
 " }}}
 " {{{ :Hist <shellcmd> " Puts the command history into a temp buffer
-" Some pointers 
 "       - use / to start searching easily, no more grep piping
 :command! -complete=shellcmd Hist new | setlocal buftype=nofile bufhidden=hide noswapfile | r !cat ~/.histfile
 

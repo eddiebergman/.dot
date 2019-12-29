@@ -10,7 +10,10 @@ export ZDOTDIR="$ZSH_DIR"
 # General environemnt variables
 export VISUAL="nvim"
 export EDITOR="nvim"
-export PAGER="most"
+# export PAGER="most"
+
+# Path things
+export PATH="${PATH}:${HOME}/.local/bin"
 
 # For Desktop Enviroment set to true
 # setup.desktop.sh should uncomment this
@@ -48,4 +51,3 @@ source $SHARE_DIR/powerlevel10k/powerlevel10k.zsh-theme
 
 # GNU dir colours
 eval `dircolors ~/.dir_colors`
-
