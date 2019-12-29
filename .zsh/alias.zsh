@@ -16,10 +16,8 @@ alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
 alias dropbox='nohup ~/.dropbox-dist/dropboxd &'
 
 # Setups
-alias dwrite='cd ~/Desktop/write'
 alias dhaskell='cd ~/Desktop/haskell && stack ghci'
 alias dpython='cd ~/Desktop/python'
-alias dread='cd ~/Desktop/read && evince'
 
 # Commands
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
