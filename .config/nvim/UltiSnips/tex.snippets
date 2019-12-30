@@ -1,4 +1,27 @@
-# b, expand at beginning, A is auto expand
+# options
+# i, in word
+# b, word boundary
+# A, auto expand
+# r, regex match
+# `!p ...` python code, t[i], ith tabstop
+
+snippet newnote "New .tex template"
+\documentclass[10pt,numbers=noenddot]{article}
+\begin{document}
+
+\section{Title text}
+
+\end{document}
+endsnippet
+
+snippet sequence "x_1, x_2, ..." i
+$1_1, $1_2, \ldots
+endsnippet
+
+snippet sequencen "x_1, x_2, .., x_n" i
+$1_1, $1_2, \ldots, $1_n
+endsnippet
+
 snippet beg "begin / end" bA
 \begin{$1}
     $0
@@ -21,6 +44,10 @@ snippet dm "\[\] - display math" wA
 \[
     $1
 .\]
+endsnippet
+
+snippet sum "\sum__{}^{}"
+\sum_{$1}^{$2}$0
 endsnippet
 
 snippet vec "\bm" w
