@@ -1,6 +1,6 @@
 # Command defaults
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
-alias clipbd='xclip -selection clipboard'
+alias xclip='xclip -selection clipboard'
 
 # Quickfiles
 alias evimrc='cd $DOT_DIR && nvim .vim/.vimrc'
@@ -17,10 +17,9 @@ alias dropbox='nohup ~/.dropbox-dist/dropboxd &'
 
 # Setups
 alias dhaskell='cd ~/Desktop/haskell && stack ghci'
-alias dpython='cd ~/Desktop/python'
+alias dpython='cd ~/Desktop/python && pipenv shell'
 
 # Commands
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
 
-# Functions
-log () { echo "$(date '+%D %T') $@" >> ~/log.txt }
+alias networkrefresh='nmcli network off && nmcli network on'
