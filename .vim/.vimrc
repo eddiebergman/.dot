@@ -261,6 +261,7 @@ nnoremap <F5> :SyntasticCheck<cr>
 " {{{ Yank And Put
 nnoremap y "yy
 nnoremap P "yp
+inoremap <C-p> <esc>"ypa
 " }}}bottom_levbottom_levelbottom_levebottom_level
 
 " }}}
