@@ -73,7 +73,8 @@ note () {
         cp $note_template ~/Desktop/write/notes/$note
         sed -i s/replacemeTitle/$1/g ~/Desktop/write/notes/$note
         sed -i s/replacemeDate/$(datestamp)/g ~/Desktop/write/notes/$note
-        nvim ~/Desktop/write/notes/$note
+        cd ~/Desktop/write/notes
+        nvim $note
     else
         echo ">note mynotename"
     fi
