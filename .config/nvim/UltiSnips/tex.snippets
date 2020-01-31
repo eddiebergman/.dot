@@ -14,8 +14,20 @@ snippet newnote "New .tex template"
 \end{document}
 endsnippet
 
+snippet r.h.s "right hand side"
+right hand side
+endsnippet
+
+snippet <> "\langle \rangle" i
+\langle$1\rangle$0
+endsnippet
+
 snippet sq "^2" i
 ^2$0
+endsnippet
+
+snippet () "\left( right)" i
+\left($1\right)$0
 endsnippet
 
 snippet frac "\frac{}{}"
@@ -89,7 +101,11 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 snippet '(\s[A-Za-z]) in ([A-Za-z])' "x in A" wrA
-$`!p snip.rv = match.group(1)` \in `!p snip.rv = match.group(2)`$
+`!p snip.rv = match.group(1)` \in `!p snip.rv = match.group(2)`
+endsnippet
+
+snippet '([A-Za-z])_([A-Za-z])\+(\d)' "v_{n+1}" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
 endsnippet
 
 snippet bf "bold" w
@@ -102,4 +118,8 @@ endsnippet
 
 snippet tt "code" w
 \texttt{$1} $0
+endsnippet
+
+snippet bp "\textbullet\ " w
+\textbullet\ $0
 endsnippet
