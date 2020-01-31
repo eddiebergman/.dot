@@ -1,0 +1,30 @@
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\newcommand*{\half}{\frac{1}{2}}
+
+\newcommand*{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\normsq}[1]{\norm{#1}^2}
+\newcommand*{\given}{\mid} % Just a naming alias
+\newcommand*{\inv}[1]{#1\raisebox{1.15ex}{$\scriptscriptstyle-\!1$}}
+\newcommand*{\sR}{\mathbb{R}}
+\newcommand*{\Ex}{\mathbb{E}}
+\newcommand*{\Prob}{\mathbf{P}}
+
+\newcommand*{\lline}{\rule{\linewidth}{0.2pt}}
+
+% https://tex.stackexchange.com/questions/5223/command-for-argmin-or-argmax
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% https://tex.stackexchange.com/questions/268766/curly-braces-in-math-mode
+% Allows the use of \set{..} in math mode
+\usepackage{mathtools}
+\DeclarePairedDelimiter\set\{\}
+
+% use paragraph spacing and remove paragrpah indents
+\usepackage{parskip}
+\setlength\parindent{0pt}
