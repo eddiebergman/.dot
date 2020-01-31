@@ -94,7 +94,7 @@ call vundle#begin()
 " {{{ Gutentags (tag management)
     Plugin 'ludovicchabant/vim-gutentags'
 " }}}
-" {{{ Off | ZoomWin (zooms in the current window <Ctrl-w>o)
+" {{{ ! ZoomWin (zooms in the current window <Ctrl-w>o)
 "    Plugin 'vim-scripts/ZoomWin'
 " }}}
 " {{{ Vim IPython (Ipython integration)
@@ -107,7 +107,7 @@ call vundle#end()
 " All the key maps for various things
 "
 let mapleader = ","
-" {{{ L Text Movement
+" {{{ Text Movement
 
 " normal: Go to first character of line
 nnoremap H ^
@@ -262,12 +262,26 @@ nnoremap <F5> :SyntasticCheck<cr>
 nnoremap y "yy
 nnoremap P "yp
 inoremap <C-p> <esc>"ypa
-" }}}bottom_levbottom_levelbottom_levebottom_level
-
+" }}}
+" {{{ Markdown preview
+nnoremap <leader>mdp :MDpreview<cr>
+" }}}
+" }}}
+" {{{ Filetypes
+augroup filetype_tex
+    autocmd!
+    autocmd FileType tex
+        \ nnoremap <leader>vv :VimtexView
+    autocmd FileType tex
+        \ nnoremap <leader>vc :VimtexCompile<cr>
+    autocmd FileType tex
+        \ nnoremap <leader>vv :VimtexView<cr>
+    autocmd FileType tex
+        \ nnoremap <leader>ve :VimtexErrors<cr>
+augroup END
 " }}}
 " {{{ Commands
 " A selection of commands
-"
 " {{{ :Silent <shellcmd> " Runs a command silently
 
 command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
@@ -282,7 +296,10 @@ command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 " {{{ :Hist <shellcmd> " Puts the command history into a temp buffer
 "       - use / to start searching easily, no more grep piping
 :command! -complete=shellcmd Hist new | setlocal buftype=nofile bufhidden=hide noswapfile | r !cat ~/.histfile
-
+" }}}
+" {{{ :MDpreview " Uses `grip` to preview the readme file
+"       - requiremenets: grip  (pip install grip)
+:command! -complete=file MDpreview execute ':silent ! grip -b -silent ' . expand('%')
 " }}}
 " }}}
 " {{{ Settings
