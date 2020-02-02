@@ -323,6 +323,11 @@ set conceallevel=1
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitbelow splitright
+
+" Disables mouse
+set mouse=
+" set ttymouse=
+
 filetype plugin indent on
 
 if (has("nvim"))
