@@ -4,14 +4,20 @@
 # A, auto expand
 # r, regex match
 # `!p ...` python code, t[i], ith tabstop
+snippet label "\label{}" w
+\label{$1}$0
+endsnippet
 
-snippet newnote "New .tex template"
-\documentclass[10pt,numbers=noenddot]{article}
-\begin{document}
+snippet ref "\hypperref{}" w
+\hyperref{$1}$0
+endsnippet
 
-\section{Title text}
+snippet i.e. "i.e." iA
+\textit{i.e.}
+endsnippet
 
-\end{document}
+snippet w.r.t. "w.r.t." iA
+\textit{w.r.t.}
 endsnippet
 
 snippet r.h.s "right hand side"
@@ -40,6 +46,15 @@ endsnippet
 
 snippet norm "|| ||"
 \left\Vert\left\Vert  $1 \right\Vert\right\Vert $0
+endsnippet
+
+snippet itemize "begin{itemize} ..."
+\begin{itemize}
+    \item $0
+\end{itemize}
+endsnippet
+snippet item " \item  " w
+\item $0
 endsnippet
 
 snippet xstar "x^*" i
