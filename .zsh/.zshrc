@@ -23,8 +23,8 @@ alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 # }}}
 # {{{ Quick files
-alias evimrc='cd $DOT_DIR && nvim .vim/.vimrc'
-alias ezshrc='cd $DOT_DIR && nvim .zsh/.zshrc'
+alias evimrc='cd $DOT && nvim .vim/.vimrc'
+alias ezshrc='cd $DOT && nvim .zsh/.zshrc'
 # }}}
 # {{{ Screen
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
