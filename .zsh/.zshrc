@@ -84,3 +84,55 @@ note_name () {
     echo "$(datestamp).$1.tex" | tr -d -
 }
 
+template () {
+
+    # Template locations
+    local python_template=~/Desktop/templates/test1.py
+    local java_template=~/Desktop/templates/test2
+
+    # If the fist argument is empty OR the second argument is empty
+    # Then print out some help on how to use `template`
+    # Also prints this out if user types 'template --help'
+    if [[ -z $1 ]] || [[ -z $2 ]] || [[ $1 == "--help" ]] then
+        echo "template <template name> <destination>
+
+            <template name> can be one of: python, java
+            <destination> is where to place the template
+
+            Example usage:
+
+            - Copy the python template to your current
+            directory and name it 'mypythonfile.py'
+
+            \$ template python ./mypythonfile.py
+
+            - Copy the java template to some
+            specified location
+
+            \$ template java ~/Desktop/myjavafile.java
+        "
+        # Exit the function early
+        return
+    fi
+
+    # Named variables
+    local template_type="$1"
+    local destination="$2"
+
+    # Copying our templates
+    if [[ $template_type == "python" ]]
+    then
+        cp $python_template $destination
+
+    elif [[ $template_type == "java" ]]
+    then
+        cp $java_tmeplate $destination
+
+    else
+        echo "Sorry, $template_type is note a valid template,
+            Valid templates:
+                python
+                java
+            "
+    fi
+}
