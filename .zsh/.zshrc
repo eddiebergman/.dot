@@ -123,7 +123,7 @@ template_note() {
     local note_preamble=$DOT/latex/note_preamble.tex
 
     local dest="$1"
-    local name=$(echo "$(datestamp)_$3.tex" | tr -d -)
+    local name=$(echo "$(datestamp)$3.tex" | tr -d -)
 
     local note_uri=$dest/$name
 
@@ -137,27 +137,8 @@ template_note() {
 
     # Replace text in file
     sed -i s/replacemeTitle/$name/g $note_uri
-    sed -i s/replacemeDate/$(datestamp)/g $note_uri
 
     # Open note
     cd $dest
     nvim $name
 }
-
-note () {
-    if [ $# -eq 1 ]
-    then
-        local note="$(note_name $1)"
-        # Had weird issues with cp and combined vars
-        # and no such file/dir errors
-        # Had to just insert in the fullpath
-        cp $note_template ~/Desktop/write/notes/$note
-        sed -i s/replacemeTitle/$1/g ~/Desktop/write/notes/$note
-        sed -i s/replacemeDate/$(datestamp)/g ~/Desktop/write/notes/$note
-        cd ~/Desktop/write/notes
-        nvim $note
-    else
-        echo ">note mynotename"
-    fi
-}
-
