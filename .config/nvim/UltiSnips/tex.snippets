@@ -1,72 +1,65 @@
+# {{{ Help
 # options
 # i, in word
 # b, word boundary
 # A, auto expand
 # r, regex match
 # `!p ...` python code, t[i], ith tabstop
-snippet label "\label{}" w
-\label{$1}$0
+# }}}
+# {{{ Symbols
+
+snippet lambda "\lambda" i
+\lambda $0
 endsnippet
 
-snippet ref "\hypperref{}" w
-\hyperref{$1}$0
+snippet Lambda "\lambda" i
+\Lambda $0
 endsnippet
 
-snippet i.e. "i.e." iA
-\textit{i.e.}
+# }}}
+# {{{ Delimiters
+
+snippet ( "\left( right)" i
+\left( $1 \right)$0
 endsnippet
 
-snippet w.r.t. "w.r.t." iA
-\textit{w.r.t.}
+snippet [ "\left[ \right]" i
+\left[ $1 \right]$0
 endsnippet
 
-snippet r.h.s "right hand side"
-right hand side
+snippet < "\langle \rangle" i
+\langle $1 \rangle$0
 endsnippet
 
-snippet <> "\langle \rangle" i
-\langle$1\rangle$0
+# }}}
+# {{{ Document structures
+
+snippet section "\section{}"
+\section{$1}$0
 endsnippet
 
-snippet sq "^2" i
-^2$0
+snippet --- "\lline" w
+\hfill \lline
 endsnippet
 
-snippet () "\left( right)" i
-\left($1\right)$0
+snippet desc "begin{description}"
+\begin{description}
+    $0
+\end{description}
 endsnippet
 
-snippet frac "\frac{}{}"
-\frac{$1}{$2}$0
-endsnippet
-
-snippet abs "| |"
-\left\Vert $1 \right\Vert $0
-endsnippet
-
-snippet norm "|| ||"
-\left\Vert\left\Vert  $1 \right\Vert\right\Vert $0
-endsnippet
-
-snippet itemize "begin{itemize} ..."
+snippet itemize "begin{itemize}"
 \begin{itemize}
-    \item $0
+    $0
 \end{itemize}
 endsnippet
-snippet item " \item  " w
+
+snippet item "\item" w
 \item $0
 endsnippet
 
-snippet xstar "x^*" i
-x^*
-endsnippet
-
-snippet sequence "x_1, x_2, ..." i
-$1_1, $1_2, \ldots$0
-endsnippet
-
-snippet sequencen "x_1, x_2, .., x_n" i
-$1_1, $1_2, \ldots, $1_n$0
+snippet itemm "\item []" w
+\item [$1] \hfill $0
 endsnippet
 
 snippet beg "begin / end" bA
@@ -75,9 +68,6 @@ snippet beg "begin / end" bA
 \end{$1}
 endsnippet
 
-# w, exapnd at word boundaries , hello mk, hellomk
-# t[i], i'th tabstop
-# not sure what rv is
 snippet mk "$$ - inline math" wA
 $${1}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
@@ -92,6 +82,32 @@ snippet dm "\[\] - display math" wA
     $1
 .\]
 endsnippet
+# }}}
+# {{{ Math structures
+
+snippet frac "\frac{}{}" i
+\frac{ $1 }{ $2 }$0
+endsnippet
+
+snippet abs "| |"
+\left\Vert $1 \right\Vert $0
+endsnippet
+
+snippet norm "|| ||"
+\left\Vert\left\Vert  $1 \right\Vert\right\Vert $0
+endsnippet
+
+snippet sq "^2" i
+^2$0
+endsnippet
+
+snippet sequence "x_1, x_2, ..." i
+$1_1, $1_2, \ldots$0
+endsnippet
+
+snippet sequencen "x_1, x_2, .., x_n" i
+$1_1, $1_2, \ldots, $1_n$0
+endsnippet
 
 snippet sum "\sum__{}^{}" i
 \sum_{$1}^{$2}$0
@@ -101,12 +117,11 @@ snippet vec "\bm" w
 \bm{$1}$0
 endsnippet
 
+# inv
 snippet '([A-Za-z])inv' "a^{-1}" wr
 `!p snip.rv = match.group(1)`^{-1}
 endsnippet
 
-# match.group matches te parentheses groups of the snippets
-# match.group(1) : ([A-Za-z]) ... etc
 snippet '([A-Za-z])(\d)' "auto subscript" wrA
 `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
 endsnippet
@@ -122,9 +137,46 @@ endsnippet
 snippet '([A-Za-z])_([A-Za-z])\+(\d)' "v_{n+1}" wrA
 `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
 endsnippet
+# }}}
+# {{{ Phrases
+
+snippet i.e. "i.e." iA
+\textit{i.e.}
+endsnippet
+
+snippet w.r.t. "w.r.t." iA
+\textit{w.r.t.}
+endsnippet
+
+snippet r.h.s "right hand side"
+\textit{r.h.s.}
+endsnippet
+
+# }}}
+# {{{ Common commands
+
+snippet label "\label{}" w
+\label{$1}$0
+endsnippet
+
+snippet ref "\hypperref{}" w
+\hyperref[$1]{$2}$0
+endsnippet
 
 snippet bf "bold" w
 \textbf{$1}$0
+endsnippet
+
+snippet mbf "mathbf" w
+\mathbf{$1}$0
+endsnippet
+
+snippet mit "mathbb" w
+\mathbb{$1}$0
+endsnippet
+
+snippet mtt "mathcal" w
+\mathcal{$1}$0
 endsnippet
 
 snippet it "italic" w
@@ -138,3 +190,6 @@ endsnippet
 snippet bp "\textbullet\ " w
 \textbullet\ $0
 endsnippet
+
+# }}}
+
