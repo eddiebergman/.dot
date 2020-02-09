@@ -268,6 +268,7 @@ nnoremap <leader>mdp :MDpreview<cr>
 " }}}
 " }}}
 " {{{ Filetypes
+" {{{ tex
 augroup filetype_tex
     autocmd!
     autocmd FileType tex
@@ -279,6 +280,14 @@ augroup filetype_tex
     autocmd FileType tex
         \ nnoremap <leader>ve :VimtexErrors<cr>
 augroup END
+" }}}
+" {{{ Python
+augroup filetype_python
+    autocmd!
+    autocmd FileType python
+                \ nnoremap <buffer> H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
+augroup END
+" }}}
 " }}}
 " {{{ Commands
 " A selection of commands
