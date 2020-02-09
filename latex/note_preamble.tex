@@ -1,7 +1,22 @@
-\usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{xcolor}
+\usepackage{amssymb}
 \usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+\usepackage{url}
+
+\usepackage{amsthm}
+\usepackage{mdframed}
+\usepackage{thmtools}
+\usepackage{hyperref}
+\usepackage{marginnote}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
 
 \newcommand*{\half}{\frac{1}{2}}
 
@@ -13,6 +28,9 @@
 \newcommand*{\sR}{\mathbb{R}}
 \newcommand*{\Ex}{\mathbb{E}}
 \newcommand*{\Prob}{\mathbf{P}}
+\newcommand*{\idx}[1]{{\left[#1\right]}}
+\newcommand*{\union}{\cup}
+\newcommand*{\intersection}{\cap}
 
 \newcommand*{\lline}{\rule{\linewidth}{0.2pt}}
 
@@ -28,3 +46,26 @@
 % use paragraph spacing and remove paragrpah indents
 \usepackage{parskip}
 \setlength\parindent{0pt}
+
+% General reference
+% https://tex.stackexchange.com/questions/110244/using-mdframed-style-within-declaretheoremstyle-to-change-title
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    notefont=\normalfont\itshape,
+    bodyfont=\normalfont,
+    notebraces={(}{)},
+    headpunct=,
+    mdframed={linecolor=black!50}
+]{blackboxstyle}
+\declaretheorem[numbered=no, name=, style=blackboxstyle]{blackbox}
+\declaretheorem[numbered=no, name=, style=blackboxstyle]{bigref}
+
+\declaretheoremstyle[
+    headfont=\normalfont\bfseries,
+    notefont=\normalfont,
+    bodyfont=\normalfont,
+    notebraces={(}{)},
+    headpunct=.,
+]{definitionstyle}
+\declaretheorem[name=Defintion, style=definitionstyle, numberwithin=section]{definition}
+
