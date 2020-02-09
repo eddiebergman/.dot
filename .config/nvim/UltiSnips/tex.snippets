@@ -1,3 +1,6 @@
+# TODO See if I can find some way map
+#   things like bfLamb to \mbf{\Lambda}
+#   for whatever mbf is set to.
 # {{{ Help
 # options
 # i, in word
@@ -7,17 +10,39 @@
 # `!p ...` python code, t[i], ith tabstop
 # }}}
 # {{{ Symbols
-
-snippet lambda "\lambda" i
-\lambda $0
+snippet margin "\marginnote"
+\marginnote{$1}[0.20cm]
 endsnippet
 
-snippet Lambda "\lambda" i
-\Lambda $0
+snippet lamb "\lambda" i
+\lambda$0
+endsnippet
+
+snippet Lamb "\lambda" i
+\Lambda$0
+endsnippet
+
+snippet bfLamb "\mbf{\Lambda}" i
+\mathbb{\Lambda}$
+endsnippet
+
+snippet phi "\phi" i
+\phi $0
+endsnippet
+
+snippet Phi "\Phi" i
+\Phi $0
+endsnippet
+
+snippet dot "\cdot" i
+\cdot$0
 endsnippet
 
 # }}}
 # {{{ Delimiters
+snippet lr "\left \right" i
+\left$1 $2 \right$1 $0
+endsnippet
 
 snippet ( "\left( right)" i
 \left( $1 \right)$0
@@ -84,6 +109,25 @@ snippet dm "\[\] - display math" wA
 endsnippet
 # }}}
 # {{{ Math structures
+snippet sub "_{}" i
+_{$1}$0
+endsnippet
+
+snippet sup "^{}" i
+^{$1}$0
+endsnippet
+
+snippet 'sub([A-Za-z]+|\d)' "a^{-1}" ir
+_{`!p snip.rv = match.group(1)`}$0
+endsnippet
+
+snippet 'sup([A-Za-z]+|\d|\*)' "a^{-1}" ir
+^{`!p snip.rv = match.group(1)`}$0
+endsnippet
+
+snippet idx "\idx" i
+\idx{$1}$0
+endsnippet
 
 snippet frac "\frac{}{}" i
 \frac{ $1 }{ $2 }$0
@@ -99,6 +143,18 @@ endsnippet
 
 snippet sq "^2" i
 ^2$0
+endsnippet
+
+snippet \cap "\, \cap \," Aw
+\, \cap \,$0
+endsnippet
+
+snippet \cup "\, \cup \," Aw
+\, \cup \,$0
+endsnippet
+
+snippet pair "_a, _b" w
+$1_a, $1_b$0
 endsnippet
 
 snippet sequence "x_1, x_2, ..." i
@@ -154,6 +210,9 @@ endsnippet
 
 # }}}
 # {{{ Common commands
+snippet in "\in" w
+\in$0
+endsnippet
 
 snippet label "\label{}" w
 \label{$1}$0
@@ -171,11 +230,17 @@ snippet mbf "mathbf" w
 \mathbf{$1}$0
 endsnippet
 
-snippet mit "mathbb" w
+snippet mtt "mathbb" w
+\mathbb{$1}$0
+endsnippet
+snippet mbb "mathbb" w
 \mathbb{$1}$0
 endsnippet
 
-snippet mtt "mathcal" w
+snippet mit "mathcal" w
+\mathcal{$1}$0
+endsnippet
+snippet mcal "mathcal" w
 \mathcal{$1}$0
 endsnippet
 
@@ -191,5 +256,9 @@ snippet bp "\textbullet\ " w
 \textbullet\ $0
 endsnippet
 
+snippet biblio "\bibliography{} \blibiographystyle"
+\bibliographystyle{vancouver}
+\bibliography{biblio}
+endsnippet
 # }}}
 
