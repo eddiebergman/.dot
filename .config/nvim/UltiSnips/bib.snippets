@@ -1,0 +1,17 @@
+snippet book "@book"
+@book{$1,
+  author    = {$2}, 
+  title     = {$2},
+  publisher = {$3},
+  year      = $4,
+  isbn      = {$5}
+}
+endsnippet
+
+snippet website "@misc"
+@misc{$1,
+  title = {$2},
+  howpublished = {\url{$3}},
+  note = {Accessed: `date +%d-%m-%y`}
+}
+endsnippet
