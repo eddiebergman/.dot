@@ -1,3 +1,4 @@
+#!/bin/bash
 # {{{ Env
 # {{{ Path
 export PATH="${PATH}:${HOME}/.local/bin"
@@ -17,6 +18,9 @@ export EDITOR="nvim"
 # export PAGER="most"
 # }}}
 # }}}
+# {{{ Modes
+alias pymode='pipenv shell'
+# }}}
 # {{{ Aliases
 # {{{ Default Parameters
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
@@ -34,12 +38,16 @@ alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
 # {{{ Work setups
 alias dhaskell='cd ~/Desktop/haskell && stack ghci'
 alias dpython='cd ~/Desktop/python && pipenv shell'
+alias notebook='cd ~/Desktop/phd/notebook && nvim'
 # }}}
 # {{{ Pdf Merge
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
 # }}}
 # {{{ Network
 alias networkrefresh='nmcli network off && nmcli network on'
+# }}}
+# {{{ Fille management
+alias clearswaps='rm ~/.local/share/nvim/swap/*'
 # }}}
 # }}}
 # {{{ History
@@ -52,6 +60,9 @@ SAVEHIST=1000
 setopt extendedglob     # Enables wildcards
 setopt notify           # Enables report of status of background jobs
 setopt complete_aliases # Enables completion of aliases
+
+set H+ # Stops history expansion
+# https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
 
 # Allows vi like navigation in shell input
 bindkey -v
@@ -79,15 +90,42 @@ eval `dircolors ~/.dir_colors`
 # }}}
 # {{{ Functions
 datestamp () { echo "$(date -Idate)" }
+mapkeys () {
+    echo "${!1[@]}"
+}
+mapvalues () {
+    local -n rmap=$1
+    echo "${rmap[@]}"
+}
+# mput <map> <key> <value>
+mput () {
+    local -n rmap=$1;
+    rmap[$2]="$3"
+    return $?
+}
+
+# mfind <map> <key>
+function mfind {
+    local -n rmap=$1;
+
+    # key not found
+    [[ -z "${rmap[$2]}" ]] && return 1;
+
+    # key found
+    echo "${rmap[$2]}" && return 0
+}
 # }}}
-# {{{ Commands
-# {{{ template
+# {{{ doc <name> | docadd <name> <url>
+typeset -A mapdoc=([k1]="v1")
+
+# }}}
+# {{{ template <dir> <template> {template params}
 
 # template
 # Creates a template of various descriptions in the current or optionally
 # specified directory
 #
-# $1 - templatename
+# $1 - template name
 # $2 - [optiona] destination
 template () {
     if [[ -z $1 ]] || [[ -z $2 ]] || [[ $1 == "--help" ]] then
@@ -117,7 +155,7 @@ template () {
     fi
     return
 }
-# {{{ template_note()
+# {{{ template_note <note name>
 template_note() {
     local note_template=$DOT/latex/note_template.tex
     local note_preamble=$DOT/latex/note_preamble.tex
@@ -142,3 +180,6 @@ template_note() {
     cd $dest
     nvim $name
 }
+# }}}
+# }}}
+
