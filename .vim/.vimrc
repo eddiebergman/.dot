@@ -1,13 +1,21 @@
 " Made to be used as a menu, :setlocal foldmethod=marker, zM
-" {{{ Runtime
-" Anything to be loaded, Has to be done first for plugins
-"
-set runtimepath+=$VIM_DIR/plugin
-set runtimepath+=$VIM_DIR/ftplugin
-set runtimepath+=$VIM_DIR/after
-set runtimepath+=$HOME/.vim/bundle/Vundle.vim " Adds to runtime path
+" BUG: If not appearing as menu, re-source file to load folding
+" {{{ Globals
+let g:shell = 'kitty'
+" }}}
+" {{{ Filesystem
+" Move <to> - moves current file and opens in current buffer
+:command! -nargs=1 -complete=shellcmd
+    \ Move
+    \ execute ":silent ! mv " . expand('%') . "  " . <q-args> |
+    \ edit <args>
+" }}}
+" {{{ Refactoring
+" Substitution on visually selected word
+vnoremap <leader>r "hy:%s/<C-r>h//c<left><left>
 " }}}
 " {{{ Plugins
+set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
 filetype off " required for Vundle
 call vundle#begin()
 " {{{ Vundle (Package manager)
@@ -89,19 +97,23 @@ call vundle#begin()
     Plugin 'townk/vim-autoclose'
 " }}}
 " {{{ Vim Local rc (allows project specific vim stuff)
-    Plugin 'embear/vim-localvimrc'
+"    Plugin 'embear/vim-localvimrc'
 " }}}
 " {{{ Gutentags (tag management)
-    Plugin 'ludovicchabant/vim-gutentags'
+"    Plugin 'ludovicchabant/vim-gutentags'
 " }}}
-" {{{ ! ZoomWin (zooms in the current window <Ctrl-w>o)
-"    Plugin 'vim-scripts/ZoomWin'
+" {{{ vimpyter (Jupyter Notebook)
+    Plugin 'szymonmaszke/vimpyter'
 " }}}
-" {{{ Vim IPython (Ipython integration)
-    Plugin 'ivanov/vim-ipython'
+" {{{ jedi-vim (Python useful things)
+    Plugin 'davidhalter/jedi-vim'
+    let g:jedi#auto_initialization = 0
 " }}}
-
+" {{{ vim-python-pep8-indent (fixes weird python indenting)
+    Plugin 'Vimjas/vim-python-pep8-indent'
+" }}}
 call vundle#end()
+filetype plugin indent on    " re-enable
 " }}}
 " {{{ Keymaps
 " All the key maps for various things
@@ -150,12 +162,8 @@ inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
 " {{{ Searching
-
 " normal: Automatically change to regular expression search
 nnoremap / /\v
-
-nnoremap <leader>sr :%s/
-
 " }}}
 " {{{ Commenting
 " normal: Comment Single line
@@ -190,25 +198,25 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " {{{ Quick File
 
 " normal: Edit Settings
-nnoremap <leader>es :vsplit $VIM_DIR/settings.vim<cr>
+nnoremap <leader>es :vsplit $drvim/settings.vim<cr>
 
 " normal: Edit Command
-nnoremap <leader>ec :vsplit $VIM_DIR/commands.vim<cr>
+nnoremap <leader>ec :vsplit $drvim/commands.vim<cr>
 
 " normal: Edit Plugins
-nnoremap <leader>ep :vsplit $VIM_DIR/plugins.vim<cr>
+nnoremap <leader>ep :vsplit $drvim/plugins.vim<cr>
 
 " normal: Edit Filetype specific
-nnoremap <leader>eft :vsplit $VIM_DIR/ftplugin<cr>
+nnoremap <leader>eft :vsplit $drvim/ftplugin<cr>
 
 " normal: Edit Snippet for filetype
 nnoremap <leader>esn :UltiSnipsEdit<cr>
 
 " normal: Edit vimrc
-nnoremap <leader>ev :vsplit $VIM_DIR/.vimrc<cr>
+nnoremap <leader>ev :vsplit $drvim/.vimrc<cr>
 
 " normal: Edit todo
-nnoremap <leader>et :vsplit $DOT_DIR/todo.vim<cr>
+nnoremap <leader>et :vsplit $drdot/todo.vim<cr>
 
 " normal: Source vimrc
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
@@ -281,13 +289,6 @@ augroup filetype_tex
         \ nnoremap <leader>ve :VimtexErrors<cr>
 augroup END
 " }}}
-" {{{ Python
-augroup filetype_python
-    autocmd!
-    autocmd FileType python
-                \ nnoremap <buffer> H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
-augroup END
-" }}}
 " }}}
 " {{{ Commands
 " A selection of commands
@@ -315,9 +316,10 @@ command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 " All globalsettings. Use h: <setting> to find out more
 "
 set nocompatible
-filetype on
+filetype plugin indent on
+set autoindent
 
-set number relativenumber
+set number
 set hlsearch incsearch
 set wrap
 set scrolloff=10
@@ -329,7 +331,8 @@ set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
 set conceallevel=1
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set expandtab
+set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitbelow splitright
 
@@ -337,7 +340,7 @@ set splitbelow splitright
 set mouse=
 " set ttymouse=
 
-filetype plugin indent on
+filetype plugin on
 
 if (has("nvim"))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -361,18 +364,6 @@ set wildignore+=*~,*.swp,*.tmp
 
 " }}}
 " }}}
-" {{{ View
-" Anything related to how things are presented
-"
-" {{{ Fold bar
-set foldtext=FoldBar()
-" {{{ FoldBar - Text to display on fold bar
-function! FoldBar()
-    let output = strpart(getline(v:foldstart), 0, (winwidth(0)*2)/3)
-    return output
-endfunction
-" }}}
-" }}}
 " {{{ Status
 " The status line displayed at the bottom of the screen
 "
@@ -386,8 +377,11 @@ set statusline+=%l " Current Line
 set statusline+=/
 set statusline+=%L " Total Lines
 " }}}
-" {{{ Quickfix
-" normal: Toggle quickfix window
+" {{{ Functionality
+" {{{ Spellcheck        - <leader>sc
+nnoremap <leader>sc :setlocal spell!<cr>
+" }}}
+" {{{ Quickfix          - <leader>q
 nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
 
 let g:quickfix_is_open = 0
@@ -413,23 +407,13 @@ augroup filetype_qf
 augroup END
 " }}}
 " }}}
-" {{{ Extra
-" When you're tired of using the word misc
-"
-" {{{ L Vimscript Helpers
-" A collection of things to help with vimscript
-"
+" {{{ Helps
+function! Myhelp(section)
+     echom "Hello from myhelp"
+endfunction
 
+command! -nargs=1 Myhelp
+    \ execute 'call Myhelp(' . <q-args> . ')'
 " }}}
-" {{{ L Autocommands
-" All the autocommands for different files
-"
-augroup general_group
-    autocmd!
 
-    " Automatically write an newely opened file
-    " autocmd BufNewFile * :write
-
-augroup END
-" }}}
-" }}}
+let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
