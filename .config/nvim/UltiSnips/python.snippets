@@ -1,0 +1,80 @@
+#{{{ General
+snippet func "def func():" w
+def $1($2):
+    $0
+endsnippet
+
+snippet ifelse "ifelse" w
+if ($1):
+    $2
+else:
+    $3
+endsnippet
+
+snippet method "def method(self):" w
+def $1(self):
+    $0
+endsnippet
+
+snippet kv1 "{ key: value, }" wA
+{ '$1': $2 },
+endsnippet
+
+snippet kv "key: value" w
+'$1' : $2,
+endsnippet
+
+#}}}
+#{{{ Django
+snippet docendpoint "# /path/to/endpoint" w
+"""
+    ${1:path: path/to/endpoint}
+    ${2:General description}
+"""
+endsnippet
+snippet path "path()" w
+path('$1', include('$1.urls')),
+endsnippet
+
+snippet view "view" w
+def ${1:viewname}(request$2):
+    return HttpResponse("$1")
+endsnippet
+
+snippet endpoint "path()" w
+path('${1:endpoint}', views.$1, name='$1'),$0
+endsnippet
+#}}}
+#{{{ File Templates
+snippet templatemodels "template:models" w
+from django.db import models
+
+class MyModel(models.Model):
+    question = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    votes = models.IntegerField(default=0)
+endsnippet
+
+snippet templateurls "template:urls" w
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+endsnippet
+
+snippet templateviews "template:views" w
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def index(request):
+    return HttpResponse("Hello, world")
+
+# Dynamic view
+def complex(request):
+    context = {'key': value }
+    return render(request, 'filename/index.html', context)
+endsnippet
+#}}}

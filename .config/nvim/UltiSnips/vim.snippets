@@ -1,0 +1,40 @@
+snippet group
+augroup $1
+    autocmd!
+    autocmd $2
+augroup END
+$0
+endsnippet
+
+snippet plugin "Plugin" wA
+" {{{
+    Plugin '$1'
+" }}}
+endsnippet
+
+# BUG: Issues with function not expanding
+# and insted autocompleting
+snippet "(func|function)" "function!" r
+function! ${1:MyFunction}()
+    ${2: echom "Hello from $1"}
+endfunction
+$0
+endsnippet
+
+snippet marker "{{{" w
+" {{{ ${1:Marker}
+$2
+" }}}
+$0
+endsnippet
+
+snippet python ":py3 << EOF"
+:py3 << EOF
+$1
+EOF
+$0
+endsnippet
+
+snippet command "command!" w
+command! ${1:Command} execute '$2'
+endsnippet

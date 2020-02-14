@@ -1,0 +1,23 @@
+snippet func "func() {  }" w
+${1:func_name}() {
+    $2
+    return
+}
+endsnippet
+
+snippet prompt "read -p 'prompt'" w
+read "response?${1:prompt (y/n)}?"
+echo # new line
+if [[ "$response" =~ ^[Yy]$ ]] then
+    $2
+fi
+endsnippet
+
+snippet switch "case expression in" w
+case ${1:expression} in
+    ${2:case1})
+        ${3:statement};;
+    *)
+        ${4:default} ;;
+esac
+endsnippet
