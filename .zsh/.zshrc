@@ -1,25 +1,27 @@
 #!/bin/bash
 # {{{ Env
 # {{{ Path
-export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
 # }}}
-# {{{ Directory Aliases
-export DOT="$HOME/.dot"
-export ZSH_DIR="$DOT/.zsh"
-export VIM_DIR="$DOT/.vim"
-export CONFIG_DIR="$DOT/.config"
-export INSTALLER_DIR="$DOT/installers"
-export SHARE_DIR="$HOME/.local/share"
-export ZDOTDIR="$ZSH_DIR"
+# {{{ Locations
+export drdot="$HOME/.dot"
+export drzsh="$drdot/.zsh"
+export drvim="$drdot/.vim"
+export drconfig="$drdot/.config"
+export drinstaller="$drdot/installers"
+export drshare="$HOME/.local/share"
+export ZSHDIR="$drzsh" # Required by <something>
 # }}}
-# {{{ Default applications
+# {{{ Defaults - $VISUAL, $EDITOR, ...
 export VISUAL="nvim"
 export EDITOR="nvim"
+eval "$(pyenv init -)"
 # export PAGER="most"
 # }}}
 # }}}
 # {{{ Modes
-alias pymode='pipenv shell'
+# TODO: Fix directory changing back to home
+alias pymode='pymodetemp1="$(pwd)" && pipenv shell && cd $pymodetemp1'
 # }}}
 # {{{ Aliases
 # {{{ Default Parameters
@@ -27,8 +29,8 @@ alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 # }}}
 # {{{ Quick files
-alias evimrc='cd $DOT && nvim .vim/.vimrc'
-alias ezshrc='cd $DOT && nvim .zsh/.zshrc'
+alias evimrc='cd $drdot && nvim .vim/.vimrc'
+alias ezshrc='cd $drdot && nvim .zsh/.zshrc'
 # }}}
 # {{{ Screen
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
@@ -39,6 +41,9 @@ alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
 alias dhaskell='cd ~/Desktop/haskell && stack ghci'
 alias dpython='cd ~/Desktop/python && pipenv shell'
 alias notebook='cd ~/Desktop/phd/notebook && nvim'
+alias nbconvert='jupyter nbconvert'
+alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
+alias django='python manage.py'
 # }}}
 # {{{ Pdf Merge
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
@@ -46,7 +51,7 @@ alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/de
 # {{{ Network
 alias networkrefresh='nmcli network off && nmcli network on'
 # }}}
-# {{{ Fille management
+# {{{ File management
 alias clearswaps='rm ~/.local/share/nvim/swap/*'
 # }}}
 # }}}
@@ -80,7 +85,7 @@ compinit
 promptinit
 # }}}
 # {{{ Theme
-source $SHARE_DIR/powerlevel10k/powerlevel10k.zsh-theme
+source $drshare/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.dot/.zsh/.p10k.zsh ]] && source ~/.dot/.zsh/.p10k.zsh
 
 # }}}
@@ -157,8 +162,8 @@ template () {
 }
 # {{{ template_note <note name>
 template_note() {
-    local note_template=$DOT/latex/note_template.tex
-    local note_preamble=$DOT/latex/note_preamble.tex
+    local note_template=$drdot/latex/note_template.tex
+    local note_preamble=$drdot/latex/note_preamble.tex
 
     local dest="$1"
     local name=$(echo "$(datestamp)$3.tex" | tr -d -)
@@ -182,4 +187,25 @@ template_note() {
 }
 # }}}
 # }}}
+# {{{ dataset <name>
+# TODO: Look into maps in bash
+movie_lens_download="files.grouplens.org/datasets/movielens/ml-25m.zip"
 
+dataset () {
+    local link="",
+    case "$1" in
+        "movielens") link="$movie_lens_download";;
+        *)
+           echo "Whoops, $1 not recognized"
+           echo "$dataset_help"
+           return
+    esac
+
+    local prompt_string="Are you sure you want to download $1 from $link (y/n)?"
+    read "response?$prompt_string?"
+    if [[ "$response" =~ ^[Yy]$ ]] then
+        wget $link
+    fi
+    return
+}
+# }}}
