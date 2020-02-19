@@ -212,7 +212,7 @@ nnoremap <leader>ep :vsplit $drvim/plugins.vim<cr>
 nnoremap <leader>eft :vsplit $drvim/ftplugin<cr>
 
 " normal: Edit Snippet for filetype
-nnoremap <leader>esn :UltiSnipsEdit<cr>
+nnoremap <leader>esn :e $drconfig/nvim/UltiSnips<cr>
 
 " normal: Edit vimrc
 nnoremap <leader>ev :vsplit $drvim/.vimrc<cr>
