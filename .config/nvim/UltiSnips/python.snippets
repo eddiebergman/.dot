@@ -1,7 +1,28 @@
-#{{{ General
+# {{{ General
 snippet func "def func():" w
-def $1($2):
-    $0
+def ${1:funcname}():
+    """ ${2: $1 Documentation} """
+    print('hello from $1')
+endsnippet
+
+snippet class "class MyClass:" w
+class ${1:MyClass}:
+    """
+    ${2: $1 Documentation}
+    """
+
+    def __init__(self):
+        $0
+endsnippet
+
+snippet bb "bigdoc" w
+"""
+${1:Documentation}
+"""
+endsnippet
+
+snippet it "smalldoc" w
+""" ${1:Documentation} """
 endsnippet
 
 snippet ifelse "ifelse" w
@@ -12,16 +33,17 @@ else:
 endsnippet
 
 snippet method "def method(self):" w
-def $1(self):
+def ${1:mymethod}(self):
+    """ ${2:$1 documentation} """
     $0
 endsnippet
 
 snippet kv1 "{ key: value, }" wA
-{ '$1': $2 },
+{ '${1:key}': ${2:value} },
 endsnippet
 
 snippet kv "key: value" w
-'$1' : $2,
+'${1:key}' : ${2:val},
 endsnippet
 
 #}}}
@@ -75,6 +97,6 @@ def index(request):
 # Dynamic view
 def complex(request):
     context = {'key': value }
-    return render(request, 'filename/index.html', context)
+    return render(request, 'complex/index.html', context)
 endsnippet
 #}}}
