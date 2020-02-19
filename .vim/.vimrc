@@ -199,31 +199,14 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " }}}
 " {{{ Quick File
 
-" normal: Edit Settings
-nnoremap <leader>es :vsplit $drvim/settings.vim<cr>
-
-" normal: Edit Command
-nnoremap <leader>ec :vsplit $drvim/commands.vim<cr>
-
-" normal: Edit Plugins
-nnoremap <leader>ep :vsplit $drvim/plugins.vim<cr>
-
-" normal: Edit Filetype specific
-nnoremap <leader>eft :vsplit $drvim/ftplugin<cr>
-
-" normal: Edit Snippet for filetype
 nnoremap <leader>esn :vsp $drconfig/nvim/UltiSnips<cr>
 
-" normal: Edit vimrc
 nnoremap <leader>ev :vsplit $drvim/.vimrc<cr>
-
-" normal: Edit todo
-nnoremap <leader>et :vsplit $drdot/todo.vim<cr>
-
-" normal: Source vimrc
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
 nnoremap <leader>eip :vsplit $HOME/.ipython/profile_default/startup<cr>
+
+nnoremap <leader>ez :vsp $drzsh/.zshrc<cr>
 
 " }}}
 " {{{ Fold
