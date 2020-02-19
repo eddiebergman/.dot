@@ -2,6 +2,7 @@
 " BUG: If not appearing as menu, re-source file to load folding
 " {{{ Globals
 let g:shell = 'kitty'
+let g:dotdir = expand('~/Desktop/.dot')
 " }}}
 " {{{ Filesystem
 " Move <to> - moves current file and opens in current buffer
@@ -108,6 +109,7 @@ call vundle#begin()
 " {{{ jedi-vim (Python useful things)
     Plugin 'davidhalter/jedi-vim'
     let g:jedi#auto_initialization = 0
+    let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
 " }}}
 " {{{ vim-python-pep8-indent (fixes weird python indenting)
     Plugin 'Vimjas/vim-python-pep8-indent'
@@ -229,6 +231,11 @@ nnoremap <leader>eip :vsplit $HOME/.ipython/profile_default/startup<cr>
 " Fold Toggle
 nnoremap <space> za
 
+" Set fold methods
+nnoremap <leader>fmm :set foldmethod=marker<cr>
+nnoremap <leader>fmi :set foldmethod=indent<cr>
+nnoremap <leader>fms :set foldmethod=syntax<cr>
+
 " }}}
 " {{{ Extra
 " Exit insert mode
@@ -280,7 +287,7 @@ nnoremap <leader>mdp :MDpreview<cr>
 augroup filetype_tex
     autocmd!
     autocmd FileType tex
-        \ nnoremap <leader>vv :VimtexView
+        \ nnoremap <leader>vv :VimtexView<cr>
     autocmd FileType tex
         \ nnoremap <leader>vc :VimtexCompile<cr>
     autocmd FileType tex
@@ -406,14 +413,27 @@ augroup filetype_qf
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
 augroup END
 " }}}
-" }}}
-" {{{ Helps
-function! Myhelp(section)
-     echom "Hello from myhelp"
+" {{{ Templates         - <leader>it
+" Select a template based on filetype into the current directory
+let s:template_dir = expand(g:dotdir . '/templates')
+let s:general_dir = expand(s:template_dir . '/general')
+
+" Template <name> [path]
+function! Template(name, path)
+    if !isdirectory(s:template_dir) 
+        echoerr 's:template_dir not known ' . s:template_dir 
+    endif
+
+    let l:pathto = get(a:, 1, 0)
+    echo s:general_dir
 endfunction
+
+
+" }}}
+" {{{ References
 
 command! -nargs=1 Myhelp
     \ execute 'call Myhelp(' . <q-args> . ')'
 " }}}
+" }}}
 
-let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
