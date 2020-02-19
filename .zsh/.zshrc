@@ -94,36 +94,46 @@ eval `dircolors ~/.dir_colors`
 # {{{ Functions
 datestamp () { echo "$(date -Idate)" }
 
-# /home/skantify/Desktop -> Desktop
-strippath () { stripped=${1%/}; stripped=${1##*/}; echo "$stripped" }
+# Equality between strings, change to strequal if equal is an issue
+equal () { [[ "$1" == "$2" ]]; return }
 
-# {{{ dataset <name>
-# TODO: Look into maps in bash
-movie_lens_download="files.grouplens.org/datasets/movielens/ml-25m.zip"
-
-dataset () {
-    local link="",
-    case "$1" in
-        "movielens") link="$movie_lens_download";;
-        *)
-           echo "Whoops, $1 not recognized"
-           echo "$dataset_help"
-           return
-    esac
-
-    local prompt_string="Are you sure you want to download $1 from $link (y/n)?"
-    read "response?$prompt_string?"
-    if [[ "$response" =~ ^[Yy]$ ]] then
-        wget $link
-    fi
-    return
+# https://unix.stackexchange.com/questions/411304/how-do-i-check-whether-a-zsh-array-contains-a-given-value
+elem () {
+    local item=$1
+    shift
+    for str in "$@"
+    do
+        equal "$item" "$str" && return 0
+    done
+    false
 }
+isarg () { elem "$@" }
+contained () { elem "$@" }
+
+# Strips prepended path, Example: /home/skantify/Desktop -> Desktop
+strippath () { stripped=${1##*/}; echo "$stripped" }
+
+# Check if var set or if dir, file, symlink exists
+isset () { [[ -z "$1" ]]; return }
+isdir () { [[ -d "$1" ]]; return }
+isfile () { [[ -f "$1" ]]; return }
+issymlink () { [[ -h "$1" ]]; return }
+
+# Check if variable, directory, file or symbolic link
+exists () { isset $1 && isdir $1 && isfile $1 && issymlink $1; return }
+
+# Check if exists and can read, write
+readable () { exists $1 && [[ -r "$1" ]];  return }
+writable () { exists $1 && [[ -w "$2" ]]; return }
+
+
+
 # }}}
-# }}}
-# {{{ External Sources
+# {{{ My plugins
 source "$drzsh/template.zsh"
 # }}}
 # {{{ On Startup
-#eval "$(pyenv init -)"
-#pipenv shell
+eval "$(pyenv init -)"
+# pipenv shell
+# clear
 # }}}
