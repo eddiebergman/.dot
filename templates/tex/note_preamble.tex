@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{xcolor}
 
+
 \usepackage{url}
 
 \usepackage{amsthm}
@@ -69,3 +70,15 @@
 ]{definitionstyle}
 \declaretheorem[name=Defintion, style=definitionstyle, numberwithin=section]{definition}
 
+% For use with inkscape-figures
+% https://github.com/gillescastel/inkscape-figures
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
