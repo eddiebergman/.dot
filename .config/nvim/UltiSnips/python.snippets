@@ -1,7 +1,9 @@
 # {{{ General
 snippet func "def func():" w
 def ${1:funcname}():
-    """ ${2: $1 Documentation} """
+    """
+    ${2: $1 Documentation}
+    """
     print('hello from $1')
 endsnippet
 
@@ -34,8 +36,10 @@ endsnippet
 
 snippet method "def method(self):" w
 def ${1:mymethod}(self):
-    """ ${2:$1 documentation} """
-    $0
+    """
+    ${2:$1 documentation}
+    """
+    print('hello from $1')
 endsnippet
 
 snippet kv1 "{ key: value, }" wA

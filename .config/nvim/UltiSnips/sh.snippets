@@ -5,6 +5,13 @@ ${1:func_name}() {
 }
 endsnippet
 
+snippet for "for loop" w
+for $1 in $2
+do
+    $0
+done
+endsnippet
+
 snippet prompt "read -p 'prompt'" w
 read "response?${1:prompt (y/n)}?"
 echo # new line
@@ -20,4 +27,8 @@ case ${1:expression} in
     *)
         ${4:default} ;;
 esac
+endsnippet
+
+snippet cantfind "Cant find x, $1" w
+echo "Cant't find ${1:file}, \$${2:filevar}"
 endsnippet
