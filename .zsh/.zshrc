@@ -97,8 +97,21 @@ eval `dircolors ~/.dir_colors`
 # {{{ Functions
 datestamp () { echo "$(date -Idate)" }
 
-# Equality between strings, change to strequal if equal is an issue
+# Comparisons
 equal () { [[ "$1" == "$2" ]]; return }
+eq () { equal $1 $2; return }
+
+less () { [[ "$1" -lt "$2" ]]; return }
+lt () { less $1 $2; return }
+
+greater () { ! less $1 $2 && ! equal $1 $2; return }
+gt () { greater $1 $2; return }
+
+lessequal () { less $1 $2 || equal $1 $2; return}
+lte () { lessequal $1 $2; return }
+
+greaterequal () { greater $1 $2 || equal $1 $2; return }
+gte () { greaterequal $1 $2; return }
 
 # https://unix.stackexchange.com/questions/411304/how-do-i-check-whether-a-zsh-array-contains-a-given-value
 elem () {
@@ -110,11 +123,14 @@ elem () {
     done
     false
 }
+iszero () { [[ $1 == 0 ]]; return }
 isarg () { elem "$@" }
 contained () { elem "$@" }
+map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; }
 
 # Strips prepended path, Example: /home/skantify/Desktop -> Desktop
 strippath () { stripped=${1##*/}; echo "$stripped" }
+
 
 # Check if var set or if dir, file, symlink exists
 isset () { [[ -z "$1" ]]; return }
@@ -129,7 +145,7 @@ exists () { isset $1 && isdir $1 && isfile $1 && issymlink $1; return }
 readable () { exists $1 && [[ -r "$1" ]];  return }
 writable () { exists $1 && [[ -w "$2" ]]; return }
 
-
+array () { declare -a $1 }
 
 # }}}
 # {{{ My plugins
