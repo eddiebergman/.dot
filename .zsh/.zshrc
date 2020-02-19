@@ -18,6 +18,9 @@ export VISUAL="nvim"
 export EDITOR="nvim"
 # export PAGER="most"
 # }}}
+# {{{ External
+source "$drdot/.secret/zotero_envs.zsh"
+# }}}
 # }}}
 # {{{ Aliases
 # {{{ Default Commands
