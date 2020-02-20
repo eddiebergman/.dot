@@ -6,6 +6,10 @@ ${1:func_name}() {
 }
 endsnippet
 
+snippet print "printf" w
+printf "${1:Text}\n"
+endsnippet
+
 snippet for "for loop" w
 for $1 in $2
 do
@@ -17,6 +21,11 @@ snippet foreach "foreach" w
 foreach ${1:var} (${2:items,})
     ${3:command}
 end
+endsnippet
+
+snippet if "if" w
+if ${1:command}; then
+    ${2:command}; return; fi
 endsnippet
 
 snippet prompt "read -p 'prompt'" w
