@@ -18,9 +18,7 @@ done
 endsnippet
 
 snippet foreach "foreach" w
-foreach ${1:var} (${2:items,})
-    ${3:command}
-end
+foreach ${1:var} (${2:items,}) ${3:command}; end
 endsnippet
 
 snippet if "if" w
@@ -80,14 +78,25 @@ snippet header "|" w
 $0
 endsnippet
 
-snippet setting "|" w
-${Yellow}${1:Setting}${NC}
-=\$$1
-$0
+snippet col "${COL} ... ${NC}" i
+${${1:Red}}$0
 endsnippet
 
-snippet col "${COL} ... ${NC}" i
-${${1:Red}}${2:text}${NC}$0
+
+#{{{ Documentation
+snippet tt "<>" w
+${Yellow}<$1>${NC}$0
+endsnippet
+
+snippet setting "$varname" w
+${UYellow}\\$${1:varname}${NC}
+endsnippet
+
+snippet command "$" w
+${Green}`!p snip.rv += ('-' * 40)`${NC}
+${Green}$ ${1:command}${NC}
+${Green}`!p snip.rv += ('-' * 50)`${NC}
+$0
 endsnippet
 
 snippet list "|~~~"
@@ -95,21 +104,71 @@ $1
 `!p snip.rv = ('-' * (len(t[1]) + 3))`
 $0
 endsnippet
+#}}}
 
-snippet item "~"
-. $0
+#{{{ Colours
+snippet nc "${NC}" i
+${NC}
 endsnippet
 
-snippet command "$" w
-${Cyan}$ ${1:command}
-`!p snip.rv += ('.' * (len(t[1]) + 3))`${NC}
-$0
+snippet purple "${Purple}" w
+${Purple}
 endsnippet
 
-snippet it "''" w
-'$1'$0
+snippet purpleb "${BPurple}" w
+${BPurple}
 endsnippet
 
-snippet tt "<>" w
-<$1>$0
+snippet purpleu "${UPurple}" w
+${UPurple}
 endsnippet
+
+snippet cyan "${Cyan}" w
+${Cyan}
+endsnippet
+
+snippet cyanbf "${BCyan}" w
+${BCyan}
+endsnippet
+
+snippet cyanu "${UCyan}" w
+${UCyan}
+endsnippet
+
+snippet blue "${Blue}" w
+${Blue}
+endsnippet
+
+snippet bluebf "${BBlue}" w
+${BBlue}
+endsnippet
+
+snippet blueu "${UBlue}" w
+${UBlue}
+endsnippet
+
+snippet yellow "${Yellow}" w
+${Yellow}
+endsnippet
+
+snippet yellowbf "${BYellow}" w
+${BYellow}
+endsnippet
+
+snippet yellowu "${UYellow}" w
+${UYellow}
+endsnippet
+
+snippet green "${Green}" w
+${Green}$0
+endsnippet
+
+snippet greenbf "${Green}" w
+${BGreen}$0
+endsnippet
+
+snippet greenu "${Green}" w
+${UGreen}$0
+endsnippet
+#}}}
+
