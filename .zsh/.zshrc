@@ -100,6 +100,7 @@ datestamp () { echo "$(date -Idate)" }
 # Comparisons
 equal () { [[ "$1" == "$2" ]]; return }
 eq () { equal $1 $2; return }
+argc () { equal $1 $2; return }
 
 less () { [[ "$1" -lt "$2" ]]; return }
 lt () { less $1 $2; return }
@@ -123,27 +124,29 @@ elem () {
     done
     false
 }
-iszero () { [[ $1 == 0 ]]; return }
-isarg () { elem "$@" }
-contained () { elem "$@" }
-map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; }
+contained () { elem "$@"; return }
+arg () { elem "$@"; return }
+zero () { equal $1 0; return }
+one () { equal $1 1; return }
+two () { equal $1 2; return }
 
-# Strips prepended path, Example: /home/skantify/Desktop -> Desktop
-strippath () { stripped=${1##*/}; echo "$stripped" }
+map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; return }
 
+filecount() { echo "$(find $2 -name $1 | wc -l)"; return }
 
 # Check if var set or if dir, file, symlink exists
 isset () { [[ -z "$1" ]]; return }
 isdir () { [[ -d "$1" ]]; return }
 isfile () { [[ -f "$1" ]]; return }
 issymlink () { [[ -h "$1" ]]; return }
+empty () { [[ -z "$1" ]]; return }
 
 # Check if variable, directory, file or symbolic link
-exists () { isset $1 && isdir $1 && isfile $1 && issymlink $1; return }
+exists () { isset $1 || isdir $1 || isfile $1 || issymlink $1; return }
 
 # Check if exists and can read, write
 readable () { exists $1 && [[ -r "$1" ]];  return }
-writable () { exists $1 && [[ -w "$2" ]]; return }
+writable () { [[ -w "$1" ]]; return }
 
 array () { declare -a $1 }
 
