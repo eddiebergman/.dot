@@ -43,11 +43,10 @@ template_list() {
     return
 }
 
-
-
 template_note_dir="$drtemplate/tex/note"
+
 template_note() {
-    ! one $# || arg $1 "--help" "-h" && template_tex_help && return
+    ! one $# || arg $1 "--help" "-h" && template_note_help && return
 
     local out=$1
     local dir=$(dirname $out)
@@ -63,25 +62,30 @@ template_note() {
 
 template_help() {
     echo "
-        $ template <name> <path>
-        ===============
-            Copies a template called <name> located beneath \$template_root to <path>.
+    $ template <name> <path>
 
-        $ template list [all]
-        ===============
-            List all templates under \$template_root
+        Copies a template called <name> located beneath \$template_root to <path>.
 
-        $ template list paths
-        ===============
-            List all paths under \$template_root
+    $ template list [all]
 
-        $ template read <name>
-        ===============
-            Cats out the template for reading into another file or looking at
+        List all templates under \$template_root
 
-        $ template edit
-        ===============
-            Opens \$EDITOR in \$template_root
+    $ template list paths
+
+        List all paths under \$template_root
+
+    $ template read <name>
+
+        Cats out the template for reading into another file or looking at
+
+    $ template edit
+
+        Opens \$EDITOR in \$template_root
+
+    ---------------
+    Available template handlers:
+
+    $ template note --help
     "
     return
 }
