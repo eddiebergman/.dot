@@ -215,9 +215,9 @@ nnoremap <leader>ez :vsp $drzsh/.zshrc<cr>
 nnoremap <space> za
 
 " Set fold methods
-nnoremap <leader>fmm :set foldmethod=marker<cr>
-nnoremap <leader>fmi :set foldmethod=indent<cr>
-nnoremap <leader>fms :set foldmethod=syntax<cr>
+nnoremap <leader>fmm :setlocal foldmethod=marker<cr>
+nnoremap <leader>fmi :setlocal foldmethod=indent<cr>
+nnoremap <leader>fms :setlocal foldmethod=syntax<cr>
 
 " }}}
 " {{{ Extra
