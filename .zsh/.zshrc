@@ -126,27 +126,32 @@ elem () {
 }
 contained () { elem "$@"; return }
 arg () { elem "$@"; return }
+helparg() { elem $1 "help" "-h" "--help"; return }
 zero () { equal $1 0; return }
 one () { equal $1 1; return }
 two () { equal $1 2; return }
 
+filecount() { printf "$(find $2 -name $1 | wc -l)"; return }
+
 map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; return }
 
-filecount() { echo "$(find $2 -name $1 | wc -l)"; return }
+readable () { [[ -r "$1" ]]; return }
+writable () { [[ -w "$1" ]]; return }
 
-# Check if var set or if dir, file, symlink exists
-isset () { [[ -z "$1" ]]; return }
+# Check if variable, directory, file or symbolic link
 isdir () { [[ -d "$1" ]]; return }
 isfile () { [[ -f "$1" ]]; return }
 issymlink () { [[ -h "$1" ]]; return }
-empty () { [[ -z "$1" ]]; return }
 
-# Check if variable, directory, file or symbolic link
-exists () { isset $1 || isdir $1 || isfile $1 || issymlink $1; return }
+exists () { isdir $1 || isfile $1 || issymlink $1; return }
 
-# Check if exists and can read, write
-readable () { exists $1 && [[ -r "$1" ]];  return }
-writable () { [[ -w "$1" ]]; return }
+emptyvar() { [[ -z "$1" ]]; return }
+isset () { ! emptyvar $1; return }
+
+emptydir () { [[ ! "$(ls -A $1)" ]]; return }
+hasfile () { ! emptydir $1; return }
+
+empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
 
 array () { declare -a $1 }
 
