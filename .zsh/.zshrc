@@ -151,6 +151,9 @@ isset () { ! emptyvar $1; return }
 emptydir () { [[ ! "$(ls -A $1)" ]]; return }
 hasfile () { ! emptydir $1; return }
 
+# <file> <root_to_check_from>
+uniquefile() { equal 1 $(filecount $1 $2); return }
+
 empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
 
 array () { declare -a $1 }
