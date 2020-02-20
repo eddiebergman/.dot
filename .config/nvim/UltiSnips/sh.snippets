@@ -1,6 +1,7 @@
 snippet func "func() {  }" w
+# ${2:documentation}
 ${1:func_name}() {
-    $2
+    echo "hello from $1"
     return
 }
 endsnippet
@@ -10,6 +11,12 @@ for $1 in $2
 do
     $0
 done
+endsnippet
+
+snippet foreach "foreach" w
+foreach ${1:var} (${2:items,})
+    ${3:command}
+end
 endsnippet
 
 snippet prompt "read -p 'prompt'" w
@@ -29,6 +36,38 @@ case ${1:expression} in
 esac
 endsnippet
 
-snippet cantfind "Cant find x, $1" w
-echo "Cant't find ${1:file}, \$${2:filevar}"
+snippet mk "$()" i
+"\$(${1:command})"$0
+endsnippet
+
+snippet args "$@" w
+"$@"
+endsnippet
+
+snippet and "&&" w
+&&
+endsnippet
+
+snippet or "||" w
+||
+endsnippet
+
+snippet not "!" w
+!
+endsnippet
+
+snippet unpack "(${arr[@]})" w
+("\${${1:arr}[@]}")
+endsnippet
+
+snippet noargs "iszero $# 0" w
+iszero $# 0
+endsnippet
+
+snippet === "===============" w
+===============
+endsnippet
+
+snippet --- "---------------" w
+---------------
 endsnippet
