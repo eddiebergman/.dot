@@ -151,8 +151,11 @@ writable () { [[ -w "$1" ]]; return }
 array () { declare -a $1 }
 
 # }}}
-# {{{ My plugins
+# {{{ Local Plugins
 source "$drzsh/template.zsh"
+# }}}
+# {{{ Colours
+source "$drzsh/colours.zsh"
 # }}}
 # {{{ On Startup
 eval "$(pyenv init -)"

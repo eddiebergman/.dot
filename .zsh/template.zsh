@@ -39,7 +39,9 @@ template_read() {
 
 template_list() {
     arg $1 "paths" && map echo "${template_dirs[@]}" && return
-    zero $# || arg $1 "all" && tree "$template_root"  && return
+    zero $# || arg $1 "all" && tree "$template_root" \
+        && echo "Handlers:\n---\n$(template_note_help)" \
+        && return
     return
 }
 
@@ -61,43 +63,49 @@ template_note() {
 }
 
 template_help() {
-    echo "
-    $ template <name> <path>
+    printf "
+    =============
+    ~ ${BBlue}template${NC}
+    =============
 
-        Copies a template called <name> located beneath \$template_root to <path>.
+    ~ ${BGreen}Usage${NC}
 
-    $ template list [all]
+        ${Green}$ template <name> <path>
+        .........................${NC}
+        Copies template <name> to <path>
 
-        List all templates under \$template_root
+        ${Green}$ template list [all]
+        ......................${NC}
+        List all templates
 
-    $ template list paths
+        ${Green}$ template list paths
+        ......................${NC}
+        List all paths search under \$template_root
 
-        List all paths under \$template_root
+        ${Green}$ template read <name>
+        .......................${NC}
+        Print out template
 
-    $ template read <name>
-
-        Cats out the template for reading into another file or looking at
-
-    $ template edit
-
+        ${Green}$ template edit
+        ................${NC}
         Opens \$EDITOR in \$template_root
 
-    ---------------
-    Available template handlers:
+        ${Green}$ template note <path>
+        ................${NC}
+        Creates folders, links tex preamble and copies tex template
 
-    $ template note --help
-    "
+    ~ ${BYellow}Settings${NC}
+
+        ${Yellow}template_root${NC}
+        =$template_root
+
+        ${Yellow}EDITOR${NC}
+        =$EDITOR\n"
     return
 }
 
 template_note_help() {
     echo "
-        template note <path>
-        -----
-        Sets up a directory with the following:
-            - A template tex note at path
-            - Symlink my preamble to the directory
-            - Create 'build' and 'figures' folders (integrates with other tools)
     "
     return
 }
