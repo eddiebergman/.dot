@@ -17,13 +17,17 @@ template() {
     outpath=$2
     if two $#; then
         if ! writable "$(dirname $outpath)"; then
-            echo "Can't write to $(dirname $outpath), does direcotry exist?" && return; fi
+            printf "Can't write to $(dirname $outpath), does direcotry exist?\n"; return; fi
 
         filepath="$(find $template_root -name $name)"
+
         case "$(filecount $name $template_root)" in
-            "1") cp $filepath $outpath && echo "copied"; return;;
-            "0") echo "$name was not found in templates"; return;;
-            *) echo "$name was matched to too many files\n$filepath"; return;;
+            "1") cp $filepath $outpath; echo "copied";
+                return;;
+            "0") echo "$name was not found in templates"; 
+                return;;
+            *) echo "$name was matched to too many files\n$filepath"; 
+                return;;
         esac
     fi
 }
@@ -31,32 +35,45 @@ template() {
 template_read() {
     filepath="$(find "$template_root" -name $1)"
     case "$(filecount $1 $template_root)" in
-        "1") cat $filepath; return;;
-        "0") echo "$name was not found in templates"; return;;
-        *) echo "$name was matched to too many files\n$filepath"; return;;
+        "1") cat $filepath; 
+            return;;
+        "0") echo "$name was not found within $template_root";
+            return;;
+        *) echo "$name was matched to too many files\n$filepath";
+            return;;
     esac
 }
 
 template_list() {
-    arg $1 "paths" && map echo "${template_dirs[@]}" && return
-    zero $# || arg $1 "all" && tree "$template_root" \
-        && echo "Handlers:\n---\n$(template_note_help)" \
-        && return
+    tree "$template_root"
+    printf "
+    ~ ${Purple}Handlers${NC}
+
+    $(template_note_help)"
     return
 }
 
-template_note_dir="$drtemplate/tex/note"
+template_add() {
+}
 
+template_note_preamble="$drtemplate/note_preamble.tex"
+template_note_template="$dtemplate/note_template.tex"
 template_note() {
-    ! one $# || arg $1 "--help" "-h" && template_note_help && return
+    if ! exists $template_note_preamble; then
+        printf "Can't find preamble at $template_note_preamble";  return; fi
+    if ! exists $template_note_template; then
+        printf "Can't find template at $template_note_template";  return; fi
+
+    if ! one $# || arg $1 "--help" "-h"; then
+        template_note_help; return; fi
 
     local out=$1
     local dir=$(dirname $out)
     if ! writable "$dir"; then
-        echo "Can't write to $dir, does directory exist?" && return; fi
+        echo "Can't write to $dir, does directory exist?";  return; fi
 
-    cp "$template_note_dir/note_template.tex" "$out.tex"
-    ln -sfn "$template_note_dir/note_preamble.tex" "$dir/note_preamble.tex"
+    cp "$template_note_template" "$out.tex"
+    ln -sfn "$template_note_preamble" "$dir/note_preamble.tex"
     exists "$dir/build" || mkdir "$dir/build"
     exists "$dir/figures" || mkdir "$dir/figures"
     return
@@ -74,13 +91,9 @@ template_help() {
         .........................${NC}
         Copies template <name> to <path>
 
-        ${Green}$ template list [all]
+        ${Green}$ template list
         ......................${NC}
         List all templates
-
-        ${Green}$ template list paths
-        ......................${NC}
-        List all paths search under \$template_root
 
         ${Green}$ template read <name>
         .......................${NC}
@@ -90,9 +103,7 @@ template_help() {
         ................${NC}
         Opens \$EDITOR in \$template_root
 
-        ${Green}$ template note <path>
-        ................${NC}
-        Creates folders, links tex preamble and copies tex template
+        $(template_note_help)
 
     ~ ${BYellow}Settings${NC}
 
@@ -105,7 +116,9 @@ template_help() {
 }
 
 template_note_help() {
-    echo "
-    "
+    printf "${Green}$ template note <path>
+        ................${NC}
+        Creates folders, links tex preamble and copies tex template"
     return
 }
+
