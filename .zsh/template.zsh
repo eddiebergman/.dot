@@ -45,6 +45,11 @@ template_read() {
 }
 
 template_list() {
+    if arg $1 "folders"; then
+        foreach dir ("${template_dirs[@]}") printf "${Cyan}$(basename $dir)${NC}\n"; end
+        return
+    fi
+
     tree "$template_root"
     printf "
     ~ ${Purple}Handlers${NC}
@@ -53,11 +58,8 @@ template_list() {
     return
 }
 
-template_add() {
-}
-
-template_note_preamble="$drtemplate/note_preamble.tex"
-template_note_template="$dtemplate/note_template.tex"
+template_note_preamble="$drtemplate/note/note_preamble.tex"
+template_note_template="$drtemplate/note/note_template.tex"
 template_note() {
     if ! exists $template_note_preamble; then
         printf "Can't find preamble at $template_note_preamble";  return; fi
@@ -81,44 +83,64 @@ template_note() {
 
 template_help() {
     printf "
-    =============
-    ~ ${BBlue}template${NC}
-    =============
+=============
+~ ${BBlue}template${NC}
+=============
 
-    ~ ${BGreen}Usage${NC}
+~ ${BGreen}Usage${NC}
 
-        ${Green}$ template <name> <path>
-        .........................${NC}
-        Copies template <name> to <path>
+    ${Green}$ template ${Yellow}<name>${NC} ${Yellow}<path>${NC}${NC}
+    ${Green}--------------------------------------------------${NC}
+    Copies template ${Yellow}<name>${NC} to ${Yellow}<path>${NC}.
 
-        ${Green}$ template list
-        ......................${NC}
-        List all templates
+    ${Green}$ template list [ ${Yellow}<folder>${NC}${Green} | folders ]${NC}
+    ${Green}--------------------------------------------------${NC}
+    List all templates, optionally specifying which ${Yellow}<folder>${NC}
+    Add ${Green}folders${NC} to list all folders under ${UYellow}\$template${NC}.
 
-        ${Green}$ template read <name>
-        .......................${NC}
-        Print out template
+    ${Green}$ template read ${Yellow}<name>${NC}${NC}
+    ${Green}--------------------------------------------------${NC}
+    Read out template with ${Yellow}<name>${NC}.
 
-        ${Green}$ template edit
-        ................${NC}
-        Opens \$EDITOR in \$template_root
+    ${Green}$ template edit [${Yellow}<name>${NC}${Green}]
+    ${Green}--------------------------------------------------${NC}
+    Opens ${UYellow}\$EDITOR${NC} in ${UYellow}\$template_root${NC}.
 
-        $(template_note_help)
+    ${Green}$ template add [${Yellow}<folder>${NC}${Green}] ${Yellow}<file>${NC}
+    ${Green}--------------------------------------------------${NC}
+    Creates a copy of ${Yellow}<file>${NC} and stores it under ${UYellow}\$template_root${NC}.
+    Optionally, pass a ${Yellow}<folder>${NC} to store it in, creating one if it does not exists.
 
-    ~ ${BYellow}Settings${NC}
+    $(template_note_help)
 
-        ${Yellow}template_root${NC}
-        =$template_root
+~ ${BYellow}Settings${NC}
 
-        ${Yellow}EDITOR${NC}
-        =$EDITOR\n"
+    ${Cyan}main-settings${NC}
+    ${UYellow}template_root${NC}
+    =$template_root
+
+    ${UYellow}EDITOR${NC}
+    =$EDITOR
+
+    $(template_note_settings)"
     return
 }
 
 template_note_help() {
-    printf "${Green}$ template note <path>
-        ................${NC}
-        Creates folders, links tex preamble and copies tex template"
+    printf "${Green}$ template note ${Yellow}<path>${NC}
+    ${Green}--------------------------------------------------${NC}
+    Creates folders, links tex preamble and copies tex template to ${Yellow}<path>${NC}."
     return
+}
+
+template_note_settings() {
+    printf "${Cyan}note-settings${NC}
+    ${UYellow}template_note_preamble${NC}
+    =$template_note_preamble
+
+    ${UYellow}template_note_template${NC}
+    =$template_note_template"
+    return
+
 }
 
