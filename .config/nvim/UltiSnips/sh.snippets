@@ -92,11 +92,13 @@ snippet setting "$varname" w
 ${UYellow}\\$${1:varname}${NC}
 endsnippet
 
-snippet command "$" w
-${Green}`!p snip.rv += ('-' * 40)`${NC}
-${Green}$ ${1:command}${NC}
-${Green}`!p snip.rv += ('-' * 50)`${NC}
-$0
+snippet cdoc "$" w
+${1:command_name}_cdoc() {
+    printf "${Green}$ ${2:command}${NC}
+    ${Green}`!p snip.rv += ('-' * 50)`${NC}
+    $0"
+    return
+}
 endsnippet
 
 snippet list "|~~~"
@@ -107,7 +109,7 @@ endsnippet
 #}}}
 
 #{{{ Colours
-snippet nc "${NC}" i
+snippet noc "${NC}" i
 ${NC}
 endsnippet
 
