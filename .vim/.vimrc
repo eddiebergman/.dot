@@ -144,23 +144,11 @@ nnoremap <leader>_ dd2kp
 " normal: Line down
 nnoremap <leader>- ddp
 
-" normal: Uppercase current word
-" nnoremap <c-u> viwU<esc>
-
 " normal: Surround with " " double quotes
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 
 " normal: Surround with ' ' single quotes
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-
-" normal: Uppercase first letter
-nnoremap <leader>uf bvU<esc>
-
-" normal: Lowercase first letter
-nnoremap <leader>lf bvu<esc>
-
-" insert: Uppercase current word
-inoremap <c-u> <esc>viwU<esc>ei
 
 " }}}
 " {{{ Searching
@@ -174,28 +162,6 @@ nnoremap <silent> <leader>cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader
 nnoremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
 " normal: Delete comment on line
 " nnoremap <silent> <localleader>cd mc0f=escape(b:comment_leader, '\/')d$`c
-" }}}
-" {{{ Line Endings
-nnoremap <silent> <leader>ll mvA<C-r>=b:line_ending<cr><esc>`w
-" }}}
-" {{{ Buffers
-" normal: Opens the previous buffer in a vertical split
-nnoremap <leader>bp :execute "rightbelow vsplit " . bufname("#")<cr>
-
-" }}}
-" {{{ Surrounds
-" visual: Surround selected in " " quotes
-vnoremap <leader>" `<i"v'>a"<esc>v
-
-" visual: Surround selected in ' ' quotes
-vnoremap <leader>' `<i'v'>a'<esc>v
-
-" normal: Surround with " " double quotes
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-
-" normal: Surround with ' ' single quotes
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-
 " }}}
 " {{{ Quick File
 
@@ -252,9 +218,6 @@ nnoremap <leader>gd :Gdiff<cr>
 " normal: Toggle NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
-" }}}
-" {{{ Syntastic
-nnoremap <F5> :SyntasticCheck<cr>
 " }}}
 " {{{ Yank And Put
 nnoremap y "yy
