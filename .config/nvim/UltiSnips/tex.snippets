@@ -67,6 +67,12 @@ snippet --- "\lline" w
 \hfill \lline
 endsnippet
 
+snippet list "begin{description}"
+\begin{description}
+    $0
+\end{description}
+endsnippet
+
 snippet desc "begin{description}"
 \begin{description}
     $0
@@ -166,7 +172,7 @@ $1_1, $1_2, \ldots, $1_n$0
 endsnippet
 
 snippet sum "\sum__{}^{}" i
-\sum_{$1}^{$2}$0
+\sum$0
 endsnippet
 
 snippet vec "\bm" w
