@@ -30,6 +30,9 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 bindsym $mod+f fullscreen toggle
 
+bindsym $mod+p move workspace to output primary
+bindsym $mod+o move workspace to output HDMI-2
+
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -76,16 +79,18 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 # }}}
 # {{{ Workspaces
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9:🌐"
-set $ws10 "10:🔧"
+# Chars:🔩 🎶 🎵 🌎 ✉ 🔧 📚 📖
+set $ws1 "1: 🔧"
+set $ws7 "2: 🔧"
+set $ws2 "2: 🔧"
+set $ws3 "3: 📝"
+set $ws4 "4: 📖"
+set $ws5 "5: 📖"
+set $ws6 "6: 🎵"
+set $ws7 "7: ✉"
+set $ws8 "8: 🌎"
+set $ws9 "9: 🌎"
+set $ws10 "10: 🔩"
 
 # }}}
 # {{{ Resize mode
@@ -130,8 +135,10 @@ client.background           #2f343f
 # finds out, if available)
 bar {
     position top
+    workspace_min_width 60
+    # strip_workspace_numbers yes
     separator_symbol "|"
-    strip_workspace_numbers yes
+    workspace_buttons yes
     colors {
         background #2f343f
         statusline #2f343f
@@ -146,4 +153,9 @@ bar {
     status_command i3status
 }
 
+# }}}
+# {{{ Notes
+# {{{ Cant show all workspaces
+# https://faq.i3wm.org/question/1228/lock-workspace-to-permanent/index.html
+# }}}
 # }}}
