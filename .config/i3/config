@@ -131,7 +131,7 @@ mode "resize" {
 # }}}
 # {{{ Colours
 # colour of border, background, text, indicator, and child_border
-client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+client.focused              #2f343f #2f343f #d8dee8 #bf616a #d8dee8
 client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
 client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
@@ -153,7 +153,7 @@ bar {
         separator #4b5262
 
         # colour of border, background, and text
-        focused_workspace       #2f343f #bf616a #d8dee8
+        focused_workspace       #2f343f #008B8B #d8dee8
         active_workspace        #2f343f #2f343f #d8dee8
         inactive_workspace      #2f343f #2f343f #d8dee8
         urgent_workspacei       #2f343f #ebcb8b #2f343f
