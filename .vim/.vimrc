@@ -238,7 +238,7 @@ inoremap <down> <nop>
 " {{{ Git
 
 " normal: Open Git Status
-nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gs :vertical Gstatus<cr>
 
 " normal: Create Git Commit
 nnoremap <leader>gc :Gcommit<cr>i
@@ -324,13 +324,12 @@ set conceallevel=1
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
-set splitbelow splitright
+set splitright splitbelow
+set diffopt+=vertical
 
 " Disables mouse
 set mouse=
 " set ttymouse=
-
-filetype plugin on
 
 if (has("nvim"))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
