@@ -1,8 +1,7 @@
 # https://i3wm.org/docs/userguide.html
 set $browser firefox
 set $terminal kitty
-set $reader evince
-
+set $reader zathura
 
 exec workspace 1; $terminal
 exec workspace 2; $browser;
