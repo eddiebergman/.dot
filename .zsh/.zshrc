@@ -16,6 +16,7 @@ export ZSHDIR="$drzsh" # Required by <something>
 # {{{ Defaults - $VISUAL, $EDITOR, ...
 export VISUAL="nvim"
 export EDITOR="nvim"
+export VIEWER="zathura"
 # export PAGER="most"
 # }}}
 # {{{ External
@@ -26,10 +27,12 @@ source "$drdot/.secret/zotero_envs.zsh"
 # {{{ Default Commands
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
+alias view="$VIEWER"
 # }}}
 # {{{ Quick files
 alias evimrc='cd $drdot && nvim .vim/.vimrc'
 alias ezshrc='cd $drdot && nvim .zsh/.zshrc'
+alias edot='cd $drdot && nvim'
 # }}}
 # {{{ Screen
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
