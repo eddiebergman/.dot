@@ -28,6 +28,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# fn + prtsc
+bindcode 107 exec "xfce4-screenshooter --clipboard --region --save $HOME/Desktop/screenshots"
+
 # Auto starts
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
