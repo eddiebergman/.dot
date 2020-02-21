@@ -1,14 +1,22 @@
 # {{{ Settings
 set $mod Mod4
 set $refresh_i3status killall -SIGUSR1 i3status
+set $newshell kitty
+set $browser firefox
 
 # font
 font pango:Fira Code Retina 8
 # }}}
 # {{{ Startup
-exec --no-startup-id "workspace 0; kitty edot; workspace 1"
-exec --no-startup-id "workspace 9; firefox; workspace 1"
-exec --no-startup-id "workspace 1; kitty"
+exec --no-startup-id "workspace 0; $newshell edot; workspace 1"
+exec --no-startup-id "workspace 9; $browser; workspace 1"
+exec --no-startup-id "workspace 8; $terminal; workspace 1"
+exec --no-startup-id "workspace 7; $browser mail.google.com/mail/u/0/#inbox; workspace 1"
+exec --no-startup-id "workspace 6; spotify"
+exec --no-startup-id "workspace 5; "
+exec --no-startup-id "workspace 3; $newshell;"
+exec --no-startup-id "workspace 2; $newshell;"
+exec --no-startup-id "workspace 1; $newshell;"
 
 # Autostart locking manager
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
