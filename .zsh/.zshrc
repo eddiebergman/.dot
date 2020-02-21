@@ -131,7 +131,9 @@ zero () { equal $1 0; return }
 one () { equal $1 1; return }
 two () { equal $1 2; return }
 
-filecount() { printf "$(find $2 -name $1 | wc -l)"; return }
+countlines() { printf "$1" | wc -l; return }
+countchars() { printf "$1" | wc -l; return }
+countwords() { printf "$1" | wc -l; return }
 
 map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; return }
 
@@ -151,8 +153,9 @@ isset () { ! emptyvar $1; return }
 emptydir () { [[ ! "$(ls -A $1)" ]]; return }
 hasfile () { ! emptydir $1; return }
 
-# <file> <root_to_check_from>
-uniquefile() { equal 1 $(filecount $1 $2); return }
+emptystring() { [[ k ]] }
+
+uniquefile() { ! emptyvar $1 && equal 0 $(printf $1 | wc -l); return }
 
 empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
 
