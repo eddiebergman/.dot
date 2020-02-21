@@ -154,6 +154,7 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " {{{ Searching
 " normal: Automatically change to regular expression search
 nnoremap / /\v
+nnoremap <leader>sr :%s/
 " }}}
 " {{{ Commenting
 " normal: Comment Single line
