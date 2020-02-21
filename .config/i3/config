@@ -1,8 +1,20 @@
-# sets
+# {{{ Settings
 set $mod Mod4
 set $refresh_i3status killall -SIGUSR1 i3status
 
-# keymaps
+# font
+font pango:Fira Code Retina 8
+# }}}
+# {{{ Startup
+exec --no-startup-id "workspace 0; kitty edot; workspace 1"
+exec --no-startup-id "workspace 9; firefox; workspace 1"
+exec --no-startup-id "workspace 1; kitty"
+
+# Autostart locking manager
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# }}}
+# {{{ Keymaps
 bindsym $mod+Return exec "kitty"
 bindsym $mod+d exec "rofi -show"
 bindsym $mod+Shift+q kill
@@ -16,7 +28,6 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
 bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
@@ -31,13 +42,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # fn + prtsc
 bindcode 107 exec "xfce4-screenshooter --clipboard --region --save $HOME/Desktop/screenshots"
 
-# Auto starts
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# font
-font pango:Fira Code Retina 8
-
-## Function keys
 # audio
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
@@ -81,6 +85,8 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+# }}}
+# {{{ Resize mode
 
 # resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -108,7 +114,17 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-
+# }}}
+# {{{ Colours
+# colour of border, background, text, indicator, and child_border
+client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background           #2f343f
+# }}}
+# {{{ i3-bar
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -124,13 +140,7 @@ bar {
         inactive_workspace      #2f343f #2f343f #d8dee8
         urgent_workspacei       #2f343f #ebcb8b #2f343f
     }
-        status_command i3status
+    status_command i3status
 }
 
-# colour of border, background, text, indicator, and child_border
-client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
-client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.background           #2f343f
+# }}}
