@@ -40,14 +40,10 @@ alias screenleft='xrandr --auto && xrandr --output HDMI-2 --left-of eDP-1'
 alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
 # }}}
 # {{{ Work setups
-alias dhaskell='cd ~/Desktop/haskell && stack ghci'
-alias dpython='cd ~/Desktop/python && pipenv shell'
 alias notebook='cd ~/Desktop/phd/notebook && nvim'
 alias nbconvert='jupyter nbconvert'
 alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
-alias django='python manage.py'
 # TODO: Fix directory changing back to home
-alias pymode='pymodetemp1="$(pwd)" && pipenv shell && cd $pymodetemp1'
 # }}}
 # {{{ Pdf Merge
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
@@ -171,8 +167,14 @@ source "$drzsh/template.zsh"
 # {{{ Colours
 source "$drzsh/colours.zsh"
 # }}}
-# {{{ On Startup
+# {{{ Python
+
+# Enable pyenv
 eval "$(pyenv init -)"
-# pipenv shell
-# clear
+
+#https://stackoverflow.com/questions/52540121/make-pipenv-create-the-virtualenv-in-the-same-folder
+export PIPENV_VENV_IN_PROJECT="enabled"
+
+alias django='python manage.py'
+alias pymode='pymodetemp1="$(pwd)"; pipenv shell; cd $pymodetemp1'
 # }}}
