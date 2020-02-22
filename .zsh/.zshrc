@@ -27,7 +27,6 @@ source "$drdot/.secret/zotero_envs.zsh"
 # {{{ Default Commands
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
-alias view="$VIEWER"
 # }}}
 # {{{ Quick files
 alias evimrc='cd $drdot && nvim .vim/.vimrc'

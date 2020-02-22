@@ -127,6 +127,7 @@ template_note() {
     ln -sfn "$template_note_preamble" "$dir/note_preamble.tex"
     exists "$dir/build" || mkdir "$dir/build"
     exists "$dir/figures" || mkdir "$dir/figures"
+    printf "Created note $1"
     return
 }
 
