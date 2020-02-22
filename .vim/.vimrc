@@ -129,15 +129,15 @@ nnoremap <leader>sr :%s/
 nnoremap <leader>sg :call SynGroup()<cr>
 " }}}
 " {{{ Quick File
-nnoremap <leader>esn :vsp $drconfig/nvim/UltiSnips<cr>
-nnoremap <leader>eft :e $drvim/ftplugin<cr>
+nnoremap <leader>esn :vert bo $drconfig/nvim/UltiSnips<cr>
+nnoremap <leader>eft :vert bo $drvim/ftplugin<cr>
 
-nnoremap <leader>ev :vsplit $drvim/.vimrc<cr>
+nnoremap <leader>ev :vert bo $drvim/.vimrc<cr>
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
-nnoremap <leader>eip :vsplit $HOME/.ipython/profile_default/startup<cr>
+nnoremap <leader>eip :vert bo $HOME/.ipython/profile_default/startup<cr>
 
-nnoremap <leader>ez :vsp $drzsh/.zshrc<cr>
+nnoremap <leader>ez :vert bo $drzsh/.zshrc<cr>
 " }}}
 " {{{ Fold
 
@@ -155,6 +155,8 @@ nnoremap <leader>fms :setlocal foldmethod=syntax<cr>
 inoremap jk <esc>
 tnoremap jk <c-\><c-n>
 
+cnoremap H vert bo help
+
 " Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
 
@@ -168,8 +170,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
 " {{{ Git
-nnoremap <leader>gs :vertical Gstatus<cr>
-nnoremap <leader>gc :Gcommit<cr>i
+nnoremap <leader>gs :vertical bo Gstatus<cr>
+nnoremap <leader>gc :split Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
 " }}}
 " {{{ NERDTree
