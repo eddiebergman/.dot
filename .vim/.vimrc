@@ -175,7 +175,7 @@ inoremap <down> <nop>
 " }}}
 " {{{ Git
 nnoremap <leader>gs :vertical bo Gstatus<cr>
-nnoremap <leader>gc :split Gcommit<cr>i
+nnoremap <leader>gc :Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
 " }}}
 " {{{ NERDTree
