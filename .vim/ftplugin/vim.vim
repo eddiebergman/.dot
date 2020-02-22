@@ -26,11 +26,3 @@ function! FoldText()
   let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
   return v:folddashes . sub
 endfunction
-
-" {{{ Title, keymap,
-" Description
-" }}}
-
-
-
-

@@ -157,6 +157,7 @@ nnoremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leade
 " {{{ Quick File
 
 nnoremap <leader>esn :vsp $drconfig/nvim/UltiSnips<cr>
+nnoremap <leader>eft :e $drvim/ftplugin<cr>
 
 nnoremap <leader>ev :vsplit $drvim/.vimrc<cr>
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
@@ -235,30 +236,41 @@ augroup END
 " }}}
 " }}}
 " {{{ Commands
-" A selection of commands
-" {{{ :Silent <shellcmd> " Runs a command silently
 
-command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
+" Silent <shellcmd> ~ Run <shellcmd> silently
+command!-nargs=1 Silent
+            \ exe ':silent !' . <q-args> 
+            \| execute ':redraw!'
 
-" }}}
-" {{{ :R <shellcmd> " Reads the output of a command to a temp buffer
+" R <shellcmd> ~ Read ouput of <shellcmd> to a temp buffer
 " https://vim.fandom.com/wiki/Append_output_of_an_external_command
+:command! -nargs=* -complete=shellcmd R
+            \ new
+            \| setlocal buftype=nofile bufhidden=hide noswapfile
+            \| r !<args>
 
-:command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+" Hist ~ Shows contents of histfile in a temp buffer
+:command! -complete=shellcmd Hist
+            \ new
+            \| setlocal buftype=nofile bufhidden=hide noswapfile
+            \| r !cat ~/.histfile
+
+:command! -nargs=0 EditPreamble
+            \ if filereadable(b:vimtex_root)
+
+" Preview (Not working)
+" :command! -complete=file MDpreview
+"            \ exe ':silent ! grip -b -silent ' . expand('%')
 
 " }}}
-" {{{ :Hist <shellcmd> " Puts the command history into a temp buffer
-"       - use / to start searching easily, no more grep piping
-:command! -complete=shellcmd Hist new | setlocal buftype=nofile bufhidden=hide noswapfile | r !cat ~/.histfile
-" }}}
-" {{{ :MDpreview " Uses `grip` to preview the readme file
-"       - requiremenets: grip  (pip install grip)
-:command! -complete=file MDpreview execute ':silent ! grip -b -silent ' . expand('%')
-" }}}
+" {{{ Functions
+
+" Return the syntax group that the current word is using
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-endfun
+endfunction
+
 " }}}
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
