@@ -17,13 +17,13 @@ class ${1:MyClass}:
         $0
 endsnippet
 
-snippet bf "bigdoc" w
+snippet bdoc "bigdoc" w
 """
 ${1:Documentation}
 """
 endsnippet
 
-snippet it "smalldoc" w
+snippet sdoc "smalldoc" w
 """ ${1:Documentation} """
 endsnippet
 
@@ -50,6 +50,15 @@ snippet kv "key: value" w
 '${1:key}' : ${2:val},
 endsnippet
 
+snippet command "@click.command" w
+@click.command()
+def ${1:fname}():
+    click.echo("Hello from $1")
+endsnippet
+
+snippet option "@click.option" w
+@click.option('${1:--help}', default=False, help="${2:Help string}")
+endsnippet
 #}}}
 #{{{ Django
 snippet docendpoint "# /path/to/endpoint" w

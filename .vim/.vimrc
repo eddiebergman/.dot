@@ -4,17 +4,6 @@
 let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
 " }}}
-" {{{ Filesystem
-" Move <to> - moves current file and opens in current buffer
-:command! -nargs=1 -complete=shellcmd
-    \ Move
-    \ execute ":silent ! mv " . expand('%') . "  " . <q-args> |
-    \ edit <args>
-" }}}
-" {{{ Refactoring
-" Substitution on visually selected word
-vnoremap <leader>r "hy:%s/<C-r>h//c<left><left>
-" }}}
 " {{{ Plugins
 set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
 filetype off " required for Vundle
@@ -155,6 +144,7 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " normal: Automatically change to regular expression search
 nnoremap / /\v
 nnoremap <leader>sr :%s/
+nnoremap <leader>sg :call SynGroup()<cr>
 " }}}
 " {{{ Commenting
 " normal: Comment Single line
@@ -265,6 +255,10 @@ command!-nargs=1 Silent execute ':silent !' . <q-args> | execute ':redraw!'
 "       - requiremenets: grip  (pip install grip)
 :command! -complete=file MDpreview execute ':silent ! grip -b -silent ' . expand('%')
 " }}}
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
 " }}}
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
@@ -306,6 +300,8 @@ endif
 syntax on
 set background=dark
 colorscheme solarized8
+
+set runtimepath+=$drvim/after
 
 " {{{ Wildignore " Control how file autocompletion works in command mode
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
