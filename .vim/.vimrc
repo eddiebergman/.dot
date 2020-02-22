@@ -22,6 +22,7 @@ call vundle#begin()
     Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
     let g:vimtex_quickfix_mode=0
+    let g:vimtex_view_method='zathura'
     let g:Tex_FoldedEnvironments='definition'
     let g:tex_conceal='abdmg'
     let g:Imap_UsePlaceHolders=0
@@ -155,7 +156,6 @@ nnoremap <silent> <leader>cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leade
 " nnoremap <silent> <localleader>cd mc0f=escape(b:comment_leader, '\/')d$`c
 " }}}
 " {{{ Quick File
-
 nnoremap <leader>esn :vsp $drconfig/nvim/UltiSnips<cr>
 nnoremap <leader>eft :e $drvim/ftplugin<cr>
 
@@ -165,7 +165,6 @@ nnoremap <leader>sv :source $HOME/.vimrc<cr>
 nnoremap <leader>eip :vsplit $HOME/.ipython/profile_default/startup<cr>
 
 nnoremap <leader>ez :vsp $drzsh/.zshrc<cr>
-
 " }}}
 " {{{ Fold
 
@@ -220,21 +219,6 @@ inoremap <C-p> <esc>"ypa
 nnoremap <leader>mdp :MDpreview<cr>
 " }}}
 " }}}
-" {{{ Filetypes
-" {{{ tex
-augroup filetype_tex
-    autocmd!
-    autocmd FileType tex
-        \ nnoremap <leader>vv :VimtexView<cr>
-    autocmd FileType tex
-        \ nnoremap <leader>vc :VimtexCompile<cr>
-    autocmd FileType tex
-        \ nnoremap <leader>vv :VimtexView<cr>
-    autocmd FileType tex
-        \ nnoremap <leader>ve :VimtexErrors<cr>
-augroup END
-" }}}
-" }}}
 " {{{ Commands
 
 " Silent <shellcmd> ~ Run <shellcmd> silently
@@ -254,9 +238,6 @@ command!-nargs=1 Silent
             \ new
             \| setlocal buftype=nofile bufhidden=hide noswapfile
             \| r !cat ~/.histfile
-
-:command! -nargs=0 EditPreamble
-            \ if filereadable(b:vimtex_root)
 
 " Preview (Not working)
 " :command! -complete=file MDpreview
