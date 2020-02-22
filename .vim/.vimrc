@@ -122,6 +122,12 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " }}}
+" {{{ Buffers
+nnoremap <leader>bb :buffers<cr>
+" Maps <leader>x to :bx where x is a buffer number (limit 0-9)
+for i in range(0, 9)
+    exe "nnoremap <leader>b" . i . ' :b' . i . '<cr>' | endfor
+" }}}
 " {{{ Searching
 " normal: Automatically change to regular expression search
 nnoremap / /\v
@@ -129,15 +135,13 @@ nnoremap <leader>sr :%s/
 nnoremap <leader>sg :call SynGroup()<cr>
 " }}}
 " {{{ Quick File
-nnoremap <leader>esn :vert bo $drconfig/nvim/UltiSnips<cr>
-nnoremap <leader>eft :vert bo $drvim/ftplugin<cr>
+nnoremap <leader>esn  :vert bo split $drconfig/nvim/UltiSnips<cr>
+nnoremap <leader>eft  :vert bo split $drvim/ftplugin<cr>
+nnoremap <leader>ez   :vert bo split $drzsh/.zshrc<cr>
+nnoremap <leader>ev   :vert bo split $drvim/.vimrc<cr>
+nnoremap <leader>eip  :vert bo split $HOME/.ipython/profile_default/startup<cr>
 
-nnoremap <leader>ev :vert bo $drvim/.vimrc<cr>
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
-
-nnoremap <leader>eip :vert bo $HOME/.ipython/profile_default/startup<cr>
-
-nnoremap <leader>ez :vert bo $drzsh/.zshrc<cr>
 " }}}
 " {{{ Fold
 
@@ -272,8 +276,8 @@ set diffopt+=vertical
 let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
 " }}}
-" {{{ View
 " {{{ Status
+set laststatus=2
 set statusline=%f " path to file
 set statusline+=\|\|
 set statusline+=FileType
@@ -283,7 +287,13 @@ set statusline+=%=
 set statusline+=%l " Current Line
 set statusline+=/
 set statusline+=%L " Total Lines
+
+set statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " }}}
+" {{{ Title
+set title
+set titlestring="hello world"
+
 " }}}
 " {{{ Colour
 syntax on
@@ -309,4 +319,3 @@ set wildignore+=*~,*.swp,*.tmp
 
 " }}}
 " }}}
-
