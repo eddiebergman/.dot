@@ -1,5 +1,4 @@
-" Made to be used as a menu, :setlocal foldmethod=marker, zM
-" BUG: If not appearing as menu, re-source file to load folding
+" Made to be used as a menu, :setlocal foldmethod=marker
 " {{{ Plugins
 set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
 filetype off " required for Vundle
