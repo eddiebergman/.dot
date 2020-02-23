@@ -288,14 +288,6 @@ function! StatusLineFormat()
     let l:s .= s:seperator . "%#Underlined#Branch%#Type#[%{FugitiveHead()}]"
 
     return l:s
-"  set statusline=%f " path to file
-"  set statusline+=\|\|
-"  set statusline+=FileType
-"  set statusline+=%y " Filetype"
-"  set statusline+=%=
-"  set statusline+=%l " Current Line
-"  set statusline+=/
-"  set statusline+=%L " Total Lines
 endfunction
 " }}}
 " {{{ Titlebar
