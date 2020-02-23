@@ -17,16 +17,6 @@ class ${1:MyClass}:
         $0
 endsnippet
 
-snippet bdoc "bigdoc" w
-"""
-${1:Documentation}
-"""
-endsnippet
-
-snippet sdoc "smalldoc" w
-""" ${1:Documentation} """
-endsnippet
-
 snippet ifelse "ifelse" w
 if ($1):
     $2
@@ -50,23 +40,8 @@ snippet kv "key: value" w
 '${1:key}' : ${2:val},
 endsnippet
 
-snippet command "@click.command" w
-@click.command()
-def ${1:fname}():
-    click.echo("Hello from $1")
-endsnippet
-
-snippet option "@click.option" w
-@click.option('${1:--help}', default=False, help="${2:Help string}")
-endsnippet
-#}}}
+# }}}
 #{{{ Django
-snippet docendpoint "# /path/to/endpoint" w
-"""
-    ${1:path: path/to/endpoint}
-    ${2:General description}
-"""
-endsnippet
 snippet path "path()" w
 path('$1', include('$1.urls')),
 endsnippet
@@ -113,3 +88,43 @@ def complex(request):
     return render(request, 'complex/index.html', context)
 endsnippet
 #}}}
+#{{{ Doc
+snippet bdoc "bigdoc" w
+"""
+${1:Documentation}
+"""
+endsnippet
+
+snippet sdoc "smalldoc" w
+""" ${1:Documentation} """
+endsnippet
+
+snippet docendpoint "# /path/to/endpoint" w
+"""
+    ${1:path: path/to/endpoint}
+    ${2:General description}
+"""
+endsnippet
+#}}}
+#{{{ click
+
+snippet echo "click.echo()" w
+echo('$1')$0
+endsnippet
+
+snippet click "@click" w
+@click.${1:clicktype}$0
+endsnippet
+
+snippet copt "'--opt/--no-opt', default=False" i
+@click.option($1)$0
+endsnippet
+
+snippet cctx "pass_context"
+@click.pass_context
+endsnippet
+
+snippet carg "'arg', type=str" w
+@click.argument('${1:arg}', type=${2:str})
+endsnippet
+# }}}

@@ -90,7 +90,8 @@ snippet item "\item" w
 endsnippet
 
 snippet itemm "\item []" w
-\item [$1] \hfill $0
+\item [$1] \hfill \\\\
+    $0
 endsnippet
 
 snippet beg "begin / end" w
@@ -169,6 +170,10 @@ endsnippet
 
 snippet sequencen "x_1, x_2, .., x_n" i
 $1_1, $1_2, \ldots, $1_n$0
+endsnippet
+
+snippet listn "[x_1 \ldots x_n ]" i
+[${1:x}_1 \ldots $1_n]
 endsnippet
 
 snippet sum "\sum__{}^{}" i
