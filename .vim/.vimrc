@@ -1,6 +1,5 @@
 " Made to be used as a menu, :setlocal foldmethod=marker, zM
 " BUG: If not appearing as menu, re-source file to load folding
-
 " {{{ Plugins
 set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
 filetype off " required for Vundle
@@ -104,7 +103,6 @@ call vundle#begin()
 call vundle#end()
 filetype plugin indent on    " re-enable
 " }}}
-
 " {{{ Keymaps
 let mapleader = ","
 " {{{ Text
@@ -124,8 +122,9 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " }}}
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
-" Maps <leader>x to :bx where x is a buffer number (limit 0-9)
-for i in range(0, 9)
+" Maps <leader>x to :bx where x is a buffer number (limit 0-999 , need to see
+" if I can restrict buffer numbers used)
+for i in range(0, 999)
     exe "nnoremap <leader>b" . i . ' :b' . i . '<cr>' | endfor
 " }}}
 " {{{ Searching
@@ -187,7 +186,6 @@ nnoremap P "yp
 inoremap <C-p> <esc>"ypa
 " }}}
 " }}}
-
 " {{{ Commands
 
 " Silent <shellcmd> ~ Run <shellcmd> silently
@@ -213,13 +211,13 @@ command!-nargs=1 Silent
 "            \ exe ':silent ! grip -b -silent ' . expand('%')
 
 " }}}
-
 " {{{ Functions
 " Return the syntax group that the current word is using
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfunction
+
 " {{{ Quickfix          - <leader>q
 nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
 
@@ -246,7 +244,6 @@ augroup filetype_qf
 augroup END
 " }}}
 " }}}
-
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
 " {{{ Main
@@ -254,7 +251,7 @@ set nocompatible
 filetype plugin indent on
 set autoindent
 
-set number
+set number cursorline
 set hlsearch incsearch
 set wrap
 set scrolloff=10
@@ -276,23 +273,58 @@ set diffopt+=vertical
 let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
 " }}}
+" {{{ Look and Feel
+let s:sspecial = "%#Special#"
+let s:sunderlined = "%#Underlined#"
+let s:stype = "%#Type#"
+
+let s:seperator = s:sspecial . " | "
 " {{{ Status
 set laststatus=2
-set statusline=%f " path to file
-set statusline+=\|\|
-set statusline+=FileType
-set statusline+=%y " Filetype"
 
-set statusline+=%=
-set statusline+=%l " Current Line
-set statusline+=/
-set statusline+=%L " Total Lines
+set statusline=%!StatusLineFormat()
+function! StatusLineFormat()
+    let l:s = "%#Underlined#Path%#Type#[%F]"
+    let l:s .= s:seperator . "%#Underlined#Type%#Type#%y"
+    let l:s .= s:seperator . "%#Underlined#Branch%#Type#[%{FugitiveHead()}]"
 
-set statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+    return l:s
+"  set statusline=%f " path to file
+"  set statusline+=\|\|
+"  set statusline+=FileType
+"  set statusline+=%y " Filetype"
+"  set statusline+=%=
+"  set statusline+=%l " Current Line
+"  set statusline+=/
+"  set statusline+=%L " Total Lines
+endfunction
 " }}}
-" {{{ Title
-set title
-set titlestring="hello world"
+" {{{ Titlebar
+set showtabline=2
+set tabline=%!TabLineFormat()
+" if this is running slowly, maybe preformat string instead of constant
+" concatenation
+function! TabLineFormat()
+    let l:s = s:sunderlined . "Buffers " . s:seperator
+
+    redir => l:buflist | silent exe ":buffers" | redir end
+    let l:buffers = split(l:buflist, "\n")
+    for bufstring in l:buffers
+        let l:bnum = trim(bufstring[0:2])
+        let l:flags = bufstring[3:8]
+        let l:fpath = split(bufstring[9:-1])[0]
+
+        let l:col = s:sunderlined
+        if stridx(flags, "%") > 0    | let l:col .= s:sspecial
+        elseif stridx(flags, "a") > 0| let l:col .= s:stype
+        endif
+
+        let l:basename = fnamemodify(trim(l:fpath, '"'), ":t")
+        let l:s .= s:stype.l:bnum." ".l:col.l:basename.s:stype.s:seperator
+    endfor
+
+    return l:s
+endfunction
 
 " }}}
 " {{{ Colour
@@ -309,6 +341,7 @@ endif
 set background=dark
 colorscheme solarized8
 " }}}
+" }}}
 " {{{ Wildignore
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
 
@@ -318,4 +351,12 @@ set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
 " }}}
+" }}}
+" {{{ Syntax Highlight groups (Must be at end)
+exec 'hi CursorLineNr gui=italic' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi LineNr gui=italic, guibg=bg' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi Folded gui=italic,underline guibg=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " }}}
