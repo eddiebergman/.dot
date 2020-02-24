@@ -135,6 +135,10 @@ nnoremap <leader>bb :buffers<cr>
 for i in range(0, 999)
     exe "nnoremap <leader>b" . i . ' :b' . i . '<cr>' | endfor
 " }}}
+" {{{ Tabs
+nnoremap <leader>tn :tabnew<cr>
+nnoremap <leader>tc :tabclose<cr>
+" }}}
 " {{{ Searching
 " normal: Automatically change to regular expression search
 nnoremap / /\v
