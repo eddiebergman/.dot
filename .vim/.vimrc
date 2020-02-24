@@ -120,6 +120,14 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " }}}
+" {{{ Terminal
+tnoremap jk <C-\><C-N>
+augroup Term_Group
+    autocmd!
+    autocmd TermOpen * setlocal modifiable
+augroup END
+
+" }}}
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
 " Maps <leader>x to :bx where x is a buffer number (limit 0-999 , need to see
@@ -181,11 +189,6 @@ nnoremap <leader>gd :Gdiff<cr>
 " }}}
 " {{{ NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
-" }}}
-" {{{ Yank And Put
-nnoremap y "yy
-nnoremap P "yp
-inoremap <C-p> <esc>"ypa
 " }}}
 " }}}
 " {{{ Commands
