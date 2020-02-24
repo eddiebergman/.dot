@@ -138,6 +138,7 @@ nnoremap <leader>eft  :vert bo split $drvim/ftplugin<cr>
 nnoremap <leader>ez   :vert bo split $drzsh/.zshrc<cr>
 nnoremap <leader>ev   :vert bo split $drvim/.vimrc<cr>
 nnoremap <leader>eip  :vert bo split $HOME/.ipython/profile_default/startup<cr>
+nnoremap <leader>esy  :vert bo split $drvim/after/syntax/<cr>
 
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 " }}}
@@ -150,6 +151,7 @@ nnoremap <space> za
 nnoremap <leader>fmm :setlocal foldmethod=marker<cr>
 nnoremap <leader>fmi :setlocal foldmethod=indent<cr>
 nnoremap <leader>fms :setlocal foldmethod=syntax<cr>
+nnoremap <leader>ft :setlocal foldenable!<cr>
 
 " }}}
 " {{{ Extra
