@@ -6,7 +6,6 @@ function! IndentLevel(lnum)
 endfunction
 
 setlocal foldmethod=marker
-setlocal fillchars=fold:.
 
 setlocal foldexpr=s:FoldExprText(v:lnum)
 function! FoldExprText(lnum)
