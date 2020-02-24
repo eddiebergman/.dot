@@ -18,12 +18,13 @@ call vundle#begin()
     let g:tex_flavor = 'latex'
     let g:vimtex_quickfix_mode=0
     let g:vimtex_view_method='zathura'
-    let g:Tex_FoldedEnvironments='definition'
+    " let g:Tex_FoldedEnvironments='definition'
     let g:tex_conceal='abdmg'
     let g:Imap_UsePlaceHolders=0
     let g:vimtex_compiler_latexmk = {
         \ 'build_dir' : 'build'
         \}
+    let g:vimtex_fold_enabled=1
 " }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
@@ -263,6 +264,7 @@ set showmode
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
+set fillchars=fold:\ 
 set conceallevel=1
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
