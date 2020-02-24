@@ -1,3 +1,7 @@
+highlight link keyword Keyword
+"highlight link texBeginEnd Underline
+
+let b:current_syntax = "tex"
 " Vimball Archiver by Charles E. Campbell, Ph.D.
 " amsmath.vim
 "   Author: Charles E. Campbell
@@ -10,16 +14,18 @@ let b:loaded_amsmath = "v1d"
 let s:keepcpo        = &cpo
 set cpo&vim
 
+echom "Loaded"
+
 " ---------------------------------------------------------------------
 "  AMS-Math Package Support: {{{1
-call TexNewMathZone("E","align",1)
-call TexNewMathZone("F","alignat",1)
-call TexNewMathZone("G","equation",1)
-call TexNewMathZone("H","flalign",1)
-call TexNewMathZone("I","gather",1)
-call TexNewMathZone("J","multline",1)
-call TexNewMathZone("K","xalignat",1)
-call TexNewMathZone("L","xxalignat",0)
+" call TexNewMathZone("E","align",1)
+" call TexNewMathZone("F","alignat",1)
+" call TexNewMathZone("G","equation",1)
+" call TexNewMathZone("H","flalign",1)
+" call TexNewMathZone("I","gather",1)
+" call TexNewMathZone("J","multline",1)
+" call TexNewMathZone("K","xalignat",1)
+" call TexNewMathZone("L","xxalignat",0)
 
 syn match texBadMath		"\\end\s*{\s*\(align\|alignat\|equation\|flalign\|gather\|multline\|xalignat\|xxalignat\)\*\=\s*}"
 
@@ -179,3 +185,9 @@ endfor
 let &cpo= s:keepcpo
 unlet s:keepcpo
 " vim: ts=4 fdm=marker
+"
+" {{{ My Own
+syntax keyword MyKeyword something
+hi link MyKeyword Keyword
+" }}}
+
