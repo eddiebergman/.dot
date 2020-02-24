@@ -1,6 +1,3 @@
-highlight link keyword Keyword
-"highlight link texBeginEnd Underline
-
 let b:current_syntax = "tex"
 " Vimball Archiver by Charles E. Campbell, Ph.D.
 " amsmath.vim
