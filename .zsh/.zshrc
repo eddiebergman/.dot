@@ -177,3 +177,22 @@ export PIPENV_VENV_IN_PROJECT="enabled"
 alias django='python manage.py'
 alias pymode='pymodetemp1="$(pwd)"; pipenv shell; cd $pymodetemp1'
 # }}}
+# {{{ Dirstack
+# https://wiki.archlinux.org/index.php/Zsh
+autoload -Uz add-zsh-hook
+
+DIRSTACKFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/dirs"
+if isfile $DIRSTACKFILE && (( ${#dirstack}  == 0)); then
+    dirstack=("${(@f)"$(< "$DIRSTACKFILE")"}")
+    [[ -d "${dirstack[1]}" ]] && cd -- "${dirstack[1]}"
+fi
+chpwd_dirstack() {
+    print -l -- "$PWD" "${(u)dirstack[@]}" > "$DIRSTACKFILE"
+}
+add-zsh-hook -Uz chpwd chpwd_dirstack
+DIRSTACKSIZE='20'
+
+setopt AUTO_PUSHD PUSHD_SILENT PUSHD_TO_HOME
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_MINUS
+# }}}
