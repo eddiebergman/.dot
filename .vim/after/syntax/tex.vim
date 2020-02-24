@@ -14,8 +14,6 @@ let b:loaded_amsmath = "v1d"
 let s:keepcpo        = &cpo
 set cpo&vim
 
-echom "Loaded"
-
 " ---------------------------------------------------------------------
 "  AMS-Math Package Support: {{{1
 " call TexNewMathZone("E","align",1)
