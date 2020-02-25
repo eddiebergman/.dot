@@ -358,10 +358,10 @@ function! TabLineFormat()
 
             let l:flags = join([l:line[2], l:line[0]], "")
             let l:flags = substitute(l:flags, "+", (s:green."+"), "")
-            let l:flags = substitute(l:flags, ">", (s:yellow.">"), "")
+            let l:flags = substitute(l:flags, ">", (s:orange.">"), "")
             let l:fname = fnamemodify(l:fullname, ":t")
 
-            if l:current      | let l:tabstr .= l:flags.s:yellow.l:fname."  "
+            if l:current      | let l:tabstr .= l:flags.s:orange.l:fname."  "
             elseif l:modified | let l:tabstr .= l:flags.s:green.l:fname."  "
             else              | let l:tabstr .= l:flags.s:purple.l:fname."  "
             endif
@@ -373,9 +373,9 @@ function! TabLineFormat()
     let l:tstr = ""
     for i in range(len(l:tabstrings))
         if i + 1 == l:activetab
-            let l:tstr .= s:orange."Tab ".(i+1).s:orange."|".l:tabstrings[i].s:yellow."|"
+            let l:tstr .= s:yellow."Tab ".(i+1).s:yellow."|".l:tabstrings[i].s:yellow."| "
         else
-            let l:tstr .= s:cyan."Tab ".(i+1).s:yellow."|"
+            let l:tstr .= s:cyan."Tab ".(i+1).s:yellow."  "
         endif
     endfor
     " }}}
@@ -415,6 +415,14 @@ function! TabLineFormat()
 endfunction
 
 " }}}
+" {{{ Syntax Highlight groups (Must be at end)
+exec 'hi CursorLineNr gui=italic' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+exec 'hi LineNr gui=italic, guibg=bg' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('keyword')), 'fg', 'gui')
+exec 'hi Folded gui=italic,underline guibg=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+" }}}
 " }}}
 " {{{ Wildignore
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
@@ -425,12 +433,4 @@ set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
 " }}}
-" }}}
-" {{{ Syntax Highlight groups (Must be at end)
-exec 'hi CursorLineNr gui=italic' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi LineNr gui=italic, guibg=bg' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi Folded gui=italic,underline guibg=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " }}}
