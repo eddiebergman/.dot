@@ -138,7 +138,7 @@ for i in range(0, 999)
 " {{{ Tabs
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>tc :tabclose<cr>
-" }}}
+
 " {{{ Searching
 " normal: Automatically change to regular expression search
 nnoremap / /\v
@@ -195,6 +195,7 @@ nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 " }}}
 " }}}
+" }}}
 " {{{ Commands
 
 " Silent <shellcmd> ~ Run <shellcmd> silently
@@ -226,6 +227,12 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfunction
+
+
+function! Substr(s1, s2)
+    return (stridx(a:s2, a:s1) != -1)
+endfunction
+
 
 " {{{ Quickfix          - <leader>q
 nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
@@ -284,51 +291,7 @@ let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
 " }}}
 " {{{ Look and Feel
-let s:sspecial = "%#Special#"
-let s:sunderlined = "%#Underlined#"
-let s:stype = "%#Type#"
-
-let s:seperator = s:sspecial . " | "
-" {{{ Status
-set laststatus=2
-
-set statusline=%!StatusLineFormat()
-function! StatusLineFormat()
-    let l:s = "%#Underlined#Path%#Type#[%F]"
-    let l:s .= s:seperator . "%#Underlined#Type%#Type#%y"
-    let l:s .= s:seperator . "%#Underlined#Branch%#Type#[%{FugitiveHead()}]"
-
-    return l:s
-endfunction
-" }}}
-" {{{ Titlebar
-set showtabline=2
-set tabline=%!TabLineFormat()
-" if this is running slowly, maybe preformat string instead of constant
-" concatenation
-function! TabLineFormat()
-    let l:s = s:sunderlined . "Buffers " . s:seperator
-
-    redir => l:buflist | silent exe ":buffers" | redir end
-    let l:buffers = split(l:buflist, "\n")
-    for bufstring in l:buffers
-        let l:bnum = trim(bufstring[0:2])
-        let l:flags = bufstring[3:8]
-        let l:fpath = split(bufstring[9:-1])[0]
-
-        let l:col = s:sunderlined
-        if stridx(flags, "%") > 0    | let l:col .= s:sspecial
-        elseif stridx(flags, "a") > 0| let l:col .= s:stype
-        endif
-
-        let l:basename = fnamemodify(trim(l:fpath, '"'), ":t")
-        let l:s .= s:stype.l:bnum." ".l:col.l:basename.s:stype.s:seperator
-    endfor
-
-    return l:s
-endfunction
-
-" }}}
+" Should technically make a user defined syntax for this
 " {{{ Colour
 syntax on
 
@@ -342,6 +305,125 @@ endif
 
 set background=dark
 colorscheme solarized8
+
+let s:orange = "%#Special#"
+let s:purple = "%#Underlined#"
+let s:green = "%#Keyword#"
+let s:yellow = "%#Type#"
+let s:blue = "%#Identifier#"
+let s:seperator = " | "
+" }}}
+" {{{ Status
+set laststatus=2
+
+set statusline=%!StatusLineFormat()
+function! StatusLineFormat()
+    let l:s = s:purple."Path".s:yellow."[%F]"
+    let l:s .= s:orange.s:seperator
+    let l:s .= s:purple."ft".s:yellow."%y"
+    let l:s .= s:orange.s:seperator
+    let l:s .= s:purple."Branch".s:yellow."[%{FugitiveHead()}]"
+    return l:s
+endfunction
+" }}}
+" {{{ Titlebar
+set showtabline=2
+set tabline=%!TabLineFormat()
+
+" if this is running slowly, maybe preformat string instead of constant
+" concatenation
+function! TabLineFormat()
+    " Tabs
+    redir => l:tablist | silent exe ":tabs" | redir end
+    let l:tablines = split(l:tablist, "\n")
+
+    " Could definitely string parse this better
+    let l:tabstrings = []
+    let l:activetab= 0
+    let l:tabnr = 0
+    let l:tabstr = ""
+    for line in l:tablines
+        if Substr("Tab page", line)
+            if l:tabnr != 0 | let l:tabstrings += [l:tabstr] | endif
+            let l:tabnr += 1
+            let l:tabstr = ""
+        else
+            " Might have issues with files with a space in it
+            let l:fullname = split(l:line, "  ")[-1]
+            let l:isterm = Substr("term://", l:fullname)
+            let l:modified = l:line[2] == "+"
+            let l:current = l:line[0] == ">"
+
+            if l:current | let l:activetab = l:tabnr | endif
+
+            let l:flags = join([l:line[2], l:line[0]], "")
+            let l:flags = substitute(l:flags, "+", (s:green."+"), "")
+            let l:flags = substitute(l:flags, ">", (s:blue.">"), "")
+
+            let l:fname = ""
+            if l:isterm   | let l:fname = "term:// "
+            else          | let l:fname = fnamemodify(l:fullname, ":t")
+            endif
+
+            if l:current      | let l:tabstr .= l:flags.s:blue.l:fname."  "
+            elseif l:modified | let l:tabstr .= l:flags.s:green.l:fname."  "
+            else              | let l:tabstr .= l:flags.s:purple.l:fname."  "
+            endif
+        endif
+    endfor
+    let l:tabstrings += [l:tabstr]
+
+    for str in l:tabstrings | echom str | endfor
+
+    let l:outstr = ""
+    for i in range(len(l:tabstrings))
+        if i + 1 == l:activetab
+            let l:outstr .= s:orange."Tab ".(i+1)."|".l:tabstrings[i].s:orange."|"
+        else
+            let l:outstr .= s:green."Tab ".(i+1)."|"
+        endif
+    endfor
+
+    return l:outstr
+
+
+    " let l:s = s:special . "["
+    " let l:tabnr = 1
+    " for i in range(len(l:tablines))
+    "     if stridx(a:line "Page") > 0
+    "         let l:s .= s:Type . l:tabnr
+    "         let l:tabnr += 1
+    "     else
+    "         if l:tablines[i][0] == '>'
+    "             let l:s .= s:K ">"
+    "         fi
+    "         if l:tablines[i][2] == '+' | let l:s .= "+ " | fi
+    "         let l:bfname = fnamemodify(l:tablines[i][4:-1])
+    "         let l:s .= l:bufname
+    "     endwhile
+    " endwhile
+
+    " Buffers
+    redir => l:buflist | silent exe ":buffers" | redir end
+    let l:buffers = split(l:buflist, "\n")
+    let l:bstr = ""
+    for line in l:buffers
+        let l:bnum = bufstring[0:2]
+        let l:flags = bufstring[3:8]
+        let l:fpath = split(bufstring[9:-1])[0]
+        let l:isterm = Substr("term://", l:fpath)
+        let l:current = Substr("%", l:flags)
+        let l:active = Substr("a", l:flags)
+        let l:modified = Substr("+", l:flags)
+
+        let l:fname = ""
+        if l:isterm   | let l:fname = "term:// "
+        else          | let l:fname = fnamemodify(l:fpath, ":t")
+        endif
+
+    endfor
+endfunction
+
 " }}}
 " }}}
 " {{{ Wildignore
