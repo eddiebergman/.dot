@@ -417,9 +417,13 @@ function! TabLineFormat()
     let l:rbstr = substitute(l:bstr, "%#[A-Za-z]*#", "", "g")
     let l:rtstr = substitute(l:tstr, "%#[A-Za-z]*#", "", "g")
 
-    let l:padlength = &columns - strchars(l:rbstr) - strchars(l:rtstr)
-    let l:padding = repeat(" ", l:padlength)
-    return l:tstr.l:padding.l:bstr
+    if strchars(l:rbstr) + strchars(l:rtstr) >= &columns
+        return l:tstr
+    else
+        let l:padlength = &columns - strchars(l:rbstr) - strchars(l:rtstr)
+        let l:padding = repeat(" ", l:padlength)
+        return l:tstr.l:padding.l:bstr
+    endif
 endfunction
 
 " }}}
