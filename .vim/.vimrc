@@ -318,11 +318,13 @@ set laststatus=2
 
 set statusline=%!StatusLineFormat()
 function! StatusLineFormat()
-    let l:s = s:purple."Path".s:yellow."[%F]"
+    "let l:s .= s:orange." | "
+    let l:s = ""
+    let l:s .= s:yellow."ft ".s:cyan."%y"
     let l:s .= s:orange." | "
-    let l:s .= s:purple."ft".s:yellow."%y"
+    let l:s .= s:yellow."branch ".s:cyan."%{FugitiveHead()}"
     let l:s .= s:orange." | "
-    let l:s .= s:purple."Branch".s:yellow."[%{FugitiveHead()}]"
+    let l:s .= s:yellow."Path ".s:cyan."%F "
     return l:s
 endfunction
 " }}}
