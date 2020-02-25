@@ -130,6 +130,7 @@ augroup END
 " }}}
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
+nnoremap <leader>bq  :bp<bar>sp<bar>bn<bar>bd<CR>
 " Maps <leader>x to :bx where x is a buffer number (limit 0-999 , need to see
 " if I can restrict buffer numbers used)
 for i in range(0, 999)
@@ -195,7 +196,6 @@ nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>nt :NERDTreeToggle<cr>
 " }}}
 " }}}
-" }}}
 " {{{ Commands
 
 " Silent <shellcmd> ~ Run <shellcmd> silently
@@ -235,7 +235,7 @@ endfunction
 
 
 " {{{ Quickfix          - <leader>q
-nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
+" nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
 
 let g:quickfix_is_open = 0
 
@@ -358,10 +358,10 @@ function! TabLineFormat()
 
             let l:flags = join([l:line[2], l:line[0]], "")
             let l:flags = substitute(l:flags, "+", (s:green."+"), "")
-            let l:flags = substitute(l:flags, ">", (s:orange.">"), "")
+            let l:flags = substitute(l:flags, ">", (s:yellow.">"), "")
             let l:fname = fnamemodify(l:fullname, ":t")
 
-            if l:current      | let l:tabstr .= l:flags.s:orange.l:fname."  "
+            if l:current      | let l:tabstr .= l:flags.s:yellow.l:fname."  "
             elseif l:modified | let l:tabstr .= l:flags.s:green.l:fname."  "
             else              | let l:tabstr .= l:flags.s:purple.l:fname."  "
             endif
@@ -373,9 +373,9 @@ function! TabLineFormat()
     let l:tstr = ""
     for i in range(len(l:tabstrings))
         if i + 1 == l:activetab
-            let l:tstr .= s:yellow."Tab ".(i+1)."|".l:tabstrings[i].s:yellow."|"
+            let l:tstr .= s:orange."Tab ".(i+1).s:orange."|".l:tabstrings[i].s:yellow."|"
         else
-            let l:tstr .= s:purple."Tab ".(i+1)."|"
+            let l:tstr .= s:cyan."Tab ".(i+1).s:yellow."|"
         endif
     endfor
     " }}}
@@ -397,7 +397,7 @@ function! TabLineFormat()
          let l:hidden = Substr("h", l:flags)
 
         if l:current
-            let l:bstr .= s:orange."> ".l:fname
+            let l:bstr .= s:orange." > ".l:fname." ".s:yellow."|"
         "elseif l:active
         "    let l:bstr .= s:yellow."".s:yellow.l:bnum."  ".l:fname." "
         else
