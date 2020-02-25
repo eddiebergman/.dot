@@ -63,19 +63,20 @@ call vundle#begin()
     Plugin 'noahfrederick/vim-skeleton'
 " }}}
 " {{{ Vim Surround (surround selections)
+    Plugin 'tpope/vim-surround'
+" }}}
 " {{{ CtrlSF (search files)
     Plugin 'dyng/ctrlsf.vim'
 " }}}
 " {{{ NERDTree (file tree)
     Plugin 'scrooloose/nerdtree'
+    let g:NERDTreeWinSize=&columns / 3
 " }}}
 " {{{ Supertab (tab completion
     Plugin 'ervandew/supertab'
 " }}}
 " {{{ Solarized (Colour Theme)
     Plugin 'lifepillar/vim-solarized8'
-" }}}
-    Plugin 'tpope/vim-surround'
 " }}}
 " {{{ Vim Repeat (enables some repeat)
     Plugin 'tpope/vim-repeat'
@@ -417,15 +418,6 @@ function! TabLineFormat()
 endfunction
 
 " }}}
-" {{{ Syntax Highlight groups (Must be at end)
-exec 'hi CursorLineNr gui=italic' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-exec 'hi LineNr gui=italic, guibg=bg' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('keyword')), 'fg', 'gui')
-exec 'hi Folded gui=italic,underline guibg=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-" }}}
-" }}}
 " {{{ Wildignore
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
 
@@ -434,5 +426,32 @@ set wildignore+=*.a,*.o
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
 
+" }}}
+" {{{ Syntax Highlight groups (Must be at end)
+" {{{ Numbering
+exec 'hi CursorLineNr gui=italic' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+exec 'hi LineNr gui=italic, guibg=bg' .
+            \' guifg=' . synIDattr(synIDtrans(hlID('keyword')), 'fg', 'gui')
+" }}}
+" {{{ Fold
+exec 'hi Folded gui=italic,underline guibg=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+" }}}
+" {{{ NERDTree
+exec 'hi NERDTreeDir gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi NERDTreeFile gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi NERDTreeLinkFile gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi NERDTreeLinkTarget gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi NERDTreeExecFile gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi NERDTreeCWD gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+" }}}
+" }}}
 " }}}
 " }}}
