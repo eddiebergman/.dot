@@ -138,7 +138,7 @@ for i in range(0, 999)
 " {{{ Tabs
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>tc :tabclose<cr>
-
+" }}}
 " {{{ Searching
 " normal: Automatically change to regular expression search
 nnoremap / /\v
@@ -311,7 +311,7 @@ let s:purple = "%#Underlined#"
 let s:green = "%#Keyword#"
 let s:yellow = "%#Type#"
 let s:blue = "%#Identifier#"
-let s:seperator = " | "
+let s:cyan = "%#Constant#"
 " }}}
 " {{{ Status
 set laststatus=2
@@ -319,9 +319,9 @@ set laststatus=2
 set statusline=%!StatusLineFormat()
 function! StatusLineFormat()
     let l:s = s:purple."Path".s:yellow."[%F]"
-    let l:s .= s:orange.s:seperator
+    let l:s .= s:orange." | "
     let l:s .= s:purple."ft".s:yellow."%y"
-    let l:s .= s:orange.s:seperator
+    let l:s .= s:orange." | "
     let l:s .= s:purple."Branch".s:yellow."[%{FugitiveHead()}]"
     return l:s
 endfunction
@@ -330,14 +330,14 @@ endfunction
 set showtabline=2
 set tabline=%!TabLineFormat()
 
-" if this is running slowly, maybe preformat string instead of constant
-" concatenation
+" If this is running slowly, maybe preformat string instead of constant
+"   concatenation
 function! TabLineFormat()
     " Tabs
+    " {{{ Tabs
     redir => l:tablist | silent exe ":tabs" | redir end
     let l:tablines = split(l:tablist, "\n")
 
-    " Could definitely string parse this better
     let l:tabstrings = []
     let l:activetab= 0
     let l:tabnr = 0
@@ -358,68 +358,60 @@ function! TabLineFormat()
 
             let l:flags = join([l:line[2], l:line[0]], "")
             let l:flags = substitute(l:flags, "+", (s:green."+"), "")
-            let l:flags = substitute(l:flags, ">", (s:blue.">"), "")
+            let l:flags = substitute(l:flags, ">", (s:orange.">"), "")
+            let l:fname = fnamemodify(l:fullname, ":t")
 
-            let l:fname = ""
-            if l:isterm   | let l:fname = "term:// "
-            else          | let l:fname = fnamemodify(l:fullname, ":t")
-            endif
-
-            if l:current      | let l:tabstr .= l:flags.s:blue.l:fname."  "
+            if l:current      | let l:tabstr .= l:flags.s:orange.l:fname."  "
             elseif l:modified | let l:tabstr .= l:flags.s:green.l:fname."  "
             else              | let l:tabstr .= l:flags.s:purple.l:fname."  "
             endif
         endif
     endfor
+
     let l:tabstrings += [l:tabstr]
 
-    let l:outstr = ""
+    let l:tstr = ""
     for i in range(len(l:tabstrings))
         if i + 1 == l:activetab
-            let l:outstr .= s:orange."Tab ".(i+1)."|".l:tabstrings[i].s:orange."|"
+            let l:tstr .= s:yellow."Tab ".(i+1)."|".l:tabstrings[i].s:yellow."|"
         else
-            let l:outstr .= s:green."Tab ".(i+1)."|"
+            let l:tstr .= s:purple."Tab ".(i+1)."|"
         endif
     endfor
-
-    return l:outstr
-
-
-    " let l:s = s:special . "["
-    " let l:tabnr = 1
-    " for i in range(len(l:tablines))
-    "     if stridx(a:line "Page") > 0
-    "         let l:s .= s:Type . l:tabnr
-    "         let l:tabnr += 1
-    "     else
-    "         if l:tablines[i][0] == '>'
-    "             let l:s .= s:K ">"
-    "         fi
-    "         if l:tablines[i][2] == '+' | let l:s .= "+ " | fi
-    "         let l:bfname = fnamemodify(l:tablines[i][4:-1])
-    "         let l:s .= l:bufname
-    "     endwhile
-    " endwhile
-
-    " Buffers
+    " }}}
+    " {{{ Buffers
     redir => l:buflist | silent exe ":buffers" | redir end
-    let l:buffers = split(l:buflist, "\n")
-    let l:bstr = ""
-    for line in l:buffers
-        let l:bnum = bufstring[0:2]
-        let l:flags = bufstring[3:8]
-        let l:fpath = split(bufstring[9:-1])[0]
-        let l:isterm = Substr("term://", l:fpath)
-        let l:current = Substr("%", l:flags)
-        let l:active = Substr("a", l:flags)
-        let l:modified = Substr("+", l:flags)
 
-        let l:fname = ""
-        if l:isterm   | let l:fname = "term:// "
-        else          | let l:fname = fnamemodify(l:fpath, ":t")
+    let l:bstr = s:yellow."Buffers: "
+    let l:buffers = split(l:buflist, "\n")
+    for line in l:buffers
+         let l:bnum = line[0:2]
+         let l:flags = line[3:8]
+         let l:fpath = split(line[9:-1])[0]
+         " May cause issues with file names with spaces
+         let l:fname = substitute(fnamemodify(l:fpath, ":t"), '"', '', 'g')
+         let l:isterm = Substr("term://", l:fpath)
+         let l:current = Substr("%", l:flags)
+         let l:active = Substr("a", l:flags)
+         let l:modified = Substr("+", l:flags)
+         let l:hidden = Substr("h", l:flags)
+
+        if l:current
+            let l:bstr .= s:orange."> ".l:fname
+        "elseif l:active
+        "    let l:bstr .= s:yellow."".s:yellow.l:bnum."  ".l:fname." "
+        else
+            let l:bstr .= s:cyan.l:bnum." ".l:fname." ".s:yellow."|"
         endif
 
     endfor
+    " }}}
+    let l:rbstr = substitute(l:bstr, "%#[A-Za-z]*#", "", "g")
+    let l:rtstr = substitute(l:tstr, "%#[A-Za-z]*#", "", "g")
+
+    let l:padlength = &columns - strchars(l:rbstr) - strchars(l:rtstr)
+    let l:padding = repeat(" ", l:padlength)
+    return l:tstr.l:padding.l:bstr
 endfunction
 
 " }}}
