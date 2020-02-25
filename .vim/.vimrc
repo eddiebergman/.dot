@@ -70,7 +70,9 @@ call vundle#begin()
 " }}}
 " {{{ NERDTree (file tree)
     Plugin 'scrooloose/nerdtree'
-    let g:NERDTreeWinSize=&columns / 3
+    let g:NERDTreeWinSize = &columns / 5
+    let g:NERDTreeShowBookmarks = 1
+    let g:NERDTreeShowHidden = 1
 " }}}
 " {{{ Supertab (tab completion
     Plugin 'ervandew/supertab'
@@ -140,6 +142,7 @@ for i in range(0, 999)
 " {{{ Tabs
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>tc :tabclose<cr>
+nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
 " }}}
 " {{{ Searching
 " normal: Automatically change to regular expression search
@@ -174,7 +177,7 @@ nnoremap <leader>ft :setlocal foldenable!<cr>
 inoremap jk <esc>
 tnoremap jk <c-\><c-n>
 
-nnoremap <leader>h :vert bo help
+nnoremap <leader>h :vert bo help 
 
 " Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
@@ -224,17 +227,7 @@ command!-nargs=1 Silent
 " }}}
 " {{{ Functions
 " Return the syntax group that the current word is using
-function! SynGroup()
-    let l:s = synID(line('.'), col('.'), 1)
-    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-endfunction
-
-
-function! Substr(s1, s2)
-    return (stridx(a:s2, a:s1) != -1)
-endfunction
-
-
+"
 " {{{ Quickfix          - <leader>q
 " nnoremap <leader>q :call <SID>QuickfixToggle()<cr>
 
@@ -260,6 +253,17 @@ augroup filetype_qf
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
 augroup END
 " }}}
+
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfunction
+
+
+function! Substr(s1, s2)
+    return (stridx(a:s2, a:s1) != -1)
+endfunction
+
 " }}}
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
