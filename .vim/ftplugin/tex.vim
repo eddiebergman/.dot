@@ -38,3 +38,22 @@ setlocal foldmethod=expr
 setlocal foldtext=TexFoldText()
 
 " }}}
+" {{{ syntax
+exec 'hi TexStatement gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexTypeStyle gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexTypeSize gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexBeginEnd gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexBeginEndName gui=bold' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexSection gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexMathZoneX gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi TexMathMatcher gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+" }}}
+
