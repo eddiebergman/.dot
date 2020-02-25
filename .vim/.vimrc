@@ -174,7 +174,7 @@ nnoremap <leader>ft :setlocal foldenable!<cr>
 inoremap jk <esc>
 tnoremap jk <c-\><c-n>
 
-cnoremap <leader>h vert bo help
+nnoremap <leader>h :vert bo help
 
 " Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
