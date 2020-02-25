@@ -373,8 +373,6 @@ function! TabLineFormat()
     endfor
     let l:tabstrings += [l:tabstr]
 
-    for str in l:tabstrings | echom str | endfor
-
     let l:outstr = ""
     for i in range(len(l:tabstrings))
         if i + 1 == l:activetab
