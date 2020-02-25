@@ -316,6 +316,7 @@ let s:cyan = "%#Constant#"
 " }}}
 " {{{ Status
 set laststatus=2
+set fillchars+=stl:-
 
 set statusline=%!StatusLineFormat()
 function! StatusLineFormat()
@@ -325,7 +326,7 @@ function! StatusLineFormat()
     let l:s .= s:orange." | "
     let l:s .= s:yellow."branch ".s:cyan."%{FugitiveHead()}"
     let l:s .= s:orange." | "
-    let l:s .= s:yellow."Path ".s:cyan."%F "
+    let l:s .= s:yellow."Path ".s:cyan."%F ".s:orange
     return l:s
 endfunction
 " }}}
@@ -378,7 +379,7 @@ function! TabLineFormat()
         if i + 1 == l:activetab
             let l:tstr .= s:yellow."Tab ".(i+1).s:yellow."|".l:tabstrings[i].s:yellow."| "
         else
-            let l:tstr .= s:cyan."Tab ".(i+1).s:yellow."  "
+            let l:tstr .= s:cyan."Tab ".(i+1)." "
         endif
     endfor
     " }}}
@@ -432,7 +433,7 @@ set wildignore+=*~,*.swp,*.tmp
 exec 'hi CursorLineNr gui=italic' .
             \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
 exec 'hi LineNr gui=italic, guibg=bg' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('keyword')), 'fg', 'gui')
+            \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " }}}
 " {{{ Fold
 exec 'hi Folded gui=italic,underline guibg=None' .
@@ -451,6 +452,36 @@ exec 'hi NERDTreeExecFile gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi NERDTreeCWD gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+exec 'hi NERDTreeBookmarksLeader gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi NERDTreeBookmarkName gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+exec 'hi NERDTreeBookmarksHeader gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi NERDTreeBookmark gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+" }}}
+" {{{ Other
+exec 'hi VertSplit gui=bold'
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+        \.' guibg=NONE'
+exec 'hi StatusLine gui=NONE'
+        \.' ctermfg=NONE'
+        \.' ctermbg=NONE'
+        \.' guifg=NONE'
+        \.' guibg=NONE'
+exec 'hi StatusLineNC gui=NONE'
+        \.' ctermfg=NONE'
+        \.' ctermbg=NONE'
+        \.' guifg=NONE'
+        \.' guibg=NONE'
+" . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi SignColumn gui=bold'
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+        \.' guibg=NONE'
+exec 'hi Pmenu gui=italic'
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+        \.' guibg=NONE'
 " }}}
 " }}}
 " }}}
