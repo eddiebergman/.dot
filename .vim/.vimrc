@@ -147,12 +147,12 @@ nnoremap <leader>sr :%s/
 nnoremap <leader>sg :call SynGroup()<cr>
 " }}}
 " {{{ Quick File
-nnoremap <leader>esn  :vert bo split $drconfig/nvim/UltiSnips<cr>
-nnoremap <leader>eft  :vert bo split $drvim/ftplugin<cr>
-nnoremap <leader>ez   :vert bo split $drzsh/.zshrc<cr>
-nnoremap <leader>ev   :vert bo split $drvim/.vimrc<cr>
-nnoremap <leader>eip  :vert bo split $HOME/.ipython/profile_default/startup<cr>
-nnoremap <leader>esy  :vert bo split $drvim/after/syntax/<cr>
+nnoremap <leader>esn  :tabnew $drconfig/nvim/UltiSnips<cr>
+nnoremap <leader>eft  :tabnew $drvim/ftplugin<cr>
+nnoremap <leader>ez   :tabnew split $drzsh/.zshrc<cr>
+nnoremap <leader>ev   :tabnew $drvim/.vimrc<cr>
+nnoremap <leader>eip  :tabnew $HOME/.ipython/profile_default/startup<cr>
+nnoremap <leader>esy  :tabnew $drvim/after/syntax/<cr>
 
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 " }}}
