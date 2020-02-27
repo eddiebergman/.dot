@@ -1,2 +1,2 @@
-set foldmethod=marker
-set foldmarker={{{,}}} " Same as vim
+setlocal foldmethod=syntax
+setlocal foldmarker={{{,}}} " Same as vim
