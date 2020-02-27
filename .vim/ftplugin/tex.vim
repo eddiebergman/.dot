@@ -55,5 +55,13 @@ exec 'hi TexMathZoneX gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi TexMathMatcher gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi TexItalStyle gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi TexBoldStyle gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi TexMathZoneES gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi TexMathZoneW gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 " }}}
 
