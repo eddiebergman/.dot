@@ -25,6 +25,7 @@ call vundle#begin()
         \ 'build_dir' : 'build'
         \}
     let g:vimtex_fold_enabled=1
+    let g:vimtex_view_forward_search_on_start=0
 " }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
