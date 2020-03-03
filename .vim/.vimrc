@@ -107,6 +107,7 @@ call vundle#begin()
 call vundle#end()
 filetype plugin indent on    " re-enable
 " }}}
+" }}}
 " {{{ Keymaps
 let mapleader = ","
 " {{{ Text
@@ -295,6 +296,8 @@ set diffopt+=vertical
 " {{{ Paths, Globals
 let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
+let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
+let g:python_host_prog="~/.pyenv/versions/2.7.17/bin/python2.7"
 " }}}
 " {{{ Look and Feel
 " Should technically make a user defined syntax for this
