@@ -1,5 +1,9 @@
 " Made to be used as a menu, :setlocal foldmethod=marker
 " {{{ Plugins
+" {{{ Local
+" source $drvim/plugin/arxiv_browser.vim
+" }}}
+" {{{ Vundle
 set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
 filetype off " required for Vundle
 call vundle#begin()
@@ -25,6 +29,7 @@ call vundle#begin()
         \ 'build_dir' : 'build'
         \}
     let g:vimtex_fold_enabled=1
+    let g:vimtex_format_enabled=1
     let g:vimtex_view_forward_search_on_start=0
 " }}}
 " {{{ CtrlP (Fuzzy find files)
@@ -44,18 +49,18 @@ call vundle#begin()
     let g:UltiSnipsSnippetDirectories=['UltiSnips']
 " }}}
 " {{{ Syntastic (syntax and linter)
-    Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+"set statusline+=%#warningmsg#
+"   set statusline+=%{SyntasticStatuslineFlag()}
+"    set statusline+=%*
 
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
-    let g:syntastic_python_checkers=['python', 'pylint']
+"   let g:syntastic_always_populate_loc_list = 1
+"   let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+"   let g:syntastic_auto_loc_list = 1
+"   let g:syntastic_check_on_open = 0
+"   let g:syntastic_check_on_wq = 0
+"   let g:syntastic_python_checkers=['python', 'pylint']
 " }}}
 " {{{ Vim fugitive (git integration)
     Plugin 'tpope/vim-fugitive'
@@ -211,13 +216,13 @@ command!-nargs=1 Silent
 
 " R <shellcmd> ~ Read ouput of <shellcmd> to a temp buffer
 " https://vim.fandom.com/wiki/Append_output_of_an_external_command
-:command! -nargs=* -complete=shellcmd R
+command! -nargs=* -complete=shellcmd R
             \ new
             \| setlocal buftype=nofile bufhidden=hide noswapfile
             \| r !<args>
 
 " Hist ~ Shows contents of histfile in a temp buffer
-:command! -complete=shellcmd Hist
+command! -complete=shellcmd Hist
             \ new
             \| setlocal buftype=nofile bufhidden=hide noswapfile
             \| r !cat ~/.histfile
