@@ -1,6 +1,7 @@
 # TODO See if I can find some way map
 #   things like bfLamb to \mbf{\Lambda}
 #   for whatever mbf is set to.
+# - Edit: could just set them as variables
 # {{{ Help
 # options
 # i, in word
@@ -10,31 +11,11 @@
 # `!p ...` python code, t[i], ith tabstop
 # }}}
 # {{{ Symbols
-snippet margin "\marginnote"
+snippet marginnote "\marginnote"
 \marginnote{$1}[0.20cm]
 endsnippet
 
-snippet lamb "\lambda" i
-\lambda$0
-endsnippet
-
-snippet Lamb "\lambda" i
-\Lambda$0
-endsnippet
-
-snippet bfLamb "\mbf{\Lambda}" i
-\mathbb{\Lambda}$
-endsnippet
-
-snippet phi "\phi" i
-\phi $0
-endsnippet
-
-snippet Phi "\Phi" i
-\Phi $0
-endsnippet
-
-snippet dot "\cdot" i
+snippet cdot "\cdot" iA
 \cdot$0
 endsnippet
 
@@ -156,8 +137,12 @@ snippet \cap "\, \cap \," Aw
 \, \cap \,$0
 endsnippet
 
-snippet \cup "\, \cup \," Aw
-\, \cup \,$0
+snippet union "\cap" i
+\cap$0
+endsnippet
+
+snippet bunion "\cap" i
+\bigcap$0
 endsnippet
 
 snippet pair "_a, _b" w
@@ -221,8 +206,8 @@ endsnippet
 
 # }}}
 # {{{ Common commands
-snippet in "\in" w
-\in$0
+snippet small "\small" i
+\small$0
 endsnippet
 
 snippet label "\label{}" w
@@ -237,21 +222,21 @@ snippet bf "bold" w
 \textbf{$1}$0
 endsnippet
 
-snippet mbf "mathbf" w
+snippet mbf "mathbf" iA
 \mathbf{$1}$0
 endsnippet
 
 snippet mtt "mathbb" w
 \mathbb{$1}$0
 endsnippet
-snippet mbb "mathbb" w
+snippet mbb "mathbb" iA
 \mathbb{$1}$0
 endsnippet
 
 snippet mit "mathcal" w
 \mathcal{$1}$0
 endsnippet
-snippet mcal "mathcal" w
+snippet mcal "mathcal" iA
 \mathcal{$1}$0
 endsnippet
 
@@ -270,6 +255,16 @@ endsnippet
 snippet biblio "\bibliography{} \blibiographystyle"
 \bibliographystyle{vancouver}
 \bibliography{biblio}
+endsnippet
+
+snippet command "\newcommand{\cname}{ body }\"
+\\newcommand{\\${1:cname}}{ $2 }
+endsnippet
+
+snippet command1 "\newcommand{\cname}[1]{ #1 }\"
+\\newcommand{\\${1:cname}} [1] {
+    ${2: Here is param #1}
+}
 endsnippet
 # }}}
 

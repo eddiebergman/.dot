@@ -39,29 +39,30 @@ setlocal foldtext=TexFoldText()
 
 " }}}
 " {{{ syntax
-exec 'hi TexStatement gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexStatement gui=italic' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Keyword')), 'fg', 'gui')
 exec 'hi TexTypeStyle gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
 exec 'hi TexTypeSize gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+exec 'hi TexBeginEndName gui=italic,bold' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+
 exec 'hi TexBeginEnd gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi TexBeginEndName gui=bold' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi TexSection gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi TexMathZoneX gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Keyword')), 'fg', 'gui')
+exec 'hi TexSection gui=bold' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+
+exec 'hi TexItalStyle gui=italic'
+exec 'hi TexBoldStyle gui=bold'
+
 exec 'hi TexMathMatcher gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi TexItalStyle gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi TexBoldStyle gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi TexMathZoneES gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi TexMathZoneW gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi TexMathZoneX gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 " }}}
 
