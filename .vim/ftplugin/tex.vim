@@ -58,6 +58,10 @@ exec 'hi TexBoldStyle gui=bold'
 
 exec 'hi TexMathMatcher gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi TexMathZoneCS gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi TexMathZoneE gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi TexMathZoneES gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi TexMathZoneW gui=None' .
