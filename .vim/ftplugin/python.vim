@@ -34,3 +34,17 @@ command! -nargs=1 Manimate execute '!manim -pl % ' . <q-args>
 nnoremap <leader>mn :Manimate<space>
 vnoremap <leader>mn yiw:Manimate<space><C-r>"<cr>
 " }}}
+" {{{ Syntax
+" TODO: mark this work 
+" <Yellow>Callable<\Yellow> [ ... ]
+" :syn-region magic syn-contains
+syn region CallableBuiltin start='Callable\[' end=']' contains=pythonBuiltin
+hi def link CallableBuiltin pythonBuiltin
+
+exec 'hi pythonBuiltin gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+
+
+
+" }}}
+
