@@ -1,8 +1,22 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage[T1]{fontenc}
 \usepackage{xcolor}
+%\usepackage[sfdefault, light]{FiraSans} %% option 'sfdefault' activates Fira Sans as the default text font
+\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+%\renewcommand*\oldstylenums[1]{{\firaoldstyle #1}}
 
+\usepackage{enumitem}
+
+% Default page setup, overwrite for your own
+\usepackage[top=1cm, bottom=1.3cm, left=4cm, right=3.0cm, heightrounded,
+  marginparwidth=3.7cm, marginparsep=3mm]{geometry}
+\setlength{\parskip}{1.1em}
+\setlength{\parindent}{0em}
+\definecolor{grayertext}{cmyk}{0, 0, 0 , 0.83}
+\color{grayertext}
+\everymath{\color{black}}
+%\everydisplay{\color{black}}
 
 \usepackage{url}
 
@@ -44,10 +58,6 @@
 \usepackage{mathtools}
 \DeclarePairedDelimiter\set\{\}
 
-% use paragraph spacing and remove paragrpah indents
-\usepackage{parskip}
-\setlength\parindent{0pt}
-
 % General reference
 % https://tex.stackexchange.com/questions/110244/using-mdframed-style-within-declaretheoremstyle-to-change-title
 \declaretheoremstyle[
@@ -82,3 +92,4 @@
 }
 
 \pdfsuppresswarningpagegroup=1
+
