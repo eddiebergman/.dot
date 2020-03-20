@@ -31,27 +31,36 @@ command! -buffer -nargs=0 EditPreamble
 " {{{ Fold
 function! TexFoldText()
     let l:line = getline(v:foldstart)
-    let l:ncount = v:foldend - v:foldstart
-    return "|".l:ncount . "|\t" . v:folddashes . substitute(l:line, '\\\|{\|}', ' ', 'g')
+    let l:line = substitute(l:line,
+        \ '\\section\*\|\\subsection\*\|\\section\|\\subsection\|\\\|{\|}',
+        \ '', 'g')
+    let l:line = substitute(l:line, 'begin', '~', 'g')
+    let l:ncount = PrePad(v:foldend - v:foldstart, 3)
+    let l:foldlevel = substitute(v:folddashes, '-', '   ', 'g')
+    return "[". l:ncount . "]\t" . l:foldlevel . l:line
 endfunction
 setlocal foldmethod=expr
 setlocal foldtext=TexFoldText()
 
 " }}}
 " {{{ syntax
-exec 'hi TexStatement gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Keyword')), 'fg', 'gui')
+" help: attr-list
+exec 'hi TexStatement gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi TexTypeStyle gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi TexTypeSize gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+exec 'hi texUrl gui=underline' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+
+exec 'hi TexBeginEnd gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi TexBeginEndName gui=italic,bold' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
 
-exec 'hi TexBeginEnd gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Keyword')), 'fg', 'gui')
-exec 'hi TexSection gui=bold' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+exec 'hi TexSection gui=None' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 
 exec 'hi TexItalStyle gui=italic'
 exec 'hi TexBoldStyle gui=bold'
