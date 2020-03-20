@@ -163,7 +163,7 @@ nnoremap <leader>eft  :e $drvim/ftplugin<cr>
 nnoremap <leader>ez   :e $drzsh/.zshrc<cr>
 nnoremap <leader>ev   :e $drvim/.vimrc<cr>
 nnoremap <leader>eip  :e $HOME/.ipython/profile_default/startup<cr>
-nnoremap <leader>esy  :e $drvim/after/syntax/<cr>
+nnoremap <leader>esy  :e $drvim/syntax/<cr>
 
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 " }}}
@@ -269,6 +269,20 @@ endfunction
 
 function! Substr(s1, s2)
     return (stridx(a:s2, a:s1) != -1)
+endfunction
+
+" https://stackoverflow.com/questions/4964772/string-formatting-padding-in-vim
+function! Pad(s, amt)
+    return a:s . repeat(' ',a:amt - len(a:s))
+endfunction
+
+function! PrePad(s,amt,...)
+    if a:0 > 0
+        let char = a:1
+    else
+        let char = ' '
+    endif
+    return repeat(char,a:amt - len(a:s)) . a:s
 endfunction
 
 " }}}
