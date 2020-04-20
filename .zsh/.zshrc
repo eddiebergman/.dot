@@ -11,6 +11,7 @@ export drconfig="$drdot/.config"
 export drinstaller="$drdot/installers"
 export drshare="$HOME/.local/share"
 export drtemplate="$drdot/templates"
+export drlib="$HOME/mylibrary"
 export ZSHDIR="$drzsh" # Required by <something>
 # }}}
 # {{{ Defaults - $VISUAL, $EDITOR, ...
@@ -32,6 +33,7 @@ alias xclip='xclip -selection clipboard'
 alias evimrc='cd $drdot && nvim .vim/.vimrc'
 alias ezshrc='cd $drdot && nvim .zsh/.zshrc'
 alias edot='cd $drdot && nvim'
+alias ebib='cd $drlib/bibs && nvim mybib.bib'
 # }}}
 # {{{ Screen
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'

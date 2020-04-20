@@ -9,6 +9,7 @@ template_dirs=($template_root/*/)
 
 template_note_preamble="$drtemplate/note/note_preamble.tex"
 template_note_template="$drtemplate/note/note_template.tex"
+template_note_bib="$drlib/bibs/mybib.bib"
 template_help() {
     printf "
 =============
@@ -180,6 +181,8 @@ template_note() {
         printf "Can't find preamble at $template_note_preamble";  return; fi
     if ! exists $template_note_template; then
         printf "Can't find template at $template_note_template";  return; fi
+    if ! exists $template_note_bib; then
+        printf "Can't find bib at $template_note_bib"; return; fi
 
     if ! one $# || arg $1 "help" "--help" "-h"; then
         template_note_cdoc; return; fi
@@ -191,6 +194,7 @@ template_note() {
 
     cp "$template_note_template" "$out.tex"
     ln -sfn "$template_note_preamble" "$dir/note_preamble.tex"
+    ln -sfn "$template_note_bib" "$dir/biblio.bib"
     exists "$dir/build" || mkdir "$dir/build"
     exists "$dir/figures" || mkdir "$dir/figures"
     printf "Created note $1"
