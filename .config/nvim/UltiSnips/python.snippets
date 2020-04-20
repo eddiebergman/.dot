@@ -105,6 +105,20 @@ snippet docendpoint "# /path/to/endpoint" w
     ${2:General description}
 """
 endsnippet
+
+snippet todo "# TODO: " w
+# TODO: $1
+endsnippet
+
+snippet params "Params" w
+Params
+======
+endsnippet
+
+snippet returns "Returns" w
+Returns
+=======
+endsnippet
 #}}}
 #{{{ click
 
@@ -128,3 +142,8 @@ snippet carg "'arg', type=str" w
 @click.argument('${1:arg}', type=${2:str})
 endsnippet
 # }}}
+#{{{ Data
+snippet naa "np.asarray()" 
+np.asarray($1)$0$0
+endsnippet
+#}}}

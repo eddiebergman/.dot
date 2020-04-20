@@ -12,7 +12,7 @@
 # }}}
 # {{{ Symbols
 snippet marginnote "\marginnote"
-\marginnote{$1}[\parkskip]
+\marginnote{$1}[\parskip]
 endsnippet
 
 snippet cdot "\cdot" i
@@ -91,7 +91,7 @@ else:
 endsnippet
 
 snippet dm "\[\] - display math" wA
-\[
+\[\color{black}
     $1
 .\]
 endsnippet
@@ -117,6 +117,10 @@ snippet idx "\idx" i
 \idx{$1}$0
 endsnippet
 
+snippet id "\id" i
+\id{$1}$0
+endsnippet
+
 snippet frac "\frac{}{}" i
 \frac{ $1 }{ $2 }$0
 endsnippet
@@ -133,7 +137,7 @@ snippet sq "^2" i
 ^2$0
 endsnippet
 
-snippet \cap "\, \cap \," Aw
+snippet \cap "\, \cap \," w
 \, \cap \,$0
 endsnippet
 
@@ -174,21 +178,21 @@ snippet '([A-Za-z])inv' "a^{-1}" wr
 `!p snip.rv = match.group(1)`^{-1}
 endsnippet
 
-snippet '([A-Za-z])(\d)' "auto subscript" wrA
-`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
-endsnippet
+#snippet '([A-Za-z])(\d)' "auto subscript" wrA
+#`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+#endsnippet
 
-snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
-`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
-endsnippet
+#snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+#`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+#endsnippet
 
-snippet '(\s[A-Za-z]) in ([A-Za-z])' "x in A" wrA
-`!p snip.rv = match.group(1)` \in `!p snip.rv = match.group(2)`
-endsnippet
+#snippet '(\s[A-Za-z]) in ([A-Za-z])' "x in A" wrA
+#`!p snip.rv = match.group(1)` \in `!p snip.rv = match.group(2)`
+#endsnippet
 
-snippet '([A-Za-z])_([A-Za-z])\+(\d)' "v_{n+1}" wrA
-`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
-endsnippet
+#snippet '([A-Za-z])_([A-Za-z])\+(\d)' "v_{n+1}" wrA
+#`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
+#endsnippet
 # }}}
 # {{{ Phrases
 
@@ -236,6 +240,7 @@ endsnippet
 snippet mit "mathcal" w
 \mathcal{$1}$0
 endsnippet
+
 snippet mcal "mathcal" iA
 \mathcal{$1}$0
 endsnippet
@@ -267,4 +272,14 @@ snippet command1 "\newcommand{\cname}[1]{ #1 }\"
 }
 endsnippet
 # }}}
+#{{{ Tikz
+snippet tikz "\begin{tikzpicture}" w
+\begin{tikzpicture}
+    $1
+\end{tikzpicture}
+endsnippet
 
+snippet boundingbox "\draw rectangle" w
+\draw (current bounding box.south west) rectangle (current bounding box.north east);
+endsnippet
+#}}}
