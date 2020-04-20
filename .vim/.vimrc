@@ -343,17 +343,17 @@ let s:cyan = "%#Constant#"
 " }}}
 " {{{ Status
 set laststatus=2
-set fillchars+=stl:-
 
 set statusline=%!StatusLineFormat()
 function! StatusLineFormat()
     "let l:s .= s:orange." | "
-    let l:s = ""
-    let l:s .= s:yellow."ft ".s:cyan."%y"
-    let l:s .= s:orange." | "
-    let l:s .= s:yellow."branch ".s:cyan."%{FugitiveHead()}"
-    let l:s .= s:orange." | "
-    let l:s .= s:yellow."Path ".s:cyan."%F ".s:orange
+    let l:s = "%*"
+    let l:s .= s:yellow."ft ".s:orange."%y"
+    let l:s .= s:cyan." | "
+    let l:s .= s:yellow."branch ".s:orange."%{FugitiveHead()}"
+    let l:s .= s:cyan." | "
+    let l:s .= s:yellow."Path ".s:orange."%F ".s:orange
+    let l:s .= "%*"
     return l:s
 endfunction
 " }}}
@@ -496,16 +496,12 @@ exec 'hi NERDTreeBookmark gui=italic' .
 exec 'hi VertSplit gui=bold'
         \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
         \.' guibg=NONE'
-exec 'hi StatusLine gui=NONE'
-        \.' ctermfg=NONE'
-        \.' ctermbg=NONE'
-        \.' guifg=NONE'
-        \.' guibg=NONE'
-exec 'hi StatusLineNC gui=NONE'
-        \.' ctermfg=NONE'
-        \.' ctermbg=NONE'
-        \.' guifg=NONE'
-        \.' guibg=NONE'
+exec 'hi StatusLine '
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi StatusLineNC '
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 exec 'hi SignColumn gui=bold'
         \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
