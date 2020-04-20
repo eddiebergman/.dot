@@ -32,6 +32,9 @@ call vundle#begin()
     let g:vimtex_format_enabled=1
     let g:vimtex_view_forward_search_on_start=0
 " }}}
+" {{{ tex-conceal (Extra conceal for latex)
+    Plugin 'KeitaNakamura/tex-conceal.vim'
+" }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
 
@@ -99,7 +102,7 @@ call vundle#begin()
 "    Plugin 'ludovicchabant/vim-gutentags'
 " }}}
 " {{{ vimpyter (Jupyter Notebook)
-    Plugin 'szymonmaszke/vimpyter'
+   " Plugin 'szymonmaszke/vimpyter'
 " }}}
 " {{{ jedi-vim (Python useful things)
     Plugin 'davidhalter/jedi-vim'
@@ -305,7 +308,7 @@ set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
 set fillchars=fold:\ 
-set conceallevel=1
+set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
