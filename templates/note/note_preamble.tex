@@ -1,31 +1,66 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{xcolor}
-%\usepackage[sfdefault, light]{FiraSans} %% option 'sfdefault' activates Fira Sans as the default text font
+
+%
+% Font stuff
+%
 \usepackage[T1]{fontenc}
-\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
-%\renewcommand*\oldstylenums[1]{{\firaoldstyle #1}}
+\usepackage{bm} % \bm{symbol}
 
-\usepackage{enumitem}
-
-% Default page setup, overwrite for your own
-\usepackage[top=1cm, bottom=1.3cm, left=4cm, right=3.0cm, heightrounded,
-  marginparwidth=3.7cm, marginparsep=3mm]{geometry}
-\setlength{\parskip}{1.1em}
-\setlength{\parindent}{0em}
-\definecolor{grayertext}{cmyk}{0, 0, 0 , 0.83}
+\renewcommand*\familydefault{\sfdefault}
+\definecolor{grayertext}{cmyk}{0, 0, 0 , 0.80}
+\definecolor{commenttext}{cmyk}{0.9, 0.3, 0.3, 0}
 \color{grayertext}
 \everymath{\color{black}}
-%\everydisplay{\color{black}}
 
-\usepackage{url}
+\usepackage{microtype}
 
+%
+% Structures
+%
+\usepackage{enumitem}
+\usepackage{marginnote} % \marginnote[vert offset]{text}
+\usepackage{listings} % For code \begin{lstlisting}[language= ]
 \usepackage{amsthm}
 \usepackage{mdframed}
 \usepackage{thmtools}
-\usepackage{hyperref}
-\usepackage{marginnote}
 
+%
+% Layout
+%
+\usepackage[
+    top=1.5cm,
+    bottom=1cm,
+    left=2.0cm,
+    right=7cm,
+    marginparsep=1cm,
+    marginparwidth=4.6cm,
+    heightrounded
+]{geometry} % default style
+
+%
+% Images
+%
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage[hang]{caption}
+
+\captionsetup[figure]{
+    labelfont={bf},
+    name={},
+    skip=12pt,
+    width=\marginparwidth}
+
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
+
+
+%
+% Linking
+%
+\usepackage{url}
+\usepackage{hyperref} % For \href{link}{text}
 \hypersetup{
     colorlinks,
     linkcolor={red!50!black},
@@ -33,8 +68,17 @@
     urlcolor={blue!80!black}
 }
 
-\newcommand*{\half}{\frac{1}{2}}
 
+%
+%
+% Commands
+%
+%
+
+%
+% Math commands
+%
+\newcommand*{\half}{\frac{1}{2}}
 \newcommand*{\abs}[1]{\left\lvert#1\right\rvert}
 \newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand*{\normsq}[1]{\norm{#1}^2}
@@ -44,10 +88,9 @@
 \newcommand*{\Ex}{\mathbb{E}}
 \newcommand*{\Prob}{\mathbf{P}}
 \newcommand*{\idx}[1]{{\left[#1\right]}}
+\newcommand*{\id}[1]{^{\left(#1\right)}}
 \newcommand*{\union}{\cup}
 \newcommand*{\intersection}{\cap}
-
-\newcommand*{\lline}{\rule{\linewidth}{0.2pt}}
 
 % https://tex.stackexchange.com/questions/5223/command-for-argmin-or-argmax
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -58,6 +101,13 @@
 \usepackage{mathtools}
 \DeclarePairedDelimiter\set\{\}
 
+%
+% Extra commands
+%
+\newcommand{\comment}[1]{{\color{commenttext}#1}}
+\newcommand*{\lline}{\rule{\linewidth}{0.2pt}}
+\newcommand*{\n}{\mbox{}\\}
+%%%%% Junk from here, yet to sort or use
 % General reference
 % https://tex.stackexchange.com/questions/110244/using-mdframed-style-within-declaretheoremstyle-to-change-title
 \declaretheoremstyle[
@@ -79,17 +129,3 @@
     headpunct=.,
 ]{definitionstyle}
 \declaretheorem[name=Defintion, style=definitionstyle, numberwithin=section]{definition}
-
-% For use with inkscape-figures
-% https://github.com/gillescastel/inkscape-figures
-\usepackage{import}
-\usepackage{pdfpages}
-\usepackage{transparent}
-
-\newcommand{\incfig}[2][1]{%
-    \def\svgwidth{#1\columnwidth}
-    \import{./figures/}{#2.pdf_tex}
-}
-
-\pdfsuppresswarningpagegroup=1
-
