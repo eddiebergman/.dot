@@ -77,5 +77,8 @@ exec 'hi TexMathZoneW gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi TexMathZoneX gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi TexBoldMathText gui=bold' .
+        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+
 " }}}
 
