@@ -185,6 +185,7 @@ nnoremap <leader>ft :setlocal foldenable!<cr>
 " {{{ Extra
 " Exit insert mode
 inoremap jk <esc>
+vnoremap jk <esc>
 tnoremap jk <c-\><c-n>
 
 nnoremap <leader>h :vert bo help 
