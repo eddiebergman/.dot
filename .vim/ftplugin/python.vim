@@ -13,6 +13,15 @@ set shiftwidth=2
 command! PythonRun execute '!python %'
 nnoremap <leader>rf :PythonRun<cr>
 
+" Returns the result of PyTest
+command! -complete=shellcmd PyTest
+            \ new
+            \| setlocal buftype=nofile bufhidden=wipe noswapfile
+            \| setlocal foldmarker=________________,________________ foldmethod=marker
+            \| file PyTest
+            \| r !pytest
+nnoremap <leader>pt :PyTest<cr>
+
 " {{{ Django
 let s:djangoport='8000'
 let s:djangoip='127.0.0.1'
