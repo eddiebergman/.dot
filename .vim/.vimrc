@@ -386,8 +386,8 @@ function! TabLineFormat()
             " Might have issues with files with a space in it
             let l:fullname = split(l:line, "  ")[-1]
             let l:isterm = Substr("term://", l:fullname)
-            let l:modified = l:line[2] == "+"
-            let l:current = l:line[0] == ">"
+            let l:modified = (l:line[2] == "+")
+            let l:current = (l:line[0] == ">")
 
             if l:current | let l:activetab = l:tabnr | endif
 
