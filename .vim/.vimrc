@@ -305,6 +305,7 @@ set autowrite
 set modelines=0
 set smartcase
 set showmode
+set colorcolumn=72
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
