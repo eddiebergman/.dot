@@ -5,20 +5,20 @@ set $newshell kitty
 set $browser firefox
 
 # font
-font pango:Fira Code Retina 8
+font pango:Fira Code Retina 10
 # }}}
 # {{{ Startup
-exec --no-startup-id "workspace 0; $newshell edot; workspace 1"
-exec --no-startup-id "workspace 9; $browser; workspace 1"
-exec --no-startup-id "workspace 8; $terminal; workspace 1"
-exec --no-startup-id "workspace 7; $browser mail.google.com/mail/u/0/#inbox; workspace 1"
-exec --no-startup-id "workspace 6; spotify"
-exec --no-startup-id "workspace 5; "
-exec --no-startup-id "workspace 3; $newshell;"
-exec --no-startup-id "workspace 2; $newshell;"
-exec --no-startup-id "workspace 1; $newshell;"
-
-# Autostart locking manager
+#exec --no-startup-id "workspace 0; $newshell edot; workspace 1"
+#exec --no-startup-id "workspace 9; $browser; workspace 1"
+#exec --no-startup-id "workspace 8; $terminal; workspace 1"
+#exec --no-startup-id "workspace 7; $browser mail.google.com/mail/u/0/#inbox; workspace 1"
+#exec --no-startup-id "workspace 6; spotify"
+#exec --no-startup-id "workspace 5; "
+#exec --no-startup-id "workspace 3; $newshell;"
+#exec --no-startup-id "workspace 2; $newshell;"
+#exec --no-startup-id "workspace 1; $newshell;"
+#
+## Autostart locking manager
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # }}}
@@ -26,6 +26,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 bindsym $mod+Return exec "kitty"
 bindsym $mod+d exec "rofi -show"
 bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -46,7 +47,6 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
-bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -148,16 +148,24 @@ bar {
     separator_symbol "|"
     workspace_buttons yes
     colors {
-        background #2f343f
+        background #002b36
         statusline #2f343f
-        separator #4b5262
+        separator #b58900
 
+        # orange #cb4b16
+        # yellow #b58900
+        # green #859900
+        # cyan #2aa198
+        # purple #6c71c4
+        # blue #268bd2
+        # background #002b36
         # colour of border, background, and text
-        focused_workspace       #2f343f #008B8B #d8dee8
-        active_workspace        #2f343f #2f343f #d8dee8
-        inactive_workspace      #2f343f #2f343f #d8dee8
-        urgent_workspacei       #2f343f #ebcb8b #2f343f
+        focused_workspace       #002b36 #002b36 #cb4b16
+        active_workspace         #002b36 #002b36 #b58900
+        inactive_workspace      #002b36 #002b36 #268bd2
+        urgent_workspace       #2f343f #ebcb8b #2f343f
     }
+    id bar-1
     status_command i3status
 }
 

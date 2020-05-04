@@ -1,11 +1,18 @@
+# orange #cb4b16
+# yellow #b58900
+# green #859900
+# cyan #2aa198
+# purple #6c71c4
+# blue #268bd2
+# background #002b36
 general {
         output_format = "i3bar"
-        colors = false
+        colors = true
         markup = pango
         interval = 5
-        color_good = '#2f343f'
-        color_degraded = '#ebcb8b'
-        color_bad = '#ba5e57'
+        color_good = '#268bd2'
+        color_degraded = '#268bd2'
+        color_bad = '#268bd2'
 }
 
 order += "volume master"
@@ -15,13 +22,13 @@ order += "cpu_usage"
 order += "tztime local"
 
 wireless wlp1s0 {
-        format_up = "<span background='#008B8B'> Net: %bitrate </span>"
-        format_down = "<span background='#008B8B'> Disconnected </span>"
+        format_up = "<span font='Fira Code Retina 11' foreground='#268bd2' background='#002b36'> Net: %bitrate </span>"
+        format_down = "<span font='Fira Code Retina 11' foreground='#b58900' background='#002b36'> Disconnected </span>"
 }
 
 battery 1 {
         last_full_capacity = true
-        format = "<span background='#008B8B'> Bat: %status %percentage </span>"
+        format = "<span font='Fira Code Retina 11' foreground='#268bd2' background='#002b36'> Bat: %status %percentage </span>"
         format_down = "No Battery"
         status_chr = "Charging"
         status_bat = "Battery"
@@ -32,17 +39,17 @@ battery 1 {
 }
 
 tztime local {
-        format = "<span background='#008B8B'> %time </span>"
+        format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> %time </span>"
         format_time = "%a %-d %b %H:%M"
 }
 
 cpu_usage {
-    format = "<span background='#008B8B'> CPU: %cpu0 %cpu1 </span>"
+    format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> CPU: %cpu0 %cpu1 </span>"
 }
 
 volume master {
-        format = "<span background='#008B8B'> Vol: %volume </span>"
-        format_muted = "<span background='#008B8B'> Vol: (muted) %volume </span>"
+        format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> Vol: %volume </span>"
+        format_muted = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> Vol: (muted) %volume </span>"
         device = "pulse"
         mixer = "Master"
         mixer_idx = 0
