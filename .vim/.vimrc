@@ -112,6 +112,10 @@ call vundle#begin()
 " {{{ vim-python-pep8-indent (fixes weird python indenting)
     Plugin 'Vimjas/vim-python-pep8-indent'
 " }}}
+" {{{ fzf
+    Plugin 'junegunn/fzf.vim'
+" }}}
+
 call vundle#end()
 filetype plugin indent on    " re-enable
 " }}}
