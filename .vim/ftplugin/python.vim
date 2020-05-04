@@ -14,10 +14,18 @@ command! PythonRun execute '!python %'
 nnoremap <leader>rf :PythonRun<cr>
 
 " Returns the result of PyTest
+function! s:ClosePyTest()
+    if bufwinnr('PyTest') > 0
+      bd PyTest
+    endif
+endfunction
+
 command! -complete=shellcmd PyTest
-            \ new
+            \ vnew
             \| setlocal buftype=nofile bufhidden=wipe noswapfile
-            \| setlocal foldmarker=________________,________________ foldmethod=marker
+            \| setlocal foldmarker=________________,________________
+            \| setlocal foldmethod=marker syntax=python
+            \| call s:ClosePyTest()
             \| file PyTest
             \| r !pytest
 nnoremap <leader>pt :PyTest<cr>
@@ -44,6 +52,8 @@ nnoremap <leader>mn :Manimate<space>
 vnoremap <leader>mn yiw:Manimate<space><C-r>"<cr>
 " }}}
 " {{{ Syntax
+" Taken from $VIMRUNITME/syntax/python.vim
+
 exec 'hi pythonBuiltin gui=None' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
 
