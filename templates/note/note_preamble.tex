@@ -29,6 +29,8 @@
 %
 % Layout
 %
+% TODO: Would like to get this to work so I can select
+%       geometries by name e.g. \loadgeometry{nomarginpage}
 \usepackage[
     top=1.5cm,
     bottom=1cm,
@@ -38,19 +40,40 @@
     marginparwidth=4.6cm,
     heightrounded
 ]{geometry} % default style
+\savegeometry{marginpage}
+\newgeometry{%
+    top=1.5cm,%
+    bottom=1cm,%
+    left=2.0cm,%
+    right=7cm,%
+    marginparsep=1cm,%
+    marginparwidth=1cm,%
+    heightrounded%
+}
+\savegeometry{nomarginpage}
+\loadgeometry{marginpage}
 
 %
 % Images
 %
+\usepackage{graphics}
 \usepackage{tikz}
 \usepackage{wrapfig}
 \usepackage[hang]{caption}
 
-\captionsetup[figure]{
+
+\captionsetup[marginfigure]{
     labelfont={bf},
     name={},
     skip=12pt,
-    width=\marginparwidth}
+    width=\marginparwidth
+}
+\captionsetup[fullfigure]{
+    labelfont={bf},
+    name={},
+    skip=12pt,
+    width=0.9\textwidth
+}
 
 \setlength{\parskip}{1em}
 \setlength{\parindent}{0em}
