@@ -194,6 +194,28 @@ endsnippet
 #`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
 #endsnippet
 # }}}
+#{{{ images
+snippet figure "\figure{...}" w
+${1:% include a  '\\graphicspath{ {./figures} in the header }}
+\\begin{figure}[h]
+    \\centering
+    \includegraphics[width=0.9\textwidth]{${2:figname}}
+    \\captionof{figure}{${3:the caption of the figure}}
+    \\label{fig:${4:label}}
+\\end{figure}
+endsnippet
+
+snippet sfigure "\wrapfigure{...}" w
+${1:% include a  '\\graphicspath{ {./figures} in the header }}
+\\begin{wrapfigure}{l}{0.25\textwidth}
+    \\centering
+    \includegraphics[width=0.25\textwidth]{${2:figname}}
+    \\captionof{figure}{${3:the caption of the figure}}
+    \\label{fig:${4:label}}
+\\end{wrapfigure}
+endsnippet
+
+#}}}
 # {{{ Phrases
 
 snippet i.e. "i.e." iA

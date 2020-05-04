@@ -10,8 +10,11 @@ snippet code "```" w
 $0
 \`\`\`
 endsnippet
-snippet pre "<pre></pre>" w
-<pre>$1</pre>$0
+
+snippet codepython "```Python" w
+\`\`\`Python
+$0
+\`\`\`
 endsnippet
 
 snippet codebash "```BASH" w
@@ -19,6 +22,12 @@ snippet codebash "```BASH" w
 \$ $0
 \`\`\`
 endsnippet
+
+snippet pre "<pre></pre>" w
+<pre>$1</pre>$0
+endsnippet
+
+
 
 snippet bf "__ $1 __" wi
 __$1__$0
