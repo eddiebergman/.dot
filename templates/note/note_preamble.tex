@@ -59,21 +59,21 @@
 \usepackage{graphics}
 \usepackage{tikz}
 \usepackage{wrapfig}
-\usepackage[hang]{caption}
+\usepackage{caption}
 
 
-\captionsetup[marginfigure]{
+\captionsetup[figure]{
+    format=hang,
+    font=small,
     labelfont={bf},
-    name={},
+    name={fig},
+    labelsep=colon,
     skip=12pt,
     width=\marginparwidth
 }
-\captionsetup[fullfigure]{
-    labelfont={bf},
-    name={},
-    skip=12pt,
-    width=0.9\textwidth
-}
+
+% No 'Fig.' before caption
+% \captionsetup{name={}}
 
 \setlength{\parskip}{1em}
 \setlength{\parindent}{0em}
