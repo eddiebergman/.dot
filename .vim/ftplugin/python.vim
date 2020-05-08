@@ -5,15 +5,57 @@ endif
 let b:comment_leader = '# ' " Outdated commenting thing
 
 " {{{ Settings
-setlocal foldmethod=indent
-setlocal foldtext=substitute(getline(v:foldstart),'\\t','\ \ \ \ ','g')
-setlocal tags=./tags,tags;$HOME
-setlocal tags+=~/venvs/py/lib/python3.7/site-packages/tags
-
 setlocal expandtab
 setlocal smarttab
 setlocal tabstop=4
 setlocal shiftwidth=4
+" }}}
+" {{{ Folding
+setlocal foldmethod=expr
+setlocal foldexpr=PythonFoldLevel(v:lnum)
+setlocal foldtext=getline(v:foldstart)
+
+function! s:IndentLevel(lnum)
+    return indent(a:lnum) / &shiftwidth
+endfunction
+
+function! s:NextNoneBlank(lnum)
+    let numlines = line('$')
+    let cur = a:lnum + 1
+
+    while cur <= numlines
+        if getline(cur) =~? '\v\S'
+            return cur
+        endif
+
+        let cur += 1
+    endwhile
+
+    return -2
+endfunction
+
+function! PythonFoldLevel(lnum)
+    let line = getline(a:lnum)
+    if line =~? '\v^\s*$'
+        return '-1'
+    endif
+
+    let i_current = s:IndentLevel(a:lnum)
+    let i_next = s:IndentLevel(s:NextNoneBlank(a:lnum))
+    if i_current == 0
+        return 0
+    endif
+
+    " If previous line is func def or class def
+    if getline(a:lnum - 1) =~? '\v(\s(def|class)\s)|(^(def|class)\s)'
+        return '>' . i_next
+    elseif i_next <= i_current
+        return i_current
+    elseif i_next > i_current
+        return '>' . i_next
+    endif
+endfunction
+
 " }}}
 " {{{ keymaps
 nnoremap <leader>rf :!python % 
