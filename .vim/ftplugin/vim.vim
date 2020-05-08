@@ -9,7 +9,6 @@ setlocal foldmethod=marker
 setlocal foldtext=FoldText()
 function! FoldText()
   let line = getline(v:foldstart)
-  let headers = split(line, ",")
   let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
   return v:folddashes . sub
 endfunction
