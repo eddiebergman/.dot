@@ -1,19 +1,32 @@
-let b:comment_leader = '# '
+if !exists('g:python_command')
+    let g:python_command = 'python'
+endif
+
+let b:comment_leader = '# ' " Outdated commenting thing
+
+" {{{ Settings
 setlocal foldmethod=indent
 setlocal foldtext=substitute(getline(v:foldstart),'\\t','\ \ \ \ ','g')
 setlocal tags=./tags,tags;$HOME
 setlocal tags+=~/venvs/py/lib/python3.7/site-packages/tags
 
 setlocal expandtab
-" setlocal smartindent
 setlocal smarttab
-setlocal tabstop=2
-set shiftwidth=2
+setlocal tabstop=4
+setlocal shiftwidth=4
+" }}}
+" {{{ keymaps
+nnoremap <leader>rf :!python % 
+" }}}
+" {{{ Style
 
-command! PythonRun execute '!python %'
-nnoremap <leader>rf :PythonRun<cr>
+let b:python_format_style = 'pep8'
+command! -buffer StyleDiff
+    \ execute ':call python#StyleDiff("'.b:python_format_style.'")'
 
-" Returns the result of PyTest
+nnoremap <buffer> <leader>sd :StyleDiff<cr>
+" }}}
+" {{{ Pytest
 function! s:ClosePyTest()
     if bufwinnr('PyTest') > 0
       bd PyTest
@@ -29,7 +42,7 @@ command! -complete=shellcmd PyTest
             \| file PyTest
             \| r !pytest
 nnoremap <leader>pt :PyTest<cr>
-
+" }}}
 " {{{ Django
 let s:djangoport='8000'
 let s:djangoip='127.0.0.1'
