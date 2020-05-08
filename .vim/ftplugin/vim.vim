@@ -1,22 +1,10 @@
 let maplocalleader=','
 let b:comment_leader = '" '
 
-function! IndentLevel(lnum)
-    return indent(a:lnum) / &shiftwidth
-endfunction
-
+setlocal shiftwidth=4
+setlocal tabstop=4
+setlocal expandtab
 setlocal foldmethod=marker
-
-setlocal foldexpr=s:FoldExprText(v:lnum)
-function! FoldExprText(lnum)
-
-    " -1 indicates the line takes its parents foldlevel
-    if getline(a:lnum) =~? '\v^\s*$'
-        return '-1'
-    endif
-
-    return '0'
-endfunction
 
 setlocal foldtext=FoldText()
 function! FoldText()
