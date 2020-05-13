@@ -44,6 +44,8 @@ alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
 alias notebook='cd ~/Desktop/phd/notebook && nvim'
 alias nbconvert='jupyter nbconvert'
 alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
+alias ctagpython="find -iname '*.py' -print0 | xargs -0 ctags"
+
 # TODO: Fix directory changing back to home
 # }}}
 # {{{ Pdf Merge
