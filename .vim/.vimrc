@@ -293,6 +293,38 @@ function! PrePad(s,amt,...)
     return repeat(char,a:amt - len(a:s)) . a:s
 endfunction
 
+" Finds the previous occurence of a regex string
+" lnum - current line number
+" reg - The regex string to match
+function! PrevOccurence(lnum, reg)
+    let n = a:lnum - 1
+    let last_line = 0
+    while n >= last_line
+        let n -= 1
+        if getline(n) =~? a:reg
+            return n
+        endif
+    endwhile
+
+    return -2
+endfunction
+
+" Finds the next occurence of a regex string
+" lnum - current line number
+" reg - The regex string to match
+function! NextOccurence(lnum, reg)
+    let n = a:lnum + 1
+    let last_line = line('$')
+    while n <= last_line
+        let n += 1
+        if getline(n) =~? a:reg
+            return n
+        endif
+    endwhile
+
+    return -2
+endfunction
+
 " }}}
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
