@@ -152,6 +152,16 @@ nnoremap <leader>bq  :bp<bar>sp<bar>bn<bar>bd<CR>
 " if I can restrict buffer numbers used)
 for i in range(0, 999)
     exe "nnoremap <leader>b" . i . ' :b' . i . '<cr>' | endfor
+
+nnoremap <Tab> :bnext<cr>
+nnoremap <S-Tab> :bprev<cr>
+" }}}
+" {{{ Yank Put
+
+" Yank clipboard
+nnoremap <leader>yc "+y
+
+
 " }}}
 " {{{ Tabs
 nnoremap <leader>tn :tabnew<cr>
@@ -185,6 +195,8 @@ nnoremap <leader>fmi :setlocal foldmethod=indent<cr>
 nnoremap <leader>fms :setlocal foldmethod=syntax<cr>
 nnoremap <leader>ft :setlocal foldenable!<cr>
 
+" Echo current fold level
+nnoremap <leader>fl :echo foldlevel('.')<cr>
 " }}}
 " {{{ Extra
 " Exit insert mode
@@ -210,6 +222,7 @@ inoremap <down> <nop>
 nnoremap <leader>gs :vertical bo Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gl :GcLog!<cr>
 " }}}
 " {{{ NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
@@ -341,7 +354,7 @@ set autowrite
 set modelines=0
 set smartcase
 set showmode
-set colorcolumn=72
+set colorcolumn=80
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
@@ -508,7 +521,8 @@ exec 'hi LineNr gui=italic, guibg=bg' .
             \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " }}}
 " {{{ Fold
-exec 'hi Folded gui=italic,underline guibg=None' .
+" \' guisp=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+exec 'hi Folded gui=underline guibg=none'
         \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 " }}}
 " {{{ NERDTree
@@ -550,6 +564,7 @@ exec 'hi SignColumn gui=bold'
 exec 'hi Pmenu gui=italic'
         \.' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
         \.' guibg=NONE'
+
 " }}}
 " }}}
 " }}}
