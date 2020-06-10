@@ -39,12 +39,13 @@ alias ebib='cd $drlib/bibs && nvim mybib.bib'
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
 alias screenleft='xrandr --auto && xrandr --output HDMI-2 --left-of eDP-1'
 alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
+alias screenabove='xrandr --auto && xrandr --output HDMI-2 --above eDP-1'
+alias screenbelow='xrandr --auto && xrandr --output HDMI-2 --below eDP-1'
 # }}}
 # {{{ Work setups
 alias notebook='cd ~/Desktop/phd/notebook && nvim'
 alias nbconvert='jupyter nbconvert'
 alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
-alias ctagpython="find -iname '*.py' -print0 | xargs -0 ctags"
 
 # TODO: Fix directory changing back to home
 # }}}
@@ -52,7 +53,7 @@ alias ctagpython="find -iname '*.py' -print0 | xargs -0 ctags"
 alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
 # }}}
 # {{{ Network
-alias networkrefresh='nmcli network off && nmcli network on'
+alias networkrefresh='nmcli network off; nmcli network on'
 # }}}
 # {{{ File management
 alias clearswaps='rm ~/.local/share/nvim/swap/*'
@@ -180,4 +181,6 @@ export PIPENV_VENV_IN_PROJECT="enabled"
 
 alias django='python manage.py'
 alias pymode='pymodetemp1="$(pwd)"; pipenv shell; cd $pymodetemp1'
+
+alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm tagged_files"
 # }}}
