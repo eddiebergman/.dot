@@ -34,26 +34,46 @@ function! s:NextNoneBlank(lnum)
     return -2
 endfunction
 
-function! PythonFoldLevel(lnum)
-    let line = getline(a:lnum)
-    if line =~? '\v^\s*$'
-        return '-1'
+function! g:PythonFoldLevel(lnum)
+    " Note: Move instansiation if laggish
+
+    let i_cur = s:IndentLevel(a:lnum)
+    let cur_line = getline(a:lnum)
+
+    let pnum = PrevOccurence(a:lnum, '\v(\S)@!')
+    let i_prev = s:IndentLevel(pnum)
+    let prev_line = line(pnum)
+
+    let nnum = NextOccurence(a:lnum, '\v(\S)@!')
+    let next_indent = s:IndentLevel(nnum)
+    let next_line = line(nnum)
+
+    " -1  Blank lines
+    if cur_line =~# '\v^$' | return '-1' | endif
+
+    " 0   Lines with no indent
+    if i_cur == 0 | return 0 | endif
+
+    " >x  After func def
+    if prev_line =~# '\v^\s*def\s' | return '>'.i_current | endif
+
+    " >x  After class def
+    if prev_line =~# '\v^\s*class\s' | return '>'.i_current | endif
+
+    " >x After opening braces and indented
+    if prev_line =~# '\v*\s\{$' | return '5' | endif
+
+    " =   Line continuations \
+    if prev_line =~? '\vaa$'
+        echom prev_line
+        return '='
     endif
 
-    let i_current = s:IndentLevel(a:lnum)
-    let i_next = s:IndentLevel(s:NextNoneBlank(a:lnum))
-    if i_current == 0
-        return 0
-    endif
+    " -1 Indented whitespace
+    if cur_line =~? '\v^\s*$' | return '-1' | endif
 
-    " If previous line is func def or class def
-    if getline(a:lnum - 1) =~? '\v(\s(def|class)\s)|(^(def|class)\s)'
-        return '>' . i_next
-    elseif i_next <= i_current
-        return i_current
-    elseif i_next > i_current
-        return '>' . i_next
-    endif
+    return i_cur
+
 endfunction
 
 " }}}
