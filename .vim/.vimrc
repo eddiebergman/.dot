@@ -224,6 +224,7 @@ nnoremap <leader>gs :vertical bo Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
+vnoremap <leader>gc y:Gwrite<cr>:Gcommit -m <C-r>"
 " }}}
 " {{{ NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
