@@ -45,7 +45,8 @@ alias screenbelow='xrandr --auto && xrandr --output HDMI-2 --below eDP-1'
 # {{{ Work setups
 alias notebook='cd ~/Desktop/phd/notebook && nvim'
 alias nbconvert='jupyter nbconvert'
-alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
+#alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
+chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
 
 # TODO: Fix directory changing back to home
 # }}}
