@@ -222,7 +222,6 @@ inoremap <down> <nop>
 " {{{ Git
 nnoremap <leader>gs :vertical bo Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>i
-vnoremap <leader>gc y:Gwrite<cr>:Gcommit<cr>i
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
 " }}}
