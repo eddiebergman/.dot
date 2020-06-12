@@ -210,7 +210,7 @@ nnoremap <leader>h :vert bo help
 nnoremap <leader><space> :set hlsearch!<CR>
 
 nnoremap <leader>sc :setlocal spell!<cr>
-vnoremap <leader>ck y:r!cksum <<< <C-r>" <bar> cut -f 1 -d ' '<CR>
+vnoremap <leader>ck y:r!cksum <<< "<C-r>"" <bar> cut -f 1 -d ' '<CR>
 " }}}
 " {{{ Unmappings
 inoremap <esc> <nop>
