@@ -11,10 +11,7 @@ setlocal tabstop=4
 setlocal shiftwidth=4
 " }}}
 " {{{ Folding
-setlocal foldmethod=expr
-setlocal foldexpr=PythonFoldLevel(v:lnum)
-setlocal foldtext=getline(v:foldstart)
-
+" Note: Currently using a plugin to manage folding
 function! s:IndentLevel(lnum)
     return indent(a:lnum) / &shiftwidth
 endfunction
@@ -36,7 +33,6 @@ endfunction
 
 function! g:PythonFoldLevel(lnum)
     " Note: Move instansiation if laggish
-
     let i_cur = s:IndentLevel(a:lnum)
     let cur_line = getline(a:lnum)
 
@@ -51,14 +47,23 @@ function! g:PythonFoldLevel(lnum)
     " -1  Blank lines
     if cur_line =~# '\v^$' | return '-1' | endif
 
+    " >x -- <x Fold comments
+    " If not a single line comment """ """
+    "    If it is the i'th occurenece and i is off
+    "       open fold >x
+    "   Else it is the end of the comment bloc
+    "     close fold <x
+
     " 0   Lines with no indent
     if i_cur == 0 | return 0 | endif
 
-    " >x  After func def
-    if prev_line =~# '\v^\s*def\s' | return '>'.i_current | endif
+    " >x  def's open a fold
+    if cur_line =~# '\v^\s*def\s'
+        return '>'.i_current
+    endif
 
-    " >x  After class def
-    if prev_line =~# '\v^\s*class\s' | return '>'.i_current | endif
+    " >x  classes open a fold
+    if cur_line =~# '\v^\s*class\s.*$' | return '>'.i_current | endif
 
     " >x After opening braces and indented
     if prev_line =~# '\v*\s\{$' | return '5' | endif
@@ -76,8 +81,23 @@ function! g:PythonFoldLevel(lnum)
 
 endfunction
 
+"setlocal foldmethod=expr
+"setlocal foldexpr=g:PythonFoldLevel(v:lnum)
+
+function! g:G_PythonCustomFoldText()
+    let line = getline(v:foldstart)
+    let line_count = v:foldend - v:foldstart
+    let str_line_count = '--('.line_count.')--'
+    let padded_line = Pad(line, &colorcolumn)
+    let trimmed_line = padded_line[0:&colorcolumn-2]
+    "let cut_off = &columns - len(line_count)
+    "let rest = str(padded_line[0:cut_off])
+    return join([trimmed_line, str_line_count], '  ')
+endfunction
+
+setlocal foldtext=g:G_PythonCustomFoldText()
 " }}}
-" {{{ keymaps
+" {{{ Keymaps
 nnoremap <leader>rf :!python % 
 " }}}
 " {{{ Style

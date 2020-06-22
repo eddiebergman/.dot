@@ -115,6 +115,9 @@ call vundle#begin()
 " {{{ fzf
     Plugin 'junegunn/fzf.vim'
 " }}}
+" {{{ Python folding
+    Plugin 'kalekundert/vim-coiled-snake'
+" }}}
 
 call vundle#end()
 filetype plugin indent on    " re-enable
@@ -188,6 +191,10 @@ nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
 " Fold Toggle
 nnoremap <space> za
+
+" Fold Movement
+nnoremap <C-j> zj
+nnoremap <C-k> zk
 
 " Set fold methods
 nnoremap <leader>fmm :setlocal foldmethod=marker<cr>
