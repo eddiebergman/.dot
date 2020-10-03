@@ -10,13 +10,6 @@ call vundle#begin()
 " {{{ Vundle (Package manager)
     Plugin 'VundleVim/Vundle.vim'
 " }}}
-" {{{ You Complete Me (Autocompletion)
-"    Plugin 'Valloric/YouCompleteMe'
-    let g:ycm_key_list_select_completion = ['<C-n>','<Down>']
-    let g:ycm_key_list_previous_completion = ['<C-p>','<Up>']
-    let g:SuperTabDefaultCompletionType = '<C-n>' " required for Ultsnips
-"
-" }}}
 " {{{ vimtex (Tools for Tex and Latex)
     Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
@@ -35,47 +28,72 @@ call vundle#begin()
 " {{{ tex-conceal (Extra conceal for latex)
     Plugin 'KeitaNakamura/tex-conceal.vim'
 " }}}
+" {{{ supertab (for help with UltiSnips+ You Complete me
+    Plugin 'ervandew/supertab'
+" }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
 
     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard'] 
     let g:ctrlp_working_path_mode = '' " Only search everything under current working directory
 " }}}
+" {{{ YouCompleteMe (Auto Completion)
+    Plugin 'ycm-core/YouCompleteMe'
+    " make YCM compatible with UltiSnips (using supertab)
+    let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+
+    let g:ycm_autoclose_preview_window_after_insertion = 1
+
+    "let g:ycm_server_python_interpreter = ''
+
+
+" }}}
 " {{{ UltiSnips (Snippet Engine)
     Plugin 'SirVer/ultisnips'
-
     let g:UltiSnipsEditSplit = 'vertical'
-    let g:UltiSnipsExpandTrigger = '<tab>'
+    let g:UltiSnipsExpandTrigger='<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-    "let g:UltiSnipsSnippetsDir='~/.vim/snips'
     let g:UltiSnipsSnippetDirectories=['UltiSnips']
 " }}}
 " {{{ Syntastic (syntax and linter)
-"Plugin 'vim-syntastic/syntastic'
+    Plugin 'vim-syntastic/syntastic'
 
-"set statusline+=%#warningmsg#
-"   set statusline+=%{SyntasticStatuslineFlag()}
-"    set statusline+=%*
-
-"   let g:syntastic_always_populate_loc_list = 1
-"   let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-"   let g:syntastic_auto_loc_list = 1
-"   let g:syntastic_check_on_open = 0
-"   let g:syntastic_check_on_wq = 0
-"   let g:syntastic_python_checkers=['python', 'pylint']
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_mode_map = {
+        \ 'mode': 'passive',
+        \ 'active_filetypes': [],
+        \ 'passive_filetypes': []
+    \}
+    let g:syntastic_python_checkers=['pylint', 'mypy']
+    let g:syntastic_auto_jump = 0
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_aggregate_errors = 1
 " }}}
 " {{{ Vim fugitive (git integration)
     Plugin 'tpope/vim-fugitive'
 " }}}
 " {{{ Vim Skeleton (File Skeleton)
-    Plugin 'noahfrederick/vim-skeleton'
+"    Plugin 'noahfrederick/vim-skeleton'
 " }}}
 " {{{ Vim Surround (surround selections)
     Plugin 'tpope/vim-surround'
 " }}}
 " {{{ CtrlSF (search files)
     Plugin 'dyng/ctrlsf.vim'
+    let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+    let g:ctrlsf_auto_preview = 0
+    let g:ctrlsf_default_view_mode = 'normal' " normal , compact
+    let g:ctrlsf_search_mode = 'async'
+    let g:ctrlsf_position = 'left'
+    let g:ctrlsf_winsize = '35%'
+    let g:ctrlsf_ackprg = 'ack'
 " }}}
 " {{{ NERDTree (file tree)
     Plugin 'scrooloose/nerdtree'
@@ -83,11 +101,23 @@ call vundle#begin()
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeShowHidden = 1
 " }}}
-" {{{ Supertab (tab completion
-    Plugin 'ervandew/supertab'
-" }}}
 " {{{ Solarized (Colour Theme)
     Plugin 'lifepillar/vim-solarized8'
+" }}}
+" {{{ tender (Color Theme)
+    Plugin 'jacoborus/tender.vim'
+" }}}
+" {{{ darcula (Color Theme)
+    Plugin 'doums/darcula'
+" }}}
+" {{{ cryslominsa/dark (Color Theme)
+    Plugin 'sainnhe/archived-colors'
+" }}}
+" {{{ Nord (Color Theme)
+    Plugin 'arcticicestudio/nord-vim'
+" }}}
+" {{{ vim-polyglot
+    Plugin 'sheerun/vim-polyglot'
 " }}}
 " {{{ Vim Repeat (enables some repeat)
     Plugin 'tpope/vim-repeat'
@@ -104,19 +134,25 @@ call vundle#begin()
 " {{{ vimpyter (Jupyter Notebook)
    " Plugin 'szymonmaszke/vimpyter'
 " }}}
-" {{{ jedi-vim (Python useful things)
-    Plugin 'davidhalter/jedi-vim'
-    let g:jedi#auto_initialization = 0
-    let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
+" {{{ Python indenting Pep8
+    Plugin 'vim-scripts/indentpython.vim'
 " }}}
-" {{{ vim-python-pep8-indent (fixes weird python indenting)
-    Plugin 'Vimjas/vim-python-pep8-indent'
+" {{{ Autopep8
+    Plugin 'tell-k/vim-autopep8'
+    let g:autopep8_max_line_length=80
+    let g:autopep8_diff_type='vertical'
+    let g:autopep8_aggressive=1
+    let g:autopep8_disable_show_diff=1
 " }}}
 " {{{ fzf
     Plugin 'junegunn/fzf.vim'
 " }}}
-" {{{ Python folding
-    Plugin 'kalekundert/vim-coiled-snake'
+" {{{ Folding
+    Plugin 'tmhedberg/SimpylFold'
+    let g:SimpylFold_docstring_preview = 1
+" }}}
+" {{{ vim-airline (bottom bar)
+    Plugin 'vim-airline/vim-airline'
 " }}}
 
 call vundle#end()
@@ -140,14 +176,6 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " }}}
-" {{{ Terminal
-tnoremap jk <C-\><C-N>
-augroup Term_Group
-    autocmd!
-    autocmd TermOpen * setlocal modifiable
-augroup END
-
-" }}}
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
 nnoremap <leader>bq  :bp<bar>sp<bar>bn<bar>bd<CR>
@@ -164,7 +192,6 @@ nnoremap <S-Tab> :bprev<cr>
 " Yank clipboard
 nnoremap <leader>yc "+y
 
-
 " }}}
 " {{{ Tabs
 nnoremap <leader>tn :tabnew<cr>
@@ -175,17 +202,23 @@ nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
 " normal: Automatically change to regular expression search
 nnoremap / /\v
 nnoremap <leader>sr :%s/
+vnoremap <leader>sr :s/
 nnoremap <leader>sg :call SynGroup()<cr>
+nnoremap <leader>sf :CtrlSF 
+vmap <leader>sfk <Plug>CtrlSFVwordPath
+nnoremap <leader>gt :YcmComplete GoTo<cr>
 " }}}
 " {{{ Quick File
-nnoremap <leader>esn  :e $drconfig/nvim/UltiSnips<cr>
-nnoremap <leader>eft  :e $drvim/ftplugin<cr>
-nnoremap <leader>ez   :e $drzsh/.zshrc<cr>
-nnoremap <leader>ev   :e $drvim/.vimrc<cr>
-nnoremap <leader>eip  :e $HOME/.ipython/profile_default/startup<cr>
-nnoremap <leader>esy  :e $drvim/syntax/<cr>
+nnoremap <leader>esn  :vsp $drvim/UltiSnips<cr>
+nnoremap <leader>eft  :vsp $drvim/ftplugin<cr>
+nnoremap <leader>ez   :vsp $drzsh/.zshrc<cr>
+nnoremap <leader>ev   :vsp $drvim/.vimrc<cr>
+nnoremap <leader>eip  :vsp $HOME/.ipython/profile_default/startup<cr>
+nnoremap <leader>esy  :vsp $drvim/syntax/<cr>
 
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
+
+nnoremap <leader>cs :vsp $drdot/cheatsheets/<cr>
 " }}}
 " {{{ Fold
 
@@ -216,8 +249,16 @@ nnoremap <leader>h :vert bo help
 " Toggle Highlighting
 nnoremap <leader><space> :set hlsearch!<CR>
 
-nnoremap <leader>sc :setlocal spell!<cr>
+nnoremap <leader>sp :setlocal spell!<cr>
 vnoremap <leader>ck y:r!cksum <<< "<C-r>"" <bar> cut -f 1 -d ' '<CR>
+
+
+" }}}
+" {{{ Syntastic
+
+nnoremap <leader>sc :SyntasticCheck<CR>
+" Stop  the auto error window opening when switching
+nnoremap <leader>sx :SyntasticReset<CR> 
 " }}}
 " {{{ Unmappings
 inoremap <esc> <nop>
@@ -238,7 +279,6 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 " }}}
 " }}}
 " {{{ Commands
-
 " Silent <shellcmd> ~ Run <shellcmd> silently
 command!-nargs=1 Silent
             \ exe ':silent !' . <q-args> 
@@ -290,12 +330,16 @@ augroup filetype_qf
     autocmd FileType qf :nnoremap <leader>qp :cprevious<CR>
 augroup END
 " }}}
+function! CloseBuffIfOpen(bufname)
+    if bufwinnr(a:bufname) > 0
+      bd a:bufname
+    endif
+endfunction
 
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfunction
-
 
 function! Substr(s1, s2)
     return (stridx(a:s2, a:s1) != -1)
@@ -355,9 +399,11 @@ set nocompatible
 filetype plugin indent on
 set autoindent
 
+set nolazyredraw
 set number cursorline
 set hlsearch incsearch
 set wrap
+set ttyfast
 set scrolloff=10
 set autowrite
 set modelines=0
@@ -374,17 +420,34 @@ set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
 set backspace=indent,eol,start " Fixes general issues with backspaces on different systems
 set splitright splitbelow
 set diffopt+=vertical
+set wildmode=longest,list,full
+set wildmenu
+set cul
+
+" }}}
+" {{{ Insert Mode/ Normal mode identifier
+"
+augroup InsertCursor
+    autocmd!
+    autocmd InsertEnter * exec 'hi CursorLine'.' cterm=bold'
+    autocmd InsertLeave * exec 'hi CursorLine'.' cterm=NONE'
+augroup END
+" }}}
+" {{{ Redraw fix for kitty terminal
+if &term =~ 'kitty'
+  " disable Background Color Erase (BCE)
+  set t_ut=
+endif
 " }}}
 " {{{ Paths, Globals
 let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
-let g:python3_host_prog="~/.pyenv/versions/3.6.2/bin/python3.6"
+"let g:python3_host_prog= expand("~/.dot/venvs/vim_python_venv/bin")
 let g:python_host_prog="~/.pyenv/versions/2.7.17/bin/python2.7"
 " }}}
 " {{{ Look and Feel
 " Should technically make a user defined syntax for this
 " {{{ Colour
-syntax on
 
 if (has("nvim"))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -394,8 +457,9 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-set background=dark
-colorscheme solarized8
+"set background=dark
+syntax on
+colorscheme nord
 
 let s:orange = "%#Special#"
 let s:purple = "%#Underlined#"
@@ -403,11 +467,11 @@ let s:green = "%#Keyword#"
 let s:yellow = "%#Type#"
 let s:blue = "%#Identifier#"
 let s:cyan = "%#Constant#"
-" }}}
+" }}} 
 " {{{ Status
 set laststatus=2
 
-set statusline=%!StatusLineFormat()
+"set statusline=%!StatusLineFormat()
 function! StatusLineFormat()
     "let l:s .= s:orange." | "
     let l:s = "%*"
@@ -524,20 +588,18 @@ set wildignore+=*~,*.swp,*.tmp
 " }}}
 " {{{ Syntax Highlight groups (Must be at end)
 " {{{ Numbering
-exec 'hi CursorLineNr gui=italic' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-exec 'hi LineNr gui=italic, guibg=bg' .
-            \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi CursorLineNr cterm=bold ctermbg=NONE'
+exec 'hi LineNr cterm=NONE ctermbg=NONE guibg=NONE'
 " }}}
 " {{{ Fold
-" \' guisp=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
-exec 'hi Folded gui=underline guibg=none'
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi Folded cterm=NONE'.
+        \' ctermbg=NONE guibg=NONE ctermfg=8'.
+        \' guifg=SlateBlue'
 " }}}
 " {{{ NERDTree
 exec 'hi NERDTreeDir gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-exec 'hi NERDTreeFile gui=italic' .
+exec 'hi NERDTreeFile cterm=italic, gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
 exec 'hi NERDTreeLinkFile gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
@@ -545,20 +607,19 @@ exec 'hi NERDTreeLinkTarget gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
 exec 'hi NERDTreeExecFile gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi NERDTreeCWD gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
 exec 'hi NERDTreeBookmarksLeader gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 exec 'hi NERDTreeBookmarkName gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
 exec 'hi NERDTreeBookmarksHeader gui=italic' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi NERDTreeBookmark gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi NERDTreeBookmark cterm=italic, gui=italic' .
+        \' guifg=SlateBlue'
+exec 'hi link NERDTreeCWD NERDTreeBookmark'
 " }}}
 " {{{ Other
-exec 'hi VertSplit gui=bold'
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+exec 'hi VertSplit gui=bold cterm=bold'
+        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
         \.' guibg=NONE'
 exec 'hi StatusLine '
         \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
@@ -570,9 +631,8 @@ exec 'hi StatusLineNC '
 exec 'hi SignColumn gui=bold'
         \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
         \.' guibg=NONE'
-exec 'hi Pmenu gui=italic'
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-        \.' guibg=NONE'
+exec 'hi Pmenu cterm=NONE'
+        \.' ctermbg='.synIDattr(synIDtrans(hlID('Comment')), 'fg', 'cterm') 
 
 " }}}
 " }}}

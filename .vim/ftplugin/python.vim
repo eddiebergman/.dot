@@ -99,31 +99,39 @@ setlocal foldtext=g:G_PythonCustomFoldText()
 " }}}
 " {{{ Keymaps
 nnoremap <leader>rf :!python % 
+nnoremap <leader>af :Autopep8<cr>
 " }}}
-" {{{ Style
-
-let b:python_format_style = 'pep8'
-command! -buffer StyleDiff
-    \ execute ':call python#StyleDiff("'.b:python_format_style.'")'
-
-nnoremap <buffer> <leader>sd :StyleDiff<cr>
+" {{{ Mypy
+command! -nargs=* -complete=file Mypy
+            \ vnew
+            \| setlocal textwidth=80
+            \| setlocal buftype=nofile bufhidden=wipe noswapfile syntax=python
+            \| call CloseBuffIfOpen('Mypy')
+            \| file Mypy
+            \| r !mypy <args>
+nnoremap <leader>mp :Mypy
+" }}}
+" {{{ Pylint
+command! -nargs=* -complete=file Pylint
+            \ new
+            \| setlocal textwidth=80
+            \| setlocal buftype=nofile bufhidden=wipe noswapfile syntax=qf
+            \| setlocal foldmethod=marker foldmarker=*****,*****
+            \| call CloseBuffIfOpen('Pylint')
+            \| file Pylint
+            \| r !pylint <args>
+nnoremap <leader>pl :PyLint
 " }}}
 " {{{ Pytest
-function! s:ClosePyTest()
-    if bufwinnr('PyTest') > 0
-      bd PyTest
-    endif
-endfunction
-
-command! -complete=shellcmd PyTest
+command! -nargs=* -complete=file PyTest
             \ vnew
             \| setlocal buftype=nofile bufhidden=wipe noswapfile
             \| setlocal foldmarker=________________,________________
             \| setlocal foldmethod=marker syntax=python
-            \| call s:ClosePyTest()
+            \| call CloseBuffIfOpen('PyTest')
             \| file PyTest
-            \| r !pytest
-nnoremap <leader>pt :PyTest<cr>
+            \| r !pytest <args>
+nnoremap <leader>pt :PyTest
 " }}}
 " {{{ Django
 let s:djangoport='8000'
@@ -147,13 +155,16 @@ nnoremap <leader>mn :Manimate<space>
 vnoremap <leader>mn yiw:Manimate<space><C-r>"<cr>
 " }}}
 " {{{ Syntax
-" Taken from $VIMRUNITME/syntax/python.vim
 
-exec 'hi pythonBuiltin gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-
-exec 'hi pythonNumber gui=None' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+if g:colors_name ==? 'nord'
+    " make yellow
+    highlight link PythonFloat Todo
+    highlight link pythonNumber Todo
+    highlight link PythonNone Todo
+    highlight link pythonClassVar Number
+    highlight link pythonStrInterpRegion Type
+    highlight link pythonBytesEscape Type
+endif
 
 " }}}
 

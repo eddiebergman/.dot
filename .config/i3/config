@@ -22,6 +22,10 @@ font pango:Fira Code Retina 10
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # }}}
+# {{{ Keyboard layouts, en, de
+exec "setxkbmap -layout en,de"
+exec "setxkbmap -option 'grp:alt_shift_toggle'"
+# }}}
 # {{{ Keymaps
 bindsym $mod+Return exec "kitty"
 bindsym $mod+d exec "rofi -show"
@@ -102,7 +106,7 @@ set $ws10 "10: 🔩"
 
 # }}}
 # {{{ Resize mode
-
+for_window [class=".*"] move absolute position center
 # resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 mode "resize" {
@@ -175,3 +179,4 @@ bar {
 # https://faq.i3wm.org/question/1228/lock-workspace-to-permanent/index.html
 # }}}
 # }}}
+

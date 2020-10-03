@@ -1,4 +1,3 @@
-#!/bin/bash
 # {{{ Env
 # {{{ Path
 export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
@@ -15,8 +14,8 @@ export drlib="$HOME/mylibrary"
 export ZSHDIR="$drzsh" # Required by <something>
 # }}}
 # {{{ Defaults - $VISUAL, $EDITOR, ...
-export VISUAL="nvim"
-export EDITOR="nvim"
+export VISUAL="vim"
+export EDITOR="vim"
 export VIEWER="zathura"
 # export PAGER="most"
 # }}}
@@ -30,10 +29,10 @@ alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 # }}}
 # {{{ Quick files
-alias evimrc='cd $drdot && nvim .vim/.vimrc'
-alias ezshrc='cd $drdot && nvim .zsh/.zshrc'
-alias edot='cd $drdot && nvim'
-alias ebib='cd $drlib/bibs && nvim mybib.bib'
+alias evimrc='cd $drdot && vim .vim/.vimrc'
+alias ezshrc='cd $drdot && vim .zsh/.zshrc'
+alias edot='cd $drdot && vim'
+alias ebib='cd $drlib/bibs && vim mybib.bib'
 # }}}
 # {{{ Screen
 alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
@@ -43,7 +42,7 @@ alias screenabove='xrandr --auto && xrandr --output HDMI-2 --above eDP-1'
 alias screenbelow='xrandr --auto && xrandr --output HDMI-2 --below eDP-1'
 # }}}
 # {{{ Work setups
-alias notebook='cd ~/Desktop/phd/notebook && nvim'
+alias notebook='cd ~/Desktop/phd/notebook && vim'
 alias nbconvert='jupyter nbconvert'
 #alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
 chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
@@ -57,7 +56,7 @@ alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/de
 alias networkrefresh='nmcli network off; nmcli network on'
 # }}}
 # {{{ File management
-alias clearswaps='rm ~/.local/share/nvim/swap/*'
+alias clearswaps='rm ~/.cache/vim/swap/*'
 # }}}
 # }}}
 # {{{ History
@@ -157,8 +156,6 @@ isset () { ! emptyvar $1; return }
 emptydir () { [[ ! "$(ls -A $1)" ]]; return }
 hasfile () { ! emptydir $1; return }
 
-emptystring() { [[ k ]] }
-
 uniquefile() { ! emptyvar $1 && equal 0 $(printf $1 | wc -l); return }
 
 empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
@@ -176,12 +173,41 @@ source "$drzsh/colours.zsh"
 
 # Enable pyenv
 eval "$(pyenv init -)"
+export PYENV_ROOT="${HOME}/.pyenv"
 
-#https://stackoverflow.com/questions/52540121/make-pipenv-create-the-virtualenv-in-the-same-folder
-export PIPENV_VENV_IN_PROJECT="enabled"
+alias pyshell='source ./.venv/bin/activate'
+
+pip () {
+    if emptyvar $VIRTUAL_ENV
+    then 
+        echo 'No VIRTUAL_ENV set, activate with `pyshell` first?'
+    else
+        python -m pip "$@"
+    fi
+}
+
+py_make_venv () {
+    if exists '.venv'; then echo '.venv already exists'; exit 1; fi
+
+    echo "Using $(python -V) located at $(which python)"
+    python -m venv .venv && source './.venv/bin/activate'
+    if exists 'requirements.txt'
+    then
+        python -m  pip install -r 'requirements.txt'
+    else
+        python -m pip freeze > 'requirements.txt'
+    fi
+}
+
 
 alias django='python manage.py'
-alias pymode='pymodetemp1="$(pwd)"; pipenv shell; cd $pymodetemp1'
-
 alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm tagged_files"
+# }}}
+# {{{ Misc
+import() {
+    echo "disabled command"
+}
+# }}}
+# {{{ Remotes
+alias horus="ssh -t -i ~/.ssh/horus_rsa eb130475@hpc.zimt.uni-siegen.de" 
 # }}}
