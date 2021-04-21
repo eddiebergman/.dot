@@ -1,154 +1,23 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{xcolor}
+\usepackage{amsfonts}
 
-%
-% Font stuff
-%
-\usepackage[T1]{fontenc}
-\usepackage{bm} % \bm{symbol}
+\newcommand{\id}[1]{^{\paren{#1}}}
+\newcommand{\given}{\mid}
+\newcommand{\prob}[1]{\mathbb{P}\paren{#1}}
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
 
-\renewcommand*\familydefault{\sfdefault}
-\definecolor{grayertext}{cmyk}{0, 0, 0 , 0.80}
-\definecolor{commenttext}{cmyk}{0.9, 0.3, 0.3, 0}
-\color{grayertext}
-\everymath{\color{black}}
-
-\usepackage{microtype}
-
-%
-% Structures
-%
-\usepackage{enumitem}
-\usepackage{marginnote} % \marginnote[vert offset]{text}
-\usepackage{listings} % For code \begin{lstlisting}[language= ]
-\usepackage{amsthm}
-\usepackage{mdframed}
-\usepackage{thmtools}
-
-%
-% Layout
-%
-% TODO: Would like to get this to work so I can select
-%       geometries by name e.g. \loadgeometry{nomarginpage}
-\usepackage[
-    top=1.5cm,
-    bottom=1cm,
-    left=2.0cm,
-    right=3cm,
-    marginparsep=1cm,
-    marginparwidth=2cm,
-    heightrounded
-]{geometry} % default style
-%\savegeometry{marginpage}
-%\newgeometry{%
-%    top=1.5cm,%
-%    bottom=1cm,%
-%    left=2.0cm,%
-%    right=7cm,%
-%    marginparsep=1cm,%
-%    marginparwidth=1cm,%
-%    heightrounded%
-%}
-%\savegeometry{nomarginpage}
-%\loadgeometry{marginpage}
-
-%
-% Images
-%
-\usepackage{graphics}
-\usepackage{tikz}
-\usepackage{wrapfig}
-\usepackage{caption}
-
-
-\captionsetup[figure]{
-    format=hang,
-    font=small,
-    labelfont={bf},
-    name={fig},
-    labelsep=colon,
-    skip=12pt,
-    width=\marginparwidth
-}
-
-% No 'Fig.' before caption
-% \captionsetup{name={}}
-
-\setlength{\parskip}{1em}
-\setlength{\parindent}{0em}
-
-
-%
-% Linking
-%
-\usepackage{url}
-\usepackage{hyperref} % For \href{link}{text}
-\hypersetup{
-    colorlinks,
-    linkcolor={red!50!black},
-    citecolor={blue!50!black},
-    urlcolor={blue!80!black}
-}
-
-
-%
-%
-% Commands
-%
-%
-
-%
-% Math commands
-%
-\newcommand*{\half}{\frac{1}{2}}
-\newcommand*{\abs}[1]{\left\lvert#1\right\rvert}
-\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand*{\normsq}[1]{\norm{#1}^2}
-\newcommand*{\given}{\mid} % Just a naming alias
-\newcommand*{\inv}[1]{#1\raisebox{1.15ex}{$\scriptscriptstyle-\!1$}}
-\newcommand*{\sR}{\mathbb{R}}
-\newcommand*{\Ex}{\mathbb{E}}
-\newcommand*{\Prob}{\mathbf{P}}
-\newcommand*{\idx}[1]{{\left[#1\right]}}
-\newcommand*{\id}[1]{^{\left(#1\right)}}
-\newcommand*{\union}{\cup}
-\newcommand*{\intersection}{\cap}
-
-% https://tex.stackexchange.com/questions/5223/command-for-argmin-or-argmax
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-
-% https://tex.stackexchange.com/questions/268766/curly-braces-in-math-mode
-% Allows the use of \set{..} in math mode
 \usepackage{mathtools}
-\DeclarePairedDelimiter\set\{\}
+\DeclarePairedDelimiter\paren{(}{)}           % (parentheses)
+\DeclarePairedDelimiter\ang{\langle}{\rangle} % <angle brackets>
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}   % |absolute value|
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}  % ||norm||
+\DeclarePairedDelimiter\bkt{[}{]}             % [brackets]
+\DeclarePairedDelimiter\set{\{}{\}}           % {braces}
 
-%
-% Extra commands
-%
-\newcommand{\comment}[1]{{\color{commenttext}#1}}
-\newcommand*{\lline}{\rule{\linewidth}{0.2pt}}
-\newcommand*{\n}{\mbox{}\\}
-%%%%% Junk from here, yet to sort or use
-% General reference
-% https://tex.stackexchange.com/questions/110244/using-mdframed-style-within-declaretheoremstyle-to-change-title
-\declaretheoremstyle[
-    headfont=\normalfont\bfseries,
-    notefont=\normalfont\itshape,
-    bodyfont=\normalfont,
-    notebraces={(}{)},
-    headpunct=,
-    mdframed={linecolor=black!50}
-]{blackboxstyle}
-\declaretheorem[numbered=no, name=, style=blackboxstyle]{blackbox}
-\declaretheorem[numbered=no, name=, style=blackboxstyle]{bigref}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
 
-\declaretheoremstyle[
-    headfont=\normalfont\bfseries,
-    notefont=\normalfont,
-    bodyfont=\normalfont,
-    notebraces={(}{)},
-    headpunct=.,
-]{definitionstyle}
-\declaretheorem[name=Defintion, style=definitionstyle, numberwithin=section]{definition}
+
