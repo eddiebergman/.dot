@@ -1,3 +1,5 @@
+Note: This readme is out of date
+
 # .dot
 __Note:__ _This installation has not been done on a dry run and may encounter an issue.
 Its main use is as a quick reminder for myself, there will be bugs until properly tested_
