@@ -2,7 +2,6 @@ if !exists('g:python_command')
     let g:python_command = 'python'
 endif
 
-let b:comment_leader = '# ' " Outdated commenting thing
 
 " {{{ Settings
 setlocal expandtab
@@ -13,7 +12,7 @@ setlocal shiftwidth=4
 " {{{ Folding
 " Note: Currently using a plugin to manage folding
 function! s:IndentLevel(lnum)
-    return indent(a:lnum) / &shiftwidth
+    return indent(a:lnum) / &shiftwidth 
 endfunction
 
 function! s:NextNoneBlank(lnum)
@@ -71,7 +70,7 @@ function! g:PythonFoldLevel(lnum)
     " =   Line continuations \
     if prev_line =~? '\vaa$'
         echom prev_line
-        return '='
+        retur '='
     endif
 
     " -1 Indented whitespace
@@ -85,14 +84,19 @@ endfunction
 "setlocal foldexpr=g:PythonFoldLevel(v:lnum)
 
 function! g:G_PythonCustomFoldText()
-    let line = getline(v:foldstart)
     let line_count = v:foldend - v:foldstart
-    let str_line_count = '--('.line_count.')--'
-    let padded_line = Pad(line, &colorcolumn)
-    let trimmed_line = padded_line[0:&colorcolumn-2]
+    let str_line_count = '('.line_count.')'
+
+    let line = getline(v:foldstart)
+    let line = substitute(line, '\(^\s*\)\@<=\(def \|class \)', '', '')
+    let line = substitute(line, ':$', '', '')
+
     "let cut_off = &columns - len(line_count)
     "let rest = str(padded_line[0:cut_off])
-    return join([trimmed_line, str_line_count], '  ')
+    let line = Pad(line, &colorcolumn)
+    let line = line[0:&colorcolumn-2]
+
+    return join([line, str_line_count], '  ')
 endfunction
 
 setlocal foldtext=g:G_PythonCustomFoldText()
@@ -100,6 +104,12 @@ setlocal foldtext=g:G_PythonCustomFoldText()
 " {{{ Keymaps
 nnoremap <leader>rf :!python % 
 nnoremap <leader>af :Autopep8<cr>
+
+" search for function
+nnoremap <leader>sff :CtrlSF "def "<left>
+" search for class
+nnoremap <leader>sfc :CtrlSF "class "<left>
+
 " }}}
 " {{{ Mypy
 command! -nargs=* -complete=file Mypy
@@ -161,10 +171,26 @@ if g:colors_name ==? 'nord'
     highlight link PythonFloat Todo
     highlight link pythonNumber Todo
     highlight link PythonNone Todo
+    highlight link PythonBuiltinObj Todo
     highlight link pythonClassVar Number
     highlight link pythonStrInterpRegion Type
     highlight link pythonBytesEscape Type
+    highlight link pythonTyping Todo
+    highlight link pythonExtraHighlight Todo
+endif
+
+if g:colors_name ==? 'solarized8'
+    highlight link pythonbdoc pythonString
+endif
+
+if g:colors_name ==? 'gruvbox'
+    highlight link pythonTyping GruvboxYellow
+    highlight link pythonFunctionCall GruvboxAqua
+    highlight link pythonFunction GruvboxAquaBold
+    highlight link pythonClass GruvboxYellowBold
+    highlight link pythonDottedName GruvboxPurple
+    highlight link pythonDecorator GruvboxRed
+    highlight link pythonExtraHighlight Folded
 endif
 
 " }}}
-

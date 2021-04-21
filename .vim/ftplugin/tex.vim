@@ -1,3 +1,4 @@
+setlocal wrap linebreak textwidth=0 colorcolumn=0
 " {{{ Keymaps
 nnoremap <buffer> <nowait> <leader>ep :EditPreamble<cr>
 nnoremap <buffer> <nowait> <leader>vv :VimtexView<cr>
@@ -81,4 +82,10 @@ exec 'hi TexBoldMathText gui=bold' .
         \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
 
 " }}}
-
+" {{{ Formatting
+let b:latexindent_pl_path = '/home/eddiebergman/latexindent.pl/latexindent.pl'
+nnoremap <leader>af :w <bar> execute('silent !'.b:latexindent_pl_path.' -w %') <bar> redraw!<cr>
+" }}}
+" {{{ Autoclose Disable in Math mode
+let b:AutoCloseProtectedRegion = ['texMath', 'texMathZones']
+" }}}

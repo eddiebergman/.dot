@@ -10,20 +10,29 @@ call vundle#begin()
 " {{{ Vundle (Package manager)
     Plugin 'VundleVim/Vundle.vim'
 " }}}
+" {{{ VimWiki (For self documents)
+    Plugin 'vimwiki/vimwiki'
+    let g:vimwiki_table_mappings = 0
+    let wiki = {}
+    let wiki.path = '~/my_wiki/'
+    let wiki.nested_syntaxes = {'python': 'python'}
+" }}}
 " {{{ vimtex (Tools for Tex and Latex)
     Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
-    let g:vimtex_quickfix_mode=0
-    let g:vimtex_view_method='zathura'
+    "let g:vimtex_quickfix_mode=0
+    "let g:vimtex_view_method='zathura'
     " let g:Tex_FoldedEnvironments='definition'
     let g:tex_conceal='abdmg'
-    let g:Imap_UsePlaceHolders=0
+    "let g:Imap_UsePlaceHolders=0
     let g:vimtex_compiler_latexmk = {
         \ 'build_dir' : 'build'
         \}
     let g:vimtex_fold_enabled=1
     let g:vimtex_format_enabled=1
     let g:vimtex_view_forward_search_on_start=0
+    " https://tex.stackexchange.com/questions/81958/using-vim-latex-live-preview-with-minted-package
+    let g:Tex_DefaultTargetFormat='pdf'
 " }}}
 " {{{ tex-conceal (Extra conceal for latex)
     Plugin 'KeitaNakamura/tex-conceal.vim'
@@ -33,9 +42,20 @@ call vundle#begin()
 " }}}
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
-
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard'] 
-    let g:ctrlp_working_path_mode = '' " Only search everything under current working directory
+    let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
+" }}}
+" {{{ CtrlSF (search inside files)
+    Plugin 'dyng/ctrlsf.vim'
+    let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+    let g:ctrlsf_auto_preview = 0
+    let g:ctrlsf_default_view_mode = 'normal' " normal , compact
+    let g:ctrlsf_search_mode = 'async'
+    let g:ctrlsf_position = 'left'
+    let g:ctrlsf_winsize = '50%'
+    let g:ctrlsf_ackprg = 'ack'
+    let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
 " }}}
 " {{{ YouCompleteMe (Auto Completion)
     Plugin 'ycm-core/YouCompleteMe'
@@ -51,6 +71,7 @@ call vundle#begin()
 
 " }}}
 " {{{ UltiSnips (Snippet Engine)
+"
     Plugin 'SirVer/ultisnips'
     let g:UltiSnipsEditSplit = 'vertical'
     let g:UltiSnipsExpandTrigger='<tab>'
@@ -77,44 +98,15 @@ call vundle#begin()
 " {{{ Vim fugitive (git integration)
     Plugin 'tpope/vim-fugitive'
 " }}}
-" {{{ Vim Skeleton (File Skeleton)
-"    Plugin 'noahfrederick/vim-skeleton'
-" }}}
 " {{{ Vim Surround (surround selections)
     Plugin 'tpope/vim-surround'
-" }}}
-" {{{ CtrlSF (search files)
-    Plugin 'dyng/ctrlsf.vim'
-    let g:ctrlsf_auto_focus = {
-    \ "at": "start"
-    \ }
-    let g:ctrlsf_auto_preview = 0
-    let g:ctrlsf_default_view_mode = 'normal' " normal , compact
-    let g:ctrlsf_search_mode = 'async'
-    let g:ctrlsf_position = 'left'
-    let g:ctrlsf_winsize = '35%'
-    let g:ctrlsf_ackprg = 'ack'
 " }}}
 " {{{ NERDTree (file tree)
     Plugin 'scrooloose/nerdtree'
     let g:NERDTreeWinSize = &columns / 5
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeShowHidden = 1
-" }}}
-" {{{ Solarized (Colour Theme)
-    Plugin 'lifepillar/vim-solarized8'
-" }}}
-" {{{ tender (Color Theme)
-    Plugin 'jacoborus/tender.vim'
-" }}}
-" {{{ darcula (Color Theme)
-    Plugin 'doums/darcula'
-" }}}
-" {{{ cryslominsa/dark (Color Theme)
-    Plugin 'sainnhe/archived-colors'
-" }}}
-" {{{ Nord (Color Theme)
-    Plugin 'arcticicestudio/nord-vim'
+    let NERDTreeIgnore=['__pycache__$', '\~$']
 " }}}
 " {{{ vim-polyglot
     Plugin 'sheerun/vim-polyglot'
@@ -147,12 +139,47 @@ call vundle#begin()
 " {{{ fzf
     Plugin 'junegunn/fzf.vim'
 " }}}
-" {{{ Folding
+" {{{ vim-airline (bottom bar)
+    Plugin 'vim-airline/vim-airline'
+" }}}
+" {{{ vim-test
+    Plugin 'vim-test/vim-test'
+    let test#strategy = 'asyncrun_background'
+" }}}
+" {{{ AsyncRun
+    Plugin 'skywind3000/asyncrun.vim'
+    let g:asyncrun_open = 8
+" }}}
+" {{{ Dispatch
+    Plugin 'tpope/vim-dispatch'
+" }}}
+
+" {{{ --- Folding ---
     Plugin 'tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
 " }}}
-" {{{ vim-airline (bottom bar)
-    Plugin 'vim-airline/vim-airline'
+" {{{ --- Themes ---
+" {{{ Solarized (Colour Theme)
+    Plugin 'lifepillar/vim-solarized8'
+" }}}
+" {{{ GruvBox(Color Theme)
+    Plugin 'morhetz/gruvbox'
+    let g:gruvbox_italic=1
+    let g:gruvbox_underline=1
+    let g:gruvbox_undercurl=1
+" }}}
+" {{{ tender (Color Theme)
+    Plugin 'jacoborus/tender.vim'
+" }}}
+" {{{ darcula (Color Theme)
+    Plugin 'doums/darcula'
+" }}}
+" {{{ cryslominsa/dark (Color Theme)
+    Plugin 'sainnhe/archived-colors'
+" }}}
+" {{{ Nord (Color Theme)
+    Plugin 'arcticicestudio/nord-vim'
+" }}}
 " }}}
 
 call vundle#end()
@@ -197,6 +224,8 @@ nnoremap <leader>yc "+y
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
+nnoremap <C-l> :tabnext<cr>
+nnoremap <C-h> :tabprev<cr>
 " }}}
 " {{{ Searching
 " normal: Automatically change to regular expression search
@@ -204,9 +233,10 @@ nnoremap / /\v
 nnoremap <leader>sr :%s/
 vnoremap <leader>sr :s/
 nnoremap <leader>sg :call SynGroup()<cr>
-nnoremap <leader>sf :CtrlSF 
+nnoremap <leader>sf :CtrlSF ""<left>
 vmap <leader>sfk <Plug>CtrlSFVwordPath
 nnoremap <leader>gt :YcmComplete GoTo<cr>
+nnoremap <leader>gtd :YcmComplete GoToDefinition<cr>
 " }}}
 " {{{ Quick File
 nnoremap <leader>esn  :vsp $drvim/UltiSnips<cr>
@@ -214,7 +244,9 @@ nnoremap <leader>eft  :vsp $drvim/ftplugin<cr>
 nnoremap <leader>ez   :vsp $drzsh/.zshrc<cr>
 nnoremap <leader>ev   :vsp $drvim/.vimrc<cr>
 nnoremap <leader>eip  :vsp $HOME/.ipython/profile_default/startup<cr>
-nnoremap <leader>esy  :vsp $drvim/syntax/<cr>
+" For now syntax is just being done in after
+nnoremap <leader>esy  :vsp $drvim/after/<cr>
+nnoremap <leader>eaf  :vsp $drvim/after/<cr>
 
 nnoremap <leader>sv :source $HOME/.vimrc<cr>
 
@@ -232,6 +264,7 @@ nnoremap <C-k> zk
 " Set fold methods
 nnoremap <leader>fmm :setlocal foldmethod=marker<cr>
 nnoremap <leader>fmi :setlocal foldmethod=indent<cr>
+nnoremap <leader>fme :setlocal foldmethod=expr<cr>
 nnoremap <leader>fms :setlocal foldmethod=syntax<cr>
 nnoremap <leader>ft :setlocal foldenable!<cr>
 
@@ -252,7 +285,12 @@ nnoremap <leader><space> :set hlsearch!<CR>
 nnoremap <leader>sp :setlocal spell!<cr>
 vnoremap <leader>ck y:r!cksum <<< "<C-r>"" <bar> cut -f 1 -d ' '<CR>
 
+noremap <leader>qf :call asyncrun#quickfix_toggle(20)<cr>
 
+" [z]oom [i]n/[o]ut using tabs
+" https://stackoverflow.com/a/53670916/5332072
+nmap <leader>zi :tabnew %<CR>
+nmap <leader>zo :tabclose<CR>
 " }}}
 " {{{ Syntastic
 
@@ -425,6 +463,10 @@ set wildmenu
 set cul
 
 " }}}
+" {{{ Folding
+set foldtext=getline(v:foldstart)
+" }}}
+
 " {{{ Insert Mode/ Normal mode identifier
 "
 augroup InsertCursor
@@ -459,7 +501,8 @@ endif
 
 "set background=dark
 syntax on
-colorscheme nord
+colorscheme gruvbox
+set background=dark
 
 let s:orange = "%#Special#"
 let s:purple = "%#Underlined#"
@@ -582,8 +625,10 @@ endfunction
 
 set wildignore+=*.a,*.o
 "set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
-set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=.DS_Store,.git,.hg,.svn,.venv
+set wildignore+=*/__pycache__/*,*/.mypy_cache/*
 set wildignore+=*~,*.swp,*.tmp
+
 
 " }}}
 " {{{ Syntax Highlight groups (Must be at end)
