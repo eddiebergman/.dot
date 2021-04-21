@@ -9,6 +9,8 @@ template_dirs=($template_root/*/)
 
 template_note_preamble="$drtemplate/note/note_preamble.tex"
 template_note_template="$drtemplate/note/note_template.tex"
+template_note_class_singlepage="$drtemplate/note/singlepage.cls"
+template_note_class_twocol="$drtemplate/note/twocol.cls"
 template_note_bib="$drlib/bibs/mybib.bib"
 template_help() {
     printf "
@@ -179,10 +181,13 @@ template_list_cdoc() {
 template_note() {
     if ! exists $template_note_preamble; then
         printf "Can't find preamble at $template_note_preamble";  return; fi
-    if ! exists $template_note_template; then
-        printf "Can't find template at $template_note_template";  return; fi
-    if ! exists $template_note_bib; then
-        printf "Can't find bib at $template_note_bib"; return; fi
+    if ! exists $template_note_class_singlepage; then
+        printf "Can't find singlepage.cls at $template_note_class_singlepage";  return; fi
+    if ! exists $template_note_class_twocol; then
+        printf "Can't find twocol.cls at $template_note_class_twocol";  return; fi
+        #
+    #if ! exists $template_note_bib; then
+    #    printf "Can't find bib at $template_note_bib"; return; fi
 
     if ! one $# || arg $1 "help" "--help" "-h"; then
         template_note_cdoc; return; fi
@@ -194,7 +199,9 @@ template_note() {
 
     cp "$template_note_template" "$out.tex"
     ln -sfn "$template_note_preamble" "$dir/note_preamble.tex"
-    ln -sfn "$template_note_bib" "$dir/biblio.bib"
+    ln -sfn "$template_note_class_singlepage" "$dir/singlepage.cls"
+    ln -sfn "$template_note_class_twocol" "$dir/twocol.cls"
+    #ln -sfn "$template_note_bib" "$dir/biblio.bib"
     exists "$dir/build" || mkdir "$dir/build"
     exists "$dir/figures" || mkdir "$dir/figures"
     printf "Created note $1"
