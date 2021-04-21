@@ -10,69 +10,42 @@
 # r, regex match
 # `!p ...` python code, t[i], ith tabstop
 # }}}
-# {{{ Symbols
-snippet marginnote "\marginnote"
-\marginnote{$1}[\parskip]
-endsnippet
-
-snippet cdot "\cdot" i
+# {{{ Symbols snippets
+priority 1
+snippet . "\cdot" i
 \cdot$0
 endsnippet
 
-# }}}
-# {{{ Delimiters
-snippet lr "\left \right" i
-\left$1 $2 \right$1 $0
-endsnippet
-
-snippet ( "\left( right)" i
-\left( $1 \right)$0
-endsnippet
-
-snippet [ "\left[ \right]" i
-\left[ $1 \right]$0
-endsnippet
-
-snippet < "\langle \rangle" i
-\langle $1 \rangle$0
-endsnippet
-
-# }}}
-# {{{ Document structures
-
-snippet section "\section{}"
-\section{$1}$0
+priority 2
+snippet ... "\ldots" i
+\ldots
 endsnippet
 
 snippet --- "\lline" w
 \hfill \lline
 endsnippet
+# }}}
+# {{{ Delimiters
+global !p
+def match_delim(delimiter):
+    pairs = {
+        '(' : ')',
+        '[' : ']',
+        '|' : '|',
+        '{' : '}',
+        '<' : '>',
+    }
+    return pairs[delimiter]
+endglobal
 
-snippet list "begin{description}"
-\begin{description}
-    $0
-\end{description}
+priority 1
+snippet '([\(|\|\[|\{|<])' "\left \right" ir
+\left`!p snip.rv = match.group(1)`$1\right`!p snip.rv = match_delim(match.group(1))`$0
 endsnippet
-
-snippet desc "begin{description}"
-\begin{description}
-    $0
-\end{description}
-endsnippet
-
-snippet itemize "begin{itemize}"
-\begin{itemize}
-    $0
-\end{itemize}
-endsnippet
-
-snippet item "\item" w
-\item $0
-endsnippet
-
-snippet itemm "\item []" w
-\item [$1] \hfill \\\\
-    $0
+# }}}
+# {{{ Regions
+snippet section "\section{}"
+\section{$1}$0
 endsnippet
 
 snippet beg "begin / end" w
@@ -93,38 +66,100 @@ endsnippet
 snippet dm "\[\] - display math" wA
 \[\color{black}
     $1
-.\]
+\ .\]
+endsnippet
+#}}}
+# {{{ Lists
+snippet desc "begin{description}"
+\begin{description}
+    $0
+\end{description}
+endsnippet
+
+snippet itemize "begin{itemize}"
+\begin{itemize}
+    $0
+\end{itemize}
+endsnippet
+
+snippet item "\item" w
+\item $0
+endsnippet
+
+snippet itemm "\item []" w
+\item [] \textbf{$1 - } $0
 endsnippet
 # }}}
-# {{{ Math structures
-snippet sub "_{}" i
-_{$1}$0
+# {{{ Math
+#{{{ Sequences
+priority 2
+snippet 'infseq(.*)--(.*)--(.*)--(.*)' "x_1 <op> x_2, ..." wr
+`!p
+var = match.group(1)
+op = match.group(2)
+start = match.group(3)
+second = match.group(4)
+snip.rv = ''.join([
+    var + '_{' + start + '} ',
+    op + ' ',
+    var + '_{' + second+ '} ',
+    op + ' \ldots'
+])
+`
 endsnippet
 
-snippet sup "^{}" i
-^{$1}$0
+snippet 'seq0n' "seq0n" w
+$1_0, \ldots, $1_n$0
 endsnippet
 
-snippet 'sub([A-Za-z]+|\d)' "a^{-1}" ir
-_{`!p snip.rv = match.group(1)`}$0
+snippet '(seqn|seq1n)' "seq1n" wr
+$1_1, \ldots, $1_n$0
 endsnippet
 
-snippet 'sup([A-Za-z]+|\d|\*)' "a^{-1}" ir
-^{`!p snip.rv = match.group(1)`}$0
+priority 1
+snippet 'seq(.*)--(.*)--(.*)--(.*)' "x_1 <op> ... <op> x_n" wr
+`!p
+var = match.group(1)
+op = match.group(2)
+start = match.group(3)
+end = match.group(4)
+snip.rv = ''.join([
+    var + '_{' + start + '} ',
+    op + ' \ldots ' + op + ' ',
+    var + '_{' + end + '} '
+])
+`
 endsnippet
 
-snippet idx "\idx" i
-\idx{$1}$0
+#}}}
+#{{{ Reduction Operators
+global !p
+def op(name):
+    operators = {
+        'sum' : '\sum',
+        'int' : '\int',
+        'union' : '\\bigcap',
+    }
+    return operators[name]
+endglobal
+
+snippet '(sum|int|union)(.*)--(.*)--(.*)' "\sum_{}^{} x_i" ir
+`!p
+operator = op(match.group(1))
+sub = match.group(2)
+sup = match.group(3)
+var = match.group(4)
+snip.rv = ''.join([
+    operator,
+    '_{' + sub + '}',
+    '^{' + sup + '}',
+    ' ' + var
+])
+`
 endsnippet
 
-snippet id "\id" i
-\id{$1}$0
-endsnippet
-
-snippet frac "\frac{}{}" i
-\frac{ $1 }{ $2 }$0
-endsnippet
-
+#}}}
+#{{{ Single Value ops
 snippet abs "| |"
 \left\Vert $1 \right\Vert $0
 endsnippet
@@ -133,63 +168,126 @@ snippet norm "|| ||"
 \left\Vert\left\Vert  $1 \right\Vert\right\Vert $0
 endsnippet
 
+snippet 'inv' "a^{-1}" i
+^{-1}
+endsnippet
+#}}}
+#{{{ Quick maf
+snippet sub "_{}" i
+_{$1}$0
+endsnippet
+
+snippet sup "^{}" i
+^{$1}$0
+endsnippet
+
+snippet \\ "\frac{}{}" i
+\frac{ $1 }{ $2 }$0
+endsnippet
+
 snippet sq "^2" i
 ^2$0
 endsnippet
 
-snippet \cap "\, \cap \," w
-\, \cap \,$0
-endsnippet
-
+priority 1
 snippet union "\cap" i
-\cap$0
-endsnippet
-
-snippet bunion "\cap" i
 \bigcap$0
 endsnippet
 
-snippet pair "_a, _b" w
-$1_a, $1_b$0
+priority 2
+snippet sunion "\cap" i
+\cap$0
 endsnippet
 
-snippet sequence "x_1, x_2, ..." i
-$1,\,\ldots\,,$1$0
+snippet setreal "\mathbb{R}" i
+\mathbb{R}$0
 endsnippet
 
-snippet listn "[x_1 \ldots x_n ]" i
-[${1:x}_1 \ldots $1_n]
+snippet setcomplex "\mathbb{C}" i
+\mathbb{C}$0
 endsnippet
 
-snippet sum "\sum__{}^{}" i
-\sum$0
+snippet setint "\mathbb{Z}" i
+\mathbb{Z}$0
 endsnippet
-
-snippet vec "\bm" w
-\bm{$1}$0
-endsnippet
-
-# inv
-snippet '([A-Za-z])inv' "a^{-1}" wr
-`!p snip.rv = match.group(1)`^{-1}
-endsnippet
-
-#snippet '([A-Za-z])(\d)' "auto subscript" wrA
-#`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
-#endsnippet
-
-#snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
-#`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
-#endsnippet
-
-#snippet '(\s[A-Za-z]) in ([A-Za-z])' "x in A" wrA
-#`!p snip.rv = match.group(1)` \in `!p snip.rv = match.group(2)`
-#endsnippet
-
-#snippet '([A-Za-z])_([A-Za-z])\+(\d)' "v_{n+1}" wrA
-#`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`+1}
-#endsnippet
+#}}}
 # }}}
+# {{{ Phrases
+snippet i.e. "i.e." i
+\textit{i.e.}
+endsnippet
+
+snippet w.r.t. "w.r.t." i
+\textit{w.r.t.}
+endsnippet
+
+snippet r.h.s "right hand side"
+\textit{r.h.s.}
+endsnippet
+# }}}
+# {{{ Text commands
+snippet small "\small" i
+\small$0
+endsnippet
+
+snippet bs "\boldsymbol" w
+\boldsymbol{$1}$0
+endsnippet
+
+snippet label "\label{}" w
+\label{$1}$0
+endsnippet
+
+snippet hat "\hat{}" w
+\hat{$1}$0
+endsnippet
+
+snippet ref "\hypperref{}" w
+\hyperref[$1]{$2}$0
+endsnippet
+
+snippet bf "bold" w
+\textbf{$1}$0
+endsnippet
+
+snippet mbf "mathbf" i
+\mathbf{$1}$0
+endsnippet
+
+snippet mtt "mathbb" w
+\mathbb{$1}$0
+endsnippet
+
+snippet mbb "mathbb" i
+\mathbb{$1}$0
+endsnippet
+
+snippet mit "mathcal" w
+\mathcal{$1}$0
+endsnippet
+
+snippet mcal "mathcal" i
+\mathcal{$1}$0
+endsnippet
+
+snippet mscr "mathscr" i
+\mathscr{$1}$0
+endsnippet
+
+snippet it "italic" w
+\textit{$1}$0
+endsnippet
+
+snippet tt "code" w
+\texttt{$1} $0
+endsnippet
+
+snippet bp "\textbullet\ " w
+\textbullet\ $0
+endsnippet
+
+# }}}
+# {{{ For Reference of how to write it
 #{{{ images
 snippet figure "\figure{...}" w
 ${1:% include a  '\\graphicspath{ {./figures} in the header }}
@@ -212,69 +310,7 @@ ${1:% include a  '\\graphicspath{ {./figures} in the header }}
 endsnippet
 
 #}}}
-# {{{ Phrases
-
-snippet i.e. "i.e." iA
-\textit{i.e.}
-endsnippet
-
-snippet w.r.t. "w.r.t." iA
-\textit{w.r.t.}
-endsnippet
-
-snippet r.h.s "right hand side"
-\textit{r.h.s.}
-endsnippet
-
-# }}}
-# {{{ Common commands
-snippet small "\small" i
-\small$0
-endsnippet
-
-snippet label "\label{}" w
-\label{$1}$0
-endsnippet
-
-snippet ref "\hypperref{}" w
-\hyperref[$1]{$2}$0
-endsnippet
-
-snippet bf "bold" w
-\textbf{$1}$0
-endsnippet
-
-snippet mbf "mathbf" iA
-\mathbf{$1}$0
-endsnippet
-
-snippet mtt "mathbb" w
-\mathbb{$1}$0
-endsnippet
-snippet mbb "mathbb" iA
-\mathbb{$1}$0
-endsnippet
-
-snippet mit "mathcal" w
-\mathcal{$1}$0
-endsnippet
-
-snippet mcal "mathcal" iA
-\mathcal{$1}$0
-endsnippet
-
-snippet it "italic" w
-\textit{$1}$0
-endsnippet
-
-snippet tt "code" w
-\texttt{$1} $0
-endsnippet
-
-snippet bp "\textbullet\ " w
-\textbullet\ $0
-endsnippet
-
+#{{{ Other
 snippet biblio "\bibliography{} \blibiographystyle"
 \bibliographystyle{vancouver}
 \bibliography{biblio}
@@ -289,8 +325,13 @@ snippet command1 "\newcommand{\cname}[1]{ #1 }\"
     ${2: Here is param #1}
 }
 endsnippet
+
+snippet marginnote "\marginnote"
+\marginnote{$1}[\parskip]
+endsnippet
+#}}}
 # }}}
-#{{{ Tikz
+# {{{ Tikz
 snippet tikz "\begin{tikzpicture}" w
 \begin{tikzpicture}
     $1
@@ -299,5 +340,14 @@ endsnippet
 
 snippet boundingbox "\draw rectangle" w
 \draw (current bounding box.south west) rectangle (current bounding box.north east);
+endsnippet
+#}}}
+# {{{ German
+snippet : "\:" i
+\\"$0
+endsnippet
+
+snippet ss "{\ss}" i
+{\\ss}
 endsnippet
 #}}}

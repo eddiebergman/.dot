@@ -1,4 +1,4 @@
-# {{{ General
+#{{{ General
 snippet func "def func():" w
 def ${1:funcname}():
     """
@@ -16,6 +16,11 @@ def __init__(self):
     ======
     """
     $0
+endsnippet
+
+snippet main "__main__" w
+if __name__ == "__main__":
+    $1
 endsnippet
 
 snippet class "class MyClass:" w
@@ -40,7 +45,7 @@ def ${1:mymethod}(self):
     """
     ${2:$1 documentation}
     """
-    print('hello from $1')
+    raise NotImplementedError
 endsnippet
 
 snippet kv1 "{ key: value, }" wA
@@ -51,6 +56,17 @@ snippet kv "key: value" w
 '${1:key}' : ${2:val},
 endsnippet
 
+snippet am "abstractmethod" w
+@abstractmethod
+endsnippet
+
+snippet cm "classmethod" w
+@classmethod
+endsnippet
+
+snippet prop "@property" w
+@property
+endsnippet
 # }}}
 #{{{ Django
 snippet path "path()" w
@@ -100,6 +116,10 @@ def complex(request):
 endsnippet
 #}}}
 #{{{ Doc
+snippet nie "raise NotImplementedError" w
+raise NotImplementedError
+endsnippet
+
 snippet bdoc "bigdoc" w
 """
 ${1:Documentation}
