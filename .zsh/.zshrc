@@ -1,28 +1,21 @@
+# {{{ oh-my-zsh
+# oh-my-zsh should be enabled towards the end
+# {{{ Theme
+ZSH_THEME="robbyrussell"
+eval `dircolors ~/.dir_colors`
+# }}}
+# {{{ Plugins
+plugins=(git zsh-autosuggestions colored-man-pages colorize)
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#fabd2f"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# }}}
+# {{{ Setup
+export ZSH=$HOME/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+# }}}
+# }}}
 # {{{ Env
-# {{{ Path
-export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
-# }}}
-# {{{ Locations
-export drdot="$HOME/.dot"
-export drzsh="$drdot/.zsh"
-export drvim="$drdot/.vim"
-export drconfig="$drdot/.config"
-export drinstaller="$drdot/installers"
-export drshare="$HOME/.local/share"
-export drtemplate="$drdot/templates"
-export drlib="$HOME/mylibrary"
-export ZSHDIR="$drzsh" # Required by <something>
-# }}}
-# {{{ Defaults - $VISUAL, $EDITOR, ...
-export VISUAL="vim"
-export EDITOR="vim"
-export VIEWER="zathura"
-# export PAGER="most"
-# }}}
-# {{{ External
-source "$drdot/.secret/zotero_envs.zsh"
-# }}}
-# }}}
 # {{{ Aliases
 # {{{ Default Commands
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
@@ -59,13 +52,38 @@ alias networkrefresh='nmcli network off; nmcli network on'
 alias clearswaps='rm ~/.cache/vim/swap/*'
 # }}}
 # }}}
-# {{{ History
-HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=1000
+# {{{ Exports
+# {{{ Path
+export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
+export PATH="${PATH}:${HOME}/usr/bin"
+export PATH="${PATH}:/usr/local/cuda/bin"
+
+# For lutris gaming on linux, required for "import dbus"
+export PATH="${PATH}:/usr/lib/python3/dist-packages"
 # }}}
-# {{{ Shell Customization
-# {{{ Options
+# {{{ Locations
+export drdot="$HOME/.dot"
+export drzsh="$drdot/.zsh"
+export drvim="$drdot/.vim"
+export drconfig="$drdot/.config"
+export drshare="$HOME/.local/share"
+export drtemplate="$drdot/templates"
+#export ZSHDIR="$drzsh" # Required by <something>
+# }}}
+# {{{ Defaults - $VISUAL, $EDITOR, ...
+export VISUAL="vim"
+export EDITOR="vim"
+export VIEWER="zathura"
+# export PAGER="most"
+# }}}
+# {{{ Sources
+source "$drzsh/colours.zsh"
+source "$drdot/.secret/zotero_envs.zsh"
+source "$drzsh/template.zsh"
+# }}}
+# }}}
+# }}}
+# {{{ Settings
 setopt extendedglob     # Enables wildcards
 setopt notify           # Enables report of status of background jobs
 setopt complete_aliases # Enables completion of aliases
@@ -73,29 +91,32 @@ setopt complete_aliases # Enables completion of aliases
 set H+ # Stops history expansion
 # https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
 
+# Enables command auto-correction
+ENABLE_CORRECTION="true"
+
 # Allows vi like navigation in shell input
 bindkey -v
-# }}}
-# {{{ Zstyle
+bindkey 'jk' vi-cmd-mode # jk to exit insert mode
+
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' matcher-list '' ''
 zstyle :compinstall filename '/home/skantify/.zshrc'
-# }}}
-# {{{ Compinit
+
 # Autoload and call
 autoload -Uz compinit promptinit
 compinit
 promptinit
-# }}}
-# {{{ Theme
-source $drshare/powerlevel10k/powerlevel10k.zsh-theme
-[[ -f ~/.dot/.zsh/.p10k.zsh ]] && source ~/.dot/.zsh/.p10k.zsh
 
+# Autosuggestion complete
+bindkey '^ ' autosuggest-accept
+
+# {{{ History
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=1000
 # }}}
-# {{{ Dir Colors
-eval `dircolors ~/.dir_colors`
-# }}}
+
 # }}}
 # {{{ Functions
 datestamp () { echo "$(date -Idate)" }
@@ -106,9 +127,9 @@ eq () { equal $1 $2; return }
 argc () { equal $1 $2; return }
 
 less () { [[ "$1" -lt "$2" ]]; return }
-lt () { less $1 $2; return }
+lt () { less $1 $2; return } 
 
-greater () { ! less $1 $2 && ! equal $1 $2; return }
+greater () { ! less $1 $2 && ! equal $1 $2; return } 
 gt () { greater $1 $2; return }
 
 lessequal () { less $1 $2 || equal $1 $2; return}
@@ -163,26 +184,34 @@ empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
 array () { declare -a $1 }
 
 # }}}
-# {{{ Local Plugins
-source "$drzsh/template.zsh"
-# }}}
-# {{{ Colours
-source "$drzsh/colours.zsh"
-# }}}
 # {{{ Python
 
 # Enable pyenv
-eval "$(pyenv init -)"
 export PYENV_ROOT="${HOME}/.pyenv"
+export PATH="${PATH}:$PYENV_ROOT/bin"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 
 alias pyshell='source ./.venv/bin/activate'
 
 pip () {
     if emptyvar $VIRTUAL_ENV
-    then 
+    then
         echo 'No VIRTUAL_ENV set, activate with `pyshell` first?'
     else
         python -m pip "$@"
+    fi
+}
+
+ipy () {
+    if emptyvar $VIRTUAL_ENV
+    then
+        ipython
+    else
+        $VIRTUAL_ENV/bin/ipython
     fi
 }
 
@@ -191,12 +220,6 @@ py_make_venv () {
 
     echo "Using $(python -V) located at $(which python)"
     python -m venv .venv && source './.venv/bin/activate'
-    if exists 'requirements.txt'
-    then
-        python -m  pip install -r 'requirements.txt'
-    else
-        python -m pip freeze > 'requirements.txt'
-    fi
 }
 
 
@@ -207,6 +230,17 @@ alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm 
 import() {
     echo "disabled command"
 }
+# }}}
+# {{{ Wacom
+wacomscreen () { 
+    xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1" 
+}
+# }}}
+# {{{ For GPU-cuda
+# This is needed by the cuda install script found
+# at ~/cuda/cuda11.1
+alias xterm-kitty="kitty"
+
 # }}}
 # {{{ Remotes
 alias horus="ssh -t -i ~/.ssh/horus_rsa eb130475@hpc.zimt.uni-siegen.de" 
