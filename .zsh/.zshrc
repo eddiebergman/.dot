@@ -3,6 +3,11 @@
 # {{{ Theme
 ZSH_THEME="robbyrussell"
 eval `dircolors ~/.dir_colors`
+stellarized_dark_shell="${HOME}/.vim/bundle/stellarized/shell/stellarized_dark.sh"
+if [[ -f "$stellarized_dark_shell" ]]; then
+    [ -n "$PS1" ] && sh "$stellarized_dark_shell"
+fi
+
 # }}}
 # {{{ Plugins
 plugins=(git zsh-autosuggestions colored-man-pages colorize)
