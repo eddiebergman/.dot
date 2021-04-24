@@ -46,6 +46,7 @@ call vundle#begin()
 " {{{ CtrlP (Fuzzy find files)
     Plugin 'ctrlpvim/ctrlp.vim'
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
+    let g:ctrlp_map = '<c-p>'
 " }}}
 " {{{ CtrlSF (search inside files)
     Plugin 'dyng/ctrlsf.vim'
@@ -284,6 +285,7 @@ noremap <leader>qf :call asyncrun#quickfix_toggle(20)<cr>
 " https://stackoverflow.com/a/53670916/5332072
 nmap <leader>zi :tabnew %<CR>
 nmap <leader>zo :tabclose<CR>
+
 " }}}
 " {{{ Syntastic
 
