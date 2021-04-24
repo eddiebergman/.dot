@@ -28,11 +28,22 @@ alias edot='cd $drdot && vim'
 alias ebib='cd $drlib/bibs && vim mybib.bib'
 # }}}
 # {{{ Screen
-alias screenright='xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1'
-alias screenleft='xrandr --auto && xrandr --output HDMI-2 --left-of eDP-1'
-alias screenoff='xrandr --auto && xrandr --output HDMI-2 --off'
-alias screenabove='xrandr --auto && xrandr --output HDMI-2 --above eDP-1'
-alias screenbelow='xrandr --auto && xrandr --output HDMI-2 --below eDP-1'
+PRIMARY_MONITOR="eDP-1"
+SECONDARY_MONITOR="HDMI-2"
+screenright () {
+    xrandr --auto
+    xrandr --output $SECONDARY_MONITOR --right-of $PRIMARY_MONITOR
+}
+
+screenleft () {
+    xrandr --auto
+    xrandr --output $SECONDARY_MONITOR --left-of $PRIMARY_MONITOR
+}
+
+screenoff () {
+    xrandr --auto
+    xrandr --output $SECONDAY_MONITOR --off
+}
 # }}}
 # {{{ Work setups
 alias notebook='cd ~/Desktop/phd/notebook && vim'

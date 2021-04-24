@@ -192,5 +192,8 @@ if g:colors_name ==? 'gruvbox'
     highlight link pythonDecorator GruvboxRed
     highlight link pythonExtraHighlight Folded
 endif
+if g:colors_name ==? 'xcodedark'
+    highlight link pythonStatement FunctionDef
+endif
 
 " }}}
