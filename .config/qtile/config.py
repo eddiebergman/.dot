@@ -100,6 +100,12 @@ def _keys():
             for i, group in enumerate(groups)
         ]
 
+    def keys_rofi():
+        rofi_theme = 'config'
+        return [
+            Key('M-d', lazy.spawn('rofi -show combi -theme {}'.format(rofi_theme)))
+        ]
+
     return [
         *keys_movement_between_windows(),
         *keys_movement_of_windows(),
@@ -109,6 +115,7 @@ def _keys():
         *keys_qtile(),
         *keys_screens(),
         *keys_workspace_groups(),
+        *keys_rofi()
     ]
 
 def _layouts():
