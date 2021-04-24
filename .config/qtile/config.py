@@ -16,6 +16,7 @@ colors = {
     'highlight': 'a32bb6',
     'highlight_bright': 'c75ad8',
     'foreground': 'FFFFFF',
+    'black': '000000',
 }
 def _keys():
 
@@ -111,20 +112,20 @@ def _keys():
     ]
 
 def _layouts():
+    def columns():
+        return layout.Columns(border_focus_stack='#d75f5f', margin=5)
+
+    def monadtall():
+        return layout.MonadTall(margin=5,
+                                border_normal=colors['highlight_background'],
+                                border_focus=colors['black'],
+                                border_width=4,
+                                single_margin=5,
+                                single_border_with=0)
+
     return [
-        layout.Columns(border_focus_stack='#d75f5f'),
+        monadtall(),
         layout.Max(),
-        # Try more layouts by unleashing below layouts.
-        # layout.Stack(num_stacks=2),
-        # layout.Bsp(),
-        # layout.Matrix(),
-        # layout.MonadTall(),
-        # layout.MonadWide(),
-        # layout.RatioTile(),
-        # layout.Tile(),
-        # layout.TreeTab(),
-        # layout.VerticalTile(),
-        # layout.Zoomy(),
     ]
 
 def _mouse():
@@ -237,6 +238,9 @@ def _screens():
                             fontsize=14,
                             font='Ubuntu mono')
 
+    def wallpaper():
+        return widget.Wallpaper(directory='~/.wallpapers/')
+
     def widgets_primary():
         try:
             import psutil
@@ -244,6 +248,7 @@ def _screens():
             pass
 
         return [
+            wallpaper(),
             group_box(),
             default_sep(),
             pomodoro(),
@@ -264,6 +269,7 @@ def _screens():
 
     def widgets_secondary():
         return [
+            wallpaper(),
             group_box(),
             window_name(),
             battery()
