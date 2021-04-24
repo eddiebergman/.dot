@@ -17,6 +17,9 @@ call vundle#begin()
     let wiki.path = '~/my_wiki/'
     let wiki.nested_syntaxes = {'python': 'python'}
 " }}}
+" {{{ vim-coloresque (Highlight color codes)
+    Plugin 'gko/vim-coloresque'
+" }}}
 " {{{ vimtex (Tools for Tex and Latex)
     Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
@@ -159,27 +162,17 @@ call vundle#begin()
     let g:SimpylFold_docstring_preview = 1
 " }}}
 " {{{ --- Themes ---
-" {{{ Solarized (Colour Theme)
     Plugin 'lifepillar/vim-solarized8'
-" }}}
-" {{{ GruvBox(Color Theme)
     Plugin 'morhetz/gruvbox'
-    let g:gruvbox_italic=1
-    let g:gruvbox_underline=1
-    let g:gruvbox_undercurl=1
-" }}}
-" {{{ tender (Color Theme)
+    "let g:gruvbox_italic=1
+    "let g:gruvbox_underline=1
+    "let g:gruvbox_undercurl=1
     Plugin 'jacoborus/tender.vim'
-" }}}
-" {{{ darcula (Color Theme)
     Plugin 'doums/darcula'
-" }}}
-" {{{ cryslominsa/dark (Color Theme)
     Plugin 'sainnhe/archived-colors'
-" }}}
-" {{{ Nord (Color Theme)
     Plugin 'arcticicestudio/nord-vim'
-" }}}
+    Plugin 'arzg/vim-colors-xcode'
+    Plugin 'nightsense/stellarized'
 " }}}
 
 call vundle#end()
@@ -466,7 +459,6 @@ set cul
 " {{{ Folding
 set foldtext=getline(v:foldstart)
 " }}}
-
 " {{{ Insert Mode/ Normal mode identifier
 "
 augroup InsertCursor
@@ -501,7 +493,7 @@ endif
 
 "set background=dark
 syntax on
-colorscheme gruvbox
+colorscheme stellarized
 set background=dark
 
 let s:orange = "%#Special#"
@@ -642,43 +634,43 @@ exec 'hi Folded cterm=NONE'.
         \' guifg=SlateBlue'
 " }}}
 " {{{ NERDTree
-exec 'hi NERDTreeDir gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-exec 'hi NERDTreeFile cterm=italic, gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi NERDTreeLinkFile gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi NERDTreeLinkTarget gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi NERDTreeExecFile gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-exec 'hi NERDTreeBookmarksLeader gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
-exec 'hi NERDTreeBookmarkName gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-exec 'hi NERDTreeBookmarksHeader gui=italic' .
-        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-exec 'hi NERDTreeBookmark cterm=italic, gui=italic' .
-        \' guifg=SlateBlue'
-exec 'hi link NERDTreeCWD NERDTreeBookmark'
-" }}}
+"exec 'hi NERDTreeDir gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"exec 'hi NERDTreeFile cterm=italic, gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+"exec 'hi NERDTreeLinkFile gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+"exec 'hi NERDTreeLinkTarget gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+"exec 'hi NERDTreeExecFile gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
+"exec 'hi NERDTreeBookmarksLeader gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
+"exec 'hi NERDTreeBookmarkName gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"exec 'hi NERDTreeBookmarksHeader gui=italic' .
+"        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
+"exec 'hi NERDTreeBookmark cterm=italic, gui=italic' .
+"        \' guifg=SlateBlue'
+"exec 'hi link NERDTreeCWD NERDTreeBookmark'
+"" }}}
 " {{{ Other
-exec 'hi VertSplit gui=bold cterm=bold'
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-        \.' guibg=NONE'
-exec 'hi StatusLine '
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-exec 'hi StatusLineNC '
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-" . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-exec 'hi SignColumn gui=bold'
-        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-        \.' guibg=NONE'
-exec 'hi Pmenu cterm=NONE'
-        \.' ctermbg='.synIDattr(synIDtrans(hlID('Comment')), 'fg', 'cterm') 
-
+"exec 'hi VertSplit gui=bold cterm=bold'
+"        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+"        \.' guibg=NONE'
+"exec 'hi StatusLine '
+"        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
+"        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"exec 'hi StatusLineNC '
+"        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"" . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"exec 'hi SignColumn gui=bold'
+"        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
+"        \.' guibg=NONE'
+"exec 'hi Pmenu cterm=NONE'
+"        \.' ctermbg='.synIDattr(synIDtrans(hlID('Comment')), 'fg', 'cterm') 
+"
 " }}}
 " }}}
 " }}}
