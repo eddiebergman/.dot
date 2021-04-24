@@ -1,1 +1,2 @@
-exec i3
+xrandr --auto && xrandr --output HDMI-2 --right-of eDP-1
+qtile start
