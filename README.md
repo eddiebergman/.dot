@@ -5,11 +5,8 @@ system at the cost of many hours/days/weeks required to learn the ins and outs
 of managing your own system, aided by the wonderful [arch-wiki](https://wiki.archlinux.org/index.php/Arch_Linux)
 and the `pacman` package manager.
 
-
-<p float="left">
-    <img src="https://github.com/eddiebergman/.dot/blob/master/screenshots/image1.png" width="100">
-    <img src="https://github.com/eddiebergman/.dot/blob/master/screenshots/image2.png" width="100">
-</p>
+![view_1](https://github.com/eddiebergman/.dot/blob/master/screenshots/image1.png)
+![view_2](https://github.com/eddiebergman/.dot/blob/master/screenshots/image2.png)
 
 Below is a list of a few key points of my setup:
 <details>
@@ -43,7 +40,7 @@ Below is a list of a few key points of my setup:
 
     ![zsh view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_shell.png)
 
-<details>
+</details>
 
 <details>
     <summary> Qtile (Window Manager) </summary>
