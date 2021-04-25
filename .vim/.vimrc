@@ -1,4 +1,5 @@
 " Made to be used as a menu, :setlocal foldmethod=marker
+" You may have to do ':set foldmarker={{{,}}}' if you've changed it before
 " {{{ Plugins
 " {{{ Local
 " source $drvim/plugin/arxiv_browser.vim
@@ -145,6 +146,7 @@ call vundle#begin()
 " }}}
 " {{{ vim-airline (bottom bar)
     Plugin 'vim-airline/vim-airline'
+    let g:airline_theme='stellarized_dark'
 " }}}
 " {{{ vim-test
     Plugin 'vim-test/vim-test'
@@ -222,8 +224,9 @@ nnoremap <C-l> :tabnext<cr>
 nnoremap <C-h> :tabprev<cr>
 " }}}
 " {{{ Searching
-" normal: Automatically change to regular expression search
+" Automatically change to regular expression search
 nnoremap / /\v
+
 nnoremap <leader>sr :%s/
 vnoremap <leader>sr :s/
 nnoremap <leader>sg :call SynGroup()<cr>
@@ -433,7 +436,7 @@ filetype plugin indent on
 set autoindent
 
 set nolazyredraw
-set number cursorline
+set nonumber cursorline
 set hlsearch incsearch
 set wrap
 set ttyfast
