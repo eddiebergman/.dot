@@ -1,176 +1,104 @@
-Note: This readme is out of date
-
-# .dot
-__Note:__ _This installation has not been done on a dry run and may encounter an issue.
-Its main use is as a quick reminder for myself, there will be bugs until properly tested_
-
-This is a repo I use for quickly installing Arch Linux and my configuration
-on a drive. This is done in two steps:
-
-1. **Arch**
-    * Once Arch is booted from drive, everything required is in *arch_install*.
-    This includes help in booting from an Arch EUFI boot and setting up grub,
-    some core system utilities and a sudo user account.
-
-2. **Configuration**
-    * Once you've installed Arch on the drive and booted in, run
-    one of the setup files that you want to install on the drive.
-    See below for the difference.
-
-This is done by keeping all configuration files in *.dot* 
-while the scripts go through and download required packages and
-and symlinking our files into where they need to
-go e.g. .vimrc or .gitconfig.
-
-## Configurations
-
-#### Admin
-Used for general administrative tasks on arch machines.
-__TODO:__ List packages
-
-#### Desktop
-User for my general setup, includes most things I would need and is ever expanding.
-__TODO:__ List packages
-
-## Links
-
-* [Github ssh-setup](https://help.github.com/en/articles/connecting-to-github-with-ssh)
-
-## Installing Arch
-### Bootloading from USB/disk
-* Download the Arch distribution that you would like to install from [here](https://www.archlinux.org/download/)
-
-* Put it on a USB key or cd and boot from it. Each system will have a different
-way to turn them into a bootable device and boot from that device.
-
-### Creating your filesystem
-
-* Check how your disks look find drive you're installing on using 
-
-    `$ fdisk -l`.
-
-* Assuming a drive name `/dev/sda`, start partitioning with `cfdisk` where
-you can specify paritions with Type, Size. We'll create 4 of them according to the
-Arch configuration guide.
-
-    `$ cfdisk /dev/sda`
-
-| Drive | Size | Type |
-| ----- | ---- | ---- |
-| /dev/sda1 | 260M | EFI System |
-| /dev/sda2 | 12G | Linux swap |
-| /dev/sda3 | 32G | Linux root (x86) |
-| /dev/sda4 | 194.2G  | Linux home |
-
-* Make sure they're all looking good 
-
-    `$ fdisk -l`
-
-* Use the default __ext4__ for our general filesystem
-
-    `$ mkfs.ext4 /dev/sda3`
-
-    `$ mkfs.ext4 /dev/sda4`
-
-* Set the `/boot/efi` drive to a UEFI bootable format, __FAT32__ is general
-
-    `$ mkfs.vfat -F 32 /dev/sda1`
-
-* Turn our SWAP partition into a swap  
-
-    `$ mkswap /dev/sda2`
-
-    `$ swapon /dev/sda2`
-
-* Mount our general file system partitions
-
-    `$ mount /mnt/ /dev/sda3`
-
-    `$ mount /mnt/home /dev/sda4`
-
-* Mount our boot loader configuration
-
-    `$ mount /mnt/boot/efi /dev/sda1`
-
-* Save the mount information for when booting
-
-    `$ genfstab -U /mnt >> /mnt/etc/fstab`
-
-* Use pacstrap to get the essentials in (/etc /var /proc ...)
-
-    `$ pacstrap /mnt base base-devel`
-
-
-* \[For wifi\]
-    * Check the name of your interface
-
-       `$ ip link`
-
-    * Set the interface to be active if required, in this case our interface is called `wlp1s0`
-
-       `$ ip link set wlp1s0 up`
-
-    * Use a wifi-menu to connect easily and follow through and select your network
-
-        `$ wifi-menu`
-
-* Get and use git to download our dotfiles to our new device
-
-    `$ sudo pacman -Sy git`
-
-    `$ git clone <repo> /mnt/.dot`
-
-### Configure our system and get boot ready
-This has been converted into a script to be run in `.dot/arch_install`.
-* Chroot into our new device
-
-    `$ arch-chroot /mnt`
-
-* Configure environment variables to your liking.
-
-    `$ vim .dot/arch_install/arch_install_en`
-
-* Run the setup script, note this installs intel specific microcode things. Please see
-the Arch install wiki and configure as needed.
-
-    `$ bash /.dot/arch_install/setup.intel.sh`
-
-* Unmount the device recursively
-
-    `$ umount -R /dev/sda`
-
-* Reboot and bootload from our new drive
-
-    `$ reboot now`
-
-### Choosing a configuration
-
-* Log in the tty as your username
-
-* Setting up wifi connection using `NetworkManager` and WPA2 security
-
-    `$ nmcli device wifi list`
-
-    `$ nmcli device wifi connect _SSID_ password _password_`
-
-* Enable this connection on boot
-
-    `$ sudo systemctl enable NetworkManager`
-
-* If there are issues, you make have to disable other network services if thet exist.
-
-    `$ systemctl --type=service`
-
-    `$ sudo systemctl disable _servicename_`
-
-    * May require a reboot
-
-        `$ sudo reboot now`
-
-* Choose a configuration to install on the system
-
-    `$ bash $HOME/.dot/setup.desktop.sh`
-
-    `$ bash $HOME/.dot/setup.admin.sh`
-
-
+# Dot Files
+Hello, this is my collection of dot files. I run [Arch](https://archlinux.org/),
+a minimilistic linux-distro which gives an extremely light weight operating
+system at the cost of many hours/days/weeks required to learn the ins and outs
+of managing your own system, aided by the wonderful [arch-wiki](https://wiki.archlinux.org/index.php/Arch_Linux)
+and the `pacman` package manager.
+
+
+<p float="left">
+    <img src="https://github.com/eddiebergman/.dot/blob/master/screenshots/image1.png" width="100">
+    <img src="https://github.com/eddiebergman/.dot/blob/master/screenshots/image2.png" width="100">
+</p>
+
+Below is a list of a few key points of my setup:
+<details>
+    <summary> Vim (Editor) </summary>
+    I primarly use Vim for most things text related.
+
+    The colorscheme is 'nightsense/stellarized' dark with a custom coded buffer
+    bar at the top.
+
+    Some core plugins in no particular order:
+    * [vimtex](https://github.com/lervag/vimtex) - For LaTeX related things
+    * [vim-fugitive](https://github.com/tpope/vim-fugitive) - Git intergration
+    * [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe) - Auto-complete
+    * [Syntastic](https://github.com/vim-syntastic/syntastic) - Intergrats with linters and syntax checkers
+    * [Ultisnips](https://github.com/SirVer/ultisnips) - code snipppets
+    * [NERDTree](https://github.com/scrooloose/nerdtree) - Tree like file navigation
+    * [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) - Fuzzy file searcher
+    * [CtrlSF](https://github.com/dyng/ctrlsf.vim) - Fuzzy text searcher
+
+    ![vim view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_vim.png)
+
+</details>
+
+<details>
+    <summary> Zsh (Shell) </summary>
+    As my shell I use [ZSH](https://www.zsh.org/) with [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) as a plugin manager. There's not too much fancy going on here except the use of powerline10k as the prompt and zsh-autosuggestion for autocomplete suggestions.
+
+    My .zshrc has a few bits and bobs to help manage tasks, some custom PATH additions
+    and some sanity checks... My favourite is warning about the usage of `pip install`
+    while outside of a virtual env, it's saved from dependancy issues on too many occasions.
+
+    ![zsh view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_shell.png)
+
+<details>
+
+<details>
+    <summary> Qtile (Window Manager) </summary>
+    As a window manager, I use [Qtile](http://www.qtile.org/), a window manager written
+    and configurable entirely in Python. Orginally I used [i3wm](https://i3wm.org/)
+    but my love of Python and a need for a fresh look got the better of me.
+
+    The entire look is custom made and will continue to be updated!
+
+    ![qtile_view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_qtile.png)
+</details>
+
+<details>
+    <sumamry> Rofi (Launcher) </summary>
+    An upgrade of the classic [dmenu](https://tools.suckless.org/dmenu/), the
+    launcher [rofi](https://github.com/davatorium/rofi) can act run any programs
+    on `PATH`, switch to any open windows, fuzzy find through user files or
+    even act in custom configured ways such as filter through user specified
+    config files or even ssh into remote hosts.
+
+    I did some extra customization on it's appearance to fit the general
+    aesthetic used for vim and Qtile
+
+    ![rofi view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_rofi.png)
+</details>
+
+<details>
+    <summary> Kitty (Terminal)</summary>
+    [Kitty](https://sw.kovidgoyal.net/kitty/) is a GPU based terminal which
+    supports many modern terminal features and has a very simple configuration.
+
+    Perhaps the biggest sell initially was simply ligatures, true-color, bold,
+    italics and bold-italics in a terminal along with its fast GPU based
+    rendering (`cat log.txt` never stood a chance). I've still never
+    had an actual issue with the terminal yet so I'll take that as a good sign.
+
+    However, any software which uses a `$TERM` and compares it against a
+    hard-coded list often does not include `kitty` and so some _linux foo_ may
+    be required here and there.
+</details>
+
+<details>
+    <summary>Some other notable mentions </sumamry>
+    ### Font
+        I mainly used Fira Code Mono for most editing, manually gotten 
+        from [here](https://github.com/Avi-D-coder/fira-mono-italic) but also installed by `fonts.install.sh`.
+
+    ### LaTeX
+        I write documents in LaTeX so I've slowly been expanding a `preamble`
+        and i've made a quick document class I use for casual documents.
+
+        ![tex view](https://github.com/eddiebergman/.dot/blob/master/screenshots/image_tex.png)
+
+    ### File Browser - Dolphin
+        Normally I just navigate through a shell but having a file manager
+        is handy, dolphin seems quite nice but I havn't spent the time 
+        to configure it to look nice yet.
+</details>
