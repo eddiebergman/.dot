@@ -20,6 +20,106 @@ export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 # }}}
 # }}}
+# {{{ Functions
+# {{{ Comparison
+equal () { [[ "$1" == "$2" ]]; return }
+eq () { equal $1 $2; return }
+
+less () { [[ "$1" -lt "$2" ]]; return }
+lt () { less $1 $2; return } 
+
+greater () { ! less $1 $2 && ! equal $1 $2; return } 
+gt () { greater $1 $2; return }
+
+lessequal () { less $1 $2 || equal $1 $2; return}
+lte () { lessequal $1 $2; return }
+
+greaterequal () { greater $1 $2 || equal $1 $2; return }
+gte () { greaterequal $1 $2; return }
+# }}}
+# {{{ Predicates
+# Check if variable, directory, file or symbolic link
+isdir () { [[ -d "$1" ]]; return }
+isfile () { [[ -f "$1" ]]; return }
+issymlink () { [[ -h "$1" ]]; return }
+
+exists () { isdir $1 || isfile $1 || issymlink $1; return }
+
+emptyvar() { [[ -z "$1" ]]; return }
+isset () { ! emptyvar $1; return }
+
+emptydir () { [[ ! "$(ls -A $1)" ]]; return }
+hasfile () { ! emptydir $1; return }
+
+uniquefile() { ! emptyvar $1 && equal 0 $(printf $1 | wc -l); return }
+
+empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
+
+readable () { [[ -r "$1" ]]; return }
+writable () { [[ -w "$1" ]]; return }
+# }}}
+# {{{ Arrays
+# https://unix.stackexchange.com/questions/411304/how-do-i-check-whether-a-zsh-array-contains-a-given-value
+elem () {
+    local item=$1
+    shift
+    for str in "$@"
+    do
+        equal "$item" "$str" && return 0
+    done
+    false
+}
+contained () { elem "$@"; return }
+array () { declare -a $1 }
+
+map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; return }
+# }}}
+# {{{ Arg parsing
+arg () { elem "$@"; return }
+helparg() { elem $1 "help" "-h" "--help"; return }
+# }}}
+# {{{ Util
+datestamp () { echo "$(date -Idate)" }
+
+getline () { printf "$1" | sed -n "${2}p"; return }
+
+countlines () { printf "$1" | wc -l; return }
+countchars () { printf "$1" | wc -l; return }
+countwords () { printf "$1" | wc -l; return }
+# }}}
+# }}}
+# {{{ Screen
+# Assumes two monitors
+screen () {
+    # Usage: screen [left|right|off]
+    #
+    # Due to changing names of monitors, we manually their names
+    # instead of hardcoding them (changed from HDMI-2 -> HDMI-1)
+    # Note: This might have an issue if the order of the monitors is not
+    #       consistent, a workaround would be to choose the one beginning with
+    #       eDPI as primary
+    xrandr --auto # Sets the monitors to show up
+
+    # Get last words of output (names of monitors)
+    monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\w+$") 
+    primary=$(getline $monitors 1)
+    secondary=$(getline $monitors 2)
+    echo "Primary: ${primary} , Secondary: ${secondary}"
+
+    if equal $1 "left"; then
+        xrandr --output $secondary --left-of $primary;
+    elif equal $1 "right"; then
+        xrandr --output $secondary --right-of $primary;
+    elif equal $1 "off"; then
+        xrandr --output $secondary --off;
+    else
+        printf "Usage: screen [left|right|off]"
+        exit 0;
+    fi
+
+    return;
+}
+# }}}
 # {{{ Env
 # {{{ Aliases
 # {{{ Default Commands
@@ -31,24 +131,6 @@ alias evimrc='cd $drdot && vim .vim/.vimrc'
 alias ezshrc='cd $drdot && vim .zsh/.zshrc'
 alias edot='cd $drdot && vim'
 alias ebib='cd $drlib/bibs && vim mybib.bib'
-# }}}
-# {{{ Screen
-PRIMARY_MONITOR="eDP-1"
-SECONDARY_MONITOR="HDMI-2"
-screenright () {
-    xrandr --auto
-    xrandr --output $SECONDARY_MONITOR --right-of $PRIMARY_MONITOR
-}
-
-screenleft () {
-    xrandr --auto
-    xrandr --output $SECONDARY_MONITOR --left-of $PRIMARY_MONITOR
-}
-
-screenoff () {
-    xrandr --auto
-    xrandr --output $SECONDAY_MONITOR --off
-}
 # }}}
 # {{{ Work setups
 alias notebook='cd ~/Desktop/phd/notebook && vim'
@@ -132,72 +214,6 @@ HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=1000
 # }}}
-
-# }}}
-# {{{ Functions
-datestamp () { echo "$(date -Idate)" }
-
-# Comparisons
-equal () { [[ "$1" == "$2" ]]; return }
-eq () { equal $1 $2; return }
-argc () { equal $1 $2; return }
-
-less () { [[ "$1" -lt "$2" ]]; return }
-lt () { less $1 $2; return } 
-
-greater () { ! less $1 $2 && ! equal $1 $2; return } 
-gt () { greater $1 $2; return }
-
-lessequal () { less $1 $2 || equal $1 $2; return}
-lte () { lessequal $1 $2; return }
-
-greaterequal () { greater $1 $2 || equal $1 $2; return }
-gte () { greaterequal $1 $2; return }
-
-# https://unix.stackexchange.com/questions/411304/how-do-i-check-whether-a-zsh-array-contains-a-given-value
-elem () {
-    local item=$1
-    shift
-    for str in "$@"
-    do
-        equal "$item" "$str" && return 0
-    done
-    false
-}
-contained () { elem "$@"; return }
-arg () { elem "$@"; return }
-helparg() { elem $1 "help" "-h" "--help"; return }
-zero () { equal $1 0; return }
-one () { equal $1 1; return }
-two () { equal $1 2; return }
-
-countlines() { printf "$1" | wc -l; return }
-countchars() { printf "$1" | wc -l; return }
-countwords() { printf "$1" | wc -l; return }
-
-map() { local f="$1"; shift; for item in "$@"; do "$f" "$item"; done; return }
-
-readable () { [[ -r "$1" ]]; return }
-writable () { [[ -w "$1" ]]; return }
-
-# Check if variable, directory, file or symbolic link
-isdir () { [[ -d "$1" ]]; return }
-isfile () { [[ -f "$1" ]]; return }
-issymlink () { [[ -h "$1" ]]; return }
-
-exists () { isdir $1 || isfile $1 || issymlink $1; return }
-
-emptyvar() { [[ -z "$1" ]]; return }
-isset () { ! emptyvar $1; return }
-
-emptydir () { [[ ! "$(ls -A $1)" ]]; return }
-hasfile () { ! emptydir $1; return }
-
-uniquefile() { ! emptyvar $1 && equal 0 $(printf $1 | wc -l); return }
-
-empty () { emptyvar $1 || (isdir $1 && emptydir $1); return }
-
-array () { declare -a $1 }
 
 # }}}
 # {{{ Python
