@@ -95,7 +95,7 @@ def _keys():
                 desc="Switch to group {}".format(group.name))
             for i, group in enumerate(groups)
         ] + [
-            Key("M-S-"+str(i+1), lazy.window.togroup(group.name, switch_group=True),
+            Key("M-S-"+str(i+1), lazy.window.togroup(group.name, switch_group=False),
                 desc="Move focused window to group {}".format(group.name))
             for i, group in enumerate(groups)
         ]
