@@ -246,7 +246,12 @@ def _screens():
                             font='Ubuntu mono')
 
     def wallpaper():
-        return widget.Wallpaper(directory='~/.wallpapers/')
+        return widget.Wallpaper(directory='~/.wallpapers/', label='')
+
+    def shutdown():
+        return widget.QuickExit(background=colors['contrast'], 
+                                default_text='\u23FC',
+                                fontsize=20)
 
     def widgets_primary():
         try:
@@ -272,6 +277,12 @@ def _screens():
             ),
             clock(),
             widget.Systray(),
+            widget.Sep(
+                linewidth=1,
+                padding=20,
+                background=colors['highlight_background']
+            ),
+            shutdown(),
         ]
 
     def widgets_secondary():
