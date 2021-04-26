@@ -25,7 +25,8 @@ call vundle#begin()
     Plugin 'lervag/vimtex'
     let g:tex_flavor = 'latex'
     "let g:vimtex_quickfix_mode=0
-    "let g:vimtex_view_method='zathura'
+    let g:vimtex_view_method='general'
+    let g:vimtex_view_general_viewer='evince'
     " let g:Tex_FoldedEnvironments='definition'
     let g:tex_conceal='abdmg'
     "let g:Imap_UsePlaceHolders=0
