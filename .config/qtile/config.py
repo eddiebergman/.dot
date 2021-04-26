@@ -84,8 +84,7 @@ def _keys():
 
     def keys_screens():
         return [
-            Key("M-p", lazy.to_screen(0)),
-            Key("M-o", lazy.to_screen(1))
+            Key("M-o", lazy.next_screen())
         ]
 
     def keys_workspace_groups():
@@ -124,8 +123,8 @@ def _layouts():
 
     def monadtall():
         return layout.MonadTall(margin=5,
-                                border_normal=colors['highlight_background'],
-                                border_focus=colors['black'],
+                                border_normal=colors['black'],
+                                border_focus=colors['highlight'],
                                 border_width=4,
                                 single_margin=5,
                                 single_border_with=0)
