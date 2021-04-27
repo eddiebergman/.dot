@@ -88,6 +88,7 @@ countchars () { printf "$1" | wc -l; return }
 countwords () { printf "$1" | wc -l; return }
 # }}}
 # }}}
+# {{{ Utility
 # {{{ Screen
 # Assumes two monitors
 screen () {
@@ -101,9 +102,9 @@ screen () {
     xrandr --auto # Sets the monitors to show up
 
     # Get last words of output (names of monitors)
-    monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\w+$") 
-    primary=$(getline $monitors 1)
-    secondary=$(getline $monitors 2)
+    local monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\w+$") 
+    local primary=$(getline $monitors 1)
+    local secondary=$(getline $monitors 2)
     echo "Primary: ${primary} , Secondary: ${secondary}"
 
     if equal $1 "left"; then
@@ -118,6 +119,33 @@ screen () {
     fi
 
     return;
+}
+# }}}
+# {{{ Decompress
+decompress () {
+    if ! equal $# 1; then
+        echo "Usage: decompress <file_path>"
+        return 1
+    fi
+
+    local filepath="$1"
+    local filename=$filepath:t:r
+    local ext=$filepath:t:e
+
+    if equal $ext "gz"; then
+        # If it's a tar.gz
+        if equal $filename:e "tar"; then
+            tar -zxvf $filepath
+        else
+            gzip -dvk $filepath
+        fi
+    elif equal $ext "tar"; then
+        tar -xvf $filepath
+    elif equal $ext "zip"; then
+        unzip -v $filepath
+    else
+        echo "Unrecognized extension '$ext', must be in ['tar', 'gz', 'zip']"
+    fi
 }
 # }}}
 # {{{ Env
