@@ -148,6 +148,12 @@ decompress () {
     fi
 }
 # }}}
+# {{{ Wacom
+wacomscreen () { 
+    xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1" 
+}
+# }}}
+# }}}
 # {{{ Env
 # {{{ Aliases
 # {{{ Default Commands
@@ -290,18 +296,10 @@ alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm 
 import() {
     echo "disabled command"
 }
-# }}}
-# {{{ Wacom
-wacomscreen () { 
-    xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1" 
-}
-# }}}
 # {{{ For GPU-cuda
 # This is needed by the cuda install script found
 # at ~/cuda/cuda11.1
 alias xterm-kitty="kitty"
 
 # }}}
-# {{{ Remotes
-alias horus="ssh -t -i ~/.ssh/horus_rsa eb130475@hpc.zimt.uni-siegen.de" 
 # }}}
