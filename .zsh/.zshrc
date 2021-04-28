@@ -88,6 +88,67 @@ countchars () { printf "$1" | wc -l; return }
 countwords () { printf "$1" | wc -l; return }
 # }}}
 # }}}
+# {{{ Env
+# {{{ Aliases
+# {{{ Default Commands
+alias ls='ls -a --group-directories-first --sort=extension --color=auto'
+alias xclip='xclip -selection clipboard'
+# }}}
+# {{{ Quick files
+alias evimrc='cd $drdot && vim .vim/.vimrc'
+alias ezshrc='cd $drdot && vim .zsh/.zshrc'
+alias edot='cd $drdot && vim'
+alias ebib='cd $drlib/bibs && vim mybib.bib'
+# }}}
+# {{{ Work setups
+alias notebook='cd ~/Desktop/phd/notebook && vim'
+alias nbconvert='jupyter nbconvert'
+#alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
+chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
+
+# TODO: Fix directory changing back to home
+# }}}
+# {{{ Pdf Merge
+alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
+# }}}
+# {{{ Network
+alias networkrefresh='nmcli network off; nmcli network on'
+# }}}
+# {{{ File management
+alias clearswaps='rm ~/.cache/vim/swap/*'
+# }}}
+# }}}
+# {{{ Exports
+# {{{ Path
+export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
+export PATH="${PATH}:${HOME}/usr/bin"
+export PATH="${PATH}:/usr/local/cuda/bin"
+
+# For lutris gaming on linux, required for "import dbus"
+export PATH="${PATH}:/usr/lib/python3/dist-packages"
+# }}}
+# {{{ Locations
+export drdot="$HOME/.dot"
+export drzsh="$drdot/.zsh"
+export drvim="$drdot/.vim"
+export drconfig="$drdot/.config"
+export drshare="$HOME/.local/share"
+export drtemplate="$drdot/templates"
+#export ZSHDIR="$drzsh" # Required by <something>
+# }}}
+# {{{ Defaults - $VISUAL, $EDITOR, ...
+export VISUAL="vim"
+export EDITOR="vim"
+export VIEWER="zathura"
+# export PAGER="most"
+# }}}
+# {{{ Sources
+source "$drzsh/colours.zsh"
+source "$drdot/.secret/zotero_envs.zsh"
+source "$drzsh/template.zsh"
+# }}}
+# }}}
+# }}}
 # {{{ Utility
 # {{{ Screen
 # Assumes two monitors
@@ -153,103 +214,6 @@ wacomscreen () {
     xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1" 
 }
 # }}}
-# }}}
-# {{{ Env
-# {{{ Aliases
-# {{{ Default Commands
-alias ls='ls -a --group-directories-first --sort=extension --color=auto'
-alias xclip='xclip -selection clipboard'
-# }}}
-# {{{ Quick files
-alias evimrc='cd $drdot && vim .vim/.vimrc'
-alias ezshrc='cd $drdot && vim .zsh/.zshrc'
-alias edot='cd $drdot && vim'
-alias ebib='cd $drlib/bibs && vim mybib.bib'
-# }}}
-# {{{ Work setups
-alias notebook='cd ~/Desktop/phd/notebook && vim'
-alias nbconvert='jupyter nbconvert'
-#alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
-chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
-
-# TODO: Fix directory changing back to home
-# }}}
-# {{{ Pdf Merge
-alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
-# }}}
-# {{{ Network
-alias networkrefresh='nmcli network off; nmcli network on'
-# }}}
-# {{{ File management
-alias clearswaps='rm ~/.cache/vim/swap/*'
-# }}}
-# }}}
-# {{{ Exports
-# {{{ Path
-export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
-export PATH="${PATH}:${HOME}/usr/bin"
-export PATH="${PATH}:/usr/local/cuda/bin"
-
-# For lutris gaming on linux, required for "import dbus"
-export PATH="${PATH}:/usr/lib/python3/dist-packages"
-# }}}
-# {{{ Locations
-export drdot="$HOME/.dot"
-export drzsh="$drdot/.zsh"
-export drvim="$drdot/.vim"
-export drconfig="$drdot/.config"
-export drshare="$HOME/.local/share"
-export drtemplate="$drdot/templates"
-#export ZSHDIR="$drzsh" # Required by <something>
-# }}}
-# {{{ Defaults - $VISUAL, $EDITOR, ...
-export VISUAL="vim"
-export EDITOR="vim"
-export VIEWER="zathura"
-# export PAGER="most"
-# }}}
-# {{{ Sources
-source "$drzsh/colours.zsh"
-source "$drdot/.secret/zotero_envs.zsh"
-source "$drzsh/template.zsh"
-# }}}
-# }}}
-# }}}
-# {{{ Settings
-setopt extendedglob     # Enables wildcards
-setopt notify           # Enables report of status of background jobs
-setopt complete_aliases # Enables completion of aliases
-
-set H+ # Stops history expansion
-# https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
-
-# Enables command auto-correction
-ENABLE_CORRECTION="true"
-
-# Allows vi like navigation in shell input
-bindkey -v
-bindkey 'jk' vi-cmd-mode # jk to exit insert mode
-
-# The following lines were added by compinstall
-zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle ':completion:*' matcher-list '' ''
-zstyle :compinstall filename '/home/skantify/.zshrc'
-
-# Autoload and call
-autoload -Uz compinit promptinit
-compinit
-promptinit
-
-# Autosuggestion complete
-bindkey '^ ' autosuggest-accept
-
-# {{{ History
-HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=1000
-# }}}
-
-# }}}
 # {{{ Python
 
 # Enable pyenv
@@ -291,6 +255,54 @@ py_make_venv () {
 
 alias django='python manage.py'
 alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm tagged_files"
+# }}}
+# {{{ Git
+# Extends some simple functionality to git
+ggit () {
+    if equal $1 "user" && equal $2 "clone"; then
+        local username="$(git config --global user.name)"
+        echo $username
+        git clone "git@github.com:${username}/$3.git"
+    else
+        git $@
+    fi
+}
+# }}}
+# }}}
+# {{{ Settings
+setopt extendedglob     # Enables wildcards
+setopt notify           # Enables report of status of background jobs
+setopt complete_aliases # Enables completion of aliases
+
+set H+ # Stops history expansion
+# https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
+
+# Enables command auto-correction
+ENABLE_CORRECTION="true"
+
+# Allows vi like navigation in shell input
+bindkey -v
+bindkey 'jk' vi-cmd-mode # jk to exit insert mode
+
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' matcher-list '' ''
+zstyle :compinstall filename '/home/skantify/.zshrc'
+
+# Autoload and call
+autoload -Uz compinit promptinit
+compinit
+promptinit
+
+# Autosuggestion complete
+bindkey '^ ' autosuggest-accept
+
+# {{{ History
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=1000
+# }}}
+
 # }}}
 # {{{ Misc
 import() {
