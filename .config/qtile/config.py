@@ -5,6 +5,12 @@ from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import EzKey as Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile.log_utils import logger
+
+# For debugging at ~/.local/share/qtile/qtile.log
+# qtile's INFO is a bit too spammy so we just use it as a WARNING
+def debug(debug_str):
+    logger.warning(f'\nDEBUG:{debug_str}\n')
 
 mod = "mod4"
 terminal = guess_terminal()
