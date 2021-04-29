@@ -109,9 +109,12 @@ call vundle#begin()
 " }}}
 " {{{ NERDTree (file tree)
     Plugin 'scrooloose/nerdtree'
-    let g:NERDTreeWinSize = &columns / 5
+    let g:NERDTreeWinSize = &columns
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeShowHidden = 1
+    let g:NERDTreeQuitOnOpen = 3
+    let g:NERDTreeMinimalUI = 1
+    let g:NERDTreeMinimalMenu = 1
     let NERDTreeIgnore=['__pycache__$', '\~$']
 " }}}
 " {{{ vim-polyglot
