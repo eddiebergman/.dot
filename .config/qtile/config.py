@@ -24,6 +24,31 @@ colors = {
     'foreground': 'FFFFFF',
     'black': '000000',
 }
+
+# Note: Qtile needs this as a list.
+#       Had to debug with `startx &; qtile start` as no log output was produced
+groups = [Group(str(i)) for i in range(1, 10)]
+
+def switch_group(group_name):
+    """
+    If the group is visible on another screen, switches screen to that screen.
+    Otherwise it will switch the group displayed on the current screen using
+    default functionality.
+    """
+    def callback(qtile):
+        group = qtile.groups_map[group_name]
+        current_screen = qtile.current_screen
+
+
+        # Group has a screen and it's not the currently active one
+        if group.screen is not None and group.screen != current_screen:
+            qtile.cmd_to_screen(group.screen.index)
+        else:
+            current_screen.set_group(group)
+        return
+
+    return callback
+
 def _keys():
 
     def keys_movement_between_windows():
@@ -94,21 +119,27 @@ def _keys():
         ]
 
     def keys_workspace_groups():
-        groups = [Group(i) for i in "123456789"]
+
         return [
-            Key("M-"+str(i+1), lazy.group[group.name].toscreen(toggle=False),
-                desc="Switch to group {}".format(group.name))
-            for i, group in enumerate(groups)
+            Key(f'M-{group.name}',
+                lazy.function(switch_group(group.name)))
+            for group in groups
         ] + [
-            Key("M-S-"+str(i+1), lazy.window.togroup(group.name, switch_group=False),
-                desc="Move focused window to group {}".format(group.name))
-            for i, group in enumerate(groups)
+            Key(f"M-S-{group.name}",
+                lazy.window.togroup(group.name, switch_group=True))
+            for group in groups
         ]
 
     def keys_rofi():
         rofi_theme = 'config'
         return [
             Key('M-d', lazy.spawn('rofi -show combi -theme {}'.format(rofi_theme)))
+        ]
+
+    def keys_test():
+        """ Tests some functionality """
+        return [
+            Key('M-t', lazy.function(switch_group('9')))
         ]
 
     return [
@@ -120,7 +151,8 @@ def _keys():
         *keys_qtile(),
         *keys_screens(),
         *keys_workspace_groups(),
-        *keys_rofi()
+        *keys_rofi(),
+        *keys_test(),
     ]
 
 def _layouts():
@@ -341,13 +373,3 @@ if __name__ in ["config", "__main__"]:
     cursor_warp=False
     auto_fullscreen=True
     focus_on_window_activation="smart"
-
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
-wmname = "LG3D"
