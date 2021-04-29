@@ -1,6 +1,6 @@
 from typing import List  # noqa: F401
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import EzKey as Key
 from libqtile.lazy import lazy
@@ -186,17 +186,18 @@ def _screens():
         return widget.GroupBox(
             font='Ubuntu Bold',
             fontsize=10,
+            hide_unused=True,
             highlight_method='line',
-            active=colors['highlight'],
-            inactive=colors['contrast'],
+            active=colors['contrast'],
+            #inactive=colors['contrast'],
             highlight_color=[#gradient
                 colors['background'], colors['highlight_background']
             ],
             block_highlight_text_color=colors['highlight'],
-            this_screen_border=colors['highlight'],
+            #this_screen_border=colors['highlight'],
             this_current_screen_border=colors['highlight'],
-            other_screen_border=colors['highlight'],
-            other_current_screen_border=colors['highlight']
+            other_screen_border=colors['background'],
+            other_current_screen_border=colors['background']
         )
 
     def default_sep():
