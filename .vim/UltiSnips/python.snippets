@@ -1,20 +1,10 @@
 #{{{ General
 snippet func "def func():" w
 def ${1:funcname}():
-    """
-    ${2: $1 Documentation}
-    """
-    print('hello from $1')
 endsnippet
 
 snippet init "def __init__:"
 def __init__(self):
-    """
-    ${1: Doc}
-
-    Params
-    ======
-    """
     $0
 endsnippet
 
@@ -25,9 +15,6 @@ endsnippet
 
 snippet class "class MyClass:" w
 class ${1:MyClass}:
-    """
-    ${2: $1 Documentation}
-    """
 
     def __init__(self):
         $0
@@ -42,9 +29,6 @@ endsnippet
 
 snippet method "def method(self):" w
 def ${1:mymethod}(self):
-    """
-    ${2:$1 documentation}
-    """
     raise NotImplementedError
 endsnippet
 
