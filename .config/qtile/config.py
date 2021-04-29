@@ -49,6 +49,23 @@ def switch_group(group_name):
 
     return callback
 
+def swap_screens():
+    """
+    Moves the current group to the other screen and vice versa.
+    """
+
+    def callback(qtile):
+        current_window = qtile.current_window
+        current_group = qtile.current_group
+        current_screen = qtile.current_screen
+
+        next_screen_index = (current_screen.index + 1) % len(qtile.screens)
+        next_screen = qtile.screens[next_screen_index]
+        next_group = next_screen.group
+        next_screen.toggle_group(group=current_group)
+
+    return callback
+
 def _keys():
 
     def keys_movement_between_windows():
@@ -115,7 +132,8 @@ def _keys():
 
     def keys_screens():
         return [
-            Key("M-o", lazy.next_screen())
+            Key("M-o", lazy.next_screen()),
+            Key("M-S-o", lazy.function(current_group_to_next_screen()))
         ]
 
     def keys_workspace_groups():
