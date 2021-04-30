@@ -49,20 +49,17 @@ def switch_group(group_name):
 
     return callback
 
-def swap_window_to_other_screen():
+def swap_to_other_screen():
     """
     Moves the current window to the other screen and vice versa.
     """
 
     def callback(qtile):
-        current_window = qtile.current_window
-        current_group = qtile.current_group
-        current_screen = qtile.current_screen
-
-        next_screen_index = (current_screen.index + 1) % len(qtile.screens)
+        next_screen_index = (qtile.current_screen.index + 1) % len(qtile.screens)
         next_screen = qtile.screens[next_screen_index]
         next_group = next_screen.group
-        next_screen.toggle_group(group=current_group)
+        debug(next_group.name)
+        return qtile.current_window.togroup(next_group.name)
 
     return callback
 
