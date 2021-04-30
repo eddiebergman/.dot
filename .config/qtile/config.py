@@ -49,9 +49,9 @@ def switch_group(group_name):
 
     return callback
 
-def swap_screens():
+def swap_window_to_other_screen():
     """
-    Moves the current group to the other screen and vice versa.
+    Moves the current window to the other screen and vice versa.
     """
 
     def callback(qtile):
@@ -133,7 +133,7 @@ def _keys():
     def keys_screens():
         return [
             Key("M-o", lazy.next_screen()),
-            Key("M-S-o", lazy.function(current_group_to_next_screen()))
+            Key("M-S-o", lazy.function(swap_to_other_screen()))
         ]
 
     def keys_workspace_groups():
