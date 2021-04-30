@@ -1,4 +1,5 @@
 from typing import List  # noqa: F401
+from itertools import chain
 
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Match, Screen
@@ -63,6 +64,41 @@ def swap_to_other_screen():
 
     return callback
 
+def cycle_visible(mode='forward'):
+    """
+    Cycles back or forward between currently visible windows.
+
+    mode: 'foward' \ 'reverse'
+        defaults to 'forward' if not explicitly 'reverse'
+    """
+
+    def callback(qtile):
+        current_window = qtile.current_window
+        current_group = qtile.current_group
+        current_screen = qtile.current_screen
+
+        visible_groups = [screen.group for screen in qtile.screens]
+
+        windows = list(
+            chain.from_iterable([group.windows for group in visible_groups]))
+
+        modifier = -1 if mode == 'reverse' else 1
+        next_window = windows[
+            (windows.index(current_window) + modifier) % len(windows)
+        ]
+        next_group = next_window.group
+        next_screen = next_group.screen
+
+        if next_screen != current_screen:
+            qtile.cmd_to_screen(next_screen.index)
+
+        next_group.focus(next_window, warp=True)
+        # cmd_focus had issues
+        #next_window.cmd_focus(warp=True)
+
+
+    return callback
+
 def _keys():
 
     def keys_movement_between_windows():
@@ -77,6 +113,8 @@ def _keys():
                 desc="Move focus up"),
             Key("M-<space>", lazy.layout.next(),
                 desc="Move window focus to other window"),
+            Key("M-<Tab>", lazy.function(cycle_visible(mode='forward'))),
+            Key("M-S-<Tab>", lazy.function(cycle_visible(mode='reverse'))),
         ]
 
     def keys_movement_of_windows():
@@ -107,7 +145,7 @@ def _keys():
 
     def keys_layouts():
         return [
-            Key("M-<Tab>", lazy.next_layout(),
+            Key("M-z", lazy.next_layout(),
                 desc="Toggle between Layouts"),
         ]
 
