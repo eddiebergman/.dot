@@ -172,6 +172,8 @@ screen () {
         xrandr --output $secondary --left-of $primary;
     elif equal $1 "right"; then
         xrandr --output $secondary --right-of $primary;
+    elif equal $1 "above"; then
+        xrandr --output $secondary --above $primary;
     elif equal $1 "off"; then
         xrandr --output $secondary --off;
     else
