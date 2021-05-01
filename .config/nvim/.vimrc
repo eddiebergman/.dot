@@ -1,28 +1,26 @@
 " Made to be used as a menu, :setlocal foldmethod=marker
 " You may have to do ':set foldmarker={{{,}}}' if you've changed it before
+let configdir = stdpath('config')
 " {{{ Plugins
-" {{{ Local
-" source $drvim/plugin/arxiv_browser.vim
+call plug#begin(stdpath('data').'/plugged')
+" {{{ vim-windowswap
+    Plug 'wesQ3/vim-windowswap'
 " }}}
-" {{{ Vundle
-set runtimepath+=~/.vim/bundle/Vundle.vim " Required by Vundle
-filetype off " required for Vundle
-call vundle#begin()
-" {{{ Vundle (Package manager)
-    Plugin 'VundleVim/Vundle.vim'
+" {{{ mslayout (for master slave layout)
+    "Plug 'file:///home/skantify/code/ms-layout-vim'
 " }}}
 " {{{ VimWiki (For self documents)
-    Plugin 'vimwiki/vimwiki'
+    Plug 'vimwiki/vimwiki'
     let g:vimwiki_table_mappings = 0
     let wiki = {}
-    let wiki.path = '~/my_wiki/'
+    let wiki.path = stdpath('config').'~/my_wiki/'
     let wiki.nested_syntaxes = {'python': 'python'}
 " }}}
 " {{{ vim-coloresque (Highlight color codes)
-    Plugin 'gko/vim-coloresque'
+    Plug 'gko/vim-coloresque'
 " }}}
 " {{{ vimtex (Tools for Tex and Latex)
-    Plugin 'lervag/vimtex'
+    Plug 'lervag/vimtex'
     let g:tex_flavor = 'latex'
     "let g:vimtex_quickfix_mode=0
     let g:vimtex_view_method='general'
@@ -40,18 +38,18 @@ call vundle#begin()
     let g:Tex_DefaultTargetFormat='pdf'
 " }}}
 " {{{ tex-conceal (Extra conceal for latex)
-    Plugin 'KeitaNakamura/tex-conceal.vim'
+    Plug 'KeitaNakamura/tex-conceal.vim'
 " }}}
 " {{{ supertab (for help with UltiSnips+ You Complete me
-    Plugin 'ervandew/supertab'
+    Plug 'ervandew/supertab'
 " }}}
 " {{{ CtrlP (Fuzzy find files)
-    Plugin 'ctrlpvim/ctrlp.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
     let g:ctrlp_map = '<c-p>'
 " }}}
 " {{{ CtrlSF (search inside files)
-    Plugin 'dyng/ctrlsf.vim'
+    Plug 'dyng/ctrlsf.vim'
     let g:ctrlsf_auto_focus = {
     \ "at": "start"
     \ }
@@ -64,7 +62,7 @@ call vundle#begin()
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
 " }}}
 " {{{ YouCompleteMe (Auto Completion)
-    Plugin 'ycm-core/YouCompleteMe'
+    Plug 'ycm-core/YouCompleteMe'
     " make YCM compatible with UltiSnips (using supertab)
     let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
@@ -78,7 +76,7 @@ call vundle#begin()
 " }}}
 " {{{ UltiSnips (Snippet Engine)
 "
-    Plugin 'SirVer/ultisnips'
+    Plug 'SirVer/ultisnips'
     let g:UltiSnipsEditSplit = 'vertical'
     let g:UltiSnipsExpandTrigger='<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
@@ -86,7 +84,7 @@ call vundle#begin()
     let g:UltiSnipsSnippetDirectories=['UltiSnips']
 " }}}
 " {{{ Syntastic (syntax and linter)
-    Plugin 'vim-syntastic/syntastic'
+    Plug 'vim-syntastic/syntastic'
 
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_mode_map = {
@@ -102,13 +100,13 @@ call vundle#begin()
     let g:syntastic_aggregate_errors = 1
 " }}}
 " {{{ Vim fugitive (git integration)
-    Plugin 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
 " }}}
 " {{{ Vim Surround (surround selections)
-    Plugin 'tpope/vim-surround'
+    Plug 'tpope/vim-surround'
 " }}}
 " {{{ NERDTree (file tree)
-    Plugin 'scrooloose/nerdtree'
+    Plug 'scrooloose/nerdtree'
     let g:NERDTreeWinSize = &columns
     let g:NERDTreeShowBookmarks = 1
     let g:NERDTreeShowHidden = 1
@@ -118,73 +116,71 @@ call vundle#begin()
     let NERDTreeIgnore=['__pycache__$', '\~$']
 " }}}
 " {{{ vim-polyglot
-    Plugin 'sheerun/vim-polyglot'
+    Plug 'sheerun/vim-polyglot'
 " }}}
 " {{{ Vim Repeat (enables some repeat)
-    Plugin 'tpope/vim-repeat'
+    Plug 'tpope/vim-repeat'
 " }}}
 " {{{ Vim Autoclose (closes delimeters automatically)
-    Plugin 'townk/vim-autoclose'
+    Plug 'townk/vim-autoclose'
 " }}}
 " {{{ Vim Local rc (allows project specific vim stuff)
-"    Plugin 'embear/vim-localvimrc'
+"    Plug 'embear/vim-localvimrc'
 " }}}
 " {{{ Gutentags (tag management)
-"    Plugin 'ludovicchabant/vim-gutentags'
+"    Plug 'ludovicchabant/vim-gutentags'
 " }}}
 " {{{ vimpyter (Jupyter Notebook)
-   " Plugin 'szymonmaszke/vimpyter'
+   " Plug 'szymonmaszke/vimpyter'
 " }}}
 " {{{ Python indenting Pep8
-    Plugin 'vim-scripts/indentpython.vim'
+    Plug 'vim-scripts/indentpython.vim'
 " }}}
 " {{{ Autopep8
-    Plugin 'tell-k/vim-autopep8'
+    Plug 'tell-k/vim-autopep8'
     let g:autopep8_max_line_length=80
     let g:autopep8_diff_type='vertical'
     let g:autopep8_aggressive=1
     let g:autopep8_disable_show_diff=1
 " }}}
 " {{{ fzf
-    Plugin 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf.vim'
 " }}}
 " {{{ vim-airline (bottom bar)
-    Plugin 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline'
     let g:airline_theme='stellarized_dark'
 " }}}
 " {{{ vim-test
-    Plugin 'vim-test/vim-test'
+    Plug 'vim-test/vim-test'
     let test#strategy = 'asyncrun_background'
 " }}}
 " {{{ AsyncRun
-    Plugin 'skywind3000/asyncrun.vim'
+    Plug 'skywind3000/asyncrun.vim'
     let g:asyncrun_open = 8
 " }}}
 " {{{ Dispatch
-    Plugin 'tpope/vim-dispatch'
+    Plug 'tpope/vim-dispatch'
 " }}}
 
 " {{{ --- Folding ---
-    Plugin 'tmhedberg/SimpylFold'
+    Plug 'tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
 " }}}
 " {{{ --- Themes ---
-    Plugin 'lifepillar/vim-solarized8'
-    Plugin 'morhetz/gruvbox'
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'morhetz/gruvbox'
     "let g:gruvbox_italic=1
     "let g:gruvbox_underline=1
     "let g:gruvbox_undercurl=1
-    Plugin 'jacoborus/tender.vim'
-    Plugin 'doums/darcula'
-    Plugin 'sainnhe/archived-colors'
-    Plugin 'arcticicestudio/nord-vim'
-    Plugin 'arzg/vim-colors-xcode'
-    Plugin 'nightsense/stellarized'
+    Plug 'jacoborus/tender.vim'
+    Plug 'doums/darcula'
+    Plug 'sainnhe/archived-colors'
+    Plug 'arcticicestudio/nord-vim'
+    Plug 'arzg/vim-colors-xcode'
+    Plug 'nightsense/stellarized'
 " }}}
 
-call vundle#end()
-filetype plugin indent on    " re-enable
-" }}}
+call plug#end()
 " }}}
 " {{{ Keymaps
 let mapleader = ","
@@ -240,18 +236,14 @@ nnoremap <leader>gt :YcmComplete GoTo<cr>
 nnoremap <leader>gtd :YcmComplete GoToDefinition<cr>
 " }}}
 " {{{ Quick File
-nnoremap <leader>esn  :vsp $drvim/UltiSnips<cr>
-nnoremap <leader>eft  :vsp $drvim/ftplugin<cr>
-nnoremap <leader>ez   :vsp $drzsh/.zshrc<cr>
-nnoremap <leader>ev   :vsp $drvim/.vimrc<cr>
-nnoremap <leader>eip  :vsp $HOME/.ipython/profile_default/startup<cr>
+nnoremap <silent> <leader>esn :exe "vsp ".configdir."/UltiSnips"<cr>
+nnoremap <silent> <leader>eft :exe "vsp ".configdir."/ftplugin"<cr>
+nnoremap <silent> <leader>ev  :exe "vsp ".configdir."/.vimrc"<cr>
 " For now syntax is just being done in after
-nnoremap <leader>esy  :vsp $drvim/after/<cr>
-nnoremap <leader>eaf  :vsp $drvim/after/<cr>
+nnoremap <silent> <leader>esy :exe "vsp ".configdir."/after"<cr>
+nnoremap <leader>sv :exe "source ".configdir."/.vimrc"<cr>
 
-nnoremap <leader>sv :source $HOME/.vimrc<cr>
-
-nnoremap <leader>cs :vsp $drdot/cheatsheets/<cr>
+nnoremap <silent> <leader>ez  :exe "vsp ".$ZDOTDIR."/.zshrc"<cr>
 " }}}
 " {{{ Fold
 

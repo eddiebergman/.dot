@@ -1,11 +1,13 @@
+# Viewed as menu with Vim, set foldmethod=marker foldmarker={{{,}}}
 # {{{ oh-my-zsh
 # oh-my-zsh should be enabled towards the end
 # {{{ Theme
 ZSH_THEME="robbyrussell"
-eval `dircolors ~/.dir_colors`
-stellarized_dark_shell="${HOME}/.vim/bundle/stellarized/shell/stellarized_dark.sh"
+stellarized_dark_shell="${ZDOTDIR}/stellarized_dark.sh"
 if [[ -f "$stellarized_dark_shell" ]]; then
     [ -n "$PS1" ] && sh "$stellarized_dark_shell"
+else
+    eval `dircolors $ZDOTDIR/dircolords.256dark`
 fi
 
 # }}}
@@ -86,36 +88,8 @@ getline () { printf "$1" | sed -n "${2}p"; return }
 countlines () { printf "$1" | wc -l; return }
 countchars () { printf "$1" | wc -l; return }
 countwords () { printf "$1" | wc -l; return }
-# }}}
-# }}}
-# {{{ Env
-# {{{ Aliases
-# {{{ Default Commands
-alias ls='ls -a --group-directories-first --sort=extension --color=auto'
-alias xclip='xclip -selection clipboard'
-# }}}
-# {{{ Quick files
-alias evimrc='cd $drdot && vim .vim/.vimrc'
-alias ezshrc='cd $drdot && vim .zsh/.zshrc'
-alias edot='cd $drdot && vim'
-alias ebib='cd $drlib/bibs && vim mybib.bib'
-# }}}
-# {{{ Work setups
-alias notebook='cd ~/Desktop/phd/notebook && vim'
-alias nbconvert='jupyter nbconvert'
-#alias viewblog='cd ~/Desktop/blog && firefox http://127.0.0.1:8080 && python manage.py runserver 8080'
-chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
 
-# TODO: Fix directory changing back to home
-# }}}
-# {{{ Pdf Merge
-alias mergepdfs='gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -r150 -sOutputFile=output.pdf'
-# }}}
-# {{{ Network
-alias networkrefresh='nmcli network off; nmcli network on'
-# }}}
-# {{{ File management
-alias clearswaps='rm ~/.cache/vim/swap/*'
+chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
 # }}}
 # }}}
 # {{{ Exports
@@ -127,26 +101,23 @@ export PATH="${PATH}:/usr/local/cuda/bin"
 # For lutris gaming on linux, required for "import dbus"
 export PATH="${PATH}:/usr/lib/python3/dist-packages"
 # }}}
-# {{{ Locations
-export drdot="$HOME/.dot"
-export drzsh="$drdot/.zsh"
-export drvim="$drdot/.vim"
-export drconfig="$drdot/.config"
-export drshare="$HOME/.local/share"
-export drtemplate="$drdot/templates"
-#export ZSHDIR="$drzsh" # Required by <something>
-# }}}
 # {{{ Defaults - $VISUAL, $EDITOR, ...
-export VISUAL="vim"
-export EDITOR="vim"
+export VISUAL="nvim"
+export EDITOR="nvim"
 export VIEWER="zathura"
 # export PAGER="most"
 # }}}
-# {{{ Sources
-source "$drzsh/colours.zsh"
-source "$drdot/.secret/zotero_envs.zsh"
-source "$drzsh/template.zsh"
 # }}}
+# {{{ Aliases
+# {{{ Default Commands
+alias ls='ls -a --group-directories-first --sort=extension --color=auto'
+alias xclip='xclip -selection clipboard'
+alias vim="nvim"
+# }}}
+# {{{ Quick files
+alias evimrc="$EDITOR ~/.config/nvim/.vimrc"
+alias ezshrc="$EDITOR ~/.config/zsh/.zshrc"
+alias edot="cd $HOME/.dot && $EDITOR"
 # }}}
 # }}}
 # {{{ Utility
@@ -269,6 +240,9 @@ ggit () {
         git $@
     fi
 }
+# }}}
+# {{{ Template
+source "$ZDOTDIR/template.zsh"
 # }}}
 # }}}
 # {{{ Settings
