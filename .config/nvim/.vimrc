@@ -298,10 +298,10 @@ inoremap <down> <nop>
 " }}}
 " {{{ Git
 nnoremap <leader>gs :vertical bo Gstatus<cr>
-nnoremap <leader>gc :Gcommit<cr>i
+nnoremap <leader>gc :Git commit<cr>
 nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
-vnoremap <leader>gc y:Gwrite<cr>:Gcommit -m "<C-r>"
+vnoremap <leader>gc y:Gwrite<cr>:Git commit -m "<C-r>"
 " }}}
 " {{{ NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
@@ -678,7 +678,6 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
-"
 lua require('lsp')
 lua require('colors')
 
