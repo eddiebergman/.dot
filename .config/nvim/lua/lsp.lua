@@ -67,7 +67,7 @@ local default_handlers = {
 -- Language Server Setup
 -- =====================
 local on_attach = function(client, bufnr)
-    print('LSP started')
+    print(string.format("%s is active", client.name))
 
     for _, mapping in pairs(normal_keymaps) do
         local keys = mapping[1]
@@ -102,7 +102,6 @@ local system_name = util.system_name()
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 if util.executable(sumneko_binary) == 1 then
-    print('yes')
     lsp.sumneko_lua.setup {
         cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
         settings = {
