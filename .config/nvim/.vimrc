@@ -6,6 +6,9 @@ call plug#begin(stdpath('data').'/plugged')
 " {{{ vim-windowswap
     Plug 'wesQ3/vim-windowswap'
 " }}}
+" {{{ nvim-lspconfig
+    Plug 'neovim/nvim-lspconfig'
+" }}}
 " {{{ mslayout (for master slave layout)
     "Plug 'file:///home/skantify/code/ms-layout-vim'
 " }}}
@@ -62,7 +65,7 @@ call plug#begin(stdpath('data').'/plugged')
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
 " }}}
 " {{{ YouCompleteMe (Auto Completion)
-    Plug 'ycm-core/YouCompleteMe'
+    "Plug 'ycm-core/YouCompleteMe'
     " make YCM compatible with UltiSnips (using supertab)
     let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
@@ -150,36 +153,29 @@ call plug#begin(stdpath('data').'/plugged')
     Plug 'vim-airline/vim-airline'
     let g:airline_theme='stellarized_dark'
 " }}}
-" {{{ vim-test
-    Plug 'vim-test/vim-test'
-    let test#strategy = 'asyncrun_background'
+" {{{ vim-ultest
+    Plug 'janko/vim-test'
+    Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
+    let test#python#pytest#option = '--color=yes'
+    let g:ultest_icons=1
 " }}}
-" {{{ AsyncRun
-    Plug 'skywind3000/asyncrun.vim'
-    let g:asyncrun_open = 8
-" }}}
-" {{{ Dispatch
-    Plug 'tpope/vim-dispatch'
-" }}}
-
 " {{{ --- Folding ---
     Plug 'tmhedberg/SimpylFold'
     let g:SimpylFold_docstring_preview = 1
 " }}}
 " {{{ --- Themes ---
-    Plug 'lifepillar/vim-solarized8'
-    Plug 'morhetz/gruvbox'
+    "Plug 'lifepillar/vim-solarized8'
+    "Plug 'morhetz/gruvbox'
     "let g:gruvbox_italic=1
     "let g:gruvbox_underline=1
     "let g:gruvbox_undercurl=1
-    Plug 'jacoborus/tender.vim'
-    Plug 'doums/darcula'
-    Plug 'sainnhe/archived-colors'
-    Plug 'arcticicestudio/nord-vim'
-    Plug 'arzg/vim-colors-xcode'
+    "Plug 'jacoborus/tender.vim'
+    "Plug 'doums/darcula'
+    "Plug 'sainnhe/archived-colors'
+    "Plug 'arcticicestudio/nord-vim'
+    "Plug 'arzg/vim-colors-xcode'
     Plug 'nightsense/stellarized'
 " }}}
-
 call plug#end()
 " }}}
 " {{{ Keymaps
@@ -217,11 +213,12 @@ nnoremap <leader>yc "+y
 
 " }}}
 " {{{ Tabs
-nnoremap <leader>tn :tabnew<cr>
-nnoremap <leader>tc :tabclose<cr>
-nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
-nnoremap <C-l> :tabnext<cr>
-nnoremap <C-h> :tabprev<cr>
+" Using <leader>t for tests now
+"nnoremap <leader>tn :tabnew<cr>
+"nnoremap <leader>tc :tabclose<cr>
+"nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
+"nnoremap <C-l> :tabnext<cr>
+"nnoremap <C-h> :tabprev<cr>
 " }}}
 " {{{ Searching
 " Automatically change to regular expression search
@@ -308,6 +305,11 @@ vnoremap <leader>gc y:Gwrite<cr>:Gcommit -m "<C-r>"
 " }}}
 " {{{ NERDTree
 nnoremap <leader>nt :NERDTreeToggle<cr>
+" }}}
+" {{{ Testing
+nmap <leader>tn <Plug>(ultest-run-nearest)
+nmap <leader>ta <Plug>(ultest-run-nearest)
+nmap <leader>ts <Plug>(ultest-summary-toggle)
 " }}}
 " }}}
 " {{{ Commands
@@ -676,3 +678,7 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
+"
+lua require('lsp')
+lua require('colors')
+

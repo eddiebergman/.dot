@@ -196,4 +196,8 @@ if g:colors_name ==? 'xcodedark'
     highlight link pythonStatement FunctionDef
 endif
 
+if g:colors_name ==? 'stellarized'
+    highlight link PythonTyping Type
+endif
+
 " }}}
