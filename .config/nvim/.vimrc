@@ -466,8 +466,8 @@ set foldtext=getline(v:foldstart)
 "
 augroup InsertCursor
     autocmd!
-    autocmd InsertEnter * exec 'hi CursorLine'.' cterm=bold'
-    autocmd InsertLeave * exec 'hi CursorLine'.' cterm=NONE'
+    autocmd InsertEnter * exec 'hi CursorLine'.' cterm=bold, gui=bold'
+    autocmd InsertLeave * exec 'hi CursorLine'.' cterm=NONE, gui=NONE'
 augroup END
 " }}}
 " {{{ Redraw fix for kitty terminal
