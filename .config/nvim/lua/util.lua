@@ -26,4 +26,8 @@ function M.os_exec(cmd)
     return cmd_result, exit_status
 end
 
+function M.executable(cmd)
+    return vim.call("executable", cmd)
+end
+
 return M
