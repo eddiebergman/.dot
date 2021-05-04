@@ -6,8 +6,11 @@ call plug#begin(stdpath('data').'/plugged')
 " {{{ vim-windowswap
     Plug 'wesQ3/vim-windowswap'
 " }}}
-" {{{ nvim-lspconfig
+" {{{ nvim-lspconfig (language server protocol interface)
     Plug 'neovim/nvim-lspconfig'
+" }}}
+" {{{ nvim-compe (auto-completion)
+    Plug 'hrsh7th/nvim-compe'
 " }}}
 " {{{ mslayout (for master slave layout)
     "Plug 'file:///home/skantify/code/ms-layout-vim'
@@ -108,15 +111,8 @@ call plug#begin(stdpath('data').'/plugged')
 " {{{ Vim Surround (surround selections)
     Plug 'tpope/vim-surround'
 " }}}
-" {{{ NERDTree (file tree)
-    Plug 'scrooloose/nerdtree'
-    let g:NERDTreeWinSize = &columns
-    let g:NERDTreeShowBookmarks = 1
-    let g:NERDTreeShowHidden = 1
-    let g:NERDTreeQuitOnOpen = 3
-    let g:NERDTreeMinimalUI = 1
-    let g:NERDTreeMinimalMenu = 1
-    let NERDTreeIgnore=['__pycache__$', '\~$']
+" {{{ CHADTree
+    Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 " }}}
 " {{{ vim-polyglot
     Plug 'sheerun/vim-polyglot'
@@ -229,8 +225,6 @@ vnoremap <leader>sr :s/
 nnoremap <leader>sg :call SynGroup()<cr>
 nnoremap <leader>sf :CtrlSF ""<left>
 vmap <leader>sfk <Plug>CtrlSFVwordPath
-nnoremap <leader>gt :YcmComplete GoTo<cr>
-nnoremap <leader>gtd :YcmComplete GoToDefinition<cr>
 " }}}
 " {{{ Quick File
 nnoremap <silent> <leader>esn :exe "vsp ".configdir."/UltiSnips"<cr>
@@ -303,8 +297,8 @@ nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
 vnoremap <leader>gc y:Gwrite<cr>:Git commit -m "<C-r>"
 " }}}
-" {{{ NERDTree
-nnoremap <leader>nt :NERDTreeToggle<cr>
+" {{{ CHADTree
+nnoremap <leader>v :CHADopen<cr>
 " }}}
 " {{{ Testing
 nmap <leader>tn <Plug>(ultest-run-nearest)
@@ -433,6 +427,7 @@ set nocompatible
 filetype plugin indent on
 set autoindent
 
+set completeopt=menuone,noselect
 set nolazyredraw
 set nonumber cursorline
 set hlsearch incsearch
@@ -457,6 +452,10 @@ set diffopt+=vertical
 set wildmode=longest,list,full
 set wildmenu
 set cul
+
+set signcolumn=yes:1
+
+let g:python3_host_prog='/home/skantify/.pyenv/versions/3.8.5/bin/python'
 
 " }}}
 " {{{ Folding
@@ -678,6 +677,8 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
+
 lua require('lsp')
 lua require('colors')
+lua require('plugins')
 

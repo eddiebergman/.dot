@@ -49,7 +49,11 @@ highlights = {
     LspDiagnosticsUnderlineInformation= { attr="undercurl", sp = Grey },
 
     LspDiagnosticsDefaultHint = { fg = Grey },
-    LspDiagnosticsUnderlineHint= { attr="undercurl", sp = Grey }
+    LspDiagnosticsUnderlineHint= { attr="undercurl", sp = Grey },
+
+    -- Editor
+    CursorLineNr = { fg = Grey, attr="bold" },
+    LineNr = { fg = Grey },
 }
 
 foreach(highlights, cmd_highlight)
