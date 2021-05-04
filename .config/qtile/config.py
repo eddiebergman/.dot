@@ -4,6 +4,7 @@ from itertools import chain
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import EzKey as Key
+from libqtile.config import Key as FullKey
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.log_utils import logger
@@ -195,6 +196,12 @@ def _keys():
             Key('M-t', lazy.function(switch_group('9')))
         ]
 
+    def keys_light():
+        return [
+            FullKey([], 'XF86MonBrightnessDown', lazy.spawn("light -U 10")),
+            FullKey([], 'XF86MonBrightnessUp', lazy.spawn("light -A 10")),
+        ]
+
     return [
         *keys_movement_between_windows(),
         *keys_movement_of_windows(),
@@ -206,6 +213,7 @@ def _keys():
         *keys_workspace_groups(),
         *keys_rofi(),
         *keys_test(),
+        *keys_light(),
     ]
 
 def _layouts():
