@@ -1,11 +1,6 @@
--- TODO: Filter out into lua based filetype plugins for syntax highlighting
--- helpers
-local function get(a, b)
-    if not (a == nil) then return a else return b end
-end
-local function foreach(t, f)
-    for k, v in pairs(t) do f(k, v) end
-end
+local util = require('util')
+local get = util.get
+local foreach = util.foreach
 
 local Transparent = "NONE"
 local DullYellow = "#a58949"

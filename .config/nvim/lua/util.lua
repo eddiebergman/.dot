@@ -35,4 +35,8 @@ function M.dump(...)
     print(unpack(objects))
 end
 
+function M.foreach(t, f)
+    for k, v in pairs(t) do f(k, v) end
+end
+
 return M
