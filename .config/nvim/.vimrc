@@ -46,9 +46,6 @@ call plug#begin(stdpath('data').'/plugged')
 " {{{ tex-conceal (Extra conceal for latex)
     Plug 'KeitaNakamura/tex-conceal.vim'
 " }}}
-" {{{ supertab (for help with UltiSnips+ You Complete me
-    Plug 'ervandew/supertab'
-" }}}
 " {{{ CtrlP (Fuzzy find files)
     Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
@@ -67,26 +64,9 @@ call plug#begin(stdpath('data').'/plugged')
     let g:ctrlsf_ackprg = 'ack'
     let g:ctrlsf_ignore_dir = ['.mypy_cache', 'node_modules', '__pycache__']
 " }}}
-" {{{ YouCompleteMe (Auto Completion)
-    "Plug 'ycm-core/YouCompleteMe'
-    " make YCM compatible with UltiSnips (using supertab)
-    let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-    let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-    let g:SuperTabDefaultCompletionType = '<C-n>'
-
-    let g:ycm_autoclose_preview_window_after_insertion = 1
-
-    "let g:ycm_server_python_interpreter = ''
-
-
-" }}}
 " {{{ UltiSnips (Snippet Engine)
-"
     Plug 'SirVer/ultisnips'
-    let g:UltiSnipsEditSplit = 'vertical'
-    let g:UltiSnipsExpandTrigger='<tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<tab>'
-    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+    let g:UltiSnipsExpandTrigger = 0 "TODO: A dummy
     let g:UltiSnipsSnippetDirectories=['UltiSnips']
 " }}}
 " {{{ Syntastic (syntax and linter)
@@ -115,7 +95,6 @@ call plug#begin(stdpath('data').'/plugged')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kyazdani42/nvim-tree.lua'
 " }}}
-
 " {{{ vim-polyglot
     Plug 'sheerun/vim-polyglot'
 " }}}
