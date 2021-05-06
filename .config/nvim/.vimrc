@@ -491,7 +491,6 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
-
-lua require('lsp')
 lua require('colors')
+lua require('lsp')
 

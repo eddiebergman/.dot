@@ -1,3 +1,5 @@
+local M = {}
+
 local util = require('util')
 local get = util.get
 local foreach = util.foreach
@@ -14,7 +16,6 @@ vim.o.background = 'dark'
 -- Checks
 -- ============
 if has("termguicolors") then vim.o.termguicolors = true end
-if has("nvim") then vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1 end
 
 -- =======
 -- Colours
@@ -38,37 +39,52 @@ local Background = "NONE"
 -- ==================
 -- Specify Highlights
 -- ==================
-highlights = {
+local highlights = {
     -- Base Syntax Types
-    Structure = { fg = DullYellow, attr="bold" },
-    Type = { fg = DullYellow },
-    Todo = { fg = SkyBlue, attr="bold" },
-    Identifier = { fg = Red },
-
+    Structure = { guifg = DullYellow, gui="bold" },
+    Type = { guifg = DullYellow },
+    Todo = { guifg = SkyBlue, gui="bold" },
+    Identifier = { guifg = Red },
+    --TODO:
     -- Lsp
-    LspDiagnosticsDefaultError = { fg = Red },
-    LspDiagnosticsUnderlineError = { attr="undercurl", sp = Red },
+    LspDiagnosticsDefaultError = { guifg = Red },
+    LspDiagnosticsUnderlineError = { gui="undercurl", guisp = Red },
 
-    LspDiagnosticsDefaultWarning = { fg = Orange },
-    LspDiagnosticsUnderlineWarning= { attr="undercurl", sp = Orange },
+    LspDiagnosticsDefaultWarning = { guifg = Orange },
+    LspDiagnosticsUnderlineWarning= { gui="undercurl", guisp = Orange },
 
-    LspDiagnosticsDefaultInformation = { fg = Grey },
-    LspDiagnosticsUnderlineInformation= { attr="undercurl", sp = Grey },
+    LspDiagnosticsDefaultInformation = { guifg = Grey },
+    LspDiagnosticsUnderlineInformation= { gui="undercurl", guisp = Grey },
 
-    LspDiagnosticsDefaultHint = { fg = Grey },
-    LspDiagnosticsUnderlineHint= { attr="undercurl", sp = Grey },
+    LspDiagnosticsDefaultHint = { guifg = Grey },
+    LspDiagnosticsUnderlineHint= { gui="undercurl", guisp = Grey },
 
     -- Editor
-    CursorLineNr = { fg = Grey, attr="bold" },
-    LineNr = { fg = Grey },
+    CursorLineNr = { guifg = Grey, gui="bold" },
+    LineNr = { guifg = Grey },
 }
 
+-- ====================
+-- Apply the highlights
+-- ====================
+-- These are applied on buffer load to enable overwriting of any colorscheme
+-- settings.
 local function cmd_highlight(group, args)
-    local fg = get(args.fg, Transparent)
-    local bg = get(args.bg, Background)
-    local attrs = get(args.attr, "none")
-    local sp = get(args.sp, "none")
-    vim.cmd("hi " .. group .. " guifg=" .. fg .. " guibg=" .. bg .. " gui=" .. attrs .. " guisp=" .. sp)
+    local strbuf = { "hi "..group }
+    for k, v in pairs(args) do
+        table.insert(strbuf, k..'='..v)
+    end
+    vim.cmd(table.concat(strbuf, ' '))
 end
 
-foreach(highlights, cmd_highlight)
+function M.apply_highlights()
+    foreach(highlights, cmd_highlight)
+end
+
+vim.cmd [[
+augroup Highlight
+    au!
+    au ColorScheme * lua require('colors').apply_highlights()
+augroup End
+]]
+return M
