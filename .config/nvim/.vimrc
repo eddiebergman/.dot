@@ -312,20 +312,6 @@ let g:python_host_prog="~/.pyenv/versions/2.7.17/bin/python2.7"
 " {{{ Look and Feel
 " Should technically make a user defined syntax for this
 " {{{ Colour
-
-if (has("nvim"))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-if (has("termguicolors"))
-    set termguicolors
-endif
-
-"set background=dark
-syntax on
-colorscheme stellarized
-set background=dark
-
 let s:orange = "%#Special#"
 let s:purple = "%#Underlined#"
 let s:green = "%#Keyword#"

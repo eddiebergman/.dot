@@ -1,7 +1,24 @@
 local util = require('util')
 local get = util.get
 local foreach = util.foreach
+local has = vim.fn['has']
 
+-- ===========
+-- Colors opts
+-- ===========
+-- Colorscheme
+vim.cmd [[ colo stellarized ]]
+vim.o.background = 'dark'
+
+-- ============
+-- Checks
+-- ============
+if has("termguicolors") then vim.o.termguicolors = true end
+if has("nvim") then vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1 end
+
+-- =======
+-- Colours
+-- =======
 local Transparent = "NONE"
 local DullYellow = "#a58949"
 local Grey = "#9d8875"
@@ -18,14 +35,9 @@ local Red = "#ca7375"
 local FloatBackground = "#132434"
 local Background = "NONE"
 
-local function cmd_highlight(group, args)
-    local fg = get(args.fg, Transparent)
-    local bg = get(args.bg, Background)
-    local attrs = get(args.attr, "none")
-    local sp = get(args.sp, "none")
-    vim.cmd("hi " .. group .. " guifg=" .. fg .. " guibg=" .. bg .. " gui=" .. attrs .. " guisp=" .. sp)
-end
-
+-- ==================
+-- Specify Highlights
+-- ==================
 highlights = {
     -- Base Syntax Types
     Structure = { fg = DullYellow, attr="bold" },
@@ -50,5 +62,13 @@ highlights = {
     CursorLineNr = { fg = Grey, attr="bold" },
     LineNr = { fg = Grey },
 }
+
+local function cmd_highlight(group, args)
+    local fg = get(args.fg, Transparent)
+    local bg = get(args.bg, Background)
+    local attrs = get(args.attr, "none")
+    local sp = get(args.sp, "none")
+    vim.cmd("hi " .. group .. " guifg=" .. fg .. " guibg=" .. bg .. " gui=" .. attrs .. " guisp=" .. sp)
+end
 
 foreach(highlights, cmd_highlight)
