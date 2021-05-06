@@ -18,7 +18,13 @@ require('compe').setup {
         calc = false,
         nvim_lsp = true,
         nvim_lua = true,
+        ultisnips = true,
     }
 }
 
-print('loaded')
+vim.api.nvim_exec(
+[[
+inoremap <silent><expr> <CR> compe#confirm('<CR>')
+inoremap <expr> <Tab> pumvisible() ? "<C-n>" : "<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
+]] ,true)
