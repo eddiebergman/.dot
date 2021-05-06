@@ -173,12 +173,14 @@ decompress () {
         else
             gzip -dvk $filepath
         fi
+    elif equal $ext "xz"; then
+        tar -xvf $filepath
     elif equal $ext "tar"; then
         tar -xvf $filepath
     elif equal $ext "zip"; then
         unzip -v $filepath
     else
-        echo "Unrecognized extension '$ext', must be in ['tar', 'gz', 'zip']"
+        echo "Unrecognized extension '$ext', must be in ['tar', 'gz', 'zip', 'xz']"
     fi
 }
 # }}}
