@@ -111,9 +111,11 @@ call plug#begin(stdpath('data').'/plugged')
 " {{{ Vim Surround (surround selections)
     Plug 'tpope/vim-surround'
 " }}}
-" {{{ CHADTree
-    Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+" {{{ nvim-tree
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kyazdani42/nvim-tree.lua'
 " }}}
+
 " {{{ vim-polyglot
     Plug 'sheerun/vim-polyglot'
 " }}}
@@ -297,8 +299,8 @@ nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
 vnoremap <leader>gc y:Gwrite<cr>:Git commit -m "<C-r>"
 " }}}
-" {{{ CHADTree
-nnoremap <leader>v :CHADopen<cr>
+" {{{ NvimTree 
+nnoremap <leader>nt :NvimTreeToggle<cr>
 " }}}
 " {{{ Testing
 nmap <leader>tn <Plug>(ultest-run-nearest)
