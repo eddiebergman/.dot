@@ -13,12 +13,12 @@ require('compe').setup {
     documentation = true,
 
     source = {
-        path = true,
-        buffer = true,
-        calc = false,
-        nvim_lsp = true,
+        path = { priority = 4 },
+        ultisnips = { priority = 3 },
+        nvim_lsp = { priority = 2 },
+        buffer = { priority = 1 },
         nvim_lua = true,
-        ultisnips = true,
+        calc = false,
     }
 }
 
