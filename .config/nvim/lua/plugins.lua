@@ -17,10 +17,6 @@ function M.update()
     cmd 'PackerSync'
 end
 
-local function load (cfg)
-    return function () require('config/'..cfg) end
-end
-
 require('packer').startup(
     function (use)
         -- Language Server
@@ -29,7 +25,7 @@ require('packer').startup(
         -- Autocomplete
         use {
             'hrsh7th/nvim-compe',
-            config = load('compe')
+            config = function () require('config/compe') end
         }
 
         -- User wiki
@@ -38,7 +34,7 @@ require('packer').startup(
         -- Latex everything plugin
         use {
             'lervag/vimtex',
-            config = load('vimtex'),
+            config = function () require('config/vimtex') end,
             ft = {'tex'}
         }
 
@@ -51,19 +47,19 @@ require('packer').startup(
         -- Fuzzy find file names
         use {
             'ctrlpvim/ctrlp.vim',
-            config = load('ctrlp')
+            config = function () require('config/ctrlp') end
         }
 
         -- Fuzzy find file contents
         use {
             'dyng/ctrlsf.vim',
-            config = load('ctrlsf')
+            config = function () require('config/ctrlsf') end
         }
 
         -- Snippet manager
         use {
             'SirVer/ultisnips',
-            config = load('ultisnips')
+            config = function () require('config/ultisnips') end
         }
 
         -- Git intergration
