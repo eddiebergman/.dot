@@ -4,14 +4,14 @@
 # See template_help for more
 # TODO: Implement add and edit
 
-template_root="$drtemplate"
+template_root="$HOME/.dot/templates"
 template_dirs=($template_root/*/)
 
-template_note_preamble="$drtemplate/note/note_preamble.tex"
-template_note_template="$drtemplate/note/note_template.tex"
-template_note_class_singlepage="$drtemplate/note/singlepage.cls"
-template_note_class_twocol="$drtemplate/note/twocol.cls"
-template_note_bib="$drlib/bibs/mybib.bib"
+template_note_preamble="$template_root/note/note_preamble.tex"
+template_note_template="$template_root/note/note_template.tex"
+template_note_class_singlepage="$template_root/note/singlepage.cls"
+template_note_class_twocol="$template_root/note/twocol.cls"
+#template_note_bib="$drlib/bibs/mybib.bib"
 template_help() {
     printf "
 =============
@@ -59,7 +59,7 @@ template() {
     arg $1 "add" && shift && template_add "$@" && return
     arg $1 "edit" && $EDITOR $template_root && return
     arg $1 "--help" "-h" || lt $# 2 && template_help && return
-    ! two $# && template_help && return
+    ! equal $#  2 && template_help && return
 
     local name=$1
     local outpath=$2
@@ -87,7 +87,7 @@ template_cdoc() {
 }
 
 template_link() {
-    ! two $# && template_link_cdoc && return
+    ! equal $# 2 && template_link_cdoc && return
 
     local name=$1
     local outpath=$2
@@ -189,7 +189,7 @@ template_note() {
     #if ! exists $template_note_bib; then
     #    printf "Can't find bib at $template_note_bib"; return; fi
 
-    if ! one $# || arg $1 "help" "--help" "-h"; then
+    if ! equal $# 1 || arg $1 "help" "--help" "-h"; then
         template_note_cdoc; return; fi
 
     local out=$1
