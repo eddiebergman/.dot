@@ -107,6 +107,11 @@ export EDITOR="nvim"
 export VIEWER="zathura"
 # export PAGER="most"
 # }}}
+# {{{ NPM
+export NPM_PACKAGES="${HOME}/.npm_packages"
+export PATH="${PATH}:${NPM_PACKAGES}/bin"
+
+# }}}
 # }}}
 # {{{ Aliases
 # {{{ Default Commands

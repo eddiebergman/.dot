@@ -93,7 +93,16 @@ if util.executable("pyright") then
 else
     print([[
         `pyright` language server could not be found.
-        $ pip install pyright
+        $ npm install -g pyright
+
+        For custom NPM_PACKAGES location
+
+        --.zshrc
+        export NPM_PACKAGES="..."
+        export PATH="${PATH}:{NPM_PACKAGES}/bin"
+
+        --.npmrc
+        prefix = ${NPM_PACKAGES}
     ]])
 end
 
