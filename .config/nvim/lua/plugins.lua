@@ -19,8 +19,22 @@ end
 
 require('packer').startup(
     function (use)
-        -- Language Server
+        -- Language Server (LSP)
         use 'neovim/nvim-lspconfig'
+
+        -- Language specific parsing based
+        use {
+            'nvim-treesitter/nvim-treesitter',
+            requires = {
+                'nvim-treesitter/playground',
+                'nvim-treesitter/nvim-treesitter-refactor',
+                'nvim-treesitter/nvim-treesitter-textobjects'
+            },
+            config = function ()  require('config/treesitter') end
+        }
+
+        -- Luapad for scratch lua
+        use 'rafcamlet/nvim-luapad'
 
         -- Autocomplete
         use {

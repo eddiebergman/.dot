@@ -50,7 +50,7 @@ nnoremap / /\v
 
 nnoremap <leader>sr :%s/
 vnoremap <leader>sr :s/
-nnoremap <leader>sg :call SynGroup()<cr>
+" nnoremap <leader>sg :call SynGroup()<cr>
 nnoremap <leader>sf :CtrlSF ""<left>
 vmap <leader>sfk <Plug>CtrlSFVwordPath
 " }}}
@@ -121,7 +121,7 @@ inoremap <down> <nop>
 " {{{ Git
 nnoremap <leader>gs :vertical bo Gstatus<cr>
 nnoremap <leader>gc :Git commit<cr>
-nnoremap <leader>gd :Gdiff<cr>
+"nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
 vnoremap <leader>gc y:Gwrite<cr>:Git commit -m "<C-r>"
 " }}}
@@ -255,6 +255,7 @@ set nocompatible
 filetype plugin indent on
 set autoindent
 
+set foldmethod=expr
 set completeopt=menuone,noselect
 set nolazyredraw
 set nonumber cursorline
@@ -493,4 +494,5 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 lua require('colors')
 lua require('lsp')
+lua require('settings')
 
