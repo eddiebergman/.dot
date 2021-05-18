@@ -146,7 +146,7 @@ def _keys():
 
     def keys_layouts():
         return [
-            Key("M-z", lazy.next_layout(),
+            Key("M-f", lazy.next_layout(),
                 desc="Toggle between Layouts"),
         ]
 
