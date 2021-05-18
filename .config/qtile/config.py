@@ -41,13 +41,43 @@ def switch_group(group_name):
         group = qtile.groups_map[group_name]
         current_screen = qtile.current_screen
 
-
         # Group has a screen and it's not the currently active one
         if group.screen is not None and group.screen != current_screen:
             qtile.cmd_to_screen(group.screen.index)
         else:
             current_screen.set_group(group)
         return
+
+    return callback
+
+def fullscreen():
+    """
+    Switches to fullscreen layout and also hides the top bar.
+    Assumes that there is at least 2 layouts of which is layout.max
+    """
+    is_max = lambda layout: layout.name == 'max'
+    def callback(qtile):
+        group = qtile.current_group
+        current_layout = group.current_layout
+
+        # Already max
+        if group.layouts[current_layout].name == 'max':
+            debug('entered 1')
+
+            if hasattr(group, 'previous_layout'):
+                group.use_layout(group.previous_layout)
+
+            else:
+                i = next(i for i, layout in enumerate(group.layouts) if not is_max(layout))
+                group.use_layout(i)
+                # will throw error here if non-max layout does not exist
+
+        # We are not max and should switch
+        else:
+            debug('entered 2')
+            group.previous_layout = current_layout
+            i = next(i for i, layout in enumerate(group.layouts) if is_max(layout))
+            group.use_layout(i)
 
     return callback
 
@@ -101,7 +131,6 @@ def cycle_visible(mode='forward'):
     return callback
 
 def _keys():
-
     def keys_movement_between_windows():
         return [
             Key("M-h", lazy.layout.left(),
@@ -146,7 +175,7 @@ def _keys():
 
     def keys_layouts():
         return [
-            Key("M-f", lazy.next_layout(),
+            Key("M-f", lazy.function(lazy.next_layout()),
                 desc="Toggle between Layouts"),
         ]
 
@@ -193,7 +222,7 @@ def _keys():
     def keys_test():
         """ Tests some functionality """
         return [
-            Key('M-t', lazy.function(switch_group('9')))
+            Key('M-t', lazy.function(fullscreen()))
         ]
 
     def keys_light():
