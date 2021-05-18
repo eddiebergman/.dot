@@ -17,7 +17,6 @@ local show_virtual_text = false
 -- Keymaps
 -- =======
 -- Get's called upon set in buffer upon loading an lsp
-local default_opts = { silent = true , noremap = true }
 local normal_keymaps = {
     -- [g]o [d]efinition
     {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
@@ -40,7 +39,7 @@ local normal_keymaps = {
     --{"<leader>sh" , "<cmd>lua vim.lsp.buf.hover()<CR>"},
 
     -- next [a
-    {"[a"        , "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
+    {"[a", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
 
     -- prev ]a
     {"]a", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"},
@@ -68,13 +67,8 @@ local default_handlers = {
 -- =====================
 local on_attach = function(client, bufnr)
     print(string.format("%s is active", client.name))
-
-    for _, mapping in pairs(normal_keymaps) do
-        local keys = mapping[1]
-        local command = mapping[2]
-        local opts = get(mapping[3], default_opts)
-        setkey(bufnr, "n", keys, command, opts)
-    end
+    util.setkeys('n', normal_keymaps, bufnr)
+    
 
     -- If autocommands wanted
     -- vim.api.nvim_exec([[

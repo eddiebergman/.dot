@@ -39,4 +39,34 @@ function M.foreach(t, f)
     for k, v in pairs(t) do f(k, v) end
 end
 
+function M.setkeys(mode, mappings, buffer)
+    local default_opts = { silent = true, noremap = true }
+
+    buffer = buffer or false
+    if buffer == true then buffer = 0 end -- 0 is current buffer
+
+    -- global mappings
+    if buffer == false then
+        local setkey = vim.api.nvim_set_keymap
+
+        for _, mapping in ipairs(mappings) do
+            local keys = mapping[1]
+            local command = mapping[2]
+            local opts = M.get(mapping[3], default_opts)
+            setkey(mode, keys, command, opts)
+        end
+
+    -- buffer mappings
+    else
+        local setkey = vim.api.nvim_buf_set_keymap
+
+        for _, mapping in ipairs(mappings) do
+            local keys = mapping[1]
+            local command = mapping[2]
+            local opts = M.get(mapping[3], default_opts)
+            setkey(buffer, mode, keys, command, opts)
+        end
+    end
+end
+
 return M
