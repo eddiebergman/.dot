@@ -54,6 +54,9 @@ def fullscreen():
     """
     Switches to fullscreen layout and also hides the top bar.
     Assumes that there is at least 2 layouts of which is layout.max
+
+    NOTE: Both use_layout and cmd_hide_show_bar both redraw screen, might be
+        worth going deeper and manually setting when to redraw
     """
     is_max = lambda layout: layout.name == 'max'
     def callback(qtile):
@@ -62,22 +65,22 @@ def fullscreen():
 
         # Already max
         if group.layouts[current_layout].name == 'max':
-            debug('entered 1')
-
             if hasattr(group, 'previous_layout'):
                 group.use_layout(group.previous_layout)
+                qtile.cmd_hide_show_bar()
 
             else:
                 i = next(i for i, layout in enumerate(group.layouts) if not is_max(layout))
                 group.use_layout(i)
+                qtile.cmd_hide_show_bar()
                 # will throw error here if non-max layout does not exist
 
         # We are not max and should switch
         else:
-            debug('entered 2')
             group.previous_layout = current_layout
             i = next(i for i, layout in enumerate(group.layouts) if is_max(layout))
             group.use_layout(i)
+            qtile.cmd_hide_show_bar()
 
     return callback
 
