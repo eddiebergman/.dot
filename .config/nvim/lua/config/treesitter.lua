@@ -1,6 +1,4 @@
 local util = require('util')
-local exec = vim.api.nvim_exec
-local cmd = vim.api.nvim_command
 
 local M = {
     languages = { 'lua', 'python', 'query' },
@@ -38,9 +36,15 @@ function M.setup()
             },
         },
 
+        query_linter = {
+            enable = true,
+            lint_events = {"BufWrite", "CursorHold"}
+        },
+
         refactor = {
 
             -- Too much
+            highlight_definitions = { enable = false },
             highlight_current_scope = { enable = false },
 
             -- Doesn't work for children who use symbol
