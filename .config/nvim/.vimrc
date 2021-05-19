@@ -68,6 +68,7 @@ nnoremap <silent> <leader>ez  :exe "vsp ".$ZDOTDIR."/.zshrc"<cr>
 
 " Fold Toggle
 nnoremap <space> za
+nnoremap z<space> zA
 
 " Fold Movement
 nnoremap <C-j> zj
@@ -271,7 +272,7 @@ set colorcolumn=80
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
-set fillchars=fold:\ 
+lua vim.o.fillchars = "fold: ,foldclose:,foldopen:,foldsep: ,eob: "
 set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
@@ -288,7 +289,19 @@ let g:python3_host_prog='/home/skantify/.pyenv/versions/3.8.5/bin/python'
 
 " }}}
 " {{{ Folding
-set foldtext=getline(v:foldstart)
+set foldtext=MyFoldText()
+function! MyFoldText()
+    let foldstr = getline(v:foldstart)
+    let foldstr = substitute(foldstr, "\s*{{{\s*$", "", "")
+    let i = match(foldstr, '\S')
+    if i < 3
+        return foldstr
+    else
+        return foldstr[0:i-1]."▶ ".foldstr[i:]
+    endif
+
+endfunction
+
 " }}}
 " {{{ Insert Mode/ Normal mode identifier
 "
