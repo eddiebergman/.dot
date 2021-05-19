@@ -1,4 +1,7 @@
-local util = require('util')
+local isdir = require('util').isdir
+local joinpath = require('util').joinpath
+local os_exec = require('util').os_exec
+local setkeys = require('util').setkeys
 
 local M = {
     languages = { 'lua', 'python', 'query' },
@@ -7,6 +10,31 @@ local M = {
         {'<leader>sg', '<cmd>TSHighlightCapturesUnderCursor<CR>'}
     }
 }
+
+-- Overwrites treesitter-pythons folding to custom one
+-- Only does so for Python folding for now, will need to
+-- make this more functional if I am to overwrite more
+function M.overwrite_with_custom_folding()
+
+    local plugin_path = require('plugins').plugin_path
+    local res = isdir(plugin_path)
+    if not res then
+        print('Plugin folder not found at '..plugin_path)
+        return
+    end
+
+    local copy_to = joinpath(plugin_path, 'nvim-treesitter', 'queries', 'python')
+    if not isdir(copy_to) then
+        print('Treesitter does not seem to exists at '..copy_to)
+        return
+    end
+
+    local extras_path = joinpath(vim.fn.stdpath('config'), 'extra')
+    local folds_scm = joinpath(extras_path, 'folds.scm')
+
+    os_exec('cp '..folds_scm..' '..copy_to)
+    print('Copied '..folds_scm..'\n to '..copy_to)
+end
 
 function M.setup()
     -- Set treesitter options
@@ -125,7 +153,7 @@ function M.setup()
     })
 
     -- Setup keys
-    util.setkeys('n', M.keymaps)
+    setkeys('n', M.keymaps)
 end
 
 M.setup()

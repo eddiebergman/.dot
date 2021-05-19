@@ -1,15 +1,16 @@
+local joinpath = require('util').joinpath
 local M = {}
 
 local cmd = vim.api.nvim_command
-local exec = vim.api.nvim_exec
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-local packer_url =  'https://github.com/wbthomason/packer.nvim'
+M.plugin_path = joinpath(fn.stdpath('data'), 'site' , 'pack', 'packer', 'start')
+M.packer_path = joinpath(M.plugin_path, 'packer.nvim')
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', packer_url, install_path})
-  cmd 'packadd packer.nvim'
+if fn.empty(fn.glob(M.packer_path)) > 0 then
+    local packer_url =  'https://github.com/wbthomason/packer.nvim'
+    fn.system({'git', 'clone', packer_url, M.packer_path})
+    cmd 'packadd packer.nvim'
 end
 
 function M.update()

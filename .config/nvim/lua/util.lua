@@ -23,7 +23,7 @@ function M.os_exec(cmd)
     local cmd_result = os_result:gsub("\n[^\n]*(\n?)$", "%1")
     local exit_status = os_result:match("(%d+)\n?$")
     handle:close()
-    return cmd_result, exit_status
+    return cmd_result, tonumber(exit_status)
 end
 
 function M.executable(cmd)
@@ -67,6 +67,31 @@ function M.setkeys(mode, mappings, buffer)
             setkey(buffer, mode, keys, command, opts)
         end
     end
+end
+
+-- Checks if a given path exists as a dir or file
+function M.os_exists(path)
+    local _, status = M.os_exec('[ -e "'..path..'" ]')
+    if status == 0 then return true else return false end
+end
+
+function M.isfile(path)
+    local _, status = M.os_exec('[ -f "'..path..'" ]')
+    if status == 0 then return true else return false end
+end
+
+function M.isdir(path)
+    local cmd = '[ -d "'..path..'" ]'
+    local _, status = M.os_exec(cmd)
+    if status == 0 then
+        return true
+    else
+        return false
+    end
+end
+
+function M.joinpath(...)
+    return table.concat({...}, '/')
 end
 
 return M
