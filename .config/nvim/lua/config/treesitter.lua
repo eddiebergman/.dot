@@ -20,8 +20,10 @@ function M.setup()
         incremental_selection = { enable = true },
         indent = { enable = true },
 
+        -- python folding
         pyfold = {
-            enable = true
+            enable = true,
+            custom_foldtext = true
         },
 
         -- 'nvim-treesitter/playground'
