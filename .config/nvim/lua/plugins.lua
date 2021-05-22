@@ -23,9 +23,7 @@ require('packer').startup(
         -- Language Server (LSP)
         use 'neovim/nvim-lspconfig'
 
-        -- Python Treesitter folding
-        use { '/home/skantify/.config/nvim/nvim-treesitter-pyfold' }
-
+        use '/home/skantify/code/nvim-treesitter-pyfold'
 
         -- Language specific parsing based
         use {
@@ -33,7 +31,7 @@ require('packer').startup(
             requires = {
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
-                'nvim-treesitter/nvim-treesitter-textobjects'
+                'nvim-treesitter/nvim-treesitter-textobjects',
             },
             config = function ()  require('config/treesitter') end
         }
