@@ -23,7 +23,18 @@ require('packer').startup(
         -- Language Server (LSP)
         use 'neovim/nvim-lspconfig'
 
+        -- Folding for Python
         use '/home/skantify/code/nvim-treesitter-pyfold'
+
+        -- For preview and finding
+        use {
+            'nvim-telescope/telescope.nvim',
+            requires = {
+                'nvim-lua/popup.nvim',
+                'nvim-lua/plenary.nvim'
+            },
+            config = function () require('config/telescope') end
+        }
 
         -- Language specific parsing based
         use {
