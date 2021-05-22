@@ -3,7 +3,6 @@ local M = {}
 
 local cmd = vim.api.nvim_command
 local fn = vim.fn
-
 M.plugin_path = joinpath(fn.stdpath('data'), 'site' , 'pack', 'packer', 'start')
 M.packer_path = joinpath(M.plugin_path, 'packer.nvim')
 
@@ -70,18 +69,6 @@ require('packer').startup(
         use {
             'KeitaNakamura/tex-conceal.vim',
             ft = {'tex'}
-        }
-
-        -- Fuzzy find file names
-        use {
-            'ctrlpvim/ctrlp.vim',
-            config = function () require('config/ctrlp') end
-        }
-
-        -- Fuzzy find file contents
-        use {
-            'dyng/ctrlsf.vim',
-            config = function () require('config/ctrlsf') end
         }
 
         -- Snippet manager

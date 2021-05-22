@@ -7,14 +7,14 @@ local M = {
         -- [s]earch [s]tring (use ripgrep to find matches of string in workspace)
         {'<leader>ss', '<cmd>Telescope live_grep<CR>'},
 
-        -- [s]earch [f]iles (search for a file in the workspace)
-        {'<leader>sf', '<cmd>Telescope find_files<CR>'},
-
-        -- [s]earch [o]ld (search through previously access files)
-        {'<leader>sf', '<cmd>Telescope oldfiles<CR>'},
-
         -- [g]o [d]efinition (Goes to any found definition in the workspace)
         {'<leader>gd', '<cmd>Telescope lsp_definitions<CR>' },
+
+        -- search files (ctrl-P plugin habit) (search for a file in the workspace)
+        {'<c-p>', '<cmd>Telescope find_files<CR>'},
+
+        -- search file history (search through previously access files)
+        {'<c-h>', '<cmd>Telescope oldfiles<CR>'},
     }
 }
 
@@ -84,11 +84,11 @@ function M.setup()
         mappings = {
             i = {
                 ['<esc>'] = actions.close,
-                ['q'] = actions.close,
             },
             n = {
                 ['<s-j>'] = actions.preview_scrolling_down,
                 ['<s-k>'] = actions.preview_scrolling_up,
+                ['q'] = actions.close,
             }
         }
       }
