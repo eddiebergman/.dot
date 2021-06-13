@@ -505,6 +505,7 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
+" }}}
 lua require('colors')
 lua require('lsp')
 lua require('settings')
