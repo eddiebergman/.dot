@@ -68,7 +68,7 @@ local default_handlers = {
 local on_attach = function(client, bufnr)
     print(string.format("%s is active", client.name))
     util.setkeys('n', normal_keymaps, bufnr)
-    
+
 
     -- If autocommands wanted
     -- vim.api.nvim_exec([[
@@ -133,4 +133,6 @@ else
         ]], sumneko_root_path))
 end
 
-
+return {
+    on_attach = on_attach
+}

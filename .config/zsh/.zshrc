@@ -100,6 +100,9 @@ export PATH="${PATH}:/usr/local/cuda/bin"
 
 # For lutris gaming on linux, required for "import dbus"
 export PATH="${PATH}:/usr/lib/python3/dist-packages"
+
+# For Lean Theorem Prover
+export PATH="${PATH}:${HOME}/.elan/bin"
 # }}}
 # {{{ Defaults - $VISUAL, $EDITOR, ...
 export VISUAL="nvim"

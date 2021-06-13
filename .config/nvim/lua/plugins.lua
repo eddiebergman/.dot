@@ -19,6 +19,7 @@ end
 
 require('packer').startup(
     function (use)
+
         -- Language Server (LSP)
         use 'neovim/nvim-lspconfig'
 
@@ -30,6 +31,16 @@ require('packer').startup(
             'mfussenegger/nvim-dap',
             requires = { 'mfussenegger/nvim-dap-python' },
             config = function () require('config/dap') end
+        }
+
+        -- Lean Theroem Prover for nvim
+        use {
+            'Julian/lean.nvim',
+            requires = {
+                'leanprover/lean.vim',
+            },
+            ft = 'lean',
+            config = function () require('config/lean') end
         }
 
         -- For preview and finding
