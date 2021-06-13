@@ -20,8 +20,13 @@ end
 function M.os_exec(cmd)
     local handle = io.popen(cmd .. "; echo $?")
     local os_result = handle:read("*all")
-    local cmd_result = os_result:gsub("\n[^\n]*(\n?)$", "%1")
+
+    -- remove the return code at the end
+    local cmd_result = os_result:gsub("\n(%d+)\n?$", "")
+
+    -- match the return code at the end
     local exit_status = os_result:match("(%d+)\n?$")
+
     handle:close()
     return cmd_result, tonumber(exit_status)
 end
