@@ -25,6 +25,13 @@ require('packer').startup(
         -- Folding for Python
         use '/home/skantify/code/nvim-treesitter-pyfold'
 
+        -- Debugging
+        use {
+            'mfussenegger/nvim-dap',
+            requires = { 'mfussenegger/nvim-dap-python' },
+            config = function () require('config/dap') end
+        }
+
         -- For preview and finding
         use {
             'nvim-telescope/telescope.nvim',
