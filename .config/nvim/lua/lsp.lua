@@ -16,10 +16,10 @@ local show_virtual_text = false
 -- =======
 -- Keymaps
 -- =======
--- Get's called upon set in buffer upon loading an lsp
-local normal_keymaps = {
+-- Get's called upon set in buffer upon loading an lsp local 
+normal_keymaps = {
     -- [g]o [d]efinition
-    --{"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
+    {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
 
     -- [r]ename
     {"<leader>r" , "<cmd>lua vim.lsp.buf.rename()<CR>"},
