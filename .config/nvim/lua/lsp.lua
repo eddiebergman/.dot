@@ -1,8 +1,6 @@
 -- TODO: Get code formatting for Python to work
 local lsp = require('lspconfig')
 local util = require('util')
-local get = util.get
-local setkey = vim.api.nvim_buf_set_keymap
 
 -- ==============
 -- Config options
@@ -16,8 +14,9 @@ local show_virtual_text = false
 -- =======
 -- Keymaps
 -- =======
--- Get's called upon set in buffer upon loading an lsp local 
-normal_keymaps = {
+-- Get's called upon set in buffer upon loading an lsp local
+local normal_keymaps = {
+
     -- [g]o [d]efinition
     {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
 
