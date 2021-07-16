@@ -1,6 +1,6 @@
 let opts = {
     \ 'highlighting' : {
-    \   'on' : 0,
+    \   'on' : 1,
     \   'limit': 1000,
     \ }
 \ }
