@@ -32,24 +32,11 @@ require('packer').startup(
             ft = { 'python' }
         }
 
-        -- Formatting
-        --use {
-        --    'mhartington/formatter.nvim',
-        --    config = function () require('config/formatting') end
-        --}
-
         -- Debugging
         use {
             'mfussenegger/nvim-dap',
             requires = { 'mfussenegger/nvim-dap-python', ft = { 'python' }},
             config = function () require('config/dap') end
-        }
-
-        -- Lean Theroem Prover for nvim
-        use {
-            'Julian/lean.nvim',
-            config = function () require('config/lean') end,
-            ft = { 'lean' }
         }
 
         -- For preview and finding
