@@ -132,11 +132,3 @@ else
         https://github.com/sumneko/lua-language-server
         ]], sumneko_root_path))
 end
-
-lsp.leanls.setup{
-    on_attach = on_attach
-}
-
-return {
-    on_attach = on_attach
-}
