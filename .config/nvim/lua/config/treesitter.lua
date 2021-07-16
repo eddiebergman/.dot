@@ -14,6 +14,12 @@ local M = {
 function M.setup()
     -- Set treesitter options
     local config = require('nvim-treesitter.configs')
+
+    -- Annoyingly this plugin to fit into treesitters module defintion
+    require'treesitter-context.config'.setup{
+        enable = true,
+    }
+
     config.setup({
         ensure_installed = M.languages,
         highlight = { enable = true },

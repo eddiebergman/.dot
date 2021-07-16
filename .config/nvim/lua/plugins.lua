@@ -20,27 +20,36 @@ end
 require('packer').startup(
     function (use)
 
+        -- vim-vinegar, slightly modified netrw
+        use 'tpope/vim-vinegar'
+
         -- Language Server (LSP)
         use 'neovim/nvim-lspconfig'
 
         -- Folding for Python
-        use '/home/skantify/code/nvim-treesitter-pyfold'
+        use {
+            '/home/skantify/code/nvim-treesitter-pyfold',
+            ft = { 'python' }
+        }
+
+        -- Formatting
+        --use {
+        --    'mhartington/formatter.nvim',
+        --    config = function () require('config/formatting') end
+        --}
 
         -- Debugging
         use {
             'mfussenegger/nvim-dap',
-            requires = { 'mfussenegger/nvim-dap-python' },
+            requires = { 'mfussenegger/nvim-dap-python', ft = { 'python' }},
             config = function () require('config/dap') end
         }
 
         -- Lean Theroem Prover for nvim
         use {
             'Julian/lean.nvim',
-            requires = {
-                'leanprover/lean.vim',
-            },
-            ft = 'lean',
-            config = function () require('config/lean') end
+            config = function () require('config/lean') end,
+            ft = { 'lean' }
         }
 
         -- For preview and finding
@@ -60,6 +69,7 @@ require('packer').startup(
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
                 'nvim-treesitter/nvim-treesitter-textobjects',
+                'romgrk/nvim-treesitter-context',
             },
             config = function ()  require('config/treesitter') end
         }
