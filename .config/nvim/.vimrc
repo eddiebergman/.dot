@@ -252,9 +252,9 @@ endfunction
 " {{{ Settings
 " All globalsettings. Use h: <setting> to find out more
 " {{{ Main
-set nocompatible
-filetype plugin indent on
 set autoindent
+set nocp
+filetype plugin indent on
 
 set foldmethod=expr
 set completeopt=menuone,noselect
@@ -272,7 +272,7 @@ set colorcolumn=80
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
-lua vim.o.fillchars = "fold: ,foldclose:,foldopen:,foldsep: ,eob: "
+set fillchars="fold: ,foldclose:,foldopen:,foldsep: ,eob: "
 set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
@@ -505,6 +505,17 @@ exec 'hi Folded cterm=NONE'.
 " }}}
 " }}}
 " }}}
+" {{{ netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 0
+let g:netrw_altv = 1
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
+" }}}
+
 " }}}
 lua require('colors')
 lua require('lsp')

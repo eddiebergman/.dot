@@ -104,12 +104,6 @@ require('packer').startup(
         -- Enables repeats for more complicated actions
         use  'tpope/vim-repeat'
 
-        -- Tree file explorer
-        use {
-            'kyazdani42/nvim-tree.lua',
-            requires = { 'kyazdani42/nvim-web-devicons' }
-        }
-
         -- Autoclose braces
         use 'townk/vim-autoclose'
 
