@@ -58,7 +58,8 @@ require('packer').startup(
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 'romgrk/nvim-treesitter-context',
             },
-            config = function ()  require('config/treesitter') end
+            config = function ()  require('config/treesitter') end,
+            run = ':TSUpdate'
         }
 
         -- Luapad for scratch lua
