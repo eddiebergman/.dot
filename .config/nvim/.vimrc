@@ -257,6 +257,7 @@ set nocp
 filetype plugin indent on
 
 set foldmethod=expr
+set foldopen-=block
 set completeopt=menuone,noselect
 set nolazyredraw
 set nonumber cursorline
