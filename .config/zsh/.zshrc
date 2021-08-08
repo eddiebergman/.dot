@@ -126,6 +126,7 @@ alias vim="nvim"
 alias evimrc="$EDITOR ~/.config/nvim/.vimrc"
 alias ezshrc="$EDITOR ~/.config/zsh/.zshrc"
 alias edot="cd $HOME/.dot && $EDITOR"
+alias todo="$EDITOR ~/.todo.md"
 # }}}
 # }}}
 # {{{ Utility
