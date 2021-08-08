@@ -4,6 +4,13 @@ let configdir = stdpath('config')
 lua require('plugins')
 " {{{ Keymaps
 let mapleader = ","
+" {{{ Navigation
+" Navigate location list for buffer
+nnoremap _ :lprev<CR>
+nnoremap + :lnext<CR>
+
+" }}}
+
 " {{{ Text
 
 " Start/end of line
@@ -105,12 +112,6 @@ noremap <leader>qf :call asyncrun#quickfix_toggle(20)<cr>
 nmap <leader>zi :tabnew %<CR>
 nmap <leader>zo :tabclose<CR>
 
-" }}}
-" {{{ Syntastic
-
-nnoremap <leader>sc :SyntasticCheck<CR>
-" Stop  the auto error window opening when switching
-nnoremap <leader>sx :SyntasticReset<CR> 
 " }}}
 " {{{ Unmappings
 inoremap <esc> <nop>
@@ -290,6 +291,10 @@ let g:python3_host_prog='/home/skantify/.pyenv/versions/3.8.5/bin/python'
 
 " }}}
 " {{{ Folding
+" Supposedly helps automatic folding while inserting
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
 set foldtext=MyFoldText()
 function! MyFoldText()
     let foldstr = getline(v:foldstart)
@@ -511,14 +516,11 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 0
 let g:netrw_altv = 1
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
 " }}}
 
 " }}}
 lua require('colors')
 lua require('lsp')
 lua require('settings')
+lua require('tabs').setup()
 
