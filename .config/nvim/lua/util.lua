@@ -1,5 +1,9 @@
 local M = {}
 
+function M.exec(str)
+    return vim.api.nvim_exec(str, true)
+end
+
 function M.system_name()
     if vim.fn.has("mac") == 1 then
         return "macOS"
@@ -31,6 +35,27 @@ function M.os_exec(cmd)
     return cmd_result, tonumber(exit_status)
 end
 
+function M.list(itr)
+    if M.isarray(itr) then
+        return itr
+    end
+    local t = {}
+    for item in itr do
+        table.insert(t, item)
+    end
+    return t
+end
+
+function M.strsplit(s, pat)
+  pat = pat or '%s+'
+  local st, g = 1, s:gmatch("()("..pat..")")
+  local function getter(segs, seps, sep, cap1, ...)
+    st = sep and seps + #sep
+    return s:sub(segs, (seps or 0) - 1), cap1 or sep, ...
+  end
+  return function() if st then return getter(st, g()) end end
+end
+
 function M.executable(cmd)
     return vim.call("executable", cmd)
 end
@@ -40,9 +65,93 @@ function M.dump(...)
     print(unpack(objects))
 end
 
-function M.foreach(t, f)
-    for k, v in pairs(t) do f(k, v) end
+function M.empty(t)
+    return next(t) == nil
 end
+
+function M.find(t, pred)
+    if type(t) ~= "table" then
+        error("Only call find on tables")
+    else
+        for k, v in pairs(t) do
+            if pred(v) then return k end
+        end
+        return nil
+    end
+end
+
+function M.index(t, x)
+   return M.find(t, function (v) return v == x end )
+end
+
+-- Not foolproof, just checks if first key is 1
+function M.isarray(t)
+    if type(t) ~= "table" then return false end
+
+    if M.empty(t) then return true end
+
+    local k, _ = next(t)
+    if k == 1 then
+        return true
+    else
+        return false
+    end
+end
+
+function M.isdict(t)
+    return type(t) == "table" and not M.isarray(t)
+end
+
+function M.foreach(iterable, f)
+    if type(iterable) == "function" then
+        for x in iterable do f(x) end
+    else
+        for k, v in pairs(iterable) do f(k, v) end
+    end
+end
+
+function M.map_iter(f, gen, state, x)
+    return function()
+        local x = gen(state , x)
+        if x ~= nil then return f(x) end
+    end
+end
+
+function M.map(iterable, f)
+    if type(iterable) == "function" then
+        return M.map_iter(f, iterable)
+    else
+        local res = {}
+        for k, v in pairs(iterable) do res[k] = f(v) end
+        return res
+    end
+end
+
+function M.filter_iter(f, gen, state, x)
+    return function()
+        local x = gen(state , x)
+        if x ~= nil and f(x) then return x end
+    end
+end
+
+function M.filter(iterable, f)
+    if type(iterable) == "function" then
+        return M.filter_iter(f, iterable)
+    else
+        local res = {}
+        if M.isarray(iterable) then
+            for _, x in ipairs(iterable) do
+                if f(x) then table.insert(res, x) end
+            end
+        else
+            for k, v in ipairs(iterable) do
+                if f(v) then res[k] = v end
+            end
+        end
+        return res
+    end
+end
+
 
 function M.setkeys(mode, mappings, buffer)
     local default_opts = { silent = true, noremap = true }
@@ -97,6 +206,14 @@ end
 
 function M.joinpath(...)
     return table.concat({...}, '/')
+end
+
+function M.str_split(s, delim)
+    local items = {}
+    for item in string.gmatch(s, delim) do
+        table.insert(items, item)
+    end
+    return items
 end
 
 return M
