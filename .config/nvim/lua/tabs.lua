@@ -1,16 +1,26 @@
 local M = {}
 local util = require('util')
-local list, map = util.list, util.map
+local list, map, range, foreach = util.list, util.map, util.range, util.foreach
 
 local _config = {
     tabs = {
         {
-            name = "home",
-            setup = function ()  end
+            name = "source",
+            setup = function () end,
+            key = "<leader>ts",
+            on_startup = true
         },
         {
             name = "testing",
-            setup = function ()  end
+            setup = function () vim.cmd("UltestSummary") end,
+            key = "<leader>tt",
+            on_startup = false
+        },
+        {
+            name = "todo",
+            setup = function () vim.cmd("edit ~/.todo.md") end,
+            key = "<leader>to",
+            on_startup = true
         }
     }
 }
@@ -34,12 +44,6 @@ function M.setup(config)
         }
     end
 
-    -- Set the first tab to be our current one
-    local _, tabconfig = next(config.tabs)
-    local tabname = tabconfig.name
-    M.state.tabs[tabname]['tabnr'] = vim.fn.tabpagenr()
-    tabconfig.setup()
-
     -- Set up a listener for tab closing
     vim.cmd([[
         augroup TabsOnTabClose
@@ -47,36 +51,60 @@ function M.setup(config)
             au TabClosed * lua require('tabs').OnTabClose(vim.fn.expand('<afile>'))
         augroup END
     ]])
+
+    -- Set hotkeys
+    local hotkeys = list(map(
+        config.tabs,
+        function (tab) return {tab.key, "<cmd>lua require('tabs').Open('"..tab.name.."')<cr>"} end
+    ))
+    util.setkeys("n", hotkeys)
+
+    -- Open tabs that should be started up
+    for _, tab in ipairs(config.tabs) do
+        if tab.on_startup then
+            tab.setup()
+            M.state.tabs[tab.name]['tabnr'] = vim.fn.tabpagenr()
+            vim.cmd("tabnew")
+        end
+    end
+
+    -- Finally close the extra created tab go back to the first tab
+    vim.cmd("tabclose | tabnext 1")
 end
 
-function M.OpenTabs()
+function M.TabNames()
+    local n_tabs = vim.fn.tabpagenr('$')
+    local tabnames = range(n_tabs)
+    for name, tab in pairs(M.state.tabs) do
+        if tab.tabnr ~= nil then tabnames[tab.tabnr] = name end
+    end
+    return tabnames
+end
+
+function M.TabNumbers()
     local tabs_str = vim.api.nvim_exec("tabs", true)
     return list(map(tabs_str:gmatch("Tab page (%d)"), tonumber))
 end
 
 function M.Open(name)
-    for tabname, tabstate in pairs(M.state.tabs) do
-        if name == tabname then
-        
-            -- Be on the tab if it's open
-            if tabstate['tabnr'] ~= nil then
+    local tab = M.state.tabs[name]
 
-                -- Nothing if it's the already opened tab
-                if M.state.current_tab == tabstate.tabnr then
-                    return
-                -- Else open it
-                else
-                    vim.cmd("tabnext "..tabstate.tabnr)
-                end
+    -- Be on the tab if it's open somewhere
+    if tab['tabnr'] ~= nil then
 
-            -- Create a new tab, set it up and switch to it
-            else
-                vim.cmd("tabnew")
-                tabstate.setup()
-                tabstate['tabnr'] = vim.fn.tabpagenr()
-            end
-
+        -- Nothing if it's the already opened tab
+        if vim.fn.tabpagenr() == tab.tabnr then
+        return
+        -- Else open it
+        else
+            vim.cmd("tabnext "..tab.tabnr)
         end
+
+    -- Create a new tab, set it up and switch to it
+    else
+        vim.cmd("tabnew")
+        tab.setup()
+        tab['tabnr'] = vim.fn.tabpagenr()
     end
 end
 
@@ -100,9 +128,6 @@ function M.OnTabClose(tabnr)
 end
 
 util.setkeys('n', {
-    -- [t]ab [t]est
-    {"<leader>tt", "<cmd>lua require('tabs').Open('testing')<cr>"},
-    {"<leader>th", "<cmd>lua require('tabs').Open('home')<cr>"},
     {"<leader>tn", "<cmd>tabnext<cr>"},
     {"<leader>tp", "<cmd>tabprev<cr>"}
 })
