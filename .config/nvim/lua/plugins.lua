@@ -1,4 +1,5 @@
 local joinpath = require('util').joinpath
+local util = require('util')
 local M = {}
 
 local cmd = vim.api.nvim_command
@@ -19,6 +20,16 @@ end
 
 require('packer').startup(
     function (use)
+
+        use {
+           'lukas-reineke/indent-blankline.nvim'
+        }
+
+        -- Neomake, run make and populate quickfix
+        use {
+            'neomake/neomake',
+            config = function () require('config/neomake') end
+        }
 
         -- vim-vinegar, slightly modified netrw
         use 'tpope/vim-vinegar'
@@ -114,7 +125,10 @@ require('packer').startup(
         -- Testing
         use {
             'rcarriga/vim-ultest',
-            requires = { 'janko/vim-test' }
+            requires = { 'janko/vim-test' },
+            config = function ()
+                util.setkeys("n", {"<leader>un", "<cmd>UltestNearest<cr>"})
+            end
         }
 
         -- Theme
