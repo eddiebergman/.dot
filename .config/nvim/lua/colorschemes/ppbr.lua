@@ -8,6 +8,7 @@ local NoteBackground = '#24293A'
 local HighlightBackground = "#2d3243"
 local Grey = "#9d8875"
 local DarkerGrey = "#676765"
+local EvenDarkerGrey = "#424141"
 local Green = "#2a7916"
 local Violet = "#826eaf"
 local BrighterViolet = "#9989BE"
@@ -31,6 +32,7 @@ local Structure = SkyBlue
 local Include = Violet
 local Keyword = SkyBlue
 local Operator = DarkerGrey
+local Guides = EvenDarkerGrey
 local Constant = DullYellow
 local String = Grey
 local Comment = DarkerGrey
@@ -61,6 +63,8 @@ local highlights = {
     LineNr = { guifg = Grey },
     ColorColumn = { guibg = NoteBackground },
     Folded = { guifg = DullerYellow, guibg = "NONE", gui = "NONE"},
+    IndentBlanklineChar = { guifg = Guides, gui='nocombine' },
+    IndentBlanklineContextChar = { guifg=DullerYellow, gui='nocombine' },
 
     -- Lsp
     LspDiagnosticsDefaultError = { guifg = Error },
@@ -71,7 +75,6 @@ local highlights = {
     LspDiagnosticsUnderlineInformation= { gui="undercurl", guisp = Hint },
     LspDiagnosticsDefaultHint = { guifg = Hint },
     LspDiagnosticsUnderlineHint= { gui="undercurl", guisp = Hint },
-
 
     -- Tree Sitter (General)
     TSVariableBuiltin = { guifg = Variable, gui="bold" },
