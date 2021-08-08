@@ -20,6 +20,9 @@ function M.setup()
         enable = true,
     }
 
+    -- This is for indent_blankline plugin
+    vim.g.indent_blankline_show_current_context = 1
+
     config.setup({
         ensure_installed = M.languages,
         highlight = { enable = true },
