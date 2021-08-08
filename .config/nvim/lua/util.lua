@@ -106,8 +106,12 @@ function M.foreach(iterable, f)
     if type(iterable) == "function" then
         for x in iterable do f(x) end
     else
-        for k, v in pairs(iterable) do f(k, v) end
+        for k, v in pairs(iterable) do f(v) end
     end
+end
+
+function M.foritems(iterable, f)
+    for k, v in pairs(iterable) do f(k, v) end
 end
 
 function M.map_iter(f, gen, state, x)
@@ -152,6 +156,23 @@ function M.filter(iterable, f)
     end
 end
 
+-- not an iterator
+-- only positive steps
+-- Starts at 1 by default
+-- inclusive endpoint
+function M.range(a, b, step)
+    if not b then
+        b = a
+        a = 1
+    end
+    step = step or 1
+    local res = {}
+    while a <= b do
+        table.insert(res, a)
+        a = a + step
+    end
+    return res
+end
 
 function M.setkeys(mode, mappings, buffer)
     local default_opts = { silent = true, noremap = true }
