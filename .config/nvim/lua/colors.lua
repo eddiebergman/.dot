@@ -1,6 +1,6 @@
 local M = {}
 local util = require('util')
-local foreach = util.foreach
+local foritems = util.foritems
 local has = vim.fn['has']
 
 -- ===========
@@ -32,7 +32,7 @@ local function cmd_highlight(group, args)
 end
 
 function M.apply_highlights()
-    foreach(colorscheme, cmd_highlight)
+    foritems(colorscheme, cmd_highlight)
 end
 
 vim.cmd [[
