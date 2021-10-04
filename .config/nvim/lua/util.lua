@@ -1,3 +1,5 @@
+local py = require('py')
+
 local M = {}
 
 function M.exec(str)
@@ -22,7 +24,7 @@ function M.get(a, b)
 end
 
 function M.os_exec(cmd)
-    local handle = io.popen(cmd .. "; echo $?")
+    local handle = io.popen(cmd .." 2>/dev/null; echo $?")
     local os_result = handle:read("*all")
 
     -- remove the return code at the end
@@ -33,17 +35,6 @@ function M.os_exec(cmd)
 
     handle:close()
     return cmd_result, tonumber(exit_status)
-end
-
-function M.list(itr)
-    if M.isarray(itr) then
-        return itr
-    end
-    local t = {}
-    for item in itr do
-        table.insert(t, item)
-    end
-    return t
 end
 
 function M.strsplit(s, pat)
@@ -65,8 +56,21 @@ function M.dump(...)
     print(unpack(objects))
 end
 
-function M.empty(t)
-    return next(t) == nil
+
+function M.contains(ele, lst)
+    if M.isarray(lst) then
+        for v in M.values(lst) do
+            if v == ele then
+                return true end end
+
+        return false
+    else
+        for k in M.keys(lst) do
+            if k == ele then
+                return true end end
+
+        return false
+    end
 end
 
 function M.find(t, pred)
@@ -82,96 +86,6 @@ end
 
 function M.index(t, x)
    return M.find(t, function (v) return v == x end )
-end
-
--- Not foolproof, just checks if first key is 1
-function M.isarray(t)
-    if type(t) ~= "table" then return false end
-
-    if M.empty(t) then return true end
-
-    local k, _ = next(t)
-    if k == 1 then
-        return true
-    else
-        return false
-    end
-end
-
-function M.isdict(t)
-    return type(t) == "table" and not M.isarray(t)
-end
-
-function M.foreach(iterable, f)
-    if type(iterable) == "function" then
-        for x in iterable do f(x) end
-    else
-        for k, v in pairs(iterable) do f(v) end
-    end
-end
-
-function M.foritems(iterable, f)
-    for k, v in pairs(iterable) do f(k, v) end
-end
-
-function M.map_iter(f, gen, state, x)
-    return function()
-        local x = gen(state , x)
-        if x ~= nil then return f(x) end
-    end
-end
-
-function M.map(iterable, f)
-    if type(iterable) == "function" then
-        return M.map_iter(f, iterable)
-    else
-        local res = {}
-        for k, v in pairs(iterable) do res[k] = f(v) end
-        return res
-    end
-end
-
-function M.filter_iter(f, gen, state, x)
-    return function()
-        local x = gen(state , x)
-        if x ~= nil and f(x) then return x end
-    end
-end
-
-function M.filter(iterable, f)
-    if type(iterable) == "function" then
-        return M.filter_iter(f, iterable)
-    else
-        local res = {}
-        if M.isarray(iterable) then
-            for _, x in ipairs(iterable) do
-                if f(x) then table.insert(res, x) end
-            end
-        else
-            for k, v in ipairs(iterable) do
-                if f(v) then res[k] = v end
-            end
-        end
-        return res
-    end
-end
-
--- not an iterator
--- only positive steps
--- Starts at 1 by default
--- inclusive endpoint
-function M.range(a, b, step)
-    if not b then
-        b = a
-        a = 1
-    end
-    step = step or 1
-    local res = {}
-    while a <= b do
-        table.insert(res, a)
-        a = a + step
-    end
-    return res
 end
 
 function M.setkeys(mode, mappings, buffer)

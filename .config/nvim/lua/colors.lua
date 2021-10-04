@@ -1,20 +1,17 @@
 local M = {}
-local util = require('util')
-local foritems = util.foritems
-local has = vim.fn['has']
+local items= require('py').items
 
 -- ===========
 -- Colors opts
 -- ===========
 -- Colorscheme
-vim.cmd [[ colo stellarized ]] -- Base Color scheme
 vim.o.background = 'dark'
 local colorscheme = require('colorschemes/ppbr')
 
 -- ============
 -- Checks
 -- ============
-if has("termguicolors") then vim.o.termguicolors = true end
+if vim.fn.has("termguicolors") then vim.o.termguicolors = true end
 
 
 -- ====================
@@ -25,14 +22,15 @@ if has("termguicolors") then vim.o.termguicolors = true end
 local function cmd_highlight(group, args)
     local strbuf = { "hi "..group }
     for k, v in pairs(args) do
-        table.insert(strbuf, k..'='..v)
-    end
+        table.insert(strbuf, k..'='..v) end
+
     vim.cmd('hi clear '..group)
     vim.cmd(table.concat(strbuf, ' '))
 end
 
 function M.apply_highlights()
-    foritems(colorscheme, cmd_highlight)
+    for group, args in items(colorscheme) do
+        cmd_highlight(group, args) end
 end
 
 vim.cmd [[
@@ -41,5 +39,11 @@ augroup Highlight
     au ColorScheme * lua require('colors').apply_highlights()
 augroup End
 ]]
+
+function M.setup()
+    vim.cmd("colo stellarized") -- Base Color scheme
+    M.apply_highlights()
+end
+
 
 return M

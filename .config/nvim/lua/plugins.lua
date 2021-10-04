@@ -46,7 +46,7 @@ require('packer').startup(
         -- Debugging
         use {
             'mfussenegger/nvim-dap',
-            requires = { 'mfussenegger/nvim-dap-python', ft = { 'python' }},
+            requires = {'rcarriga/nvim-dap-ui', 'mfussenegger/nvim-dap-python'},
             config = function () require('config/dap') end
         }
 
@@ -119,15 +119,13 @@ require('packer').startup(
         -- Fzf engine
         use 'junegunn/fzf.vim'
 
-        -- Airline status bar
-        use 'vim-airline/vim-airline'
-
         -- Testing
         use {
             'rcarriga/vim-ultest',
             requires = { 'janko/vim-test' },
-            config = function ()
-                util.setkeys("n", {"<leader>un", "<cmd>UltestNearest<cr>"})
+            config = function () require('util').setkeys("n", {
+                {"<leader>un", "<cmd>UltestNearest<cr>"}
+            })
             end
         }
 

@@ -4,6 +4,7 @@
 local DullYellow = "#a5894A"
 local DullerYellow = "#715e33"
 local DefaultBackground = '#222532'
+local SlightlyBackground = '#242835'
 local NoteBackground = '#24293A'
 local HighlightBackground = "#2d3243"
 local Grey = "#9d8875"
@@ -43,6 +44,7 @@ local Warning = Orange
 local Hint = Grey
 
 local highlights = {
+ 
     -- Base Syntax for languages
     Function = { guifg = Function },
     Type = { guifg = Type },
@@ -61,10 +63,14 @@ local highlights = {
     Todo = { guifg = SkyBlue, gui="bold" },
     CursorLineNr = { guifg = Grey, gui="bold" },
     LineNr = { guifg = Grey },
-    ColorColumn = { guibg = NoteBackground },
+    ColorColumn = { guibg = SlightlyBackground },
+    CursorLine = { guibg = SlightlyBackground, gui="underline", guisp=Guides },
     Folded = { guifg = DullerYellow, guibg = "NONE", gui = "NONE"},
     IndentBlanklineChar = { guifg = Guides, gui='nocombine' },
     IndentBlanklineContextChar = { guifg=DullerYellow, gui='nocombine' },
+    VertSplit = { guifg = DullerYellow, guibg = "NONE" },
+    StatusLine= { guifg = DullerYellow, guibg = "NONE" },
+    StatusLineNC = { guibg = "NONE" },
 
     -- Lsp
     LspDiagnosticsDefaultError = { guifg = Error },
@@ -102,7 +108,22 @@ local highlights = {
     TSComment = { guifg = Comment, gui="italic" },
     TSInclude = { guifg = Include },
     TSKeywordFunction = { guifg = Keyword },
-    TSBoolean = { guifg = Constant }
-}
+    TSBoolean = { guifg = Constant },
 
+    -- Status and Tab Line
+    SLactive = { guibg = Guides },
+    SLinactive = { guibg = "NONE", gui = 'underline', guisp=DullerYellow },
+    SLfilepathsep = { guifg=Comment },
+    SLfilepath = { guifg=DullYellow, gui='bold' },
+    SLlinecolsep = { guifg=Comment },
+    SLlinecol = { guifg=Type },
+    SLmodified = { guifg=Green },
+
+    TL = { guibg = "NONE" },
+    TLpre = { guifg=Constant },
+    TLenvsep = { guifg=Guides },
+    TLenv = { guifg=Type, gui="bold" },
+    TLgitbranchsep = { guifg=Guides },
+    TLgitbranch = { guifg=Type, gui="bold" },
+}
 return highlights

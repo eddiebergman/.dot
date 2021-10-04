@@ -123,7 +123,7 @@ alias xclip='xclip -selection clipboard'
 alias vim="nvim"
 # }}}
 # {{{ Quick files
-alias evimrc="$EDITOR ~/.config/nvim/.vimrc"
+alias evimrc="cd ~/.config/nvim; $EDITOR"
 alias ezshrc="$EDITOR ~/.config/zsh/.zshrc"
 alias edot="cd $HOME/.dot && $EDITOR"
 alias todo="$EDITOR ~/.todo.md"
@@ -133,31 +133,35 @@ alias todo="$EDITOR ~/.todo.md"
 # {{{ Screen
 # Assumes two monitors
 screen () {
-    # Usage: screen [left|right|off]
-    #
-    # Due to changing names of monitors, we manually their names
+
+    if empty $1; then
+        echo "Usage: screen {left,right,above,off}"
+        exit 1
+    fi
+
+    # Due to changing names of monitors, we manually get their names
     # instead of hardcoding them (changed from HDMI-2 -> HDMI-1)
     # Note: This might have an issue if the order of the monitors is not
     #       consistent, a workaround would be to choose the one beginning with
     #       eDPI as primary
-    xrandr --auto # Sets the monitors to show up
+    # Sets the monitors to show up
+    xrandr --auto
 
     # Get last words of output (names of monitors)
     local monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\w+$") 
     local primary=$(getline $monitors 1)
     local secondary=$(getline $monitors 2)
-    echo "Primary: ${primary} , Secondary: ${secondary}"
 
     if equal $1 "left"; then
-        xrandr --output $secondary --left-of $primary;
+        xrandr --output $secondary --left-of $primary --auto;
     elif equal $1 "right"; then
-        xrandr --output $secondary --right-of $primary;
+        xrandr --output $secondary --right-of $primary --auto;
     elif equal $1 "above"; then
-        xrandr --output $secondary --above $primary;
+        xrandr --output $secondary --above $primary --auto;
     elif equal $1 "off"; then
         xrandr --output $secondary --off;
     else
-        printf "Usage: screen [left|right|off]"
+        printf "Usage: screen {left,right,above,off}"
         exit 0;
     fi
 
@@ -249,6 +253,22 @@ ggit () {
         git clone "git@github.com:${username}/$3.git"
     else
         git $@
+    fi
+}
+# }}}
+# {{{ Update
+update() {
+    local dir="$HOME/software/neovim"
+    if equal $1 "nvim" || equal $1 "neovim"; then
+        cd $dir
+        git stash
+        git pull
+        sudo make clean
+        CMAKE_BUILD_TYPE=Release; sudo make
+        sudo make install
+    else
+        echo "Update [nvim]"
+        exit(1)
     fi
 }
 # }}}

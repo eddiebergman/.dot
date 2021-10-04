@@ -1,0 +1,2 @@
+function import(module)
+end

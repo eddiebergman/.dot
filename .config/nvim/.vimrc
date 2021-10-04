@@ -121,7 +121,7 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 " }}}
 " {{{ Git
-nnoremap <leader>gs :vertical bo Gstatus<cr>
+nnoremap <leader>gs :vertical bo Git<cr>
 nnoremap <leader>gc :Git commit<cr>
 "nnoremap <leader>gd :Gdiff<cr>
 nnoremap <leader>gl :GcLog!<cr>
@@ -148,12 +148,6 @@ command! -nargs=* -complete=shellcmd R
             \ new
             \| setlocal buftype=nofile bufhidden=hide noswapfile
             \| r !<args>
-
-" Hist ~ Shows contents of histfile in a temp buffer
-command! -complete=shellcmd Hist
-            \ new
-            \| setlocal buftype=nofile bufhidden=hide noswapfile
-            \| r !cat ~/.histfile
 
 " Preview (Not working)
 " :command! -complete=file MDpreview
@@ -287,14 +281,11 @@ set cul
 
 set signcolumn=yes:1
 
+
 let g:python3_host_prog='/home/skantify/.pyenv/versions/3.8.5/bin/python'
 
 " }}}
 " {{{ Folding
-" Supposedly helps automatic folding while inserting
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-
 set foldtext=MyFoldText()
 function! MyFoldText()
     let foldstr = getline(v:foldstart)
@@ -313,9 +304,10 @@ endfunction
 "
 augroup InsertCursor
     autocmd!
-    autocmd InsertEnter * exec 'hi CursorLine'.' cterm=bold, gui=bold'
-    autocmd InsertLeave * exec 'hi CursorLine'.' cterm=NONE, gui=NONE'
+    autocmd InsertEnter * exec 'hi CursorLine'.' gui=bold'
+    autocmd InsertLeave * exec 'hi CursorLine'.' gui=underline'
 augroup END
+
 " }}}
 " {{{ Redraw fix for kitty terminal
 if &term =~ 'kitty'
@@ -328,6 +320,13 @@ let g:shell = 'kitty'
 let g:dotdir = expand('~/Desktop/.dot')
 "let g:python3_host_prog= expand("~/.dot/venvs/vim_python_venv/bin")
 let g:python_host_prog="~/.pyenv/versions/2.7.17/bin/python2.7"
+" }}}
+" }}}
+" {{{ netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 0
+let g:netrw_altv = 1
 " }}}
 " {{{ Look and Feel
 " Should technically make a user defined syntax for this
@@ -469,6 +468,10 @@ exec 'hi Folded cterm=NONE'.
         \' ctermbg=NONE guibg=NONE ctermfg=8'.
         \' guifg=SlateBlue'
 " }}}
+" {{{ Trailing chars
+exec 'match ExtraWhitespace /\s\+$/'
+exec 'hi ExtraWhitespace ctermbg=red guibg=red'
+" }}}
 " {{{ NERDTree
 "exec 'hi NERDTreeDir gui=italic' .
 "        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
@@ -506,21 +509,17 @@ exec 'hi Folded cterm=NONE'.
 "        \.' guibg=NONE'
 "exec 'hi Pmenu cterm=NONE'
 "        \.' ctermbg='.synIDattr(synIDtrans(hlID('Comment')), 'fg', 'cterm') 
+" Highlight trailing whitespace
 "
 " }}}
 " }}}
 " }}}
-" }}}
-" {{{ netrw
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 0
-let g:netrw_altv = 1
-" }}}
 
 " }}}
-lua require('colors')
+lua require('colors').setup()
 lua require('lsp')
 lua require('settings')
 lua require('tabs').setup()
+lua require('debugging').setup()
+lua require('statusline').setup()
 
