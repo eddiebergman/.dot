@@ -12,8 +12,9 @@ local self = {
     config = {
         branch = { seperator = { left='[', right=']'} },
         env = { seperator = { left='(', right=')'} },
-        filepath = { seperator = { left='', right=''} },
-        linecol = { seperator = { left='', right=''} }
+        filepath = { seperator = { left='[', right=''} },
+        linecol = { seperator = { left='', right=']'} },
+        time = { seperator = { left='[', right=']'} }
     }
 }
 
@@ -33,7 +34,9 @@ end
 function self.tabline()
     return join({
         hi('TL'),
+        self.time(),
         '%=',
+        hi('TL'),
         self.env(),
         self.git_branch()
     })
@@ -42,10 +45,14 @@ end
 function self.active_statusline()
     return join({
         hi('SLactive'),
-        self.line_col(),
-        '   ',
+        hi('SLactive'),
+        '%=',
+        hi('SLactive'),
         self.modified(),
         self.filepath(),
+        self.line_col(),
+        hi('SLactive'),
+        '%=',
         hi('SLactive'),
 
     },'')
@@ -67,14 +74,23 @@ end
 
 function self.line_col()
     return join({
-        hi('SLlinecol')..self.config.linecol.seperator.left,
+        hi('SLlinecolsep')..self.config.linecol.seperator.left,
         hi('SLlinecol')..'%l:%c',
-        hi('SLlinecol')..self.config.linecol.seperator.right,
+        hi('SLlinecolsep')..self.config.linecol.seperator.right,
     })
 end
 
 function self.inactive_statusline()
     return join({hi('SLinactive')})
+end
+
+function self.time()
+    local res, _ = util.os_exec('date +%T')
+    return join({
+        hi('TLtimesep')..self.config.time.seperator.left,
+        hi('TLtime')..res,
+        hi('TLtimesep')..self.config.time.seperator.right
+    })
 end
 
 function self.git_branch()
@@ -87,10 +103,22 @@ function self.git_branch()
         return ''
     end
 
+    local remote = util.exec('echo FugitiveRemoteUrl()')
+    if remote == nil or remote == '' then
+        return ''
+    end
+
+    local _, org_repo = remote:match("([^:]+):([^:]+)")
+    org_repo = org_repo:match("(.+)%.git")
+
+    if branch == nil then
+        return ''
+    end
+
     return join({
-        hi('TLgitbranchsep')..self.config.branch.seperator.left,
-        hi('TLpre')..'ref: '..hi('TLgitbranch')..branch,
-        hi('TLgitbranchsep')..self.config.branch.seperator.right,
+        hi('TLgitsep')..self.config.branch.seperator.left,
+        hi('TLpre')..'ref: '..hi('TLgitbranch')..branch..hi('TLgitorg')..' @ '..org_repo,
+        hi('TLgitsep')..self.config.branch.seperator.right,
     },'')
 end
 

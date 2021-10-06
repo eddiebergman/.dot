@@ -123,7 +123,10 @@ local highlights = {
     TLpre = { guifg=Constant },
     TLenvsep = { guifg=Guides },
     TLenv = { guifg=Type, gui="bold" },
-    TLgitbranchsep = { guifg=Guides },
+    TLtimesep = { guifg=Guides },
+    TLtime = { guifg=Constant, },
+    TLgitsep = { guifg=Guides },
+    TLgitorg = { guifg=Type },
     TLgitbranch = { guifg=Type, gui="bold" },
 }
 return highlights
