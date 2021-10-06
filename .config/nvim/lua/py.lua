@@ -128,7 +128,7 @@ function M.list(itr)
 
     local t = {}
     for k, v in unpack{itr} do
-        table.insert(t, v) end
+        table.insert(t, k) end
 
     return t
 end
