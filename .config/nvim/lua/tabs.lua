@@ -2,11 +2,6 @@ local util = require('util')
 local py = require('py')
 local items, empty, index, map, enumerate, isinstance = py.items, py.empty, py.index, py.map, py.enumerate, py.isinstance
 
-util.setkeys('n', {
-    {"<leader>tn", "<cmd>tabnext<cr>"},
-    {"<leader>tp", "<cmd>tabprev<cr>"}
-})
-
 local function tabs_tabline(tabname, tabnr)
     return "hello"
 end

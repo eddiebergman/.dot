@@ -1,6 +1,15 @@
+local self = {}
+
 local util = require('util')
 
-local self = {}
+function self.setup()
+    util.setkeys('n',{
+        {'<leader>gp', ':Git push<cr>'},
+        {'<leader>gc', ':Git commit<cr>'},
+        {'<leader>gs', ':vertical bo Git<cr>'},
+        {'<leader>gl', ':GcLog!<cr>'},
+    })
+end
 
 function self.in_repo()
     local _, status = util.os_exec('git branch')

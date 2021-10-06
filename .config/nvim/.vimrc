@@ -10,7 +10,6 @@ nnoremap _ :lprev<CR>
 nnoremap + :lnext<CR>
 
 " }}}
-
 " {{{ Text
 
 " Start/end of line
@@ -43,23 +42,11 @@ nnoremap <S-Tab> :bprev<cr>
 nnoremap <leader>yc "+y
 
 " }}}
-" {{{ Tabs
-" Using <leader>t for tests now
-"nnoremap <leader>tn :tabnew<cr>
-"nnoremap <leader>tc :tabclose<cr>
-"nnoremap <leader>tt :tabnew<cr>:terminal<cr>a
-"nnoremap <C-l> :tabnext<cr>
-"nnoremap <C-h> :tabprev<cr>
-" }}}
 " {{{ Searching
 " Automatically change to regular expression search
 nnoremap / /\v
-
 nnoremap <leader>sr :%s/
 vnoremap <leader>sr :s/
-" nnoremap <leader>sg :call SynGroup()<cr>
-nnoremap <leader>sf :CtrlSF ""<left>
-vmap <leader>sfk <Plug>CtrlSFVwordPath
 " }}}
 " {{{ Quick File
 nnoremap <silent> <leader>esn :exe "vsp ".configdir."/UltiSnips"<cr>
@@ -119,21 +106,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
-" }}}
-" {{{ Git
-nnoremap <leader>gs :vertical bo Git<cr>
-nnoremap <leader>gc :Git commit<cr>
-"nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gl :GcLog!<cr>
-vnoremap <leader>gc y:Gwrite<cr>:Git commit -m "<C-r>"
-" }}}
-" {{{ NvimTree 
-nnoremap <leader>nt :NvimTreeToggle<cr>
-" }}}
-" {{{ Testing
-nmap <leader>tn <Plug>(ultest-run-nearest)
-nmap <leader>ta <Plug>(ultest-run-nearest)
-nmap <leader>ts <Plug>(ultest-summary-toggle)
 " }}}
 " }}}
 " {{{ Commands
@@ -519,7 +491,9 @@ exec 'hi ExtraWhitespace ctermbg=red guibg=red'
 lua require('colors').setup()
 lua require('lsp')
 lua require('settings')
-lua require('tabs').setup()
+"lua require('tabs').setup()
 lua require('debugging').setup()
 lua require('statusline').setup()
-
+lua require('git').setup()
+lua require('testing').setup()
+lua require('filetypes').setup()
