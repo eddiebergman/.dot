@@ -7,26 +7,20 @@ local util = require('util')
 -- =======
 -- Get's called upon set in buffer upon loading an lsp local
 local normal_keymaps = {
-
     -- [g]o [d]efinition
     {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
 
     -- [r]ename
     {"<leader>r" , "<cmd>lua vim.lsp.buf.rename()<CR>"},
 
-    -- [f]ind
-    {"<leader>f" ,"<cmd>lua vim.lsp.buf.references()<CR>"},
+    -- find [u]sage
+    {"<leader>u" ,"<cmd>lua vim.lsp.buf.references()<CR>"},
 
-    -- [g]o [t]ype
-    {"<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>"},
+    -- [f]ormat
+    {"<leader>f" ,"<cmd>lua vim.lsp.buf.formatting()<CR>"},
 
-    -- [s]how [d]oc
-    {"<leader>sd", "<cmd>lua vim.lsp.buf.signature_help()<CR>"},
-
-    -- [s]how [h]over
-    -- Note: not sure what's this is meant to show but not present in present in
-    --        pyright
-    --{"<leader>sh" , "<cmd>lua vim.lsp.buf.hover()<CR>"},
+    -- [s]how [d]efintion
+    {"<leader>sd", "<cmd>lua vim.lsp.buf.hover()<CR>"},
 
     -- next [a
     {"[a", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"},
@@ -44,15 +38,8 @@ local normal_keymaps = {
 -- ========
 -- Handlers
 -- ========
-local default_handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = False,
-            signs = True,
-            underline = True,
-        }
-    )
-}
+vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
+vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 -- =====================
 -- Language Server Setup
@@ -61,18 +48,37 @@ local on_attach = function(client, bufnr)
     print(string.format("%s is active", client.name))
     util.setkeys('n', normal_keymaps, bufnr)
 
+    local border = {
+        {"🭽", "FloatBorder"},
+        {"▔", "FloatBorder"},
+        {"🭾", "FloatBorder"},
+        {"▕", "FloatBorder"},
+        {"🭿", "FloatBorder"},
+        {"▁", "FloatBorder"},
+        {"🭼", "FloatBorder"},
+        {"▏", "FloatBorder"},
+    }
 
-    -- If autocommands wanted
-    -- vim.api.nvim_exec([[
-    --    augroup LspAutocommands
-    --        autocmd! * <buffer>
-    --    augroup END
-    --]], true)
+
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+            signs = true,
+            underline = true,
+        }
+    )
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+        vim.lsp.handlers.hover, { border=border }
+    )
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+        vim.lsp.handlers.signature_help, { border=border }
+    )
 end
 
 lsp.pylsp.setup({
     cmd = { "/home/skantify/.pyenv/versions/3.8.5/bin/pylsp" },
     on_attach = on_attach,
+    default_handlers = default_handlers,
     settings = {
         pylsp = {
             configurationSources = {'flake8'},
