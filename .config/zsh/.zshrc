@@ -12,7 +12,7 @@ fi
 
 # }}}
 # {{{ Plugins
-plugins=(git zsh-autosuggestions colored-man-pages colorize)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting colored-man-pages colorize)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#fabd2f"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
