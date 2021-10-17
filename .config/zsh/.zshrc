@@ -148,9 +148,9 @@ screen () {
     xrandr --auto
 
     # Get last words of output (names of monitors)
-    local monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\w+$") 
-    local primary=$(getline $monitors 1)
-    local secondary=$(getline $monitors 2)
+    local monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\s\s[^\s]+$")
+    local primary=$(getline $monitors 1 | xargs)
+    local secondary=$(getline $monitors 2 | xargs)
 
     if equal $1 "left"; then
         xrandr --output $secondary --left-of $primary --auto;
