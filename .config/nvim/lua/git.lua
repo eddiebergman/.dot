@@ -33,4 +33,12 @@ function self.branch()
     return nil
 end
 
+function self.org_repo()
+    remote = util.exec('echo FugitiveRemoteUrl()')
+    if remote == '' then
+        return ''
+    end
+    return remote.match(remote, ".+[%/:](.+%/.+)$")
+end
+
 return self
