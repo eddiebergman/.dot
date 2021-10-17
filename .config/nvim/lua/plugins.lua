@@ -37,7 +37,7 @@ require('packer').startup(
 
         -- Folding for Python
         use {
-            '/home/skantify/code/nvim-treesitter-pyfold',
+            'eddiebergman/nvim-treesitter-pyfold',
             ft = { 'python' }
         }
 
