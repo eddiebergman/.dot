@@ -31,6 +31,7 @@ function self.setup(config)
     ]])
 end
 
+
 function self.tabline()
     return join({
         hi('TL'),
@@ -103,17 +104,11 @@ function self.git_branch()
         return ''
     end
 
-    local remote = util.exec('echo FugitiveRemoteUrl()')
-    if remote == nil or remote == '' then
+    local org_repo = git.org_repo()
+    if org_repo == nil or org_repo == '' then
         return ''
     end
 
-    local _, org_repo = remote:match("([^:]+):([^:]+)")
-    org_repo = org_repo:match("(.+)%.git")
-
-    if branch == nil then
-        return ''
-    end
 
     return join({
         hi('TLgitsep')..self.config.branch.seperator.left,
