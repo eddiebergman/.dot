@@ -1,4 +1,15 @@
-vim.cmd [[ syntax on ]]
+local self = {}
 
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+function self.setup()
+    vim.cmd [[ syntax on ]]
+
+    vim.o.foldmethod = 'expr'
+    vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
+    vim.cmd([[
+        augroup FoldOnOpen
+        augroup END
+    ]])
+end
+
+return self

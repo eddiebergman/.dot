@@ -1,5 +1,4 @@
 local joinpath = require('util').joinpath
-local util = require('util')
 local M = {}
 
 local cmd = vim.api.nvim_command
@@ -20,7 +19,6 @@ end
 
 require('packer').startup(
     function (use)
-
         use {
            'lukas-reineke/indent-blankline.nvim'
         }
@@ -57,7 +55,7 @@ require('packer').startup(
                 'nvim-lua/popup.nvim',
                 'nvim-lua/plenary.nvim'
             },
-            config = function () require('config/telescope') end
+            config = function () print('yes'); require('config/telescope').setup() end
         }
 
         -- Language specific parsing based
@@ -69,7 +67,7 @@ require('packer').startup(
                 'nvim-treesitter/nvim-treesitter-textobjects',
                 'romgrk/nvim-treesitter-context',
             },
-            config = function ()  require('config/treesitter') end,
+            config = function () require('config/treesitter') end,
             run = ':TSUpdate'
         }
 
@@ -131,7 +129,6 @@ require('packer').startup(
 
         -- Theme
         use 'nightsense/stellarized'
-
     end
 )
 
