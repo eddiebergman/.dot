@@ -2,15 +2,6 @@
 local lsp = require('lspconfig')
 local util = require('util')
 
--- ==============
--- Config options
--- ==============
--- Where the sumneko/lua-language-server is located
-local sumneko_root_path = os.getenv("HOME").."/software/lua-language-server"
-
--- Whether to show the virtual text beside the lines
-local show_virtual_text = false
-
 -- =======
 -- Keymaps
 -- =======
@@ -56,7 +47,9 @@ local normal_keymaps = {
 local default_handlers = {
     ["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = show_virtual_text
+            virtual_text = False,
+            signs = True,
+            underline = True,
         }
     )
 }
@@ -77,57 +70,30 @@ local on_attach = function(client, bufnr)
     --]], true)
 end
 
--- Python
-if util.executable("pyright") then
-    lsp.pyright.setup {
-        handlers = default_handlers,
-        on_attach = on_attach,
-    }
-else
-    print([[
-        `pyright` language server could not be found.
-        $ npm install -g pyright
-
-        For custom NPM_PACKAGES location
-
-        --.zshrc
-        export NPM_PACKAGES="..."
-        export PATH="${PATH}:{NPM_PACKAGES}/bin"
-
-        --.npmrc
-        prefix = ${NPM_PACKAGES}
-    ]])
-end
-
--- Lua
-local system_name = util.system_name()
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-
-if util.executable(sumneko_binary) == 1 then
-    lsp.sumneko_lua.setup {
-        cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-        settings = {
-            Lua = {
-                runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-                diagnostics = { globals = { "vim" } },
-                workspace = {
-                    library = {
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                    }
+lsp.pylsp.setup({
+    cmd = { "/home/skantify/.pyenv/versions/3.8.5/bin/pylsp" },
+    on_attach = on_attach,
+    settings = {
+        pylsp = {
+            configurationSources = {'flake8'},
+            plugins = {
+                flake8 = {
+                    enabled = true,
+                    hangClosing = false,
+                    maxLineLength = 100
                 },
-                telemetry = { enable = false }
+                pycodestyle = {
+                    enabled = false
+                },
+                pydocstyle = {
+                    enabled = true
+                },
+                mypy = {
+                    enabled = true,
+                    dmypy = true,
+                    live_mode = false
+                }
             }
-        },
-        on_attach = on_attach,
-        handlers = default_handlers
+        }
     }
-else
-    print(string.format([[
-        lua-language-server not found, looking for root at:
-
-            local sumneko_root_path = %s
-
-        https://github.com/sumneko/lua-language-server
-        ]], sumneko_root_path))
-end
+})
