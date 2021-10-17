@@ -72,9 +72,9 @@ function M.setup()
             },
 
             navigation = {
-                enable = true,
+                enable = false,
                 keymaps = {
-                    goto_definition_lsp_fallback = "gd",
+                    goto_definition_lsp_fallback = "<leader>gd",
                     list_definitions = "<leader>ld",
                     list_definitions_toc = "<leader>lD",
                     goto_next_usage = "gn",

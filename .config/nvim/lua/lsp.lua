@@ -7,9 +7,6 @@ local util = require('util')
 -- =======
 -- Get's called upon set in buffer upon loading an lsp local
 local normal_keymaps = {
-    -- [g]o [d]efinition
-    {"gd", "<cmd>lua vim.lsp.buf.definition()<CR>"},
-
     -- [r]ename
     {"<leader>r" , "<cmd>lua vim.lsp.buf.rename()<CR>"},
 
@@ -31,8 +28,8 @@ local normal_keymaps = {
     -- [c]ode [a]ctions
     {"<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>"},
 
-    -- [s]how [e]rrors
-    {"<leader>se", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"},
+    -- [e]rror
+    {"<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"},
 }
 
 -- ========
