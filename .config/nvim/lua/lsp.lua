@@ -59,7 +59,7 @@ local on_attach = function(client, bufnr)
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = false,
+            virtual_text = true,
             signs = true,
             underline = true,
         }
@@ -72,31 +72,32 @@ local on_attach = function(client, bufnr)
     )
 end
 
-lsp.pylsp.setup({
-    cmd = { "/home/skantify/.pyenv/versions/3.8.5/bin/pylsp" },
-    on_attach = on_attach,
-    default_handlers = default_handlers,
-    settings = {
-        pylsp = {
-            configurationSources = {'flake8'},
-            plugins = {
-                flake8 = {
-                    enabled = true,
-                    hangClosing = false,
-                    maxLineLength = 100
-                },
-                pycodestyle = {
-                    enabled = false
-                },
-                pydocstyle = {
-                    enabled = true
-                },
-                mypy = {
-                    enabled = true,
-                    dmypy = true,
-                    live_mode = false
+if os.getenv("VIRTUAL_ENV") ~= nil then
+
+    lsp.pylsp.setup({
+        cmd = { os.getenv('VIRTUAL_ENV')..'/bin/pylsp' },
+        on_attach = on_attach,
+        default_handlers = default_handlers,
+        settings = {
+            pylsp = {
+                configurationSources = {'flake8'},
+                plugins = {
+                    flake8 = {
+                        enabled = true,
+                    },
+                    pycodestyle = {
+                        enabled = false
+                    },
+                    pydocstyle = {
+                        enabled = true
+                    },
+                    mypy = {
+                        enabled = true,
+                        dmypy = true,
+                        live_mode = false
+                    }
                 }
             }
         }
-    }
-})
+    })
+end
