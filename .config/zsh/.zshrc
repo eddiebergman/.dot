@@ -136,7 +136,7 @@ screen () {
 
     if empty $1; then
         echo "Usage: screen {left,right,above,off}"
-        exit 1
+        return 1
     fi
 
     # Due to changing names of monitors, we manually get their names
@@ -162,7 +162,7 @@ screen () {
         xrandr --output $secondary --off;
     else
         printf "Usage: screen {left,right,above,off}"
-        exit 0;
+        return 0
     fi
 
     return;
@@ -233,11 +233,14 @@ ipy () {
     fi
 }
 
-py_make_venv () {
-    if exists '.venv'; then echo '.venv already exists'; exit 1; fi
+pyvenv () {
+    if exists '.venv'; then echo '.venv already exists'; return 1; fi
 
     echo "Using $(python -V) located at $(which python)"
-    python -m venv .venv && source './.venv/bin/activate'
+    python -m venv .venv
+    source './.venv/bin/activate'
+
+    pip install pyls-flake8 mypy-ls 'python-lsp-server[rope, mccabe, pycodestyle, pydocstyle, yapf]'
 }
 
 
@@ -255,6 +258,8 @@ ggit () {
         git $@
     fi
 }
+
+
 # }}}
 # {{{ Update
 update() {
@@ -268,12 +273,71 @@ update() {
         sudo make install
     else
         echo "Update [nvim]"
-        exit(1)
+        return 1
     fi
 }
 # }}}
 # {{{ Template
 source "$ZDOTDIR/template.zsh"
+# }}}
+# {{{ Clone
+# Create environments I normally need
+clone () {
+    repo=$1
+    name=$2
+
+    if empty $name; then
+        name=$repo
+    fi
+
+    # Validate the name if it exists
+    if exists $name; then
+        echo "${name} already exists"
+        return 1
+    else
+        mkdir $name
+    fi
+
+    # Validate and get org for repo
+    case $repo in
+
+        'autosklearn')
+            org="automl"
+            install_cmd='.[test,examples,docs]'
+            ;;
+
+        'meta_remote')
+            org="automl-private"
+            install_cmd='.[test]'
+            ;;
+
+        'automlbenchmark_remote')
+            org="automl-private"
+            install_cmd='.'
+            ;;
+
+        'automlbenchmark_analysis')
+            org="automl-private"
+            install_cmd='.'
+            ;;
+
+        *)
+            supported = (
+                'autosklearn', 'meta_remote',
+                'automlbenchmark_remote', 'automlbenchmark_analysis'
+            )
+            echo "Supported:"
+            echo $supported
+            return 1
+    esac
+
+    cd $name
+    git clone "git@github.com:${org}/${repo}" "."
+    pyvenv
+    echo $install_cmd
+    pip install -e $install_cmd
+    mypy --install-types
+}
 # }}}
 # }}}
 # {{{ Settings
