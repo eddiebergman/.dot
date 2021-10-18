@@ -105,13 +105,12 @@ raise NotImplementedError
 endsnippet
 
 snippet bdoc "bigdoc" w
-"""
-${1:Documentation}
+"""${1:Documentation}
 """
 endsnippet
 
 snippet sdoc "smalldoc" w
-""" ${1:Documentation} """
+"""${1:Documentation}"""
 endsnippet
 
 snippet docendpoint "# /path/to/endpoint" w
@@ -128,11 +127,13 @@ endsnippet
 snippet params "Parameters" w
 Parameters
 ----------
+
 endsnippet
 
 snippet returns "Returns" w
 Returns
 -------
+
 endsnippet
 #}}}
 #{{{ click
