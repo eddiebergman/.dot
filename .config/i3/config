@@ -177,4 +177,5 @@ bar {
 # https://faq.i3wm.org/question/1228/lock-workspace-to-permanent/index.html
 # }}}
 # }}}
-
+exec feh --bg-scale /home/skantify/.config/background.jpg
+exec_always picom

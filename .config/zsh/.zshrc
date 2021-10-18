@@ -165,6 +165,8 @@ screen () {
         return 0
     fi
 
+    feh --bg-scale /home/skantify/.config/background.jpg
+
     return;
 }
 # }}}
