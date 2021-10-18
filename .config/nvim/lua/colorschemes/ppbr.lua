@@ -118,6 +118,9 @@ local highlights = {
     SLlinecolsep = { guifg=Comment },
     SLlinecol = { guifg=Type },
     SLmodified = { guifg=Green },
+    SLmodifiedsep = { guifg=Green },
+    SLfiletype = { guifg=Keyword },
+    SLfiletypesep = { guifg=Keyword },
 
     TL = { guibg = "NONE" },
     TLpre = { guifg=Constant },

@@ -12,8 +12,10 @@ local self = {
     config = {
         branch = { seperator = { left='[', right=']'} },
         env = { seperator = { left='(', right=')'} },
-        filepath = { seperator = { left='[', right=''} },
-        linecol = { seperator = { left='', right=']'} },
+        filepath = { seperator = { left='', right=''} },
+        modified = { seperator = { left=' ', right=''} },
+        filetype = { seperator = { left='', right='-'} },
+        linecol = { seperator = { left='', right=''} },
         time = { seperator = { left='[', right=']'} }
     }
 }
@@ -50,6 +52,7 @@ function self.active_statusline()
         '%=',
         hi('SLactive'),
         self.modified(),
+        self.filetype(),
         self.filepath(),
         self.line_col(),
         hi('SLactive'),
@@ -59,16 +62,26 @@ function self.active_statusline()
     },'')
 end
 
+function self.filetype()
+    return join({
+        hi('SLfiletypesep')..self.config.filetype.seperator.left,
+        hi('SLfiletype')..'%y',
+        hi('SLfiletypesep')..self.config.filetype.seperator.right
+    })
+end
+
 function self.modified()
     return join({
-        hi('SLmodified')..'%m'
-    })
+        hi('SLmodifiedsep')..self.config.modified.seperator.left,
+        hi('SLmodified')..'%m',
+        hi('SLmodifiedsep')..self.config.modified.seperator.right,
+    }, '')
 end
 
 function self.filepath()
     return join({
         hi('SLfilepathsep')..self.config.filepath.seperator.left,
-        hi('SLfilepath')..'"%f"',
+        hi('SLfilepath')..'%f',
         hi('SLfilepathsep')..self.config.filepath.seperator.right
     })
 end
