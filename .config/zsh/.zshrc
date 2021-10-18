@@ -242,7 +242,8 @@ pyvenv () {
     python -m venv .venv
     source './.venv/bin/activate'
 
-    pip install pyls-flake8 mypy-ls 'python-lsp-server[rope, mccabe, pycodestyle, pydocstyle, yapf]'
+    pip install pyls-flake8 mypy-ls python-lsp-black 'python-lsp-server[rope, mccabe, pycodestyle, pydocstyle]'
+    mypy --install-types
 }
 
 
