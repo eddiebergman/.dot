@@ -54,7 +54,7 @@ fi
 if confirm "rofi"; then
     echo "Installing"
     ( command -v rofi > /dev/null 2>&1 && sudo pacman -Su rofi --noconfirm --needed)
-    
+
     echo "Linking"
     ln -sfn ${dot}/.config/rofi ${HOME}/.config/rofi
 fi
@@ -83,6 +83,14 @@ fi
 if confirm "firefox"; then
     echo "Installing"
     ( command -v firefox > /dev/null 2>&1 || sudo pacman -Su firefox --noconfirm --needed)
+fi
+
+if confirm "picom"; then
+    echo "Installing"
+    ( command -v picom > /dev/null 2>&1 || sudo pacman -Su picom --noconfirm --needed)
+
+    echo "Linking"
+    ln -sfn ${dot}/.config/picom ${HOME}/.config/picom
 fi
 
 # qtile
