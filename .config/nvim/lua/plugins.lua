@@ -115,7 +115,7 @@ require('packer').startup(
         use 'townk/vim-autoclose'
 
         -- Fzf engine
-        use 'junegunn/fzf.vim'
+        -- use 'junegunn/fzf.vim'
 
         -- Testing
         use {
