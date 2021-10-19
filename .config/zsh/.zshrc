@@ -135,39 +135,37 @@ alias todo="$EDITOR ~/.todo.md"
 screen () {
 
     if empty $1; then
-        echo "Usage: screen {left,right,above,off}"
+        echo "Usage: screen {work,home,off}"
         return 1
     fi
-
-    # Due to changing names of monitors, we manually get their names
-    # instead of hardcoding them (changed from HDMI-2 -> HDMI-1)
-    # Note: This might have an issue if the order of the monitors is not
-    #       consistent, a workaround would be to choose the one beginning with
-    #       eDPI as primary
+    #
     # Sets the monitors to show up
     xrandr --auto
+    local primary="eDP-1"
+    local home_extern="HDMI-2"
+    local work_middle="DP-2-2"
+    local work_right="DP-2-3"
 
-    # Get last words of output (names of monitors)
-    local monitors=$(xrandr --listmonitors | tail -n 2 | grep -oE "\s\s[^\s]+$")
-    local primary=$(getline $monitors 1 | xargs)
-    local secondary=$(getline $monitors 2 | xargs)
+    # Disable all monitors
+    if equal $1 "off"; then
+        xrandr --output $home_extern --off;
+        xrandr --output $work_middle --off;
+        xrandr --output $work_right --off;
 
-    if equal $1 "left"; then
-        xrandr --output $secondary --left-of $primary --auto;
-    elif equal $1 "right"; then
-        xrandr --output $secondary --right-of $primary --auto;
-    elif equal $1 "above"; then
-        xrandr --output $secondary --above $primary --auto;
-    elif equal $1 "off"; then
-        xrandr --output $secondary --off;
+    elif equal $1 "work" ; then
+        xrandr --output $work_middle --right-of $primary --auto
+        xrandr --output $work_right --right-of $work_middle --rotate left --auto
+
+    elif equal $1 "home"; then
+        xrandr --output $home_extern --right-of $primary --auto
+
     else
         printf "Usage: screen {left,right,above,off}"
-        return 0
+        return 1
+
     fi
 
     feh --bg-scale /home/skantify/.config/background.jpg
-
-    return;
 }
 # }}}
 # {{{ Decompress
