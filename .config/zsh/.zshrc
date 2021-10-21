@@ -121,6 +121,7 @@ export PATH="${PATH}:${NPM_PACKAGES}/bin"
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 alias vim="nvim"
+alias ipython=ipy
 # }}}
 # {{{ Quick files
 alias evimrc="cd ~/.config/nvim; $EDITOR"
@@ -227,7 +228,7 @@ pip () {
 ipy () {
     if emptyvar $VIRTUAL_ENV
     then
-        ipython
+        $(pyenv which ipython)
     else
         $VIRTUAL_ENV/bin/ipython
     fi
