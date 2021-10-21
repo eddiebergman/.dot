@@ -336,7 +336,7 @@ clone () {
     cd $name
     git clone "git@github.com:${org}/${repo}" "."
     pyvenv
-    $install_cmd
+    eval $install_cmd
     mypy --install-types
 }
 # }}}
