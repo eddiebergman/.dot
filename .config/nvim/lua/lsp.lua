@@ -1,3 +1,4 @@
+local self = {}
 -- TODO: Get code formatting for Python to work
 local lsp = require('lspconfig')
 local util = require('util')
@@ -43,7 +44,6 @@ vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]
 -- =====================
 local on_attach = function(client, bufnr)
     print(string.format("%s is active", client.name))
-    util.setkeys('n', normal_keymaps, bufnr)
 
     local border = {
         {"🭽", "FloatBorder"},
@@ -55,7 +55,6 @@ local on_attach = function(client, bufnr)
         {"🭼", "FloatBorder"},
         {"▏", "FloatBorder"},
     }
-
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -101,3 +100,9 @@ if os.getenv("VIRTUAL_ENV") ~= nil then
         }
     })
 end
+
+function self.setup()
+    util.setkeys('n', normal_keymaps)
+end
+
+return self

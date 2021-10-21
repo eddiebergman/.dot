@@ -490,7 +490,7 @@ exec 'hi ExtraWhitespace ctermbg=red guibg=red'
 " }}}
 lua require('settings').setup()
 lua require('colors').setup()
-lua require('lsp')
+lua require('lsp').setup()
 "lua require('tabs').setup()
 lua require('debugging').setup()
 lua require('statusline').setup()

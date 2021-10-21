@@ -55,7 +55,7 @@ require('packer').startup(
                 'nvim-lua/popup.nvim',
                 'nvim-lua/plenary.nvim'
             },
-            config = function () print('yes'); require('config/telescope').setup() end
+            config = function () require('config/telescope').setup() end
         }
 
         -- Language specific parsing based
