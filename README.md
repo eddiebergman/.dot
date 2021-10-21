@@ -1,4 +1,6 @@
 # Dot Files
+Note: README is a little outdated
+
 Hello, this is my collection of dot files. I run [Arch](https://archlinux.org/),
 a minimilistic linux-distro which gives an extremely light weight operating
 system at the cost of many hours/days/weeks required to learn the ins and outs
