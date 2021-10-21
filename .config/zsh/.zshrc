@@ -242,7 +242,6 @@ pyvenv () {
     source './.venv/bin/activate'
 
     pip install pyls-flake8 mypy-ls python-lsp-black 'python-lsp-server[rope, mccabe, pycodestyle, pydocstyle]'
-    mypy --install-types
 }
 
 
@@ -296,8 +295,6 @@ clone () {
     if exists $name; then
         echo "${name} already exists"
         return 1
-    else
-        mkdir $name
     fi
 
     # Validate and get org for repo
@@ -305,39 +302,41 @@ clone () {
 
         'autosklearn')
             org="automl"
-            install_cmd='.[test,examples,docs]'
+            install_cmd='pip install -e .[test,examples,docs]'
             ;;
 
         'meta_remote')
             org="automl-private"
-            install_cmd='.[test]'
+            install_cmd='pip install -e .[test]'
             ;;
 
         'automlbenchmark_remote')
             org="automl-private"
-            install_cmd='.'
+            install_cmd='pip install -e .'
             ;;
 
         'automlbenchmark_analysis')
             org="automl-private"
-            install_cmd='.'
+            install_cmd='pip install -e .'
+            ;;
+
+        'automlbenchmark')
+            org='openml'
+            install_cmd='pip install -r requirements.txt'
             ;;
 
         *)
-            supported = (
-                'autosklearn', 'meta_remote',
-                'automlbenchmark_remote', 'automlbenchmark_analysis'
-            )
+            supported=('autosklearn', 'meta_remote', 'automlbenchmark_remote', 'automlbenchmark_analysis')
             echo "Supported:"
             echo $supported
             return 1
     esac
 
+    mkdir $name
     cd $name
     git clone "git@github.com:${org}/${repo}" "."
     pyvenv
-    echo $install_cmd
-    pip install -e $install_cmd
+    $install_cmd
     mypy --install-types
 }
 # }}}
