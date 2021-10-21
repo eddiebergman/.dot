@@ -85,12 +85,27 @@ if confirm "firefox"; then
     ( command -v firefox > /dev/null 2>&1 || sudo pacman -Su firefox --noconfirm --needed)
 fi
 
+# picom
 if confirm "picom"; then
     echo "Installing"
     ( command -v picom > /dev/null 2>&1 || sudo pacman -Su picom --noconfirm --needed)
 
     echo "Linking"
     ln -sfn ${dot}/.config/picom ${HOME}/.config/picom
+fi
+
+# bluetooth
+if confirm "picom"; then
+    echo "Installing"
+    ( pacman -Q bluez > /dev/null 2>&1 || sudo pacman -Su bluez --noconfirm --needed)
+    ( pacman -Q bluez-util > /dev/null 2>&1 || sudo pacman -Su bluez-util --noconfirm --needed)
+
+    echo "Enabling bluetooth services"
+    sudo systemctl enable bluetooth
+    sudo systemctl start bluetooth
+
+    echo "Linking for auto-startup"
+    sudo ln -sfn ${dot}/misc/bluetooth/main.conf /etc/bluetooth/main.conf
 fi
 
 # qtile
