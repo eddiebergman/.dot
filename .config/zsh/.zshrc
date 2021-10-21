@@ -143,9 +143,15 @@ screen () {
     # Sets the monitors to show up
     xrandr --auto
     local primary="eDP-1"
-    local home_extern="HDMI-2"
+    local home_extern="HDMI2"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
+
+    # Home laptop reads them differently sometimes
+    if ! empty echo $(xrandr | grep "eDP1"); then
+        primary="eDP1" 
+        home_extern="HDMI2"
+    fi
 
     # Disable all monitors
     if equal $1 "off"; then
