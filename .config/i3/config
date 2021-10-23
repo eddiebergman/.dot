@@ -179,3 +179,4 @@ bar {
 # }}}
 exec feh --bg-scale /home/skantify/.config/background.jpg
 exec_always picom
+exec_always bluetoothctl power on
