@@ -1,3 +1,8 @@
+local py = require('py')
+local update = py.update
+
+local self = {}
+
 -- =======
 -- Colours
 -- =======
@@ -42,25 +47,41 @@ local Normal = White
 local Error = Red
 local Warning = Orange
 local Hint = Grey
-
-local highlights = {
- 
+--
+-- ========
+-- Handlers
+-- ========
+self.base_highlights = {
     -- Base Syntax for languages
-    Function = { guifg = Function },
-    Type = { guifg = Type },
-    Statement = { guifg = Structure },
-    Include = { guifg = Include },
-    Number = { guifg = Constant },
     Comment = { guifg = Comment },
-    Conditional = { guifg = Structure },
-    Operator = { guifg = Operator },
-    String = { guifg = String },
     Constant = { guifg = Constant },
+    String = { guifg = String },
+    Character = { guifg = Comment },
+    Number = { guifg = Constant },
+    Boolean = { guifg = Constant },
+    Float = { guifg = Constant },
+    Identifier = { guifg = Variable },
+    Function = { guifg = Function },
+    Statement = { guifg = Structure },
+    Conditional = { guifg = Structure },
+    Repeat = { guifg = Structure },
+    Label = { guifg = Structure },
+    Operator = { guifg = Operator },
     Keyword = { guifg = Keyword },
+    Exception = { guifg = Structure },
+    Include = { guifg = Include },
+    Type = { guifg = Type },
     Normal = { guifg = Normal },
+    Underlined = { guifg = Normal, gui="underline" },
+    Ignore = { guifg = Normal },
+    Error = { guifg = Error },
+    Todo = { guifg = SkyBlue, gui="bold" },
+    Special = { guifg = SkyBlue },
+}
+
+self.highlights = {
 
     -- Editor
-    Todo = { guifg = SkyBlue, gui="bold" },
     CursorLineNr = { guifg = Grey, gui="bold" },
     LineNr = { guifg = Grey },
     ColorColumn = { guibg = SlightlyBackground },
@@ -71,6 +92,8 @@ local highlights = {
     VertSplit = { guifg = DullerYellow, guibg = "NONE" },
     StatusLine= { guifg = DullerYellow, guibg = "NONE" },
     StatusLineNC = { guibg = "NONE" },
+    FloatBorder = { guibg = "NONE", guifg = DullerYellow },
+    NormalFloat = { guibg = "NONE" },
 
     -- Lsp
     LspDiagnosticsDefaultError = { guifg = Error },
@@ -110,6 +133,14 @@ local highlights = {
     TSKeywordFunction = { guifg = Keyword },
     TSBoolean = { guifg = Constant },
 
+    -- Nvim-cmp Completion
+    CmpItemAbbr = { guifg = Comment },
+    CmpItemAbbrDeprecated = { guifg = Comment },
+    CmpItemAbbrMatch = { guifg = Normal },
+    CmpItemAbbrMatchFuzzy = { guifg = Normal },
+    CmpItemKind = { guifg = Type },
+    CmpItemMenu = { guibg = SkyBlue },
+
     -- Status and Tab Line
     SLactive = { guibg = Guides },
     SLinactive = { guibg = "NONE", gui = 'underline', guisp=DullerYellow },
@@ -131,5 +162,10 @@ local highlights = {
     TLgitsep = { guifg=Guides },
     TLgitorg = { guifg=Type },
     TLgitbranch = { guifg=Type, gui="bold" },
+
+    -- PMenu
 }
-return highlights
+
+py.update(self.highlights, self.base_highlights)
+
+return self

@@ -56,7 +56,6 @@ function M.isinstance(obj, typestr)
             return true
         end
 
-        print('hello')
         -- the table is a dict in not a list
         if typestr == "dict" then
             return true

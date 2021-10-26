@@ -64,10 +64,6 @@ nnoremap <silent> <leader>ez  :exe "vsp ".$ZDOTDIR."/.zshrc"<cr>
 nnoremap <space> za
 nnoremap z<space> zA
 
-" Fold Movement
-nnoremap <C-j> zj
-nnoremap <C-k> zk
-
 " Set fold methods
 nnoremap <leader>fmm :setlocal foldmethod=marker<cr>
 nnoremap <leader>fmi :setlocal foldmethod=indent<cr>
@@ -225,7 +221,7 @@ filetype plugin indent on
 
 set foldmethod=expr
 set foldopen-=block
-set completeopt=menuone,noselect
+set completeopt=menuone,preview
 set nolazyredraw
 set nonumber cursorline
 set hlsearch incsearch
@@ -499,3 +495,4 @@ lua require('testing').setup()
 lua require('filetypes').setup()
 lua require('search').setup()
 lua require('nav').setup()
+lua require('completion').setup()

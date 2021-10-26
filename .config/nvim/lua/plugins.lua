@@ -19,9 +19,18 @@ end
 
 require('packer').startup(
     function (use)
+        -- Indent lines
         use {
            'lukas-reineke/indent-blankline.nvim'
         }
+
+        -- Completion
+        use {
+            'hrsh7th/nvim-cmp',
+            requires = {'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'quangnguyen30192/cmp-nvim-ultisnips'}
+        }
+
+
 
         -- Neomake, run make and populate quickfix
         use {
@@ -73,12 +82,6 @@ require('packer').startup(
 
         -- Luapad for scratch lua
         use 'rafcamlet/nvim-luapad'
-
-        -- Autocomplete
-        use {
-            'hrsh7th/nvim-compe',
-            config = function () require('config/compe') end
-        }
 
         -- User wiki
         use 'vimwiki/vimwiki'

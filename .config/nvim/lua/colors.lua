@@ -29,7 +29,7 @@ local function cmd_highlight(group, args)
 end
 
 function M.apply_highlights()
-    for group, args in items(colorscheme) do
+    for group, args in items(colorscheme.highlights) do
         cmd_highlight(group, args) end
 end
 
