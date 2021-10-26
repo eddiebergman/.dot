@@ -33,11 +33,6 @@ local normal_keymaps = {
     {"<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"},
 }
 
--- ========
--- Handlers
--- ========
-vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
-vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 -- =====================
 -- Language Server Setup
