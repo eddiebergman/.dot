@@ -236,7 +236,7 @@ set colorcolumn=88
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
-set fillchars="fold: ,foldclose:,foldopen:,foldsep: ,eob: "
+set fillchars=fold:\ ,eob:~
 set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
@@ -269,7 +269,6 @@ endfunction
 
 " }}}
 " {{{ Insert Mode/ Normal mode identifier
-"
 augroup InsertCursor
     autocmd!
     autocmd InsertEnter * exec 'hi CursorLine'.' gui=bold'
@@ -306,115 +305,6 @@ let s:yellow = "%#Type#"
 let s:blue = "%#Identifier#"
 let s:cyan = "%#Constant#"
 " }}} 
-" {{{ Status
-set laststatus=2
-
-"set statusline=%!StatusLineFormat()
-function! StatusLineFormat()
-    "let l:s .= s:orange." | "
-    let l:s = "%*"
-    let l:s .= s:yellow."ft ".s:orange."%y"
-    let l:s .= s:cyan." | "
-    let l:s .= s:yellow."branch ".s:orange."%{FugitiveHead()}"
-    let l:s .= s:cyan." | "
-    let l:s .= s:yellow."Path ".s:orange."%F ".s:orange
-    let l:s .= "%*"
-    return l:s
-endfunction
-" }}}
-" {{{ Titlebar
-set showtabline=2
-set tabline=%!TabLineFormat()
-
-" If this is running slowly, maybe preformat string instead of constant
-"   concatenation
-function! TabLineFormat()
-    " Tabs
-    " {{{ Tabs
-    redir => l:tablist | silent exe ":tabs" | redir end
-    let l:tablines = split(l:tablist, "\n")
-
-    let l:tabstrings = []
-    let l:activetab= 0
-    let l:tabnr = 0
-    let l:tabstr = ""
-    for line in l:tablines
-        if Substr("Tab page", line)
-            if l:tabnr != 0 | let l:tabstrings += [l:tabstr] | endif
-            let l:tabnr += 1
-            let l:tabstr = ""
-        else
-            " Might have issues with files with a space in it
-            let l:fullname = split(l:line, "  ")[-1]
-            let l:isterm = Substr("term://", l:fullname)
-            let l:modified = (l:line[2] == "+")
-            let l:current = (l:line[0] == ">")
-
-            if l:current | let l:activetab = l:tabnr | endif
-
-            let l:flags = join([l:line[2], l:line[0]], "")
-            let l:flags = substitute(l:flags, "+", (s:green."+"), "")
-            let l:flags = substitute(l:flags, ">", (s:orange.">"), "")
-            let l:fname = fnamemodify(l:fullname, ":t")
-
-            if l:current      | let l:tabstr .= l:flags.s:orange.l:fname."  "
-            elseif l:modified | let l:tabstr .= l:flags.s:green.l:fname."  "
-            else              | let l:tabstr .= l:flags.s:purple.l:fname."  "
-            endif
-        endif
-    endfor
-
-    let l:tabstrings += [l:tabstr]
-
-    let l:tstr = ""
-    for i in range(len(l:tabstrings))
-        if i + 1 == l:activetab
-            let l:tstr .= s:yellow."Tab ".(i+1).s:yellow."|".l:tabstrings[i].s:yellow."| "
-        else
-            let l:tstr .= s:cyan."Tab ".(i+1)." "
-        endif
-    endfor
-    " }}}
-    " {{{ Buffers
-    redir => l:buflist | silent exe ":buffers" | redir end
-
-    let l:bstr = s:yellow."Buffers: "
-    let l:buffers = split(l:buflist, "\n")
-    for line in l:buffers
-         let l:bnum = line[0:2]
-         let l:flags = line[3:8]
-         let l:fpath = split(line[9:-1])[0]
-         " May cause issues with file names with spaces
-         let l:fname = substitute(fnamemodify(l:fpath, ":t"), '"', '', 'g')
-         let l:isterm = Substr("term://", l:fpath)
-         let l:current = Substr("%", l:flags)
-         let l:active = Substr("a", l:flags)
-         let l:modified = Substr("+", l:flags)
-         let l:hidden = Substr("h", l:flags)
-
-        if l:current
-            let l:bstr .= s:orange." > ".l:fname." ".s:yellow."|"
-        "elseif l:active
-        "    let l:bstr .= s:yellow."".s:yellow.l:bnum."  ".l:fname." "
-        else
-            let l:bstr .= s:cyan.l:bnum." ".l:fname." ".s:yellow."|"
-        endif
-
-    endfor
-    " }}}
-    let l:rbstr = substitute(l:bstr, "%#[A-Za-z]*#", "", "g")
-    let l:rtstr = substitute(l:tstr, "%#[A-Za-z]*#", "", "g")
-
-    if strchars(l:rbstr) + strchars(l:rtstr) >= &columns
-        return l:tstr
-    else
-        let l:padlength = &columns - strchars(l:rbstr) - strchars(l:rtstr)
-        let l:padding = repeat(" ", l:padlength)
-        return l:tstr.l:padding.l:bstr
-    endif
-endfunction
-
-" }}}
 " {{{ Wildignore
 " https://sanctum.geek.nz/arabesque/vim-filename-completion/
 
@@ -426,63 +316,6 @@ set wildignore+=*~,*.swp,*.tmp
 
 
 " }}}
-" {{{ Syntax Highlight groups (Must be at end)
-" {{{ Numbering
-exec 'hi CursorLineNr cterm=bold ctermbg=NONE'
-exec 'hi LineNr cterm=NONE ctermbg=NONE guibg=NONE'
-" }}}
-" {{{ Fold
-exec 'hi Folded cterm=NONE'.
-        \' ctermbg=NONE guibg=NONE ctermfg=8'.
-        \' guifg=SlateBlue'
-" }}}
-" {{{ Trailing chars
-exec 'match ExtraWhitespace /\s\+$/'
-exec 'hi ExtraWhitespace ctermbg=red guibg=red'
-" }}}
-" {{{ NERDTree
-"exec 'hi NERDTreeDir gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"exec 'hi NERDTreeFile cterm=italic, gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-"exec 'hi NERDTreeLinkFile gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-"exec 'hi NERDTreeLinkTarget gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-"exec 'hi NERDTreeExecFile gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Constant')), 'fg', 'gui')
-"exec 'hi NERDTreeBookmarksLeader gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Identifier')), 'fg', 'gui')
-"exec 'hi NERDTreeBookmarkName gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"exec 'hi NERDTreeBookmarksHeader gui=italic' .
-"        \' guifg=' . synIDattr(synIDtrans(hlID('Type')), 'fg', 'gui')
-"exec 'hi NERDTreeBookmark cterm=italic, gui=italic' .
-"        \' guifg=SlateBlue'
-"exec 'hi link NERDTreeCWD NERDTreeBookmark'
-"" }}}
-" {{{ Other
-"exec 'hi VertSplit gui=bold cterm=bold'
-"        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-"        \.' guibg=NONE'
-"exec 'hi StatusLine '
-"        \.' guifg=' . synIDattr(synIDtrans(hlID('Special')), 'fg', 'gui')
-"        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"exec 'hi StatusLineNC '
-"        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"        \.' guibg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"" . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"exec 'hi SignColumn gui=bold'
-"        \.' guifg=' . synIDattr(synIDtrans(hlID('Underlined')), 'fg', 'gui')
-"        \.' guibg=NONE'
-"exec 'hi Pmenu cterm=NONE'
-"        \.' ctermbg='.synIDattr(synIDtrans(hlID('Comment')), 'fg', 'cterm') 
-" Highlight trailing whitespace
-"
-" }}}
-" }}}
-" }}}
-
 " }}}
 lua require('settings').setup()
 lua require('colors').setup()

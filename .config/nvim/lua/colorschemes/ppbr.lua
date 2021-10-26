@@ -94,6 +94,7 @@ self.highlights = {
     StatusLineNC = { guibg = "NONE" },
     FloatBorder = { guibg = "NONE", guifg = DullerYellow },
     NormalFloat = { guibg = "NONE" },
+    WhiteSpace = { guibg = Error },
 
     -- Lsp
     LspDiagnosticsDefaultError = { guifg = Error },
