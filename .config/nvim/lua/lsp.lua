@@ -33,6 +33,10 @@ local normal_keymaps = {
     {"<leader>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"},
 }
 
+local visual_keymaps = {
+
+}
+
 
 -- =====================
 -- Language Server Setup
@@ -68,28 +72,41 @@ end
 
 if os.getenv("VIRTUAL_ENV") ~= nil then
 
+    -- Part of cmp
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
+
+    print(os.getenv('VIRTUAL_ENV')..'/bin/pylsp')
     lsp.pylsp.setup({
-        cmd = { os.getenv('VIRTUAL_ENV')..'/bin/pylsp' },
+        cmd = {
+            os.getenv('VIRTUAL_ENV')..'/bin/pylsp',
+            '-vvv',
+            '--log-file', '/home/skantify/.dot/.config/nvim/tmp/pylsp.log'
+        },
+        filetypes = {"python"},
         on_attach = on_attach,
-        default_handlers = default_handlers,
+        capabilities = capabilities,
+        single_file_support = true,
         settings = {
             pylsp = {
                 configurationSources = {'flake8'},
                 plugins = {
-                    flake8 = {
-                        enabled = true,
-                    },
-                    pycodestyle = {
-                        enabled = false
-                    },
-                    pydocstyle = {
-                        enabled = true
-                    },
+                    mccabe = { enabled = false },
+                    flake8 = { enabled = true, },
+                    pycodestyle = { enabled = false },
+                    pylint = { enabled = true },
+                    rope_complete = { enabled = false },
+                    pyflakes = { enabled = true },
+                    yapf = { enabled = false },
+                    pydocstyle = { enabled = true },
+                    jedi_completion = { enabled = true },
                     mypy = {
                         enabled = true,
                         dmypy = true,
-                        live_mode = false
-                    }
+                        live_mode = false,
+                        strict = false,
+                    },
                 }
             }
         }

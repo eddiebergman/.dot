@@ -9,6 +9,7 @@ local self = {}
 local DullYellow = "#a5894A"
 local DullerYellow = "#715e33"
 local DefaultBackground = '#222532'
+local InactiveBackground = DefaultBackground
 local SlightlyBackground = '#242835'
 local NoteBackground = '#24293A'
 local HighlightBackground = "#2d3243"
@@ -92,8 +93,9 @@ self.highlights = {
     VertSplit = { guifg = DullerYellow, guibg = "NONE" },
     StatusLine= { guifg = DullerYellow, guibg = "NONE" },
     StatusLineNC = { guibg = "NONE" },
-    FloatBorder = { guibg = "NONE", guifg = DullerYellow },
+    FloatBorder = { guifg = DullerYellow },
     NormalFloat = { guibg = "NONE" },
+    NormalNC = { guibg = InactiveBackground },
     WhiteSpace = { guibg = Error },
 
     -- Lsp
@@ -117,6 +119,7 @@ self.highlights = {
     TSConditional = { guifg = Keyword },
     TSRepeat = { guifg = Keyword },
     TSString = { guifg = String },
+    TSStringEscape = { guifg = Comment },
     TSKeywordOperator = { guifg = Keyword },
     TSOperator = { guifg = Operator },
     TSMethod = { guifg =  MethodCall },
@@ -140,7 +143,7 @@ self.highlights = {
     CmpItemAbbrMatch = { guifg = Normal },
     CmpItemAbbrMatchFuzzy = { guifg = Normal },
     CmpItemKind = { guifg = Type },
-    CmpItemMenu = { guibg = SkyBlue },
+    CmpItemMenu = { guibg = SlightyBackground, guifg = DullerYellow },
 
     -- Status and Tab Line
     SLactive = { guibg = Guides },

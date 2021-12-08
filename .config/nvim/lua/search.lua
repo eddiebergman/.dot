@@ -8,7 +8,7 @@ local themes = require('telescope.themes')
 self.keymaps = {
     n = {
         -- [s]earch [s]tring (use ripgrep to find matches of string in workspace)
-        {'<leader>ss', '<cmd>Telescope live_grep<CR>'},
+        {'<leader>ss', ':lua require("search").live_grep()<CR>'},
 
         -- [s]earch [b]uffers
         {'<leader>sb', ':lua require("telescope.builtin").buffers()<CR>'},
@@ -28,6 +28,14 @@ self.keymaps = {
     }
 }
 
+function self.live_grep()
+    if util.orientation() == 'vertical' then
+        builtin.live_grep(themes.get_dropdown())
+    else
+        builtin.live_grep()
+    end
+end
+
 function self.references()
     local opts = {
         layout_config = { width = 100 }
@@ -36,9 +44,36 @@ function self.references()
 end
 
 function self.files()
-    builtin.find_files({
-        find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
-    })
+    local ignores = {'!.git', '!.venv', '!.mypy_cache'}
+    local find_command = { 'rg', '--files', '--hidden' }
+
+    for _, item in ipairs(ignores) do
+        table.insert(find_command, '-g')
+        table.insert(find_command, item)
+    end
+
+    if util.orientation() == "vertical" then
+        opts = {
+            find_command = find_command,
+            layout_strategy = "vertical",
+            layout_config = {
+                width = 0.8,
+                height = { padding = 0.2 },
+                prompt_position="top"
+            },
+            sorting_strategy="ascending",
+        }
+    else
+        opts = {
+            find_command = find_command,
+            layout_strategy = "horizontal",
+            layout_config = {
+                width = 0.8,
+                height = 0.6,
+            }
+        }
+    end
+    builtin.find_files(opts)
 end
 
 function self.setup()

@@ -151,4 +151,28 @@ function M.str_split(s, delim)
     return items
 end
 
+--  orientation
+--
+--  Returns the orientation based on a rough hueristic of
+--  lines and columns.
+--
+--  Returns
+--  -------
+-- 'vertical' | 'horizontal'
+--    if (cols /lines) > 2 return 'horizontal' else 'vertical'
+function M.orientation()
+    cols = M.exec("set co")
+    cols = tonumber(string.match(cols, "=(%d+)$"))
+
+    lines = M.exec("set lines")
+    lines = tonumber(string.match(lines, "=(%d+)$"))
+
+    ratio = cols / lines
+    if ratio > 2 then
+        return 'horizontal'
+    else
+        return 'vertical'
+    end
+end
+
 return M
