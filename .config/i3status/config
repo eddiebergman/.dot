@@ -16,40 +16,39 @@ general {
 }
 
 order += "volume master"
-order += "wireless wlp1s0"
+order += "wireless wlp0s20f3"
 order += "battery 1"
 order += "cpu_usage"
 order += "tztime local"
 
-wireless wlp1s0 {
-        format_up = "<span font='Fira Code Retina 11' foreground='#268bd2' background='#002b36'> Net: %bitrate </span>"
-        format_down = "<span font='Fira Code Retina 11' foreground='#b58900' background='#002b36'> Disconnected </span>"
+wireless wlp0s20f3 {
+        format_up = "<span font='Fira Mono 10' foreground='#268bd2' background='#002b36'> Net: %bitrate </span>"
+        format_down = "<span font='Fira Mono 10' foreground='#b58900' background='#002b36'> Disconnected </span>"
 }
 
 battery 1 {
         last_full_capacity = true
-        format = "<span font='Fira Code Retina 11' foreground='#268bd2' background='#002b36'> Bat: %status %percentage </span>"
+        format = "<span font='Fira Mono 10' foreground='#268bd2' background='#002b36'> Bat: %status %percentage </span>"
         format_down = "No Battery"
-        status_chr = "Charging"
-        status_bat = "Battery"
-        status_unk = "Unknown"
-        status_full = "Charged"
-        path = "/sys/class/power_supply/BAT%d/uevent"
+        status_chr = ""
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
+        path = "/sys/class/power_supply/CMB1/uevent"
         low_threshold = 30
 }
 
 tztime local {
-        format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> %time </span>"
-        format_time = "%a %-d %b %H:%M"
+        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> %a %-d %b %H:%M </span>"
 }
 
 cpu_usage {
-    format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> CPU: %cpu0 %cpu1 </span>"
+        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> CPU: %cpu0 %cpu1 </span>"
 }
 
 volume master {
-        format = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> Vol: %volume </span>"
-        format_muted = "<span foreground='#268bd2' font='Fira Code Retina 11' background='#002b36'> Vol: (muted) %volume </span>"
+        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> Vol: %volume </span>"
+        format_muted = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> Vol: (muted) %volume </span>"
         device = "pulse"
         mixer = "Master"
         mixer_idx = 0
