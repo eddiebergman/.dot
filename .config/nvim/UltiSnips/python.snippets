@@ -104,13 +104,25 @@ snippet nie "raise NotImplementedError" w
 raise NotImplementedError
 endsnippet
 
-snippet bdoc "bigdoc" wA
+snippet docb "bigdoc" wA
 """${1:Documentation}
 """
 endsnippet
 
-snippet sdoc "smalldoc" wA
+snippet docs "smalldoc" wA
 """${1:Documentation}"""
+endsnippet
+
+snippet doce "expects" wA
+Expects
+-------
+$0
+endsnippet
+
+snippet docx "expects" wA
+Raises
+------
+$0
 endsnippet
 
 snippet docendpoint "# /path/to/endpoint" w
