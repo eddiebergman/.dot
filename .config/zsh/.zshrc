@@ -162,7 +162,7 @@ screen () {
 
     elif equal $1 "work" ; then
         xrandr --output $work_middle --right-of $primary --auto
-        xrandr --output $work_right --right-of $work_middle --rotate left --auto
+        xrandr --output $work_right --right-of $work_middle --auto
 
     elif equal $1 "home"; then
         xrandr --output $home_extern --right-of $primary --auto
@@ -248,7 +248,7 @@ pyvenv () {
     python -m venv .venv
     source './.venv/bin/activate'
 
-    pip install pyls-flake8 mypy-ls python-lsp-black 'python-lsp-server[rope, mccabe, pycodestyle, pydocstyle]'
+    pip install 'python-lsp-server[pydocstyle]' pyls-flake8 mypy-ls python-lsp-black wheel
 }
 
 
