@@ -8,6 +8,7 @@ function self.setup()
         {'<leader>gc', ':Git commit<cr>'},
         {'<leader>gs', ':vertical bo Git<cr>'},
         {'<leader>gl', ':GcLog!<cr>'},
+        {'<leader>gm', ':Gdiffsplit!<cr>'},
     })
 end
 
