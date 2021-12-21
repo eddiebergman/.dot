@@ -166,6 +166,8 @@ self.highlights = {
     TLgitsep = { guifg=Guides },
     TLgitorg = { guifg=Type },
     TLgitbranch = { guifg=Type, gui="bold" },
+    TLi3 = { guifg=Type, gui="bold" },
+    TLi3sep = { guifg=Guides }
 
     -- PMenu
 }
