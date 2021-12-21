@@ -16,7 +16,8 @@ local self = {
         modified = { seperator = { left=' ', right=''} },
         filetype = { seperator = { left='', right='-'} },
         linecol = { seperator = { left='', right=''} },
-        time = { seperator = { left='[', right=']'} }
+        time = { seperator = { left='[', right=']'} },
+        i3 = { seperator = { left='[', right=']'} }
     }
 }
 
@@ -34,10 +35,26 @@ function self.setup(config)
 end
 
 
+function self.i3_workspace()
+    if util.executable("jq") and util.executable("i3-msg") then
+        cmd = 'i3-msg -t get_workspaces | jq ".[] | select(.focused==true).name" | cut -d"\\"" -f2'
+        active_window = util.os_exec(cmd)
+        return join({
+            hi('TLi3sep')..self.config.i3.seperator.left,
+            hi('TLpre')..'workspace: ',
+            hi('TLi3')..active_window,
+            hi('TLi3sep')..self.config.i3.seperator.right
+        })
+    else
+        return ""
+    end
+end
+
 function self.tabline()
     return join({
         hi('TL'),
         self.time(),
+        self.i3_workspace(),
         '%=',
         hi('TL'),
         self.env(),
