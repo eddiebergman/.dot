@@ -14,7 +14,7 @@ self.keymaps = {
         {'<leader>sb', ':lua require("telescope.builtin").buffers()<CR>'},
 
         -- [s]earch [e]rrors
-        {'<leader>se', ':lua require("telescope.builtin").lsp_document_diagnostics()<CR>'},
+        {'<leader>se', ':Telescope diagnostics bufnr=0<CR>'},
 
         -- [s]earch [r]eferences
         {'<leader>sr', ':lua require("search").references()<CR>'},
