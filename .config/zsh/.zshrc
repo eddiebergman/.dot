@@ -242,7 +242,16 @@ ipy () {
 }
 
 pyvenv () {
-    if exists '.venv'; then echo '.venv already exists'; return 1; fi
+    if exists '.venv'
+    then
+        echo '.venv already exists'
+        return 1
+    fi
+
+    if ! emptyvar $VIRTUAL_ENV
+    then
+        deactivate
+    fi
 
     echo "Using $(python -V) located at $(which python)"
     python -m venv .venv
