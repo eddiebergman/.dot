@@ -182,7 +182,15 @@ self.highlights = {
     TLgitorg = { guifg=Type },
     TLgitbranch = { guifg=Type, gui="bold" },
     TLi3 = { guifg=Type, gui="bold" },
-    TLi3sep = { guifg=Guides }
+    TLi3sep = { guifg=Guides },
+
+    -- Files
+    netrwCode = { guifg=Constant },
+    netrwDir = { guifg=Constant, gui="bold" },
+    netrwConfig = { guifg=Include },
+    netrwObscure = { guifg=Comment },
+    netrwSeperator = { guifg=Function },
+
 
 }
 

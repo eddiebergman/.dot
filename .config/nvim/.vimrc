@@ -28,10 +28,6 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
 nnoremap <leader>bq  :bp<bar>sp<bar>bn<bar>bd<CR>
-" Maps <leader>x to :bx where x is a buffer number (limit 0-999 , need to see
-" if I can restrict buffer numbers used)
-for i in range(0, 999)
-    exe "nnoremap <leader>b" . i . ' :b' . i . '<cr>' | endfor
 
 nnoremap <Tab> :bnext<cr>
 nnoremap <S-Tab> :bprev<cr>
@@ -330,3 +326,4 @@ lua require('filetypes').setup()
 lua require('search').setup()
 lua require('nav').setup()
 lua require('completion').setup()
+lua require('tree').setup()

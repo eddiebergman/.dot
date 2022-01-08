@@ -113,7 +113,7 @@ function M.setkeys(mode, mappings, buffer)
             local keys = mapping[1]
             local command = mapping[2]
             local opts = M.get(mapping[3], default_opts)
-            setkey(buffer, mode, keys, command, opts)
+            setkey(0, mode, keys, command, opts)
         end
     end
 end
