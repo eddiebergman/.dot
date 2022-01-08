@@ -8,6 +8,7 @@
 ( fc-list | grep 'droid' ) || ( sudo pacman -Su ttf-droid --needed --noconfirm  )
 ( fc-list | grep 'noto' ) || ( sudo pacman -Su noto-fonts --needed --noconfirm  )
 ( fc-list | grep 'dejavu' ) || ( sudo pacman -Su  ttf-dejavu --needed --noconfirm  )
+( fc-list | grep '' )
 ( pacman -Qi adobe-source-sans-pro-fonts ) || ( sudo pacman -Su adobe-source-sans-pro-fonts --needed --noconfirm )
 ( pacman -Qi gnu-free-fonts ) || ( sudo pacman -Su adobe-source-sans-pro-fonts --needed --noconfirm )
 
@@ -24,6 +25,10 @@ if [[ !$( fc-list | grep 'Fira Mono') ]]; then
     cp $HOME/fira-mono-italic/distr/otf/* $HOME/.local/share/fonts/otf/fira-mono
     rm -rf $HOME/fira-mono-italic
 fi
+
+# You'll probably want to grab a patched font from here
+# https://www.nerdfonts.com/#home
+# To install it just put the .otf files in ~/.local/share/fonts/otf/<name>
 
 # Update the font cache
 fc-cache
