@@ -276,6 +276,10 @@ ggit () {
     fi
 }
 
+branches () {
+    git --no-pager branch
+}
+
 
 # }}}
 # {{{ Update
