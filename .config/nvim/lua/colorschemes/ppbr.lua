@@ -2,7 +2,6 @@ local py = require('py')
 local update = py.update
 
 local self = {}
-
 -- =======
 -- Colours
 -- =======
@@ -60,7 +59,7 @@ self.base_highlights = {
     Character = { guifg = Comment },
     Number = { guifg = Constant },
     Boolean = { guifg = Constant },
-    Float = { guifg = Constant },
+    kloat = { guifg = Constant },
     Identifier = { guifg = Variable },
     Function = { guifg = Function },
     Statement = { guifg = Structure },
@@ -144,6 +143,22 @@ self.highlights = {
     CmpItemAbbrMatchFuzzy = { guifg = Normal },
     CmpItemKind = { guifg = Type },
     CmpItemMenu = { guibg = SlightyBackground, guifg = DullerYellow },
+    CmpItemKindText = { guifg = Normal },
+    CmpItemKindMethod = { guifg = MethodCall },
+    CmpItemKindFunction = { guifg = Function },
+    CmpItemKindConstructor = { guifg = Function, gui = "nocombine,NONE" },
+    CmpItemKindField = { guifg = Variable },
+    CmpItemKindVariable = { guifg = Variable },
+    CmpItemKindClass = { guifg = Type  },
+    CmpItemKindModule = { guifg = Include },
+    CmpItemKindProperty = { guifg = Variable },
+    CmpItemKindKeyword = { guifg = Keyword },
+    CmpItemKindSnippet = { guifg = String },
+    CmpItemKindFile = { guifg = String },
+    CmpItemKindFolder = { guifg = String },
+    CmpItemKindConstant = { guifg = Type, gui="nocombine,NONE" },
+    CmpItemKindOperator = { guifg = Operator },
+    CmpItemKindTypeParameter = { guifg = Type },
 
     -- Status and Tab Line
     SLactive = { guibg = Guides },
@@ -169,7 +184,6 @@ self.highlights = {
     TLi3 = { guifg=Type, gui="bold" },
     TLi3sep = { guifg=Guides }
 
-    -- PMenu
 }
 
 py.update(self.highlights, self.base_highlights)

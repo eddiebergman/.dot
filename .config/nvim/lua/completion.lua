@@ -53,7 +53,7 @@ local cmp_config = {
         ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
         ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
         ['<C-y>'] = cmp.config.disable,
-        ['<C-space>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-Space>'] = cmp.mapping.confirm({ select = true, behaviour = cmp.ConfirmBehavior.Replace }),
     },
     documentation = {
         border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
@@ -62,15 +62,12 @@ local cmp_config = {
         native_menu = false,
         ghost_text = false,
     },
-    confirm_opts = {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
-    },
     formatting = {
-        fields = { "kind", "abbr", "menu" },
+        fields = { "abbr", "kind" },
         format = function(entry, vim_item)
-            vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-            vim_item.menu = source_names[entry.source.name]
+            local icon = kind_icons[vim_item.kind]
+            vim_item.kind = string.format("%s %s", icon, vim_item.kind)
+            --vim_item.menu = source_names[entry.source.name]
             return vim_item
         end,
     },
@@ -101,10 +98,10 @@ function self.setup()
         vim.lsp.protocol.make_client_capabilities()
     )
 
-    autopairs.setup({})
-    cmp.event:on("confirm_done",
-        autopairs_cmp.on_confirm_done({ map_char = { tex = '' } })
-    )
+    --autopairs.setup({})
+    --cmp.event:on("confirm_done",
+    --    autopairs_cmp.on_confirm_done({ map_char = { tex = '' } })
+    --)
 
     return
 end

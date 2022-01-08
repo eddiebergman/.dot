@@ -9,7 +9,8 @@ local pylsp_config = {
             pycodestyle = { enabled = false },
             pyflakes = { enabled = false },
             mypy = { enabled = false }, -- Using null-ls instead, seems more responsive
-            yapf = { enabled = false }
+            yapf = { enabled = false },
+            jedi_competion = { enabled = true, include_param = true }
         }
     }
 }
