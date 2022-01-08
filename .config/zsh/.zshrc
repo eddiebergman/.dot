@@ -28,9 +28,9 @@ equal () { [[ "$1" == "$2" ]]; return }
 eq () { equal $1 $2; return }
 
 less () { [[ "$1" -lt "$2" ]]; return }
-lt () { less $1 $2; return } 
+lt () { less $1 $2; return }
 
-greater () { ! less $1 $2 && ! equal $1 $2; return } 
+greater () { ! less $1 $2 && ! equal $1 $2; return }
 gt () { greater $1 $2; return }
 
 lessequal () { less $1 $2 || equal $1 $2; return}
@@ -143,7 +143,8 @@ screen () {
     # Sets the monitors to show up
     xrandr --auto
     local primary="eDP-1"
-    local home_extern="HDMI-1"
+    local home_left="DP-2-8"
+    local home_right="HDMI-1"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
 
@@ -156,7 +157,8 @@ screen () {
 
     # Disable all monitors
     if equal $1 "off"; then
-        xrandr --output $home_extern --off;
+        xrandr --output $home_left --off;
+        xrandr --output $home_right --off;
         xrandr --output $work_middle --off;
         xrandr --output $work_right --off;
 
@@ -165,7 +167,8 @@ screen () {
         xrandr --output $work_right --right-of $work_middle --auto
 
     elif equal $1 "home"; then
-        xrandr --output $home_extern --right-of $primary --auto
+        xrandr --output $home_right --left-of $primary --mode 2560x1440
+        xrandr --output $home_left --left-of $home_right --auto
 
     else
         printf "Usage: screen {left,right,above,off}"
