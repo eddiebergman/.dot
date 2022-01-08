@@ -1,47 +1,85 @@
 local self = {}
 local cmp = require('cmp')
+local autopairs = require("nvim-autopairs")
+local autopairs_cmp = require("nvim-autopairs.completion.cmp")
 local ppbr = require('colorschemes/ppbr')
 
+local kind_icons = {
+    Text = "",
+    Method = "m",
+    Function = "",
+    Constructor = "",
+    Field = "",
+    Variable = "",
+    Class = "",
+    Interface = "",
+    Module = "",
+    Property = "",
+    Unit = "",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "",
+    Event = "",
+    Operator = "",
+    TypeParameter = "",
+}
+
+local source_names = {
+    nvim_lsp = "[LSP]",
+    luasnip = "[Snippet]",
+    buffer = "[Buffer]",
+    path = "[Path]",
+}
 
 local cmp_config = {
-    -- snippet = {
-    --  expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-    --  end,
-    -- },
+    snippet = {
+        expand = function(args)
+            require('snippy').expand_snippet(args.body)
+        end,
+    },
     mapping = {
-      ['<C-k>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-j>'] = cmp.mapping.scroll_docs(4),
-      ['<C-l>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-      ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-      ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-      ['<C-space>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-j>'] = cmp.mapping.scroll_docs(4),
+        ['<C-l>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+        ['<C-y>'] = cmp.config.disable,
+        ['<C-space>'] = cmp.mapping.confirm({ select = true }),
     },
     documentation = {
         border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-        winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBoarder',
     },
     experimental = {
         native_menu = false,
-        ghost_text = true
+        ghost_text = false,
     },
-    sources = cmp.config.sources(
-        {
-            { name = 'nvim_lsp' },
-            -- { name = 'vsnip' }, -- For vsnip users.
-            -- { name = 'luasnip' }, -- For luasnip users.
-            -- { name = 'ultisnips' }, -- For ultisnips users.
-            -- { name = 'snippy' }, -- For snippy users.
-        },
-        {
-            { name = 'buffer' },
-        }
-    )
+    confirm_opts = {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = false,
+    },
+    formatting = {
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+            vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+            vim_item.menu = source_names[entry.source.name]
+            return vim_item
+        end,
+    },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'snippy' }, -- For ultisnips users.
+        { name = 'buffer' },
+        { name = 'path' }
+    }
 }
 
 function self.setup()
@@ -59,7 +97,15 @@ function self.setup()
     cmp_config.documentation.winhighlight = "Normal:Normal"
     cmp.setup(cmp_config)
 
-    -- Also includes extending capabilities in lsp.lua
+    self.capabilities = require('cmp_nvim_lsp').update_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
+
+    autopairs.setup({})
+    cmp.event:on("confirm_done",
+        autopairs_cmp.on_confirm_done({ map_char = { tex = '' } })
+    )
+
     return
 end
 

@@ -257,9 +257,10 @@ pyvenv () {
     python -m venv .venv
     source './.venv/bin/activate'
 
-    pip install 'python-lsp-server[pydocstyle]' pyls-flake8 mypy-ls python-lsp-black wheel
+    pip install --upgrade pip
+    pip install wheel
+    pip install python-lsp-server mypy pydocstyle flake8 isort black
 }
-
 
 alias django='python manage.py'
 alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm tagged_files"

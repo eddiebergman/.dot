@@ -37,9 +37,7 @@ function self.live_grep()
 end
 
 function self.references()
-    local opts = {
-        layout_config = { width = 100 }
-    }
+    local opts = { layout_config = { width = 100 } }
     builtin.lsp_references(themes.get_cursor(opts))
 end
 

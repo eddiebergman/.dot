@@ -19,18 +19,31 @@ end
 
 require('packer').startup(
     function (use)
+        -- Temporary while testing nvim-tree-docs
+        -- use {
+        --    "/home/skantify/test/nvim-tree-docs"
+        --}
+
         -- Indent lines
         use {
            'lukas-reineke/indent-blankline.nvim'
         }
 
+        use {
+            'jose-elias-alvarez/null-ls.nvim'
+        }
+
         -- Completion
         use {
             'hrsh7th/nvim-cmp',
-            requires = {'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'quangnguyen30192/cmp-nvim-ultisnips'}
+            requires = {
+                'hrsh7th/cmp-nvim-lsp', -- For LSP completion
+                'hrsh7th/cmp-buffer', -- For buffer completion
+                'hrsh7th/cmp-path', -- For path completion
+                'dcampos/cmp-snippy', -- For snippy snippets
+                'windwp/nvim-autopairs' -- For autopairs on function completions
+            }
         }
-
-
 
         -- Neomake, run make and populate quickfix
         use {
@@ -45,10 +58,7 @@ require('packer').startup(
         use 'neovim/nvim-lspconfig'
 
         -- Folding for Python
-        use {
-            'eddiebergman/nvim-treesitter-pyfold',
-            ft = { 'python' }
-        }
+        use { 'eddiebergman/nvim-treesitter-pyfold', ft = { 'python' } }
 
         -- Debugging
         use {
@@ -64,7 +74,6 @@ require('packer').startup(
                 'nvim-lua/popup.nvim',
                 'nvim-lua/plenary.nvim',
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
             },
             config = function () require('config/telescope').setup() end
         }
@@ -76,6 +85,7 @@ require('packer').startup(
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
                 'nvim-treesitter/nvim-treesitter-textobjects',
+                'RRethy/nvim-treesitter-textsubjects',
                 'romgrk/nvim-treesitter-context',
             },
             config = function () require('config/treesitter') end,
@@ -101,10 +111,8 @@ require('packer').startup(
             ft = {'tex'}
         }
 
-        -- Snippet manager
         use {
-            'SirVer/ultisnips',
-            config = function () require('config/ultisnips') end
+            'dcampos/nvim-snippy'
         }
 
         -- Git intergration

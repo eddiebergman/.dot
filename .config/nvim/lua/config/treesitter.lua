@@ -3,6 +3,29 @@ local joinpath = require('util').joinpath
 local os_exec = require('util').os_exec
 local setkeys = require('util').setkeys
 
+function tree_docs_setup()
+    return  {
+        enable = true,
+        keymaps = { doc_node_at_cursor = "<leader>d" },
+        spec_config = {
+            python = {
+                slots = {
+                    func = { helloworld = true }
+                },
+                templates = {
+                    func = {
+                        "%contents%",
+                        "helloworld"
+                    }
+                },
+                processors = {
+                    helloworld = function() return "hello world" end
+                }
+            }
+        }
+    }
+end
+
 local M = {
     languages = { 'lua', 'python', 'query' },
     keymaps = {
@@ -16,9 +39,7 @@ function M.setup()
     local config = require('nvim-treesitter.configs')
 
     -- Annoyingly this plugin to fit into treesitters module defintion
-    require'treesitter-context.config'.setup{
-        enable = true,
-    }
+    require'treesitter-context.config'.setup{ enable = true, }
 
     -- This is for indent_blankline plugin
     vim.g.indent_blankline_show_current_context = 1
@@ -28,6 +49,9 @@ function M.setup()
         highlight = { enable = true },
         incremental_selection = { enable = true },
         indent = { enable = true },
+
+        --nvim-tree-docs
+
 
         -- python folding
         pyfold = {
@@ -59,29 +83,12 @@ function M.setup()
             lint_events = {"BufWrite", "CursorHold"}
         },
 
-        refactor = {
-
-            -- Too much
-            highlight_definitions = { enable = false },
-            highlight_current_scope = { enable = false },
-
-            -- Doesn't work for children who use symbol
-            smart_rename = {
-                enable = false,
-                keymaps = { smart_rename = "cf" }
-            },
-
-            navigation = {
-                enable = false,
-                keymaps = {
-                    goto_definition_lsp_fallback = "<leader>gd",
-                    list_definitions = "<leader>ld",
-                    list_definitions_toc = "<leader>lD",
-                    goto_next_usage = "gn",
-                    goto_previous_usage = "gp",
-                }
+        textsubjects = {
+            enable = true,
+            keymaps = {
+                ['.'] = 'textsubjects-smart',
+                [';'] = 'textsubjects-container-outer',
             }
-
         },
 
         textobjects = {
@@ -138,7 +145,6 @@ function M.setup()
                         ["]F"] = "@function.outer",
                 }
             }
-
         }
     })
 

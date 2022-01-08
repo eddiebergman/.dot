@@ -317,9 +317,10 @@ set wildignore+=*~,*.swp,*.tmp
 
 " }}}
 " }}}
+" }}}
 lua require('settings').setup()
 lua require('colors').setup()
-lua require('lsp').setup()
+lua require('lsp.config').setup()
 "lua require('tabs').setup()
 lua require('debugging').setup()
 lua require('statusline').setup()

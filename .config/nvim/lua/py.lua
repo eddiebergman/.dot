@@ -120,7 +120,7 @@ end
 
 function M.list(itr)
     if M.isinstance(itr, "list") then
-        return itr
+        return M.values(itr)
 
     elseif M.isinstance(itr, "dict") then
         return M.keys(itr) end
