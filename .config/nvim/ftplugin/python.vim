@@ -33,6 +33,13 @@ endif
 if info['enabled']['TS']
     set foldmethod=expr
     set foldexpr=nvim_treesitter#foldexpr()
-endif
-" }}}
+    " Some plugin somewhere is causing issues, we make this an autocmd too
+    "
+    augroup PythonForceFoldMethod
+        autocmd!
+        autocmd BufWinEnter *.py set foldmethod=expr
+    augroup END
 
+endif
+
+" }}}

@@ -23,6 +23,11 @@ require('packer').startup(
         -- use {
         --    "/home/skantify/test/nvim-tree-docs"
         --}
+        -- Toggle term
+        use {
+            "akinsho/toggleterm.nvim",
+            config = function () require('config/toggleterm').setup() end
+        }
 
         -- Indent lines
         use {

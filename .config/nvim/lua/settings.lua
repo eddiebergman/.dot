@@ -1,4 +1,5 @@
 local self = {}
+local util = require("util")
 
 function self.set_indent_blankline()
 
@@ -29,10 +30,9 @@ function self.setup()
 
     vim.o.showtabline = 2
 
-    vim.cmd([[
-        augroup FoldOnOpen
-        augroup END
-    ]])
+    vim.opt.autowrite = true
+
+    util.setkeys("n", {{"sr", ":%s/"}})
 
     self.set_indent_blankline()
 end

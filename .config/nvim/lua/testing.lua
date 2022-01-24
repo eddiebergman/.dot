@@ -4,10 +4,9 @@ local util = require('util')
 
 function self.setup()
     util.setkeys('n', {
-        {'<leader>tf', ':Ultest<cr>:UltestSummaryOpen<cr>'},
-        {'<leader>tt', ':UltestNearest<cr>:UltestSummaryOpen<cr>'},
-        {'<leader>ts', ':UltestSummary<cr>'},
+        {'t', ':UltestNearest<cr>:UltestSummaryOpen<cr>'},
         {'<leader>to', ':UltestOutput<cr>'},
+        {'<leader>ts', ':UltestSummary<cr>'},
     })
 end
 
