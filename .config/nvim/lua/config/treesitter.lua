@@ -92,7 +92,7 @@ function M.setup()
         },
 
         textobjects = {
-            enable = true,
+            enable = false,
             select = {
                 enable = true,
                 keymaps = {

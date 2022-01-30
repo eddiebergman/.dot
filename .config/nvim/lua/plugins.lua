@@ -89,7 +89,6 @@ require('packer').startup(
             requires = {
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
-                'nvim-treesitter/nvim-treesitter-textobjects',
                 'RRethy/nvim-treesitter-textsubjects',
                 'romgrk/nvim-treesitter-context',
             },
