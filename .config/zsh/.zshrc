@@ -292,9 +292,11 @@ update() {
     if equal $1 "nvim" || equal $1 "neovim"; then
         cd $dir
         git stash
+        git checkout stable
         git pull
-        sudo make clean
-        CMAKE_BUILD_TYPE=Release; sudo make
+        make clean
+        make distclean
+        make CMAKE_BUILD_TYPE=Release
         sudo make install
     else
         echo "Update [nvim]"
