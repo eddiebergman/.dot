@@ -1,5 +1,6 @@
 local self = {}
 local cmp = require('cmp')
+local neogen = require("neogen")
 local autopairs = require("nvim-autopairs")
 local autopairs_cmp = require("nvim-autopairs.completion.cmp")
 local ppbr = require('colorschemes/ppbr')
@@ -39,6 +40,10 @@ local source_names = {
     path = "[Path]",
 }
 
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 local cmp_config = {
     snippet = {
         expand = function(args)
@@ -50,10 +55,30 @@ local cmp_config = {
         ['<C-j>'] = cmp.mapping.scroll_docs(4),
         ['<C-l>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
-        ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-        ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+        ['<Tab>'] = cmp.mapping(
+            function(fallback)
+                if neogen.jumpable() then
+                    vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
+                elseif cmp.visible() then
+                    cmp.select_next_item({behaviour = cmp.SelectBehaviour })
+                else
+                    fallback()
+                end
+            end
+        ),
+        ['<S-Tab>'] = cmp.mapping(
+            function(fallback)
+                if neogen.jumpable(-1) then
+                    vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
+                elseif cmp.visible() then
+                    cmp.select_prev_item({behaviour = cmp.SelectBehaviour })
+                else
+                    fallback()
+                end
+            end
+        ),
         ['<C-y>'] = cmp.config.disable,
-        ['<C-Space>'] = cmp.mapping.confirm({ select = true, behaviour = cmp.ConfirmBehavior.Replace }),
+        ['<C-Space>'] = cmp.mapping.confirm({ select = true, behaviour = cmp.ConfirmBehavior }),
     },
     documentation = {
         border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },

@@ -1,32 +1,21 @@
 local joinpath = require('util').joinpath
 local M = {}
 
-local cmd = vim.api.nvim_command
 local fn = vim.fn
-M.plugin_path = joinpath(fn.stdpath('data'), 'site' , 'pack', 'packer', 'start')
-M.packer_path = joinpath(M.plugin_path, 'packer.nvim')
-
-if fn.empty(fn.glob(M.packer_path)) > 0 then
-    local packer_url =  'https://github.com/wbthomason/packer.nvim'
-    fn.system({'git', 'clone', packer_url, M.packer_path})
-    cmd 'packadd packer.nvim'
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-function M.update()
-    cmd 'PackerCompile'
-    cmd 'PackerSync'
-end
+vim.cmd [[packadd packer.nvim]]
 
 require('packer').startup(
     function (use)
-        -- Temporary while testing nvim-tree-docs
-        -- use {
-        --    "/home/skantify/test/nvim-tree-docs"
-        --}
-        -- Toggle term
+        use 'wbthomason/packer.nvim'
+
+        -- Doc generator
         use {
-            "akinsho/toggleterm.nvim",
-            config = function () require('config/toggleterm').setup() end
+            "danymat/neogen"
         }
 
         -- Indent lines
@@ -148,5 +137,4 @@ require('packer').startup(
         use 'nightsense/stellarized'
     end
 )
-
 return M
