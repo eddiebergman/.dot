@@ -88,7 +88,7 @@ function self.setup()
         {'<leader>gp', ':Git push<cr>'},
         {'<leader>gc', ':Git commit<cr>'},
         {'<leader>gs', ':vertical bo Git<cr>'},
-        {'gl', ':GcLog!<cr>'},
+        {'gl', ':vsp | GcLog<cr>'},
         {'gD', ':Gdiffsplit!<cr>'},
     })
     self.setup_gitsigns()
