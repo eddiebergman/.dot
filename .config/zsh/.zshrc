@@ -376,11 +376,26 @@ clone () {
     mypy --install-types
 }
 # }}}
-# }}}
-# {{{ Settings
-setopt extendedglob     # Enables wildcards
-setopt notify           # Enables report of status of background jobs
-setopt complete_aliases # Enables completion of aliases
+# {{{
+work () {
+
+    if empty $1; then
+        mode="asklearn"
+    else
+        mode=$1
+    fi
+
+    if equal $mode "asklearn" then
+        cd ${HOME}/code/asklearn/dev/
+        pyshell
+        vim
+    elif equal $mode "asklearn" then
+        cd ${HOME}/code/automl_class
+    else
+        echo "Usage: work [{asklearn, class}]"
+    fi
+
+}
 
 set H+ # Stops history expansion
 # https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
