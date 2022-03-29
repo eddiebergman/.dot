@@ -385,11 +385,11 @@ work () {
         mode=$1
     fi
 
-    if equal $mode "asklearn" then
+    if equal $mode "asklearn"; then
         cd ${HOME}/code/asklearn/dev/
         pyshell
         vim
-    elif equal $mode "asklearn" then
+    elif equal $mode "asklearn"; then
         cd ${HOME}/code/automl_class
     else
         echo "Usage: work [{asklearn, class}]"
