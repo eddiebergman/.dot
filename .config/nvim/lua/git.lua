@@ -68,10 +68,8 @@ function self.setup_gitsigns()
         map('n', 'gp', '<cmd>Gitsigns preview_hunk<CR>')
 
         map('n', 'gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
-
-        map('n', 'gD', '<cmd>Gitsigns diffthis<CR>')
-
         map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
+
         map('n', '<leader>td', '<cmd>Gitsigns toggle_deleted<CR>')
         map('n', '<leader>tl', '<cmd>Gitsigns toggle_linehl<CR>')
 
@@ -90,8 +88,8 @@ function self.setup()
         {'<leader>gp', ':Git push<cr>'},
         {'<leader>gc', ':Git commit<cr>'},
         {'<leader>gs', ':vertical bo Git<cr>'},
-        {'<leader>gl', ':GcLog!<cr>'},
-        {'<leader>gm', ':Gdiffsplit!<cr>'},
+        {'gl', ':GcLog!<cr>'},
+        {'gD', ':Gdiffsplit!<cr>'},
     })
     self.setup_gitsigns()
 end
