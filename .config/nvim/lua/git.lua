@@ -62,8 +62,6 @@ function self.setup_gitsigns()
         map('n', 'gr', ':Gitsigns reset_hunk<CR>')
         map('n', 'gu', '<cmd>Gitsigns undo_stage_hunk<CR>')
 
-        map('n', 'gl', '<cmd>Gitsigns undo_stage_hunk<CR>')
-
         map('n', 'gA', '<cmd>Gitsigns stage_buffer<CR>')
         map('n', 'gR', '<cmd>Gitsigns reset_buffer<CR>')
 
