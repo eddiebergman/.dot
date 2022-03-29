@@ -122,7 +122,7 @@ self.highlights = {
     TSPunctBracket = { guifg = Bracket },
     TSInclude = { guifg = Imports, gui = "NONE" },
     TSVariable = { guifg = Variable },
-    TSParameter = { guifg = Parameter, gui = "italic" },
+    TSParameter = { guifg = Parameter },
     TSString = { guifg = String },
 
     -- Lsp
