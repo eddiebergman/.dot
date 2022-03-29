@@ -43,7 +43,8 @@ local Imports = Red
 local Normal = fg3
 local Parameter = fg1Soft
 local String = Yellow
-local Field = fg1Soft
+local Field = fg3
+local Variable = fg3
 local Constructor = Orange
 local Comment = Blue
 local Constant = OrangeStrong
@@ -120,7 +121,7 @@ self.highlights = {
     TSOperator = { guifg = Operator },
     TSPunctBracket = { guifg = Bracket },
     TSInclude = { guifg = Imports, gui = "NONE" },
-    TSVariable = { guifg = Normal },
+    TSVariable = { guifg = Variable },
     TSParameter = { guifg = Parameter },
     TSString = { guifg = String },
 
