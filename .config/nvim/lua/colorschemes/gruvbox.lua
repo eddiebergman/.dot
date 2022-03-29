@@ -41,7 +41,7 @@ local Operator = BlueStrong
 local Bracket = Orange
 local Imports = Red
 local Normal = fg3
-local Parameter = fg1Soft
+local Parameter = fg2
 local String = Yellow
 local Field = fg3
 local Variable = fg3
@@ -122,7 +122,7 @@ self.highlights = {
     TSPunctBracket = { guifg = Bracket },
     TSInclude = { guifg = Imports, gui = "NONE" },
     TSVariable = { guifg = Variable },
-    TSParameter = { guifg = Parameter },
+    TSParameter = { guifg = Parameter, gui = "italic" },
     TSString = { guifg = String },
 
     -- Lsp
