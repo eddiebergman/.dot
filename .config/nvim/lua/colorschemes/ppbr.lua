@@ -1,7 +1,10 @@
-local py = require('py')
-local update = py.update
-
 local self = {}
+
+
+self.background = "dark"
+self.base = "stellarized"
+
+
 -- =======
 -- Colours
 -- =======
@@ -11,6 +14,7 @@ local DefaultBackground = '#222532'
 local InactiveBackground = DefaultBackground
 local SlightlyBackground = '#242835'
 local NoteBackground = '#24293A'
+local DarkerBackground = '#12131a'
 local HighlightBackground = "#2d3243"
 local Grey = "#9d8875"
 local DarkerGrey = "#676765"
@@ -23,6 +27,9 @@ local Cyan = "#20A9B1"
 local DarkerCyan = "#198086"
 local Orange = "#F79000"
 local Red = "#ca7375"
+local DarkerRed = "#b56769"
+local MurkyRed = "#8d5051"
+local Peach = "#dfabac"
 local White = "#a29f92"
 
 -- ===========
@@ -30,7 +37,7 @@ local White = "#a29f92"
 -- ===========
 local Function = DarkerCyan
 local Class = Red
-local Type = Red
+local Type = DarkerRed
 local MethodCall = BrighterViolet
 local FunctionCall = Violet
 local Variable = White
@@ -43,15 +50,17 @@ local Constant = DullYellow
 local String = Grey
 local Comment = DarkerGrey
 local Normal = White
+local Parameter = Orange
 
 local Error = Red
 local Warning = Orange
 local Hint = Grey
---
+
 -- ========
 -- Handlers
 -- ========
-self.base_highlights = {
+self.highlights = {
+
     -- Base Syntax for languages
     Comment = { guifg = Comment },
     Constant = { guifg = Constant },
@@ -59,7 +68,7 @@ self.base_highlights = {
     Character = { guifg = Comment },
     Number = { guifg = Constant },
     Boolean = { guifg = Constant },
-    kloat = { guifg = Constant },
+    Float = { guifg = Constant },
     Identifier = { guifg = Variable },
     Function = { guifg = Function },
     Statement = { guifg = Structure },
@@ -77,9 +86,6 @@ self.base_highlights = {
     Error = { guifg = Error },
     Todo = { guifg = SkyBlue, gui="bold" },
     Special = { guifg = SkyBlue },
-}
-
-self.highlights = {
 
     -- Editor
     CursorLineNr = { guifg = Grey, gui="bold" },
@@ -98,14 +104,15 @@ self.highlights = {
     WhiteSpace = { guibg = Error },
 
     -- Lsp
-    LspDiagnosticsDefaultError = { guifg = Error },
-    LspDiagnosticsUnderlineError = { gui="undercurl", guisp = Error },
-    LspDiagnosticsDefaultWarning = { guifg = Warning },
-    LspDiagnosticsUnderlineWarning= { gui="undercurl", guisp =  Warning },
-    LspDiagnosticsDefaultInformation = { guifg = Hint },
-    LspDiagnosticsUnderlineInformation= { gui="undercurl", guisp = Hint },
-    LspDiagnosticsDefaultHint = { guifg = Hint },
-    LspDiagnosticsUnderlineHint= { gui="undercurl", guisp = Hint },
+    DiagnosticError = { guifg = Error },
+    DiagnosticWarning = { guifg = Warning },
+    DiagnosticInformation = { guifg = Hint },
+    DiagnosticHint = { guifg = Hint },
+
+    DiagnosticUnderlineError = { gui="undercurl", guisp = Error },
+    DiagnosticUnderlineWarning= { gui="undercurl", guisp =  Warning },
+    DiagnosticUnderlineHint= { gui="undercurl", guisp = Hint },
+    DiagnosticUnderlineInfo = { gui="undercurl", guisp = Hint },
 
     -- Tree Sitter (General)
     TSVariableBuiltin = { guifg = Variable, gui="bold" },
@@ -191,9 +198,15 @@ self.highlights = {
     netrwObscure = { guifg=Comment },
     netrwSeperator = { guifg=Function },
 
-
+    -- NvimTree
+    NvimTreeNormal = { guifg=Constant },
+    NvimTreeFolderName = { guifg=DarkerCyan },
+    NvimTreeOpenedFolderName = { guifg=DarkerCyan, gui="bold" },
+    NvimTreeOpenedFile = { guifg=BrighterViolet },
+    NvimTreeMarkdownFile = { guifg=BrighterViolet, },
+    NvimTreeSpecialFile = { guifg=BrighterViolet, },
+    NvimTreeExecFile = { guifg=BrighterViolet, },
+    NvimTreeImageFile = { guifg=BrighterViolet, },
 }
-
-py.update(self.highlights, self.base_highlights)
 
 return self

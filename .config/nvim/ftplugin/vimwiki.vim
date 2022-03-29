@@ -10,3 +10,5 @@ if g:colors_name ==? 'gruvbox'
 endif
 
 " }}}
+"
+noremap <buffer> <tab> :bnext<cr>

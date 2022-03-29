@@ -6,7 +6,7 @@ function self.setup()
     util.setkeys('n', {
         {'t', ':UltestNearest<cr>:UltestSummaryOpen<cr>'},
         {'<leader>to', ':UltestOutput<cr>'},
-        {'<leader>ts', ':UltestSummary<cr>'},
+        {'<C-t>', ':UltestSummary<cr>'},
     })
 end
 

@@ -95,7 +95,7 @@ if confirm "picom"; then
 fi
 
 # bluetooth
-if confirm "picom"; then
+if confirm "bluetooth"; then
     echo "Installing"
     ( pacman -Q bluez > /dev/null 2>&1 || sudo pacman -Su bluez --noconfirm --needed)
     ( pacman -Q bluez-util > /dev/null 2>&1 || sudo pacman -Su bluez-util --noconfirm --needed)

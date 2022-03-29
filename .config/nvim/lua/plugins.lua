@@ -13,9 +13,40 @@ require('packer').startup(
     function (use)
         use 'wbthomason/packer.nvim'
 
+        -- Git integrations
+        use {
+            'lewis6991/gitsigns.nvim'
+        }
+
         -- Doc generator
         use {
             "danymat/neogen"
+        }
+
+        -- Center a buffer
+        use {
+            'smithbm2316/centerpad.nvim'
+        }
+
+        -- Areial, symbol navigations
+        use {
+            "stevearc/aerial.nvim",
+            config = function () require("symbol_tree").setup() end
+        }
+
+        -- Bufferline
+        use {
+            'akinsho/bufferline.nvim', requires = "kyazdani42/nvim-web-devicons"
+        }
+
+        -- Terminal
+        use {
+            'akinsho/toggleterm.nvim'
+        }
+
+        -- Tree
+        use {
+            'kyazdani42/nvim-tree.lua', requires = "kyazdani42/nvim-web-devicons"
         }
 
         -- Indent lines
@@ -34,6 +65,7 @@ require('packer').startup(
                 'hrsh7th/cmp-nvim-lsp', -- For LSP completion
                 'hrsh7th/cmp-buffer', -- For buffer completion
                 'hrsh7th/cmp-path', -- For path completion
+                "lukas-reineke/cmp-under-comparator", -- For deprioritizing __ python
                 'dcampos/cmp-snippy', -- For snippy snippets
                 'windwp/nvim-autopairs' -- For autopairs on function completions
             }
@@ -133,8 +165,10 @@ require('packer').startup(
             end
         }
 
-        -- Theme
+        -- Themes
         use 'nightsense/stellarized'
+        use 'sainnhe/everforest'
+        use 'morhetz/gruvbox'
     end
 )
 return M

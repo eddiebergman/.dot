@@ -2,6 +2,7 @@ local py = require('py')
 local util = require('util')
 local chains = require('chains')
 local git = require('git')
+local ppbr = require('colorschemes/ppbr')
 
 local join = py.join
 local update = chains.update
@@ -21,14 +22,38 @@ local self = {
     }
 }
 
+local bufferline_config = {
+    options = {
+        indicator_icon = "▎",
+        separator_style = { "", "" },
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        diagnostics = "nvim_lsp",
+        offsets = {
+            { filetype = "NvimTree", }
+        },
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+            local s = " "
+            for e, n in pairs(diagnostics_dict) do
+                local sym = e == "error" and " "
+                    or (e == "warning" and " " or "" )
+                s = s .. n .. sym
+            end
+            return s
+        end,
+    },
+    -- highlights = ppbr.bufferline
+}
+
 function self.setup(config)
     update(self.config).with(config)
 
+    -- autocmd WinEnter,BufEnter * lua vim.go.tabline = require('statusline').tabline()
+    require("bufferline").setup(bufferline_config)
     vim.cmd([[
     augroup Statusline
         autocmd!
         autocmd WinEnter,BufEnter * lua vim.wo.statusline = require('statusline').active_statusline()
-        autocmd WinEnter,BufEnter * lua vim.go.tabline = require('statusline').tabline()
         autocmd WinLeave,BufLeave * lua vim.wo.statusline = require('statusline').inactive_statusline()
     augroup END
     ]])

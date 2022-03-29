@@ -4,6 +4,7 @@ local neogen = require("neogen")
 local autopairs = require("nvim-autopairs")
 local autopairs_cmp = require("nvim-autopairs.completion.cmp")
 local ppbr = require('colorschemes/ppbr')
+local cmp_buffer = require("cmp_buffer")
 
 local kind_icons = {
     Text = "",
@@ -57,9 +58,7 @@ local cmp_config = {
         ['<C-e>'] = cmp.mapping.close(),
         ['<Tab>'] = cmp.mapping(
             function(fallback)
-                if neogen.jumpable() then
-                    vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
-                elseif cmp.visible() then
+                if cmp.visible() then
                     cmp.select_next_item({behaviour = cmp.SelectBehaviour })
                 else
                     fallback()
@@ -68,9 +67,7 @@ local cmp_config = {
         ),
         ['<S-Tab>'] = cmp.mapping(
             function(fallback)
-                if neogen.jumpable(-1) then
-                    vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
-                elseif cmp.visible() then
+                if cmp.visible() then
                     cmp.select_prev_item({behaviour = cmp.SelectBehaviour })
                 else
                     fallback()
@@ -101,32 +98,21 @@ local cmp_config = {
         { name = 'snippy' }, -- For ultisnips users.
         { name = 'buffer' },
         { name = 'path' }
+    },
+    sorting = {
+        comparators = {
+          require("cmp-under-comparator").under,
+        }
     }
 }
 
 function self.setup()
 
-    local winhighlights = {}
-    for k, _ in pairs(ppbr.base_highlights) do
-        table.insert(winhighlights, k..':'..k)
-    end
-    local winhighlight_str = table.concat(winhighlights, ',')
-
-    local function arg(k)
-        return k..':'..k
-    end
-
-    cmp_config.documentation.winhighlight = "Normal:Normal"
     cmp.setup(cmp_config)
 
     self.capabilities = require('cmp_nvim_lsp').update_capabilities(
         vim.lsp.protocol.make_client_capabilities()
     )
-
-    --autopairs.setup({})
-    --cmp.event:on("confirm_done",
-    --    autopairs_cmp.on_confirm_done({ map_char = { tex = '' } })
-    --)
 
     return
 end

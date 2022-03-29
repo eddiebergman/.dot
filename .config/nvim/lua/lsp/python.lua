@@ -22,7 +22,10 @@ function self.setup()
             on_attach = require('lsp.config').on_attach,
             capabilities = require('lsp.config').capabilities,
             single_file_support = true,
-            settings = pylsp_config
+            settings = pylsp_config,
+            flags = {
+                allow_incremental_sync = false
+            },
         })
     end
 

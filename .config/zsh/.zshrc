@@ -129,6 +129,9 @@ alias ezshrc="$EDITOR ~/.config/zsh/.zshrc"
 alias edot="cd $HOME/.dot && $EDITOR"
 alias todo="$EDITOR ~/.todo.md"
 # }}}
+# {{{ Python
+alias pytesth="pytest --cov-report html; firefox htmlcov/index.html"
+# }}}
 # }}}
 # {{{ Utility
 # {{{ Screen
@@ -136,7 +139,7 @@ alias todo="$EDITOR ~/.todo.md"
 screen () {
 
     if empty $1; then
-        echo "Usage: screen {work,home,off}"
+        echo "Usage: screen {work,home,gf,off}"
         return 1
     fi
     #
@@ -147,6 +150,7 @@ screen () {
     local home_right="HDMI-1"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
+    local gf_right="HDMI-1"
 
     # Home laptop and work laptop mark them reads them differently sometimes
     # This is for my personal laptop
@@ -170,8 +174,14 @@ screen () {
         xrandr --output $home_right --left-of $primary --mode 2560x1440
         xrandr --output $home_left --left-of $home_right --auto
 
+    elif equal $1 "gf"; then
+        xrandr --output $gf_right --right-of $primary --auto
+
+    elif equal $1 "left"; then
+        xrandr --output $gf_right --left-of $primary --auto
+
     else
-        printf "Usage: screen {left,right,above,off}"
+        echo "Usage: screen {work,home,gf,off}"
         return 1
 
     fi
@@ -281,7 +291,7 @@ ggit () {
 }
 
 branches () {
-    git --no-pager branch
+    git checkout "$(git branch | fzf | tr -d '[:space:]')"
 }
 
 

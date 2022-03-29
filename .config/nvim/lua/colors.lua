@@ -1,49 +1,34 @@
-local M = {}
+local self = {}
 local items= require('py').items
 
--- ===========
--- Colors opts
--- ===========
--- Colorscheme
-vim.o.background = 'dark'
-local colorscheme = require('colorschemes/ppbr')
+self.colorschemes = {
+--  name = {background, base_theme}
+    --ppbr = {"dark", "stellarized"}
+    ppbr = function () return require("colorschemes/ppbr") end,
+    forest = function () return require("colorschemes/forest") end,
+    gruvbox = function () return require("colorschemes/gruvbox") end,
+}
+self.default = "gruvbox"
 
--- ============
--- Checks
--- ============
-if vim.fn.has("termguicolors") then vim.o.termguicolors = true end
-
-
--- ====================
--- Apply the highlights
--- ====================
--- These are applied on buffer load to enable overwriting of any colorscheme
--- settings.
-local function cmd_highlight(group, args)
-    local strbuf = { "hi "..group }
-    for k, v in pairs(args) do
-        table.insert(strbuf, k..'='..v) end
-
-    vim.cmd('hi clear '..group)
-    vim.cmd(table.concat(strbuf, ' '))
+function self.setup()
+    self.set(self.default)
 end
 
-function M.apply_highlights()
-    for group, args in items(colorscheme.highlights) do
-        cmd_highlight(group, args) end
-end
+function self.set(name)
+    scheme = self.colorschemes[name]()
 
-vim.cmd [[
-augroup Highlight
-    au!
-    au ColorScheme * lua require('colors').apply_highlights()
-augroup End
-]]
+    vim.cmd("colo ".. scheme.base)
+    vim.cmd("set background="..scheme.background)
 
-function M.setup()
-    vim.cmd("colo stellarized") -- Base Color scheme
-    M.apply_highlights()
+    for group, args in items(scheme.highlights) do
+        local strbuf = { "hi "..group }
+        for k, v in pairs(args) do
+            table.insert(strbuf, k..'='..v) end
+
+        vim.cmd('hi clear '..group)
+        vim.cmd(table.concat(strbuf, ' '))
+    end
 end
 
 
-return M
+return self

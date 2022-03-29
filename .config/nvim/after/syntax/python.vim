@@ -9,5 +9,8 @@ highlight link pythonlambda Warning
 
 syntax match pythonTyping 'np.ndarray'
 syntax match pythonTyping 'ndarray'
+syntax match pythonProperty '@/zsproperty/ze'
+syntax match pythonClassMethod '@/zsclassmethod/ze'
+syntax match pythonAbstractMethod '@/zsabstractmethod/ze'
 
 syntax keyword pythonBuiltinFunc cast

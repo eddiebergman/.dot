@@ -27,10 +27,14 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 " }}}
 " {{{ Buffers
 nnoremap <leader>bb :buffers<cr>
-nnoremap <leader>bq  :bp<bar>sp<bar>bn<bar>bd<CR>
+nnoremap Q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 nnoremap <Tab> :bnext<cr>
 nnoremap <S-Tab> :bprev<cr>
+
+nnoremap <C-right> :tabnext<cr>
+nnoremap <C-left> :tabprev<cr>
+nnoremap TT :tab split<cr>
 " }}}
 " {{{ Yank Put
 
@@ -228,11 +232,11 @@ set autowrite
 set modelines=0
 set smartcase
 set showmode
-set colorcolumn=88
+set colorcolumn=""
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
-set fillchars=fold:\ ,eob:~
+set fillchars=eob:\ ,fold:\ 
 set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
@@ -273,10 +277,12 @@ augroup END
 
 " }}}
 " {{{ Redraw fix for kitty terminal
-if &term =~ 'kitty'
+"
+"{{{
+ "if &term =~ 'kitty'
   " disable Background Color Erase (BCE)
-  set t_ut=
-endif
+  "set t_ut=
+"endif
 " }}}
 " {{{ Paths, Globals
 let g:shell = 'kitty'
@@ -314,8 +320,23 @@ set wildignore+=*~,*.swp,*.tmp
 " }}}
 " }}}
 " }}}
+" {{{ Color stuff
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+" }}}
+" }}}
+
 lua require('settings').setup()
-lua require('colors').setup()
 lua require('lsp.config').setup()
 "lua require('tabs').setup()
 lua require('debugging').setup()
@@ -328,3 +349,7 @@ lua require('nav').setup()
 lua require('completion').setup()
 lua require('tree').setup()
 lua require("doc").setup()
+lua require("term").setup()
+lua require("gitsidebar").setup()
+" Last just to make sure it's king
+lua require('colors').setup()

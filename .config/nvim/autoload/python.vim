@@ -1,6 +1,6 @@
 " {{{ Format Diff
 " There was a problem in that this file is reloaded for the new buffer
-" before the current function call returns, have to add a recursive 
+" before the current function call returns, have to add a recursive
 " gaurd
 
 function! python#StyleDiff(style)
