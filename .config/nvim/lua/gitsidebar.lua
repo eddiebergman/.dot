@@ -56,20 +56,20 @@ function self.setup()
         map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
 
         -- Actions
-        map('n', 'ha', ':Gitsigns stage_hunk<CR>')
-        map('n', 'hr', ':Gitsigns reset_hunk<CR>')
-        map('n', 'hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
+        map('n', 'ga', ':Gitsigns stage_hunk<CR>')
+        map('n', 'gr', ':Gitsigns reset_hunk<CR>')
+        map('n', 'gu', '<cmd>Gitsigns undo_stage_hunk<CR>')
 
-        map('n', 'hl', '<cmd>Gitsigns undo_stage_hunk<CR>')
+        map('n', 'gl', '<cmd>Gitsigns undo_stage_hunk<CR>')
 
-        map('n', 'hA', '<cmd>Gitsigns stage_buffer<CR>')
-        map('n', 'hR', '<cmd>Gitsigns reset_buffer<CR>')
+        map('n', 'gA', '<cmd>Gitsigns stage_buffer<CR>')
+        map('n', 'gR', '<cmd>Gitsigns reset_buffer<CR>')
 
-        map('n', 'hp', '<cmd>Gitsigns preview_hunk<CR>')
+        map('n', 'gp', '<cmd>Gitsigns preview_hunk<CR>')
 
-        map('n', 'hb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+        map('n', 'gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
 
-        map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
+        map('n', 'gD', '<cmd>Gitsigns diffthis<CR>')
 
         map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
         map('n', '<leader>td', '<cmd>Gitsigns toggle_deleted<CR>')
