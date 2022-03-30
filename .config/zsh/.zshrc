@@ -138,19 +138,21 @@ alias pytesth="pytest --cov-report html; firefox htmlcov/index.html"
 # Assumes two monitors
 screen () {
 
+    local usage="Usage: screen {off, work, home, left, right}"
+
     if empty $1; then
-        echo "Usage: screen {work,home,gf,off}"
+        echo $usage
         return 1
     fi
     #
     # Sets the monitors to show up
     xrandr --auto
     local primary="eDP-1"
+    local hdmi="HDMI-1"
     local home_left="DP-2-8"
     local home_right="HDMI-1"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
-    local gf_right="HDMI-1"
 
     # Home laptop and work laptop mark them reads them differently sometimes
     # This is for my personal laptop
@@ -174,14 +176,14 @@ screen () {
         xrandr --output $home_right --left-of $primary --mode 2560x1440
         xrandr --output $home_left --left-of $home_right --auto
 
-    elif equal $1 "gf"; then
-        xrandr --output $gf_right --right-of $primary --auto
+    elif equal $1 "right" ; then
+        xrandr --output $hdmi --right-of $primary --auto
 
     elif equal $1 "left"; then
-        xrandr --output $gf_right --left-of $primary --auto
+        xrandr --output $hdmi --left-of $primary --auto
 
     else
-        echo "Usage: screen {work,home,gf,off}"
+        echo $usage
         return 1
 
     fi
