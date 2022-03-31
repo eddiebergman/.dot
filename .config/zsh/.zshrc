@@ -391,7 +391,7 @@ work () {
         cd ${HOME}/code/asklearn/dev/
         pyshell
         vim
-    elif equal $mode "asklearn"; then
+    elif equal $mode "work"; then
         cd ${HOME}/code/automl_class
     else
         echo "Usage: work [{asklearn, class}]"
