@@ -41,7 +41,7 @@ local Operator = BlueStrong
 local Bracket = Orange
 local Imports = Red
 local Normal = fg3
-local Parameter = fg2
+local Parameter = Aqua
 local String = Yellow
 local Field = fg3
 local Variable = fg3
@@ -98,6 +98,9 @@ self.highlights = {
     GitSignsAddLn = { guibg = "NONE", gui = "underline", guisp = GreenStrong },
     GitSignsChangeLn = { guibg = "NONE", gui = "underline", guisp = PurpleStrong },
     GitSignsDeleteLn = { guifg = RedStrong, guibg = "NONE", gui = "underline", guisp = RedStrong },
+
+    gitDiff = { guifg = Normal },
+    fugitiveHunk = { guifg = Normal },
 
     -- TS
     TSKeywordOperator = { guifg = Keyword, gui = "italic" },
