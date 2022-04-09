@@ -10,7 +10,6 @@ local pylsp_config = {
             pyflakes = { enabled = false },
             mypy = { enabled = false }, -- Using null-ls instead, seems more responsive
             yapf = { enabled = false },
-            jedi_competion = {enabled = true, include_params = true }
         }
     }
 }
@@ -28,6 +27,7 @@ function self.setup()
             },
         })
     end
+
 
 end
 

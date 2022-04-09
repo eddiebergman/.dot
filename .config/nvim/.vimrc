@@ -349,6 +349,5 @@ lua require('nav').setup()
 lua require('completion').setup()
 lua require('tree').setup()
 lua require("doc").setup()
-lua require("term").setup()
 " Last just to make sure it's king
 lua require('colors').setup()

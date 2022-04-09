@@ -13,6 +13,12 @@ require('packer').startup(
     function (use)
         use 'wbthomason/packer.nvim'
 
+        use {
+            "L3MON4D3/LuaSnip",
+            requires = { "rafamadriz/friendly-snippets" },
+            config = function () require("luasnip.loaders.from_vscode").lazy_load() end
+        }
+
         -- Git integrations
         use {
             'lewis6991/gitsigns.nvim'
@@ -39,11 +45,6 @@ require('packer').startup(
             'akinsho/bufferline.nvim', requires = "kyazdani42/nvim-web-devicons"
         }
 
-        -- Terminal
-        use {
-            'akinsho/toggleterm.nvim'
-        }
-
         -- Tree
         use {
             'kyazdani42/nvim-tree.lua', requires = "kyazdani42/nvim-web-devicons"
@@ -65,9 +66,10 @@ require('packer').startup(
                 'hrsh7th/cmp-nvim-lsp', -- For LSP completion
                 'hrsh7th/cmp-buffer', -- For buffer completion
                 'hrsh7th/cmp-path', -- For path completion
+                "saadparwaiz1/cmp_luasnip", -- for luasnip
                 "lukas-reineke/cmp-under-comparator", -- For deprioritizing __ python
-                'dcampos/cmp-snippy', -- For snippy snippets
-                'windwp/nvim-autopairs' -- For autopairs on function completions
+                'windwp/nvim-autopairs', -- For autopairs on function completions
+                'hrsh7th/cmp-nvim-lsp-signature-help',
             }
         }
 
@@ -97,7 +99,6 @@ require('packer').startup(
         use {
             'nvim-telescope/telescope.nvim',
             requires = {
-                'nvim-lua/popup.nvim',
                 'nvim-lua/plenary.nvim',
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
             },
