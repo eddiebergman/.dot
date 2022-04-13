@@ -2,6 +2,10 @@ local py = require('py')
 
 local M = {}
 
+function M.cmd(str)
+    vim.api.nvim_exec(str, false)
+end
+
 function M.exec(str)
     return vim.api.nvim_exec(str, true)
 end
