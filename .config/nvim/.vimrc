@@ -335,7 +335,6 @@ if (empty($TMUX))
 endif
 " }}}
 " }}}
-
 lua require('settings').setup()
 lua require('lsp.config').setup()
 "lua require('tabs').setup()
@@ -349,5 +348,6 @@ lua require('nav').setup()
 lua require('completion').setup()
 lua require('tree').setup()
 lua require("doc").setup()
+lua require("commands").setup()
 " Last just to make sure it's king
 lua require('colors').setup()
