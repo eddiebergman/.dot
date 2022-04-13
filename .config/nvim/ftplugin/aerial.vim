@@ -1,8 +1,5 @@
-" Jump (focus)
-nnoremap <buffer> L :lua require("aerial").select({jump=true})<cr>
-
-" Jump (no focus)
-nnoremap <buffer> l :lua require("aerial").select({jump=false})<cr>
+" We auto jump so this sort of acts like a select
+nnoremap <buffer> l :AerialClose<cr>
 
 " Collapse whole tree
 nnoremap <buffer> H :AerialTreeCloseAll<cr>
