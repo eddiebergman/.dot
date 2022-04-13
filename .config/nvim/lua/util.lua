@@ -121,6 +121,10 @@ function M.setkeys(mode, mappings, buffer)
     end
 end
 
+function M.setkey(mode, mapping, buffer)
+    M.setkeys(mode, {mapping}, buffer)
+end
+
 -- Checks if a given path exists as a dir or file
 function M.os_exists(path)
     local _, status = M.os_exec('[ -e "'..path..'" ]')

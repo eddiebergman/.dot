@@ -1,5 +1,7 @@
 local py = require("py")
+local util = require("util")
 local join = py.join
+local setkey = util.setkey
 
 local self = {}
 
@@ -30,6 +32,7 @@ local strip_whitespace = {
 
 function self.setup()
     self.register(strip_whitespace)
+    setkey("n", {"<C-f>", ":Telescope commands<cr>"})
 end
 
 return self
