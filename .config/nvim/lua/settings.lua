@@ -32,6 +32,10 @@ function self.setup()
 
     vim.opt.autowrite = true
 
+    -- vim.g.copilot_no_tab_map = true
+    -- vim.g.copilot_assume_mapped = true
+    -- vim.g.copilot_tab_fallback = ""
+
     util.setkeys("n", {{"sr", ":%s/"}})
 
     self.set_indent_blankline()

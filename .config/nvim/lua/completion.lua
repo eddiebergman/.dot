@@ -59,6 +59,12 @@ local cmp_config = {
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
                 else
+                    -- local copilot_keys = vim.fn["copilot#Accept"]()
+                    --if copilot_keys ~= "" then
+                    --  vim.api.nvim_feedkeys(copilot_keys, "i", true)
+                    --else
+                    --  fallback()
+                    --end
                     fallback()
                 end
             end
@@ -94,6 +100,7 @@ local cmp_config = {
     },
     sources = {
         { name = 'nvim_lsp_signature_help' },
+        -- { name = 'copilot' },
         { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'buffer' },

@@ -13,6 +13,11 @@ require('packer').startup(
     function (use)
         use 'wbthomason/packer.nvim'
 
+        -- copilot?
+        -- use {
+        --    "github/copilot.vim"
+        -- }
+
         use {
             "L3MON4D3/LuaSnip",
             requires = { "rafamadriz/friendly-snippets" },
@@ -70,6 +75,7 @@ require('packer').startup(
                 "lukas-reineke/cmp-under-comparator", -- For deprioritizing __ python
                 'windwp/nvim-autopairs', -- For autopairs on function completions
                 'hrsh7th/cmp-nvim-lsp-signature-help',
+                -- 'hrsh7th/cmp-copilot',
             }
         }
 
