@@ -176,6 +176,7 @@ require('packer').startup(
         use 'nightsense/stellarized'
         use 'sainnhe/everforest'
         use 'morhetz/gruvbox'
+        use 'NLKNguyen/papercolor-theme'
     end
 )
 return M

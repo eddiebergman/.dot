@@ -7,6 +7,7 @@ self.colorschemes = {
     ppbr = function () return require("colorschemes/ppbr") end,
     forest = function () return require("colorschemes/forest") end,
     gruvbox = function () return require("colorschemes/gruvbox") end,
+    paper = function () return require("colorschemes/paper") end,
 }
 self.default = "gruvbox"
 
