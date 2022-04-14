@@ -38,12 +38,18 @@ end
 
 function M.isinstance(obj, typestr)
     if typestr == "int" or typestr == "float" then
-        typestr = "number" end
+        typestr = "number"
+    end
+
+    if typestr == "bool" then
+        typestr = "boolean"
+    end
 
     if type(obj) == "table" then
         -- table is table
         if typestr == "table" then
-            return true end
+            return true
+        end
 
         -- empty is list or dict
         if M.empty(obj) and (typestr == "list" or typestr == "dict") then
@@ -64,7 +70,8 @@ function M.isinstance(obj, typestr)
         return type(obj) == typestr
 
     else
-        return type(obj) == typestr end
+        return type(obj) == typestr
+    end
 end
 
 function M.filter(iterable, f)

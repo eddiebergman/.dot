@@ -1,4 +1,5 @@
 local py = require('py')
+local isinstance = py.isinstance
 
 local M = {}
 
@@ -121,8 +122,24 @@ function M.setkeys(mode, mappings, buffer)
     end
 end
 
-function M.setkey(mode, mapping, buffer)
-    M.setkeys(mode, {mapping}, buffer)
+function M.setkey(mode, mapping, action, buffer)
+    -- 2 params (mapping, action) -> setkey("n", mapping, action)
+    if action == nil then
+        action = mapping
+        mapping = mode
+        mode = "n"
+    end
+
+    -- 3 params with 3rd being boolean (mapping, action, buffer)
+    if isinstance(action, "bool") then
+        buffer = action
+        action = mapping
+        mapping = mode
+        mode = "n"
+    end
+
+
+    M.setkeys(mode, {{mapping, action}}, buffer)
 end
 
 -- Checks if a given path exists as a dir or file

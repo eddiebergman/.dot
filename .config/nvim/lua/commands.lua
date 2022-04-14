@@ -32,7 +32,7 @@ local strip_whitespace = {
 
 function self.setup()
     self.register(strip_whitespace)
-    setkey("n", {"<C-f>", ":Telescope commands<cr>"})
+    setkey("<C-f>", ":Telescope commands<cr>")
 end
 
 return self
