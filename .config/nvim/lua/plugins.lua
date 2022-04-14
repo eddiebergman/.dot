@@ -166,10 +166,7 @@ require('packer').startup(
         use {
             'rcarriga/vim-ultest',
             requires = { 'janko/vim-test' },
-            config = function () require('util').setkeys("n", {
-                {"<leader>un", "<cmd>UltestNearest<cr>"}
-            })
-            end
+            ft = "python"
         }
 
         -- Themes

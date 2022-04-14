@@ -56,7 +56,15 @@ local Hint = Blue
 local Guides = fg1Soft
 local Type = BlueDeep
 
-local Chosen = Purple
+local Add = GreenStrong
+local Change = PurpleStrong
+local Delete = RedStrong
+
+local Pass = Green
+local Running = Yellow
+local Fail = RedStrong
+
+local Chosen = PurpleStrong
 
 vim.g.gruvbox_contrast_dark = "medium"
 vim.g.gruvbox_bold = 0
@@ -94,13 +102,13 @@ self.highlights = {
 
 
     -- GitSigns
-    GitSignsAdd = { guibg = "NONE", guifg = GreenStrong },
-    GitSignsChange = { guibg = "NONE", guifg = PurpleStrong },
-    GitSignsDelete = { guibg = "NONE", guifg = RedStrong },
+    GitSignsAdd = { guibg = "NONE", guifg = Add },
+    GitSignsChange = { guibg = "NONE", guifg = Change },
+    GitSignsDelete = { guibg = "NONE", guifg = Delete },
 
-    GitSignsAddLn = { guibg = "NONE", gui = "underline", guisp = GreenStrong },
-    GitSignsChangeLn = { guibg = "NONE", gui = "underline", guisp = PurpleStrong },
-    GitSignsDeleteLn = { guifg = RedStrong, guibg = "NONE", gui = "underline", guisp = RedStrong },
+    GitSignsAddLn = { guibg = "NONE", gui = "underline", guisp = Add },
+    GitSignsChangeLn = { guibg = "NONE", gui = "underline", guisp = Change },
+    GitSignsDeleteLn = { guifg = Delete, guibg = "NONE", gui = "underline", guisp = Delete },
 
     gitDiff = { guifg = Normal },
     fugitiveHunk = { guifg = Normal },
@@ -168,11 +176,20 @@ self.highlights = {
 
     -- Indent blank line
     IndentBlanklineChar = { guifg = Blue },
-    IndentBlanklineContextChar = { guifg = Purple },
+    IndentBlanklineContextChar = { guifg = Chosen },
 
-    IndentBlanklineContextStart = { guisp=Blue  },
-    IndentBlanklineSpaceChar = { guisp=Blue },
-    IndentBlanklineSpaceCharBlankline = { guisp=Blue }
+    IndentBlanklineContextStart = { guisp=Guides  },
+    IndentBlanklineSpaceChar = { guisp=Guides },
+    IndentBlanklineSpaceCharBlankline = { guisp=Guides },
+
+    -- Ultest
+    UltestPass = { guifg = Pass },
+    UltestFail = { guifg = Fail },
+    UltestRunning = { guifg = Running },
+    UltestBorder = { guifg = Guides },
+    UltestSummaryInfo = { guifg = Purple },
+    UltestSummaryFile = { guifg = Normal },
+    UltestSummaryNamespace = { guifg = Chosen },
 
 }
 
