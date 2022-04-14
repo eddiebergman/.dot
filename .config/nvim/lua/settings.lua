@@ -1,5 +1,6 @@
 local self = {}
 local util = require("util")
+local setkey = util.setkey
 
 function self.set_indent_blankline()
 
@@ -37,7 +38,12 @@ function self.setup()
     -- vim.g.copilot_assume_mapped = true
     -- vim.g.copilot_tab_fallback = ""
 
-    util.setkeys("n", {{"sr", ":%s/"}})
+    -- Start a search/replace
+    util.setkey("sr", ":%s/")
+
+    -- Close/open all folds
+    util.setkey("FF", ":%foldclose!<cr>")
+    util.setkey("F<space>", ":%foldopen!<cr>")
 
     self.set_indent_blankline()
 end
