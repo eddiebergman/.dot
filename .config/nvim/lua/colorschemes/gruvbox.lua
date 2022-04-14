@@ -34,6 +34,8 @@ local fg3 = "#BDAE93"
 local bg4 = "#7C6F64"
 local fg4 = "#A89984"
 
+local grey = "#878787"
+
 local BlueDeep = "#0997d9"
 
 local Keyword = RedStrong
@@ -54,6 +56,7 @@ local Hint = Blue
 local Guides = fg1Soft
 local Type = BlueDeep
 
+local Chosen = Purple
 
 vim.g.gruvbox_contrast_dark = "medium"
 vim.g.gruvbox_bold = 0
@@ -65,7 +68,7 @@ self.highlights = {
 
     -- Editor
     ColorColumn = { guibg = "NONE" },
-    CursorLine = { guibg="NONE", guisp=Blue },
+    CursorLine = { guibg="NONE", guisp=Blue, gui="underline" },
     Folded = { guifg = BlueStrong, guibg = "NONE", gui = "NONE"},
     VertSplit = { guifg = BlueStrong, guibg = "NONE" },
 
@@ -162,6 +165,14 @@ self.highlights = {
     TLgitbranch = { guifg=Yellow, gui="bold" },
     TLi3 = { guifg=Yellow, gui="bold" },
     TLi3sep = { guifg=Guides },
+
+    -- Indent blank line
+    IndentBlanklineChar = { guifg = Blue },
+    IndentBlanklineContextChar = { guifg = Purple },
+
+    IndentBlanklineContextStart = { guisp=Blue  },
+    IndentBlanklineSpaceChar = { guisp=Blue },
+    IndentBlanklineSpaceCharBlankline = { guisp=Blue }
 
 }
 
