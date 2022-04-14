@@ -29,6 +29,7 @@ function self.setup()
     vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
     vim.o.showtabline = 2
+    vim.o.mouse = "a"
 
     vim.opt.autowrite = true
 
