@@ -54,7 +54,6 @@ self.config = {
 }
 
 function self.on_attach(client, bufnr)
-    require("aerial").on_attach(client, bufnr)
 end
 
 function self.setup()
