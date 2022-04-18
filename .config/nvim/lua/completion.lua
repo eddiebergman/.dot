@@ -83,11 +83,13 @@ local cmp_config = {
         ['<C-y>'] = cmp.config.disable,
         ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
     },
-    documentation = {
-        border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    window = {
+        documentation = {
+            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+        }
     },
     experimental = {
-        ghost_text = false,
+        ghost_text = true,
     },
     formatting = {
         fields = { "abbr", "kind" },

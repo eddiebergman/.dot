@@ -42,6 +42,7 @@ require('packer').startup(
         -- Areial, symbol navigations
         use {
             "stevearc/aerial.nvim",
+            disable = true,
             config = function () require("symbol_tree").setup() end
         }
 
