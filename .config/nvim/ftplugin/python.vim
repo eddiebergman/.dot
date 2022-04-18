@@ -4,3 +4,10 @@ if exists(":TSConfigInfo")
 else
     set foldmethod=expr
 endif
+
+if exists(":UltestNearest")
+    augroup UltestRunner
+        au!
+        au BufWritePost * UltestNearest
+    augroup END
+endif

@@ -27,12 +27,7 @@ function self.setup()
 
     vim.cmd([[let test#python#pytest#options = "--no-header --disable-warnings --code-highlight=yes -q"]])
 
-    vim.cmd([[
-    augroup UltestRunner
-        au!
-        au BufWritePost * UltestNearest
-    augroup END
-    ]])
+
 end
 
 return self
