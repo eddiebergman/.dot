@@ -274,7 +274,7 @@ pyvenv () {
 
     pip install --upgrade pip
     pip install wheel
-    pip install python-lsp-server mypy pydocstyle flake8 isort black
+    pip install pydocstyle pyright
 }
 
 alias django='python manage.py'
@@ -304,7 +304,7 @@ update() {
     if equal $1 "nvim" || equal $1 "neovim"; then
         cd $dir
         git stash
-        git checkout stable
+        git checkout tags/v0.7.0
         git pull
         make clean
         make distclean

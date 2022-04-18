@@ -14,9 +14,14 @@ local pylsp_config = {
     }
 }
 
+local pyright_config = {}
+
+local kind = "pyright"
+
 function self.setup()
 
-    if os.getenv("VIRTUAL_ENV") ~= nil then
+    print(kind)
+    if os.getenv("VIRTUAL_ENV") ~= nil and kind == "pylsp" then
         require("lspconfig").pylsp.setup({
             on_attach = require('lsp.config').on_attach,
             capabilities = require('lsp.config').capabilities,
@@ -25,6 +30,14 @@ function self.setup()
             flags = {
                 allow_incremental_sync = false
             },
+        })
+    elseif os.getenv("VIRTUAL_ENV") ~= nil and kind == "pyright" then
+        require("lspconfig").pyright.setup({
+            on_attach = require('lsp.config').on_attach,
+            capabilities = require('lsp.config').capabilities,
+            single_file_support = true,
+            settings = pyright_config,
+            flags = { allow_incremental_sync = false},
         })
     end
 
