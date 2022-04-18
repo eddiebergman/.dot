@@ -153,8 +153,6 @@ function M.setup()
     setkeys('n', M.keymaps)
 end
 
-M.setup()
-
 -- Recommended to run this after setup but doesn't seem to have the command
 -- registered at time of calling
 --

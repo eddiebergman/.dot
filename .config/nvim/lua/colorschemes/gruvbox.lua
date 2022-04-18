@@ -2,6 +2,8 @@ local self = {}
 
 -- https://www.reddit.com/r/gruvbox/comments/np5ylp/official_resources/
 -- https://github.com/morhetz/gruvbox-contrib
+local NONE = "NONE"
+
 local bg0 = "#282828"
 local bg0Strong = "#928374"
 local Red = "#CC241D"
@@ -105,6 +107,10 @@ self.highlights = {
     GitSignsAdd = { guibg = "NONE", guifg = Add },
     GitSignsChange = { guibg = "NONE", guifg = Change },
     GitSignsDelete = { guibg = "NONE", guifg = Delete },
+
+    GitSignsAddNr = { guibg = Add, guifg = NONE },
+    GitSignsChangeNr = { guibg = Change, guifg = NONE },
+    GitSignsDeleteNr = { guibg = Delete, guifg = NONE },
 
     GitSignsAddLn = { guibg = "NONE", gui = "underline", guisp = Add },
     GitSignsChangeLn = { guibg = "NONE", gui = "underline", guisp = Change },
