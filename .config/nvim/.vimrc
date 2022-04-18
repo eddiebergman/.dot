@@ -349,5 +349,8 @@ lua require('completion').setup()
 lua require('tree').setup()
 lua require("doc").setup()
 lua require("commands").setup()
+lua require("snippets").setup()
 " Last just to make sure it's king
+
 lua require('colors').setup()
+
