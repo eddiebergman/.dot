@@ -32,3 +32,10 @@ endfunction
 setl foldexpr=FoldOutline(v:lnum)
 setl foldtext=FoldTextOutline()
 setl foldmethod=expr
+
+
+" Close all folds
+nnoremap <buffer> H :%foldclose!<cr>
+
+" Close current fold
+nnoremap <buffer> h :foldclose<cr>

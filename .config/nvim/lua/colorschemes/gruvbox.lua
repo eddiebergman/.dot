@@ -85,6 +85,7 @@ self.highlights = {
     CursorLine = { guibg="NONE", guisp=Blue, gui="underline" },
     Folded = { guifg = BlueStrong, guibg = "NONE", gui = "NONE"},
     VertSplit = { guifg = BlueStrong, guibg = "NONE" },
+    Pmenu = { guifg=None },
 
     StatusLine = { guifg = Yellow, guibg = "NONE" },
     StatusLineNC = { guibg = "NONE" },
@@ -161,6 +162,11 @@ self.highlights = {
     DiagnosticWarning = { guifg = Warning },
     DiagnosticInformation = { guifg = Hint },
     DiagnosticHint = { guifg = Hint },
+
+    DiagnosticVirtualTextError = { guifg = Error, gui=None },
+    DiagnosticVirtualTextWarn = { guifg = Warning, gui=None },
+    DiagnosticVirtualTextInfo= { guifg = Hint, gui=None },
+    DiagnosticVirtualTextHint= { guifg = Hint, gui=None },
 
     DiagnosticUnderlineError = { gui="undercurl", guisp = Error },
     DiagnosticUnderlineWarning= { gui="undercurl", guisp =  Warning },

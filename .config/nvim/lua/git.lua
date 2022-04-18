@@ -94,6 +94,19 @@ function self.setup()
     self.setup_gitsigns()
 end
 
+function self.repo_root()
+    if not self.in_repo() then
+        return nil
+    end
+
+    local dir, status = util.os_exec("git rev-parse --show-toplevel")
+    if dir == nil or status ~= 0 then
+        return nil
+    end
+
+    return dir
+end
+
 function self.in_repo()
     local _, status = util.os_exec('git branch')
     return status == 0

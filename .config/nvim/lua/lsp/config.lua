@@ -41,9 +41,10 @@ local normal_keymaps = {
 }
 
 self.config = {
-    virtual_text = false,
+    virtual_text = { spacing=0, prefix="", format = function(diag) return "●" end },
     update_in_insert = false,
-    underline = true,
+    underline = false,
+    signs = false,
     severity_sort = true,
     float = {
         border = "rounded",

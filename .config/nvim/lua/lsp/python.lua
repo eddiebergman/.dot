@@ -16,7 +16,7 @@ local pylsp_config = {
 
 local pyright_config = {}
 
-local kind = "pyright"
+local kind = "jedi"
 
 function self.setup()
 
@@ -33,6 +33,14 @@ function self.setup()
         })
     elseif os.getenv("VIRTUAL_ENV") ~= nil and kind == "pyright" then
         require("lspconfig").pyright.setup({
+            on_attach = require('lsp.config').on_attach,
+            capabilities = require('lsp.config').capabilities,
+            single_file_support = true,
+            settings = pyright_config,
+            flags = { allow_incremental_sync = false},
+        })
+    elseif os.getenv("VIRTUAL_ENV") ~= nil and kind == "jedi" then
+        require("lspconfig").jedi_language_server.setup({
             on_attach = require('lsp.config').on_attach,
             capabilities = require('lsp.config').capabilities,
             single_file_support = true,
