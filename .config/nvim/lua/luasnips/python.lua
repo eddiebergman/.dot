@@ -14,7 +14,15 @@ local fmt = require("luasnip.extras.fmt").fmt
 local m = require("luasnip.extras").m
 local lambda = require("luasnip.extras").l
 
-local snippets = {
+local nl = t({""})
+
+local autosnippets = {
+    s("docs",
+        {t('"""'), i(0), t('"""')}
+    ),
+    s("docb",
+        {t({'"""', ""}), i(0), t({"", '"""'})}
+    ),
     s("doce",
         t({"Expects", "-------", "* "})
     ),
@@ -23,5 +31,9 @@ local snippets = {
     ),
 }
 
+local snippets = {}
 
-return {snippets = snippets}
+return {
+    autosnippets = autosnippets,
+    snippets = snippets
+}
