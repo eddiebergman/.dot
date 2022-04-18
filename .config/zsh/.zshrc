@@ -149,7 +149,7 @@ screen () {
     xrandr --auto
     local primary="eDP-1"
     local hdmi="HDMI-1"
-    local home_left="DP-2-8"
+    local home_left="DP-2-9"
     local home_right="HDMI-1"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
