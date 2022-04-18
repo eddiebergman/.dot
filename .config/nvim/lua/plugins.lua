@@ -120,7 +120,6 @@ require('packer').startup(
                 'RRethy/nvim-treesitter-textsubjects',
                 'romgrk/nvim-treesitter-context',
             },
-            config = function () require('config/treesitter') end,
             run = ':TSUpdate'
         }
 

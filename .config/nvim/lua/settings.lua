@@ -69,6 +69,9 @@ function self.setup()
     util.setkey("F<space>", ":%foldopen!<cr>")
 
     self.set_indent_blankline()
+
+    -- Somehow not updating properly from plugins file
+    require("config/treesitter").setup()
 end
 
 return self
