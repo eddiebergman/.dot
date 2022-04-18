@@ -56,6 +56,9 @@ function self.setup()
     vim.o.mouse = "a"
 
     vim.opt.autowrite = true
+    vim.o.number = true
+    vim.o.relativenumber = true
+    vim.numberwidth = 2
 
     -- vim.g.copilot_no_tab_map = true
     -- vim.g.copilot_assume_mapped = true

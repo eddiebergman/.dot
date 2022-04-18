@@ -1,7 +1,8 @@
+local gs = require("gitsigns")
 local self = {}
 
 function self.setup()
-    require('gitsigns').setup {
+    gs.setup {
       signs = {
         add          = {hl = 'GitSignsAdd'   , text = '▐', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
         change       = {hl = 'GitSignsChange', text = '▐', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
@@ -83,6 +84,9 @@ function self.setup()
         map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
       end
     }
+
+    -- Seems to activate itself even with false above
+    gs.toggle_numhl(nil)
 end
 
 return self
