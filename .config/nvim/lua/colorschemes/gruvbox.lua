@@ -102,18 +102,13 @@ self.highlights = {
 
     WhiteSpace = { guibg = Error },
 
-
     -- GitSigns
     GitSignsAdd = { guibg = "NONE", guifg = Add },
     GitSignsChange = { guibg = "NONE", guifg = Change },
     GitSignsDelete = { guibg = "NONE", guifg = Delete },
 
-    GitSignsAddNr = { guibg = Add, guifg = NONE },
-    GitSignsChangeNr = { guibg = Change, guifg = NONE },
-    GitSignsDeleteNr = { guibg = Delete, guifg = NONE },
-
-    GitSignsAddLn = { guibg = "NONE", gui = "underline", guisp = Add },
-    GitSignsChangeLn = { guibg = "NONE", gui = "underline", guisp = Change },
+    GitSignsAddLn = { guibg = NONE, gui = "underline", guisp = Add },
+    GitSignsChangeLn = { guibg = NONE, gui = "underline", guisp = Change },
     GitSignsDeleteLn = { guifg = Delete, guibg = "NONE", gui = "underline", guisp = Delete },
 
     gitDiff = { guifg = Normal },
