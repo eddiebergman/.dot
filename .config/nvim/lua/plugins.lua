@@ -46,6 +46,10 @@ require('packer').startup(
             config = function () require("symbol_tree").setup() end
         }
 
+        use {
+            "simrat39/symbols-outline.nvim"
+        }
+
         -- Bufferline
         use {
             'akinsho/bufferline.nvim', requires = "kyazdani42/nvim-web-devicons"
@@ -119,7 +123,7 @@ require('packer').startup(
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
                 'RRethy/nvim-treesitter-textsubjects',
-                'romgrk/nvim-treesitter-context',
+                'lewis6991/nvim-treesitter-context',
             },
             run = ':TSUpdate'
         }
