@@ -67,6 +67,10 @@ local Running = Yellow
 local Fail = RedStrong
 
 local Chosen = PurpleStrong
+local Inactive = Blue
+
+
+local LineNr = Inactive
 
 vim.g.gruvbox_contrast_dark = "medium"
 vim.g.gruvbox_bold = 0
@@ -93,7 +97,8 @@ self.highlights = {
     SignatureMarkerText = { guibg = "NONE" },
 
     SignColumn = { guibg = "NONE", guifg = "NONE" },
-    LineNr = { guifg = Blue, guibg = "NONE" },
+    LineNr = { guifg = LineNr, guibg = "NONE" },
+    CursorLineNr = { guifg = Chosen, gui = "bold,underline",  guisp = Blue },
 
     NormalNC = { guibg = "NONE" },
 
@@ -106,6 +111,17 @@ self.highlights = {
     GitSignsAdd = { guibg = "NONE", guifg = Add },
     GitSignsChange = { guibg = "NONE", guifg = Change },
     GitSignsDelete = { guibg = "NONE", guifg = Delete },
+
+    GitSignsAddNr = { guibg = "NONE", guifg = Add, guisp = Add, gui = "underline"},
+    GitSignsChangeNr = { guibg = "NONE", guifg = Add, guisp = Change, gui = "underline"},
+    GitSignsDeleteNr = { guibg = "NONE", guifg = Add, guisp = Delete, gui = "underline"},
+
+    GitSignsAddLn = { guibg = NONE, gui = "underline", guisp = Add },
+    GitSignsChangeLn = { guibg = NONE, gui = "underline", guisp = Change },
+    GitSignsDeleteLn = { guifg = Delete, gui = "underline", guisp = Delete },
+
+    gitDiff = { guifg = Normal },
+    fugitiveHunk = { guifg = Normal },
 
     GitSignsAddLn = { guibg = NONE, gui = "underline", guisp = Add },
     GitSignsChangeLn = { guibg = NONE, gui = "underline", guisp = Change },
