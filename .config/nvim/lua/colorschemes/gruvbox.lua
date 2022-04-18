@@ -191,6 +191,12 @@ self.highlights = {
     UltestSummaryFile = { guifg = Normal },
     UltestSummaryNamespace = { guifg = Chosen },
 
+    -- Git diffs
+    DiffAdd = { guifg = Add, gui="underline", guisp=Add },
+    DiffChange= { guifg = Change, gui="underline", guisp=Change },
+    DiffDelete = { guifg = Delete, gui="underline", guisp=Delete },
+    DiffText = { guifg = Change, gui="underline", guisp=Change  },
+
 }
 
 return self
