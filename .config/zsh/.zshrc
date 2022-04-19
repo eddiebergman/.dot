@@ -274,7 +274,7 @@ pyvenv () {
 
     pip install --upgrade pip
     pip install wheel
-    pip install pydocstyle pyright
+    pip install pydocstyle jedi-language-server
 }
 
 alias django='python manage.py'
