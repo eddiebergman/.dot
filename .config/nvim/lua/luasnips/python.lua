@@ -27,7 +27,10 @@ local autosnippets = {
         t({"Expects", "-------", "* "})
     ),
     s("docp",
-        t({"Parameters", "---------", "* "})
+        t({"Parameters", "----------"}, i(0))
+    ),
+    s("docr",
+        t({"Returns", "-------"}, i(0))
     ),
 }
 
