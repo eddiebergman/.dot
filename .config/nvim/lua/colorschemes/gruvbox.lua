@@ -85,7 +85,7 @@ self.highlights = {
     CursorLine = { guibg="NONE", guisp=Blue, gui="underline" },
     Folded = { guifg = BlueStrong, guibg = "NONE", gui = "NONE"},
     VertSplit = { guifg = BlueStrong, guibg = "NONE" },
-    Pmenu = { guifg=None },
+    Pmenu = { guifg=None, gui="nocombine" },
 
     StatusLine = { guifg = Yellow, guibg = "NONE" },
     StatusLineNC = { guibg = "NONE" },

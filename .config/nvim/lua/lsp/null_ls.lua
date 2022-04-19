@@ -29,7 +29,6 @@ local function pydocstyle()
     for _, config in ipairs(order) do
         path = util.joinpath(root, config)
         if util.file_exists(path) then
-            print(path)
             return pydoc.with({args = { "$FILENAME", "--config="..path}})
             --return pydoc
         end

@@ -20,7 +20,6 @@ local kind = "jedi"
 
 function self.setup()
 
-    print(kind)
     if os.getenv("VIRTUAL_ENV") ~= nil and kind == "pylsp" then
         require("lspconfig").pylsp.setup({
             on_attach = require('lsp.config').on_attach,
