@@ -53,9 +53,6 @@ function self.setup_gitsigns()
             vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
         end
 
-        -- Navigation
-        map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
-        map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
 
         -- Actions
         map('n', 'ga', ':Gitsigns stage_hunk<CR>')
@@ -81,6 +78,10 @@ function self.setup_gitsigns()
         map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
       end
     }
+
+    -- Navigation
+    util.setkey(")", ":lua require('gitsigns').next_hunk({navigation_message = false})<cr>")
+    util.setkey("(", ":lua require('gitsigns').prev_hunk({navigation_message = false})<cr>")
 end
 
 function self.setup()
