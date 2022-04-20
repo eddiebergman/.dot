@@ -26,7 +26,6 @@ nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " }}}
 " {{{ Buffers
-nnoremap <leader>bb :buffers<cr>
 nnoremap Q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 nnoremap <Tab> :bnext<cr>

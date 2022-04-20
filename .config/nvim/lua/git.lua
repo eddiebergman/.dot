@@ -82,6 +82,7 @@ function self.setup_gitsigns()
     -- Navigation
     util.setkey(")", ":lua require('gitsigns').next_hunk({navigation_message = false})<cr>")
     util.setkey("(", ":lua require('gitsigns').prev_hunk({navigation_message = false})<cr>")
+    util.setkey("<leader>b", ":Gitsigns blame_line<cr>")
 end
 
 function self.setup()
