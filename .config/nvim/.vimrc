@@ -270,7 +270,7 @@ endfunction
 " {{{ Insert Mode/ Normal mode identifier
 augroup InsertCursor
     autocmd!
-    autocmd InsertEnter * exec 'hi CursorLine'.' gui=bold'
+    autocmd InsertEnter * exec 'hi CursorLine'.' gui=bold,underline'
     autocmd InsertLeave * exec 'hi CursorLine'.' gui=underline'
 augroup END
 

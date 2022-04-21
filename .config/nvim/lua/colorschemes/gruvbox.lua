@@ -81,7 +81,7 @@ self.base = "gruvbox"
 self.highlights = {
 
     -- Editor
-    ColorColumn = { guibg = "NONE" },
+    ColorColumn = { guibg = "NONE", gui="underline", guisp=bg0},
     CursorLine = { guibg="NONE", guisp=Blue, gui="underline" },
     Folded = { guifg = BlueStrong, guibg = "NONE", gui = "NONE"},
     VertSplit = { guifg = BlueStrong, guibg = "NONE" },
@@ -201,9 +201,9 @@ self.highlights = {
     IndentBlanklineChar = { guifg = Blue },
     IndentBlanklineContextChar = { guifg = Chosen },
 
-    IndentBlanklineContextStart = { guisp=Guides  },
-    IndentBlanklineSpaceChar = { guisp=Guides },
-    IndentBlanklineSpaceCharBlankline = { guisp=Guides },
+    IndentBlanklineContextStart = { guisp=Blue  },
+    IndentBlanklineSpaceChar = { guisp=Blue,  },
+    IndentBlanklineSpaceCharBlankline = { guisp=Blue },
 
     -- Ultest
     UltestPass = { guifg = Pass },
