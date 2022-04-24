@@ -274,7 +274,7 @@ pyvenv () {
 
     pip install --upgrade pip
     pip install wheel
-    pip install pydocstyle jedi-language-server
+    pip install "mypy" "flake8" "black" "isort" "pydocstyle[toml]" "jedi-language-server"
 }
 
 alias django='python manage.py'
