@@ -6,9 +6,9 @@ if exists(":TSConfigInfo")
 endif
 
 
-#if exists(":UltestNearest")
-#    augroup UltestRunner
-#        au!
-        # au BufWritePost * UltestNearest
-#    augroup END
-#endif
+" if exists(":UltestNearest")
+"    augroup UltestRunner
+"        au!
+"       # au BufWritePost * UltestNearest
+"    augroup END
+" endif
