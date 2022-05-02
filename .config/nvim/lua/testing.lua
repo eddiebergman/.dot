@@ -4,13 +4,16 @@ local util = require('util')
 
 function self.setup()
     util.setkeys('n', {
-        {'tt', ':UltestNearest<cr>:UltestSummaryOpen<cr>'},
-        {'T', ':Ultest<cr>:UltestSummaryOpen<cr>'},
+        {'tt', ':UltestNearest<cr>'},
+        {'tT', ':Ultest<cr>'},
+        {'ts', ':UltestStopNearest<cr>'},
+        {'tS', ':UltestStop<cr>'},
+        {'T', ':UltestSummary<cr>'},
         {'to', ':call ultest#output#jumpto()<cr>'},
     })
     vim.g.icons = true
     vim.g.ultest_max_threads = 2
-    vim.g.ultest_output_on_run = true
+    vim.g.ultest_output_on_run = false
     vim.g.ultest_output_on_line = false
     vim.g.ultest_use_pty = true
     vim.g.ultest_virtual_text = false
