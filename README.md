@@ -95,3 +95,5 @@ and i've made a quick document class I use for casual documents.
 Normally I just navigate through a shell but having a file manager
 is handy, dolphin seems quite nice but I havn't spent the time 
 to configure it to look nice yet.
+
+TEST
