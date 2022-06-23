@@ -416,7 +416,7 @@ zstyle :compinstall filename '/home/skantify/.zshrc'
 
 # Autoload and call
 autoload -Uz compinit promptinit
-compinit
+compinit -i
 promptinit
 
 # Autosuggestion complete
@@ -440,3 +440,5 @@ alias xterm-kitty="kitty"
 
 # }}}
 # }}}
+
+alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake

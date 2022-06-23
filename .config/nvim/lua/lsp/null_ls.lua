@@ -5,7 +5,7 @@ local util = require("util")
 
 local function pydocstyle()
     -- Need to feed it a config file if we cant
-    pydoc = null_ls.builtins.diagnostics.pydocstyle
+    local pydoc = null_ls.builtins.diagnostics.pydocstyle
 
     -- We use git as a proxy for the root dir, otherwise setup.py
     local git = require("git")
@@ -27,9 +27,9 @@ local function pydocstyle()
 
     -- If a config is found return it
     for _, config in ipairs(order) do
-        path = util.joinpath(root, config)
+        local path = util.joinpath(root, config)
         if util.file_exists(path) then
-            return pydoc.with({args = { "$FILENAME", "--config="..path}})
+            return pydoc.with({ args = { "$FILENAME", "--config=" .. path } })
             --return pydoc
         end
     end
@@ -41,13 +41,13 @@ end
 
 function self.setup()
     null_ls.setup({
-        debug = true,
         sources = {
-            null_ls.builtins.formatting.black,
-            null_ls.builtins.formatting.isort,
-            null_ls.builtins.diagnostics.mypy,
-            null_ls.builtins.diagnostics.flake8,
-            pydocstyle(),
+            null_ls.builtins.formatting.black.with({ filetypes = { "python" } }),
+            null_ls.builtins.formatting.isort.with({ filetypes = { "python" } }),
+            null_ls.builtins.diagnostics.mypy.with({ filetypes = { "python" } }),
+            null_ls.builtins.diagnostics.flake8.with({ filetypes = { "python" } }),
+            pydocstyle().with({ filetypes = { "python" } }),
+            null_ls.builtins.code_actions.shellcheck.with({ filetypes = { "sh" } }),
         }
     })
 end

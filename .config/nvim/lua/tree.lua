@@ -59,6 +59,7 @@ local config = {
     open_on_tab = false,
     hijack_cursor = true,
     update_cwd = false,
+
     update_to_buf_dir = {
         enable = true,
         auto_open = true,
@@ -89,6 +90,23 @@ local config = {
         enable = true,
         ignore = true,
         timeout = 500,
+    },
+    renderer = {
+        highlight_opened_files = "name",
+        icons = {
+            show = {
+                git = false,
+                folder = true,
+                folder_arrow = false,
+                file = true,
+            },
+            glyphs = {
+                folder = {
+                    default = "",
+                    open = "",
+                }
+            }
+        }
     },
     view = {
         width = 30,
@@ -127,12 +145,6 @@ local keymaps = {
 }
 
 function self.setup()
-    vim.g.nvim_tree_show_icons = {
-        git = 0,
-        folders = 1,
-        files = 1,
-    }
-    vim.g.nvim_tree_highlight_opened_files = 1
     require('nvim-tree').setup(config)
     util.setkeys("n", keymaps)
 

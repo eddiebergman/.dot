@@ -9,7 +9,7 @@ self.colorschemes = {
     gruvbox = function () return require("colorschemes/gruvbox") end,
     paper = function () return require("colorschemes/paper") end,
 }
-self.default = "gruvbox"
+self.default = "ppbr"
 
 function self.setup()
     self.set(self.default)

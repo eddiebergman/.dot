@@ -13,7 +13,7 @@ function self.setup_gitsigns()
       },
 
       signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-      numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
+      numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
       linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
       word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
 
@@ -90,8 +90,7 @@ function self.setup()
         {'<leader>gp', ':Git push<cr>'},
         {'<leader>gc', ':Git commit<cr>'},
         {'<leader>gs', ':vertical bo Git<cr>'},
-        {'gl', ':vsp | GcLog<cr>'},
-        {'gD', ':Gdiffsplit!<cr>'},
+        {'<leader>gl', ':vsp | GcLog<cr>'},
     })
     self.setup_gitsigns()
 end

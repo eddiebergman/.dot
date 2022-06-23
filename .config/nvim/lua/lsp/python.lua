@@ -36,7 +36,7 @@ function self.setup()
             capabilities = require('lsp.config').capabilities,
             single_file_support = true,
             settings = pyright_config,
-            flags = { allow_incremental_sync = false},
+            flags = { allow_incremental_sync = false },
         })
     elseif os.getenv("VIRTUAL_ENV") ~= nil and kind == "jedi" then
         require("lspconfig").jedi_language_server.setup({
@@ -44,12 +44,11 @@ function self.setup()
             capabilities = require('lsp.config').capabilities,
             single_file_support = true,
             settings = pyright_config,
-            flags = { allow_incremental_sync = false},
+            flags = { allow_incremental_sync = false },
         })
     end
 
 
 end
-
 
 return self

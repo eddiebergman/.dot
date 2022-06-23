@@ -69,7 +69,7 @@ function self.setup()
         vim.lsp.handlers.signature_help, { border = "rounded" }
     )
 
-    for module in _.list({"python", "lua", "null_ls"}) do
+    for module in _.list({"python", "lua", "null_ls", "bash"}) do
         require("lsp."..module).setup()
     end
 end

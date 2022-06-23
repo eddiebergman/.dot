@@ -1,4 +1,3 @@
-local joinpath = require('util').joinpath
 local M = {}
 
 local fn = vim.fn
@@ -12,6 +11,12 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(
     function (use)
         use 'wbthomason/packer.nvim'
+
+        -- github
+        use {
+            'ldelossa/gh.nvim',
+            requires= {{ 'ldelossa/litee.nvim' }}
+        }
 
         -- copilot?
         -- use {
@@ -168,9 +173,12 @@ require('packer').startup(
 
         -- Testing
         use {
-            'rcarriga/vim-ultest',
-            requires = { 'janko/vim-test' },
-            ft = "python"
+            'nvim-neotest/neotest',
+            requires = {
+                'nvim-lua/plenary.nvim',
+                'antoinemadec/FixCursorHold.nvim',
+                'nvim-neotest/neotest-python'
+            },
         }
 
         -- Themes

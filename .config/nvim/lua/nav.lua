@@ -5,8 +5,11 @@ local util = require('util')
 
 self.keymaps = {
     n = {
-        -- [g]o [d]efinition (Goes to any found definition in the workspace)
-        {'<leader>gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>' },
+        -- [g]o [D]efinition (Goes to any found definition in the workspace)
+        {'gD', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>' },
+
+        -- [g]o [d]eclaration
+        {'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>' },
     }
 }
 

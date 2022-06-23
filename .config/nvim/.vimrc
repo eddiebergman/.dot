@@ -350,7 +350,8 @@ lua require("doc").setup()
 lua require("commands").setup()
 lua require("snippets").setup()
 lua require("symbol_tree").setup()
-" Last just to make sure it's king
+lua require("github").setup()
 
+" Last just to make sure it's king
 lua require('colors').setup()
 

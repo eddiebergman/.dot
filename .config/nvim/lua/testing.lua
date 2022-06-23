@@ -1,36 +1,30 @@
 local self = {}
+local neotest = require("neotest")
 
 local util = require('util')
 
+self.keymaps = {
+    n = {
+        {"T", "<cmd>lua require('neotest').summary.toggle()<CR>"},
+        {"tt", "<cmd>lua require('neotest').run.run()<CR>"},
+        {"to", "<cmd>lua require('neotest').output.open({enter = true, short = true})<CR>"},
+        {"tT", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>"},
+        {"ts", "<cmd>lua require('neotest').run.stop()<CR>"},
+    }
+}
+
 function self.setup()
-    util.setkeys('n', {
-        {'tt', ':UltestNearest<cr>'},
-        {'tT', ':Ultest<cr>'},
-        {'ts', ':UltestStopNearest<cr>'},
-        {'tS', ':UltestStop<cr>'},
-        {'T', ':UltestSummary<cr>'},
-        {'to', ':call ultest#output#jumpto()<cr>'},
+    for mode, keys in pairs(self.keymaps) do
+        util.setkeys(mode, keys)
+    end
+
+    neotest.setup({
+        adapters = {
+            require("neotest-python")({
+                args = {"--log-level", "DEBUG", "--color", "yes"}
+            })
+        }
     })
-    vim.g.icons = true
-    vim.g.ultest_max_threads = 2
-    vim.g.ultest_output_on_run = false
-    vim.g.ultest_output_on_line = false
-    vim.g.ultest_use_pty = true
-    vim.g.ultest_virtual_text = false
-    vim.g.ultest_pass_sign = "●"
-    vim.g.ultest_running_sign = "●"
-    vim.g.ultest_fail_sign = "●"
-    vim.g.ultest_pass_text = "| ● Passed |"
-    vim.g.ultest_running_text = "| ● Running |"
-    vim.g.ultest_fail_text = " | ● Failed |"
-    vim.g.ultest_show_in_file = true
-
-    -- x
-    vim.g.ultest_output_min_height = 2
-
-    vim.cmd([[let test#python#pytest#options = "--no-header --disable-warnings --code-highlight=yes -q"]])
-
-
 end
 
 return self

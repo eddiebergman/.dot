@@ -8,6 +8,7 @@ self.base = "stellarized"
 -- =======
 -- Colours
 -- =======
+local NONE = "NONE"
 local DullYellow = "#a5894A"
 local DullerYellow = "#715e33"
 local DefaultBackground = '#222532'
@@ -35,73 +36,135 @@ local White = "#a29f92"
 -- ===========
 -- Basic setting
 -- ===========
-local Function = DarkerCyan
+-- Code
+local Normal = White
+
+local Imports = BrighterViolet
+
+local Parameter = Orange
 local Class = Red
 local Type = DarkerRed
-local MethodCall = BrighterViolet
-local FunctionCall = Violet
 local Variable = White
-local Structure = SkyBlue
-local Include = Violet
-local Keyword = SkyBlue
-local Operator = DarkerGrey
-local Guides = EvenDarkerGrey
 local Constant = DullYellow
+
 local String = Grey
 local Comment = DarkerGrey
-local Normal = White
-local Parameter = Orange
+
+local Constructor = Cyan
+local Function = Violet
+local Method = BrighterViolet
+
+local Field = White
+
+local Keyword = SkyBlue
+local Operator = DarkerGrey
+local Bracket = DarkerGrey
+
+-- Constructs
+local FilePath = DullYellow
+local Dir = Orange
+
+-- Editor Colors
+local ColorColumn = SlightlyBackground
+local CursorLine = SlightlyBackground
+local Fold = DullYellow
+local Guides = DullYellow
+local FloatText = White
+
+-- Status Line
+local StatusLine = DullYellow
+
+-- Diagnostics and supprt
+local Inactive = Grey
+local Chosen = Orange
 
 local Error = Red
 local Warning = Orange
 local Hint = Grey
 
+local Add = Green
+local Change = Orange
+local Delete = Red
+
+local Pass = Green
+local Running = DullYellow
+local Fail = Red
+
 -- ========
 -- Handlers
 -- ========
 self.highlights = {
-
-    -- Base Syntax for languages
-    Comment = { guifg = Comment },
-    Constant = { guifg = Constant },
-    String = { guifg = String },
-    Character = { guifg = Comment },
-    Number = { guifg = Constant },
-    Boolean = { guifg = Constant },
-    Float = { guifg = Constant },
-    Identifier = { guifg = Variable },
-    Function = { guifg = Function },
-    Statement = { guifg = Structure },
-    Conditional = { guifg = Structure },
-    Repeat = { guifg = Structure },
-    Label = { guifg = Structure },
-    Operator = { guifg = Operator },
-    Keyword = { guifg = Keyword },
-    Exception = { guifg = Structure },
-    Include = { guifg = Include },
-    Type = { guifg = Type },
-    Normal = { guifg = Normal },
-    Underlined = { guifg = Normal, gui="underline" },
-    Ignore = { guifg = Normal },
-    Error = { guifg = Error },
-    Todo = { guifg = SkyBlue, gui="bold" },
-    Special = { guifg = SkyBlue },
-
     -- Editor
-    CursorLineNr = { guifg = Grey, gui="bold" },
-    LineNr = { guifg = Grey },
-    ColorColumn = { guibg = SlightlyBackground },
-    CursorLine = { guibg = SlightlyBackground, gui="underline", guisp=Guides },
-    Folded = { guifg = DullerYellow, guibg = "NONE", gui = "NONE"},
-    IndentBlanklineChar = { guifg = Guides, gui='nocombine' },
-    IndentBlanklineContextChar = { guifg=DullerYellow, gui='nocombine' },
-    VertSplit = { guifg = DullerYellow, guibg = "NONE" },
-    StatusLine= { guifg = DullerYellow, guibg = "NONE" },
-    StatusLineNC = { guibg = "NONE" },
-    FloatBorder = { guifg = DullerYellow },
-    NormalFloat = { guibg = "NONE" },
-    NormalNC = { guibg = InactiveBackground },
+    ColorColumn = { guibg = NONE, gui="underline", guisp=ColorColumn},
+    CursorLine = { guibg=NONE, guisp=CursorLine, gui="underline" },
+    Folded = { guifg = Fold, guibg = NONE, gui = NONE},
+    VertSplit = { guifg = Guides, guibg = NONE },
+    --Pmenu = { guifg=NONE, gui="nocombine" },
+
+    StatusLine = { guifg = StatusLine, guibg = NONE },
+    StatusLineNC = { guibg = NONE },
+
+    SignifySignAdd = { guibg = NONE },
+    SignifySignChange = { guibg = NONE },
+    SignifySignDelete = { guibg = NONE },
+
+    SignatureMarkText = { guibg = NONE },
+    SignatureMarkerText = { guibg = NONE },
+
+    SignColumn = { guibg = NONE, guifg = NONE },
+    LineNr = { guifg = Inactive, guibg = NONE },
+    CursorLineNr = { guifg = Chosen, gui = "bold,underline",  guisp = Chosen },
+
+    NormalNC = { guibg = NONE },
+
+    FloatBorder = { guifg = Guides, guibg = NONE },
+    NormalFloat = { guifg = FloatText, guibg = NONE },
+
     WhiteSpace = { guibg = Error },
+
+    -- GitSigns
+    GitSignsAdd = { guibg = NONE, guifg = Add },
+    GitSignsChange = { guibg = NONE, guifg = Change },
+    GitSignsDelete = { guibg = NONE, guifg = Delete },
+
+    --GitSignsAddNr = { guibg = NONE, guifg = NONE, guisp = Add, gui = NONE},
+    --GitSignsChangeNr = { guibg = NONE, guifg = NONE, guisp = Change, gui = NONE},
+    --GitSignsDeleteNr = { guibg = NONE, guifg = NONE, guisp = Delete, gui = NONE},
+
+    --GitSignsAddLn = { guibg = NONE, gui = "underline", guisp = Add },
+    --GitSignsChangeLn = { guibg = NONE, gui = "underline", guisp = Change },
+    --GitSignsDeleteLn = { guifg = Delete, gui = "underline", guisp = Delete },
+
+    gitDiff = { guifg = Normal },
+    fugitiveHunk = { guifg = Normal },
+
+    -- TS
+    TSKeywordOperator = { guifg = Keyword, gui = "italic" },
+    TSType = { guifg = Type },
+    TSKeywordFunction = { guifg = Keyword, gui = "italic" },
+    TSPunctSpecial = { guifg = Bracket },
+    TSConstBuiltin = { guifg = Constant, gui = "italic" },
+    TSBoolean = { guifg = Constant, gui = "italic" },
+    TSFloat = { guifg = Constant, gui = "italic" },
+    TSNumber = { guifg = Constant, gui = "italic" },
+    TSRepeat = { guifg = Keyword, gui = "italic" },
+    TSField = { guifg = Field },
+    TSKeyword = { guifg = Keyword, gui = "italic" },
+    TSKeywordReturn = { guifg = Keyword, gui = NONE },
+    TSConstructor = { guifg = Constructor, gui = "bold" },
+    TSComment = { guifg = Comment, gui = "italic" },
+    TSVariableBuiltin = { gui = "italic" },
+    TSPunctDelimiter = { guifg = Operator },
+    TSConditional = { guifg = Keyword, gui = "italic" },
+    TSOperator = { guifg = Operator },
+    TSPunctBracket = { guifg = Bracket },
+    TSInclude = { guifg = Imports, gui = NONE },
+    TSVariable = { guifg = Variable },
+    TSParameter = { guifg = Parameter },
+    TSString = { guifg = String },
+    TSMethod = { guifg = Method },
+    TSFunction = { guifg = Function },
+    TSException = { guifg = Keyword },
 
     -- Lsp
     DiagnosticError = { guifg = Error },
@@ -109,104 +172,54 @@ self.highlights = {
     DiagnosticInformation = { guifg = Hint },
     DiagnosticHint = { guifg = Hint },
 
+    DiagnosticVirtualTextError = { guifg = Error, gui=NONE },
+    DiagnosticVirtualTextWarn = { guifg = Warning, gui=NONE },
+    DiagnosticVirtualTextInfo= { guifg = Hint, gui=NONE },
+    DiagnosticVirtualTextHint= { guifg = Hint, gui=NONE },
+
     DiagnosticUnderlineError = { gui="undercurl", guisp = Error },
     DiagnosticUnderlineWarning= { gui="undercurl", guisp =  Warning },
     DiagnosticUnderlineHint= { gui="undercurl", guisp = Hint },
     DiagnosticUnderlineInfo = { gui="undercurl", guisp = Hint },
 
-    -- Tree Sitter (General)
-    TSVariableBuiltin = { guifg = Variable, gui="bold" },
-    TSConstant = { guifg = Type, gui="nocombine,NONE" },
-    TSType = { guifg = Type, gui="NONE" },
-    TSKeyword = { guifg = Keyword },
-    TSVariable = { guifg = Variable },
-    TSProperty = { guifg = Variable },
-    TSParameter = { guifg = Variable },
-    TSConditional = { guifg = Keyword },
-    TSRepeat = { guifg = Keyword },
-    TSString = { guifg = String },
-    TSStringEscape = { guifg = Comment },
-    TSKeywordOperator = { guifg = Keyword },
-    TSOperator = { guifg = Operator },
-    TSMethod = { guifg =  MethodCall },
-    TSFuncBuiltin = { guifg = FunctionCall, gui = "nocombine,NONE"},
-    TSFunction = { guifg = Function, gui="NONE" },
-    TSPunctBracket = { guifg = Operator },
-    TSPunctDelimiter = { guifg = Operator },
-    TSField = { guifg = Variable },
-    TSConstructor = { guifg = Function, gui="nocombine,NONE" },
-    TSConstBuiltin = { guifg = Constant, gui="NONE" },
-    TSPunctSpecial = { guifg = Operator },
-    TSNumber = { guifg = Constant },
-    TSComment = { guifg = Comment, gui="italic" },
-    TSInclude = { guifg = Include },
-    TSKeywordFunction = { guifg = Keyword },
-    TSBoolean = { guifg = Constant },
-
-    -- Nvim-cmp Completion
-    CmpItemAbbr = { guifg = Comment },
-    CmpItemAbbrDeprecated = { guifg = Comment },
-    CmpItemAbbrMatch = { guifg = Normal },
-    CmpItemAbbrMatchFuzzy = { guifg = Normal },
-    CmpItemKind = { guifg = Type },
-    CmpItemMenu = { guibg = SlightyBackground, guifg = DullerYellow },
-    CmpItemKindText = { guifg = Normal },
-    CmpItemKindMethod = { guifg = MethodCall },
-    CmpItemKindFunction = { guifg = Function },
-    CmpItemKindConstructor = { guifg = Function, gui = "nocombine,NONE" },
-    CmpItemKindField = { guifg = Variable },
-    CmpItemKindVariable = { guifg = Variable },
-    CmpItemKindClass = { guifg = Type  },
-    CmpItemKindModule = { guifg = Include },
-    CmpItemKindProperty = { guifg = Variable },
-    CmpItemKindKeyword = { guifg = Keyword },
-    CmpItemKindSnippet = { guifg = String },
-    CmpItemKindFile = { guifg = String },
-    CmpItemKindFolder = { guifg = String },
-    CmpItemKindConstant = { guifg = Type, gui="nocombine,NONE" },
-    CmpItemKindOperator = { guifg = Operator },
-    CmpItemKindTypeParameter = { guifg = Type },
-
     -- Status and Tab Line
-    SLactive = { guibg = Guides },
-    SLinactive = { guibg = "NONE", gui = 'underline', guisp=DullerYellow },
-    SLfilepathsep = { guifg=Comment },
-    SLfilepath = { guifg=DullYellow, gui='bold' },
-    SLlinecolsep = { guifg=Comment },
-    SLlinecol = { guifg=Type },
-    SLmodified = { guifg=Green },
-    SLmodifiedsep = { guifg=Green },
-    SLfiletype = { guifg=Keyword },
-    SLfiletypesep = { guifg=Keyword },
+    SLactive = { guibg = Chosen },
+    SLinactive = { gui = 'underline', guisp=Inactive },
+    SLfilepathsep = { guifg=Guides },
+    SLfilepath = { guifg=FilePath, gui='bold' },
+    SLlinecolsep = { guifg=Guides },
+    SLlinecol = { guifg=Guides },
+    SLmodified = { guifg=Change },
+    SLmodifiedsep = { guifg=Guides },
+    SLfiletype = { guifg=Type },
+    SLfiletypesep = { guifg=Guides },
 
-    TL = { guibg = "NONE" },
-    TLpre = { guifg=Constant },
-    TLenvsep = { guifg=Guides },
-    TLenv = { guifg=Type, gui="bold" },
-    TLtimesep = { guifg=Guides },
-    TLtime = { guifg=Constant, },
-    TLgitsep = { guifg=Guides },
-    TLgitorg = { guifg=Type },
-    TLgitbranch = { guifg=Type, gui="bold" },
-    TLi3 = { guifg=Type, gui="bold" },
-    TLi3sep = { guifg=Guides },
+    -- Indent blank line
+    IndentBlanklineChar = { guifg = Inactive },
+    IndentBlanklineContextChar = { guifg = Chosen },
 
-    -- Files
-    netrwCode = { guifg=Constant },
-    netrwDir = { guifg=Constant, gui="bold" },
-    netrwConfig = { guifg=Include },
-    netrwObscure = { guifg=Comment },
-    netrwSeperator = { guifg=Function },
+    IndentBlanklineContextStart = { guisp=Guides  },
+    IndentBlanklineSpaceChar = { guisp=Guides },
+    IndentBlanklineSpaceCharBlankline = { guisp=Guides },
 
-    -- NvimTree
-    NvimTreeNormal = { guifg=Constant },
-    NvimTreeFolderName = { guifg=DarkerCyan },
-    NvimTreeOpenedFolderName = { guifg=DarkerCyan, gui="bold" },
-    NvimTreeOpenedFile = { guifg=BrighterViolet },
-    NvimTreeMarkdownFile = { guifg=BrighterViolet, },
-    NvimTreeSpecialFile = { guifg=BrighterViolet, },
-    NvimTreeExecFile = { guifg=BrighterViolet, },
-    NvimTreeImageFile = { guifg=BrighterViolet, },
+    -- Ultest
+    NeotestPassed = { guifg = Pass },
+    NeotestFailed = { guifg = Fail },
+    NeotestRunning = { guifg = Running },
+    NeotestBorder = { guifg = Guides },
+    NeotestSkipped = { guifg = Inactive },
+    NeotestTest = { guifg = Function },
+    NeotestFile = { guifg = FilePath },
+    NeotestFocused = { guifg = Chosen },
+    NeotestDir = { guifg = Dir },
+    NeotestAdapterName = { guifg = Class },
+    UltestSummaryNamespace = { guifg = Class },
+
+    -- Git diffs
+    DiffAdd = { guifg = Add, gui="underline", guisp=Add },
+    DiffChange= { guifg = Change, gui="underline", guisp=Change },
+    DiffDelete = { guifg = Delete, gui="underline", guisp=Delete },
+    DiffText = { guifg = Change, gui="underline", guisp=Change  },
 }
 
 return self
