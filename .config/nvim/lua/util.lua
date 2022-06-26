@@ -138,7 +138,6 @@ function M.setkey(mode, mapping, action, buffer)
         mode = "n"
     end
 
-
     M.setkeys(mode, {{mapping, action}}, buffer)
 end
 

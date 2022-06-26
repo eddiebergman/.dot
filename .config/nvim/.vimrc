@@ -351,6 +351,7 @@ lua require("commands").setup()
 lua require("snippets").setup()
 lua require("symbol_tree").setup()
 lua require("github").setup()
+lua require("terminal").setup()
 
 " Last just to make sure it's king
 lua require('colors').setup()
