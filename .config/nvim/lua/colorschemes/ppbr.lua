@@ -61,7 +61,7 @@ local Operator = DarkerGrey
 local Bracket = DarkerGrey
 
 -- Constructs
-local FilePath = DullYellow
+local FilePath = Peach
 local Dir = Orange
 
 -- Editor Colors
@@ -90,14 +90,22 @@ local Pass = Green
 local Running = DullYellow
 local Fail = Red
 
+-- Extra
+local Key = Method
+local Value = Orange
+
+local Heading = DarkerRed
+local SubHeading = SkyBlue
+
 -- ========
 -- Handlers
 -- ========
 self.highlights = {
     -- Editor
-    ColorColumn = { guibg = NONE, gui="underline", guisp=ColorColumn},
-    CursorLine = { guibg=NONE, guisp=CursorLine, gui="underline" },
-    Folded = { guifg = Fold, guibg = NONE, gui = NONE},
+    ColorColumn = { guibg = NONE, gui = "underline", guisp = ColorColumn },
+    CursorLine = { guibg = NONE, guisp = CursorLine, gui = "underline" },
+    Folded = { guifg = Fold, guibg = NONE, gui = NONE },
+    FoldColumn = { guifg = Fold, gui = "bold" },
     VertSplit = { guifg = Guides, guibg = NONE },
     --Pmenu = { guifg=NONE, gui="nocombine" },
 
@@ -113,7 +121,7 @@ self.highlights = {
 
     SignColumn = { guibg = NONE, guifg = NONE },
     LineNr = { guifg = Inactive, guibg = NONE },
-    CursorLineNr = { guifg = Chosen, gui = "bold,underline",  guisp = Chosen },
+    CursorLineNr = { guifg = Chosen, gui = "bold,underline", guisp = Chosen },
 
     NormalNC = { guibg = NONE },
 
@@ -172,35 +180,35 @@ self.highlights = {
     DiagnosticInformation = { guifg = Hint },
     DiagnosticHint = { guifg = Hint },
 
-    DiagnosticVirtualTextError = { guifg = Error, gui=NONE },
-    DiagnosticVirtualTextWarn = { guifg = Warning, gui=NONE },
-    DiagnosticVirtualTextInfo= { guifg = Hint, gui=NONE },
-    DiagnosticVirtualTextHint= { guifg = Hint, gui=NONE },
+    DiagnosticVirtualTextError = { guifg = Error, gui = NONE },
+    DiagnosticVirtualTextWarn = { guifg = Warning, gui = NONE },
+    DiagnosticVirtualTextInfo = { guifg = Hint, gui = NONE },
+    DiagnosticVirtualTextHint = { guifg = Hint, gui = NONE },
 
-    DiagnosticUnderlineError = { gui="undercurl", guisp = Error },
-    DiagnosticUnderlineWarning= { gui="undercurl", guisp =  Warning },
-    DiagnosticUnderlineHint= { gui="undercurl", guisp = Hint },
-    DiagnosticUnderlineInfo = { gui="undercurl", guisp = Hint },
+    DiagnosticUnderlineError = { gui = "undercurl", guisp = Error },
+    DiagnosticUnderlineWarning = { gui = "undercurl", guisp = Warning },
+    DiagnosticUnderlineHint = { gui = "undercurl", guisp = Hint },
+    DiagnosticUnderlineInfo = { gui = "undercurl", guisp = Hint },
 
     -- Status and Tab Line
     SLactive = { guibg = Chosen },
-    SLinactive = { gui = 'underline', guisp=Inactive },
-    SLfilepathsep = { guifg=Guides },
-    SLfilepath = { guifg=FilePath, gui='bold' },
-    SLlinecolsep = { guifg=Guides },
-    SLlinecol = { guifg=Guides },
-    SLmodified = { guifg=Change },
-    SLmodifiedsep = { guifg=Guides },
-    SLfiletype = { guifg=Type },
-    SLfiletypesep = { guifg=Guides },
+    SLinactive = { gui = 'underline', guisp = Inactive },
+    SLfilepathsep = { guifg = Guides },
+    SLfilepath = { guifg = FilePath, gui = 'bold' },
+    SLlinecolsep = { guifg = Guides },
+    SLlinecol = { guifg = Guides },
+    SLmodified = { guifg = Change },
+    SLmodifiedsep = { guifg = Guides },
+    SLfiletype = { guifg = Type },
+    SLfiletypesep = { guifg = Guides },
 
     -- Indent blank line
     IndentBlanklineChar = { guifg = Inactive },
     IndentBlanklineContextChar = { guifg = Chosen },
 
-    IndentBlanklineContextStart = { guisp=Guides  },
-    IndentBlanklineSpaceChar = { guisp=Guides },
-    IndentBlanklineSpaceCharBlankline = { guisp=Guides },
+    IndentBlanklineContextStart = { guisp = Guides },
+    IndentBlanklineSpaceChar = { guisp = Guides },
+    IndentBlanklineSpaceCharBlankline = { guisp = Guides },
 
     -- Ultest
     NeotestPassed = { guifg = Pass },
@@ -216,10 +224,36 @@ self.highlights = {
     UltestSummaryNamespace = { guifg = Class },
 
     -- Git diffs
-    DiffAdd = { guifg = Add, gui="underline", guisp=Add },
-    DiffChange= { guifg = Change, gui="underline", guisp=Change },
-    DiffDelete = { guifg = Delete, gui="underline", guisp=Delete },
-    DiffText = { guifg = Change, gui="underline", guisp=Change  },
+    DiffAdd = { guifg = Add, gui = "underline", guisp = Add },
+    DiffChange = { guifg = Change, gui = "underline", guisp = Change },
+    DiffDelete = { guifg = Delete, gui = "underline", guisp = Delete },
+    DiffText = { guifg = Change, gui = "underline", guisp = Change },
+
+    -- RST
+    rstTSLiteral = { guifg = Function },
+    rstTSFunction = { guifg = Class },
+    rstTSTextReference = { guifg = String, gui = "underline" },
+
+    -- Neorg
+    NeorgLink = { guifg = FilePath, gui = "underline" },
+    NeorgCarryoverTag = { gui = "italic" },
+    NeorgCarryoverTagBegin = { guifg = Operator },
+    NeorgCarryoverTagNameWord = { guifg = Key },
+    NeorgCarryoverTagParameter = { guifg = Value },
+    NeorgCarryoverTagNameDelimiter = { guifg = Key },
+
+    NeorgHeading1Title = { guifg = Heading, gui = "bold" },
+    NeorgHeading1Prefix = { guifg = Operator },
+    NeorgHeading2Title = { guifg = SubHeading },
+    NeorgHeading2Prefix = { guifg = Operator },
+
+    -- Calendar
+    CalendarDayTitle = { guifg = Heading, gui = "bold", guibg = DefaultBackground },
+    CalendarSundayTitle = { guifg = SubHeading, gui = "bold", guibg = DefaultBackground },
+    CalendarSaturdayTitle = { guifg = SubHeading, gui = "bold", guibg = DefaultBackground },
+    CalendarToday = { guifg = Chosen, gui = "bold", guibg = DefaultBackground },
+    CalendarSelect = { guibg = HighlightBackground },
+    Calendarlgne = { guifg = Guides }
 }
 
 return self

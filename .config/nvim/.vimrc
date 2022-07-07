@@ -235,7 +235,7 @@ set colorcolumn=""
 set showtabline=1
 set list
 set listchars=tab:>>,extends:›,precedes:‹,nbsp:·,trail:·
-set fillchars=eob:\ ,fold:\ 
+set fillchars=eob:\ ,fold:\ ,foldsep:\ 
 set conceallevel=2
 set expandtab
 set tabstop=4 softtabstop=2 shiftwidth=4 smarttab smartindent
@@ -352,7 +352,7 @@ lua require("snippets").setup()
 lua require("symbol_tree").setup()
 lua require("github").setup()
 lua require("terminal").setup()
+lua require("run").setup()
 
 " Last just to make sure it's king
 lua require('colors').setup()
-

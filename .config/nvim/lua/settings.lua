@@ -51,7 +51,7 @@ function self.set_indent_blankline()
 end
 
 function self.setup()
-    vim.cmd [[ syntax on ]]
+    vim.o.syntax = "on"
 
     vim.o.foldmethod = 'expr'
     vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -60,9 +60,14 @@ function self.setup()
     vim.o.mouse = "a"
 
     vim.opt.autowrite = true
-    vim.o.number = true
-    vim.o.relativenumber = true
+    vim.o.number = false
+    vim.o.relativenumber = false
     vim.o.numberwidth = 2
+    vim.o.fileencoding = "utf-8"
+
+
+    -- Not sure why but it doesn't work when set with vim.o.foldcolumn
+    vim.cmd("set foldcolumn=0")
 
     -- vim.g.copilot_no_tab_map = true
     -- vim.g.copilot_assume_mapped = true
@@ -74,6 +79,11 @@ function self.setup()
     -- Close/open all folds
     util.setkey("FF", ":%foldclose!<cr>")
     util.setkey("F<space>", ":%foldopen!<cr>")
+
+    -- Activate zenmode
+    if vim.fn.exists(":ZenMode") then
+        util.setkey("<C-z>", "<cmd>ZenMode<CR>")
+    end
 
     self.set_indent_blankline()
 

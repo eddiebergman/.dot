@@ -12,16 +12,36 @@ require('packer').startup(
     function (use)
         use 'wbthomason/packer.nvim'
 
+        -- zen
+        use { "folke/zen-mode.nvim" }
+
+        -- org
+        use {
+            "nvim-neorg/neorg",
+            config = function () require("config/neorg").setup() end
+        }
+        use {
+            "itchyny/calendar.vim"
+        }
+
         -- github
         use {
             'ldelossa/gh.nvim',
             requires= {{ 'ldelossa/litee.nvim' }}
         }
 
+        use {
+            'stsewd/sphinx.nvim'
+        }
+
         -- copilot?
         -- use {
         --    "github/copilot.vim"
         -- }
+        --
+        use {
+            "akinsho/bufferline.nvim"
+        }
 
         use {
             "L3MON4D3/LuaSnip",
@@ -53,11 +73,6 @@ require('packer').startup(
 
         use {
             "simrat39/symbols-outline.nvim"
-        }
-
-        -- Bufferline
-        use {
-            'akinsho/bufferline.nvim', requires = "kyazdani42/nvim-web-devicons"
         }
 
         -- Tree

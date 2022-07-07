@@ -27,7 +27,7 @@ function tree_docs_setup()
 end
 
 local M = {
-    languages = { 'lua', 'python', 'query' },
+    languages = { 'lua', 'python', 'query', 'rust', 'json', 'rst', 'markdown' },
     keymaps = {
         -- Relies on nvim-treesitter/playground
         {'<leader>sg', '<cmd>TSHighlightCapturesUnderCursor<CR>'}
