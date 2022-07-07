@@ -128,6 +128,7 @@ alias evimrc="cd ~/.config/nvim; $EDITOR"
 alias ezshrc="$EDITOR ~/.config/zsh/.zshrc"
 alias edot="cd $HOME/.dot && $EDITOR"
 alias todo="$EDITOR ~/.todo.md"
+alias org="nvim -c \"Neorg workspace gtd\""
 # }}}
 # {{{ Python
 alias pytesth="pytest --cov-report html; firefox htmlcov/index.html"
