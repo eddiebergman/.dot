@@ -54,9 +54,6 @@ self.config = {
     }
 }
 
-function self.on_attach(client, bufnr)
-end
-
 function self.setup()
     util.setkeys("n", normal_keymaps)
 
