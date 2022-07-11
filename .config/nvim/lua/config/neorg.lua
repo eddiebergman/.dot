@@ -3,7 +3,7 @@ local util = require("util")
 
 local neorg = require("neorg")
 
-local concealer_icons = { { heading = { enabled = false, } } }
+local concealer_icons = { { heading = { enabled = false, } }, diff = "" }
 
 function self.setup()
     neorg.setup({
