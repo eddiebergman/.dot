@@ -25,12 +25,20 @@ local function pydocstyle()
         ".pydocstylerc.ini",
     }
 
-    -- If a config is found return it
+    local paths = {}
+    -- Append the root to each
     for _, config in ipairs(order) do
-        local path = util.joinpath(root, config)
+        table.insert(paths, util.joinpath(root, config))
+    end
+
+    -- Add a global config
+    local expected_root_config = util.joinpath(os.getenv("HOME"), ".config/pydocstyle/pyproject.toml")
+    table.insert(paths, expected_root_config)
+
+    -- If a config is found return it
+    for _, path in ipairs(paths) do
         if util.file_exists(path) then
             return pydoc.with({ args = { "$FILENAME", "--config=" .. path } })
-            --return pydoc
         end
     end
 
