@@ -379,7 +379,7 @@ clone () {
     mypy --install-types
 }
 # }}}
-# {{{
+# {{{ work
 work () {
 
     if empty $1; then
@@ -399,6 +399,33 @@ work () {
     fi
 
 }
+# }}}
+# {{{ Editors
+v() {
+    if exists ".venv"; then
+        pyshell
+        vim
+    else
+        vim
+    fi
+}
+# }}}
+# {{{ History
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=1000
+# }}}
+# }}}
+# {{{ Misc
+import() {
+    echo "disabled command"
+}
+# {{{ For GPU-cuda
+# This is needed by the cuda install script found
+# at ~/cuda/cuda11.1
+alias xterm-kitty="kitty"
+
+# }}}
 
 set H+ # Stops history expansion
 # https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
@@ -422,24 +449,6 @@ promptinit
 
 # Autosuggestion complete
 bindkey '^ ' autosuggest-accept
-
-# {{{ History
-HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=1000
-# }}}
-
-# }}}
-# {{{ Misc
-import() {
-    echo "disabled command"
-}
-# {{{ For GPU-cuda
-# This is needed by the cuda install script found
-# at ~/cuda/cuda11.1
-alias xterm-kitty="kitty"
-
-# }}}
 # }}}
 
 alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake
