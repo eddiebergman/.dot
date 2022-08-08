@@ -2,13 +2,13 @@
 # {{{ oh-my-zsh
 # oh-my-zsh should be enabled towards the end
 # {{{ Theme
-ZSH_THEME="robbyrussell"
-stellarized_dark_shell="${ZDOTDIR}/stellarized_dark.sh"
-if [[ -f "$stellarized_dark_shell" ]]; then
-    [ -n "$PS1" ] && sh "$stellarized_dark_shell"
-else
-    eval `dircolors $ZDOTDIR/dircolords.256dark`
-fi
+ZSH_THEME="ys"
+# stellarized_dark_shell="${ZDOTDIR}/stellarized_dark.sh"
+# if [[ -f "$stellarized_dark_shell" ]]; then
+#    [ -n "$PS1" ] && sh "$stellarized_dark_shell"
+#else
+#    eval `dircolors $ZDOTDIR/dircolors.256dark`
+#fi
 
 # }}}
 # {{{ Plugins
