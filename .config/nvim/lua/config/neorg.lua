@@ -70,7 +70,7 @@ function self.setup()
     })
 
     -- Start Neorg
-    vim.cmd(":NeorgStart silent=true")
+    -- vim.cmd(":NeorgStart silent=true")
 
     util.setkey("n", "<leader>tc", "<cmd>Neorg gtd capture<cr>")
     util.setkey("n", "<leader>tv", "<cmd>Neorg gtd views<cr>")

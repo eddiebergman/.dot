@@ -1,16 +1,37 @@
 local M = {}
 
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
 vim.cmd [[packadd packer.nvim]]
 
 require('packer').startup(
-    function (use)
+    function(use)
+
+        use { "pwntester/octo.nvim", config = function() require("config/octo").setup() end }
+        use { '~/code/onhold/pyrate.nvim', disable = true }
+
         use 'wbthomason/packer.nvim'
+
+        -- luadev
+        use "folke/lua-dev.nvim"
+
+        -- hop
+        use {
+            "phaazon/hop.nvim",
+            branch = "v2",
+            config = function() require("config/hop").setup() end,
+        }
+
+        -- diagnostics project
+        use {
+            "folke/trouble.nvim",
+            requires = "kyazdani42/nvim-web-devicons",
+            config = function() require("config/trouble").setup() end
+        }
 
         -- zen
         use { "folke/zen-mode.nvim" }
@@ -18,16 +39,10 @@ require('packer').startup(
         -- org
         use {
             "nvim-neorg/neorg",
-            config = function () require("config/neorg").setup() end
+            config = function() require("config/neorg").setup() end
         }
         use {
             "itchyny/calendar.vim"
-        }
-
-        -- github
-        use {
-            'ldelossa/gh.nvim',
-            requires= {{ 'ldelossa/litee.nvim' }}
         }
 
         use {
@@ -44,9 +59,14 @@ require('packer').startup(
         }
 
         use {
+            'nvim-lualine/lualine.nvim',
+            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        }
+
+        use {
             "L3MON4D3/LuaSnip",
             requires = { "rafamadriz/friendly-snippets" },
-            config = function () require("luasnip.loaders.from_vscode").lazy_load() end
+            config = function() require("luasnip.loaders.from_vscode").lazy_load() end
         }
 
         -- Git integrations
@@ -68,7 +88,7 @@ require('packer').startup(
         use {
             "stevearc/aerial.nvim",
             disable = true,
-            config = function () require("symbol_tree").setup() end
+            config = function() require("symbol_tree").setup() end
         }
 
         use {
@@ -82,7 +102,7 @@ require('packer').startup(
 
         -- Indent lines
         use {
-           'lukas-reineke/indent-blankline.nvim'
+            'lukas-reineke/indent-blankline.nvim'
         }
 
         use {
@@ -107,7 +127,7 @@ require('packer').startup(
         -- Neomake, run make and populate quickfix
         use {
             'neomake/neomake',
-            config = function () require('config/neomake') end
+            config = function() require('config/neomake') end
         }
 
         -- vim-vinegar, slightly modified netrw
@@ -122,8 +142,8 @@ require('packer').startup(
         -- Debugging
         use {
             'mfussenegger/nvim-dap',
-            requires = {'rcarriga/nvim-dap-ui', 'mfussenegger/nvim-dap-python'},
-            config = function () require('config/dap') end
+            requires = { 'rcarriga/nvim-dap-ui', 'mfussenegger/nvim-dap-python' },
+            config = function() require('config/dap') end
         }
 
         -- For preview and finding
@@ -133,7 +153,7 @@ require('packer').startup(
                 'nvim-lua/plenary.nvim',
                 { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
             },
-            config = function () require('config/telescope').setup() end
+            config = function() require('config/telescope').setup() end
         }
 
         -- Language specific parsing based
@@ -144,6 +164,7 @@ require('packer').startup(
                 'nvim-treesitter/nvim-treesitter-refactor',
                 'RRethy/nvim-treesitter-textsubjects',
                 'lewis6991/nvim-treesitter-context',
+                'nvim-treesitter/nvim-treesitter-textobjects',
             },
             run = ':TSUpdate'
         }
@@ -157,14 +178,14 @@ require('packer').startup(
         -- Latex everything plugin
         use {
             'lervag/vimtex',
-            config = function () require('config/vimtex') end,
-            ft = {'tex'}
+            config = function() require('config/vimtex') end,
+            ft = { 'tex' }
         }
 
         -- Extra tex-concealing
         use {
             'KeitaNakamura/tex-conceal.vim',
-            ft = {'tex'}
+            ft = { 'tex' }
         }
 
         use {
@@ -178,7 +199,7 @@ require('packer').startup(
         use 'tpope/vim-surround'
 
         -- Enables repeats for more complicated actions
-        use  'tpope/vim-repeat'
+        use 'tpope/vim-repeat'
 
         -- Autoclose braces
         use 'townk/vim-autoclose'
@@ -201,6 +222,7 @@ require('packer').startup(
         use 'sainnhe/everforest'
         use 'morhetz/gruvbox'
         use 'NLKNguyen/papercolor-theme'
+        use 'folke/tokyonight.nvim'
     end
 )
 return M

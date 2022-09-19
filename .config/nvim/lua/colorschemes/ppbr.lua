@@ -4,7 +4,6 @@ local self = {}
 self.background = "dark"
 self.base = "stellarized"
 
-
 -- =======
 -- Colours
 -- =======

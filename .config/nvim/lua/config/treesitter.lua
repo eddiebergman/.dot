@@ -1,36 +1,10 @@
-local isdir = require('util').isdir
-local joinpath = require('util').joinpath
-local os_exec = require('util').os_exec
 local setkeys = require('util').setkeys
-
-function tree_docs_setup()
-    return  {
-        enable = true,
-        keymaps = { doc_node_at_cursor = "<leader>d" },
-        spec_config = {
-            python = {
-                slots = {
-                    func = { helloworld = true }
-                },
-                templates = {
-                    func = {
-                        "%contents%",
-                        "helloworld"
-                    }
-                },
-                processors = {
-                    helloworld = function() return "hello world" end
-                }
-            }
-        }
-    }
-end
 
 local M = {
     languages = { 'lua', 'python', 'query', 'rust', 'json', 'rst', 'markdown' },
     keymaps = {
         -- Relies on nvim-treesitter/playground
-        {'<leader>sg', '<cmd>TSHighlightCapturesUnderCursor<CR>'}
+        { '<leader>sg', '<cmd>TSHighlightCapturesUnderCursor<CR>' }
     }
 }
 
@@ -39,7 +13,7 @@ function M.setup()
     local config = require('nvim-treesitter.configs')
 
     -- Annoyingly this plugin to fit into treesitters module defintion
-    require'treesitter-context'.setup{ enable = true, }
+    require 'treesitter-context'.setup { enable = true, }
 
     -- This is for indent_blankline plugin
     vim.g.indent_blankline_show_current_context = 1
@@ -49,9 +23,6 @@ function M.setup()
         highlight = { enable = true },
         incremental_selection = { enable = true },
         indent = { enable = true },
-
-        --nvim-tree-docs
-
 
         -- python folding
         pyfold = {
@@ -80,33 +51,26 @@ function M.setup()
 
         query_linter = {
             enable = true,
-            lint_events = {"BufWrite", "CursorHold"}
+            lint_events = { "BufWrite", "CursorHold" }
         },
 
         textsubjects = {
             enable = true,
-            keymaps = {
-                ['.'] = 'textsubjects-smart',
-                [';'] = 'textsubjects-container-outer',
-            }
+            keymaps = { ['.'] = 'textsubjects-smart' }
         },
 
         textobjects = {
-            enable = false,
             select = {
                 enable = true,
                 keymaps = {
+                    ["p"] = "@parameter",
                     ["af"] = "@function.outer",
                     ["if"] = "@function.inner",
+                    ["ac"] = "@class.outer",
+                    ["ic"] = "@class.inner",
                     ["ab"] = "@block.outer",
                     ["ib"] = "@block.inner",
-                    ["il"] = "@loop.inner",
-                    ["al"] = "@loop.outer",
-                    ["ic"] = "@conditional.inner",
-                    ["ac"] = "@conditional.outer",
-                    ["p"] = "@parameter.outer",
-                    ["c"] = "@comment.outer",
-                }
+                },
             },
             swap = {
                 enable = true,
@@ -120,32 +84,35 @@ function M.setup()
                 swap_previous = {
                     ["sP"] = "@parameter.inner",
                     ["sF"] = "@function.outer",
-                    ["sC"] = "@parameter.outer",
+                    ["sC"] = "@class.outer",
                     ["sS"] = "@statement.outer",
                     ["sB"] = "@block.outer",
-                }
+                },
             },
             move = {
                 enable = true,
-                keymaps = {
-                    goto_previous_start = {
-                        ["[["] = "@block.outer",
-                        ["[f"] = "@function.outer",
-                    },
-                    goto_next_start = {
-                        ["]["] = "@block.outer",
-                        ["]f"] = "@function.outer",
-                    },
-                    },
-                    goto_previous_end = {
-                        ["[]"] = "@block.outer",
-                        ["[F"] = "@function.outer",
-                    },
-                    goto_next_end = {
-                        ["]]"] = "@block.outer",
-                        ["]F"] = "@function.outer",
-                }
-            }
+                goto_next_start = {
+                    ["]f"] = "@function.outer",
+                    ["}"] = "@function.outer",
+                },
+                goto_next_end = {
+                    ["]F"] = "@function.outer",
+                    ["]["] = "@class.outer",
+                },
+                goto_previous_start = {
+                    ["{"] = "@function.outer",
+                    ["[f"] = "@function.outer",
+                    ["[["] = "@class.outer",
+                },
+                goto_previous_end = {
+                    ["[F"] = "@function.outer",
+                    ["[]"] = "@class.outer",
+                },
+            },
+        },
+
+        pysitter = {
+            enable = true
         }
     })
 

@@ -69,22 +69,26 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["FixCursorHold.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim",
+    url = "https://github.com/antoinemadec/FixCursorHold.nvim"
+  },
   LuaSnip = {
     config = { "\27LJ\2\nM\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\14lazy_load luasnip.loaders.from_vscode\frequire\0" },
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["aerial.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16symbol_tree\frequire\0" },
-    loaded = true,
-    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/aerial.nvim",
-    url = "https://github.com/stevearc/aerial.nvim"
-  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
+  },
+  ["calendar.vim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/calendar.vim",
+    url = "https://github.com/itchyny/calendar.vim"
   },
   ["centerpad.nvim"] = {
     loaded = true,
@@ -141,10 +145,26 @@ _G.packer_plugins = {
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/gruvbox",
     url = "https://github.com/morhetz/gruvbox"
   },
+  ["hop.nvim"] = {
+    config = { "\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15config/hop\frequire\0" },
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/hop.nvim",
+    url = "https://github.com/phaazon/hop.nvim"
+  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["lua-dev.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
+    url = "https://github.com/folke/lua-dev.nvim"
+  },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   neogen = {
     loaded = true,
@@ -156,6 +176,22 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/neomake",
     url = "https://github.com/neomake/neomake"
+  },
+  neorg = {
+    config = { "\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17config/neorg\frequire\0" },
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/neorg",
+    url = "https://github.com/nvim-neorg/neorg"
+  },
+  neotest = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/neotest",
+    url = "https://github.com/nvim-neotest/neotest"
+  },
+  ["neotest-python"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/neotest-python",
+    url = "https://github.com/nvim-neotest/neotest-python"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -209,7 +245,6 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22config/treesitter\frequire\0" },
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -217,7 +252,7 @@ _G.packer_plugins = {
   ["nvim-treesitter-context"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
-    url = "https://github.com/romgrk/nvim-treesitter-context"
+    url = "https://github.com/lewis6991/nvim-treesitter-context"
   },
   ["nvim-treesitter-pyfold"] = {
     loaded = false,
@@ -231,6 +266,11 @@ _G.packer_plugins = {
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-treesitter-refactor",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-refactor"
   },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
   ["nvim-treesitter-textsubjects"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textsubjects",
@@ -241,10 +281,21 @@ _G.packer_plugins = {
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
+  ["octo.nvim"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16config/octo\frequire\0" },
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/octo.nvim",
+    url = "https://github.com/pwntester/octo.nvim"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["papercolor-theme"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/papercolor-theme",
+    url = "https://github.com/NLKNguyen/papercolor-theme"
   },
   playground = {
     loaded = true,
@@ -256,10 +307,20 @@ _G.packer_plugins = {
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["sphinx.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/sphinx.nvim",
+    url = "https://github.com/stsewd/sphinx.nvim"
+  },
   stellarized = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/stellarized",
     url = "https://github.com/nightsense/stellarized"
+  },
+  ["symbols-outline.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
+    url = "https://github.com/simrat39/symbols-outline.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -278,6 +339,17 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/opt/tex-conceal.vim",
     url = "https://github.com/KeitaNakamura/tex-conceal.vim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
+  },
+  ["trouble.nvim"] = {
+    config = { "\27LJ\2\n<\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19config/trouble\frequire\0" },
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
   },
   ["vim-autoclose"] = {
     loaded = true,
@@ -299,17 +371,6 @@ _G.packer_plugins = {
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
-  ["vim-test"] = {
-    loaded = true,
-    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/vim-test",
-    url = "https://github.com/janko/vim-test"
-  },
-  ["vim-ultest"] = {
-    config = { "\27LJ\2\nl\0\0\5\0\5\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0004\3\3\0005\4\4\0>\4\1\3B\0\3\1K\0\1\0\1\3\0\0\15<leader>un\27<cmd>UltestNearest<cr>\6n\fsetkeys\tutil\frequire\0" },
-    loaded = true,
-    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/vim-ultest",
-    url = "https://github.com/rcarriga/vim-ultest"
-  },
   ["vim-vinegar"] = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/vim-vinegar",
@@ -327,43 +388,52 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/skantify/.local/share/nvim/site/pack/packer/start/vimwiki",
     url = "https://github.com/vimwiki/vimwiki"
+  },
+  ["zen-mode.nvim"] = {
+    loaded = true,
+    path = "/home/skantify/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
+    url = "https://github.com/folke/zen-mode.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: aerial.nvim
-time([[Config for aerial.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16symbol_tree\frequire\0", "config", "aerial.nvim")
-time([[Config for aerial.nvim]], false)
--- Config for: vim-ultest
-time([[Config for vim-ultest]], true)
-try_loadstring("\27LJ\2\nl\0\0\5\0\5\0\n6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0004\3\3\0005\4\4\0>\4\1\3B\0\3\1K\0\1\0\1\3\0\0\15<leader>un\27<cmd>UltestNearest<cr>\6n\fsetkeys\tutil\frequire\0", "config", "vim-ultest")
-time([[Config for vim-ultest]], false)
--- Config for: neomake
-time([[Config for neomake]], true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19config/neomake\frequire\0", "config", "neomake")
-time([[Config for neomake]], false)
--- Config for: LuaSnip
-time([[Config for LuaSnip]], true)
-try_loadstring("\27LJ\2\nM\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\14lazy_load luasnip.loaders.from_vscode\frequire\0", "config", "LuaSnip")
-time([[Config for LuaSnip]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\2\n>\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\21config/telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22config/treesitter\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
+-- Config for: neorg
+time([[Config for neorg]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17config/neorg\frequire\0", "config", "neorg")
+time([[Config for neorg]], false)
+-- Config for: hop.nvim
+time([[Config for hop.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15config/hop\frequire\0", "config", "hop.nvim")
+time([[Config for hop.nvim]], false)
+-- Config for: octo.nvim
+time([[Config for octo.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16config/octo\frequire\0", "config", "octo.nvim")
+time([[Config for octo.nvim]], false)
 -- Config for: nvim-dap
 time([[Config for nvim-dap]], true)
 try_loadstring("\27LJ\2\n*\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\15config/dap\frequire\0", "config", "nvim-dap")
 time([[Config for nvim-dap]], false)
+-- Config for: neomake
+time([[Config for neomake]], true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19config/neomake\frequire\0", "config", "neomake")
+time([[Config for neomake]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19config/trouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
+-- Config for: LuaSnip
+time([[Config for LuaSnip]], true)
+try_loadstring("\27LJ\2\nM\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\14lazy_load luasnip.loaders.from_vscode\frequire\0", "config", "LuaSnip")
+time([[Config for LuaSnip]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'vimtex', 'tex-conceal.vim'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'tex-conceal.vim', 'vimtex'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType python ++once lua require("packer.load")({'nvim-treesitter-pyfold'}, { ft = "python" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")

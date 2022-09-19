@@ -227,15 +227,10 @@ wacomscreen () {
 }
 # }}}
 # {{{ Python
-
-# Enable pyenv
-export PYENV_ROOT="${HOME}/.pyenv"
-export PATH="${PATH}:$PYENV_ROOT/bin"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
-fi
-
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 alias pyshell='source ./.venv/bin/activate'
 
@@ -283,14 +278,23 @@ alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm 
 # }}}
 # {{{ Git
 # Extends some simple functionality to git
-ggit () {
-    if equal $1 "user" && equal $2 "clone"; then
+gclone () {
+    local repo=$1
+    {
+        local cmd="git@github.com:automl/$1.git"
+        echo "Trying $cmd"
+        # Try automl org first as it's most used
+        git clone "$cmd"
+    } || {
+        # Try my account otherwise
         local username="$(git config --global user.name)"
-        echo $username
-        git clone "git@github.com:${username}/$3.git"
-    else
-        git $@
-    fi
+        local cmd="git@github.com:${username}/$1.git"
+        echo "Trying $cmd"
+        git clone "$cmd"
+    } || {
+        # Default to whatever was passed
+        git clone $@
+    }
 }
 
 branches () {
@@ -452,3 +456,4 @@ bindkey '^ ' autosuggest-accept
 # }}}
 
 alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake
+export PATH="$HOME/.just:$PATH"

@@ -41,7 +41,7 @@ local normal_keymaps = {
 }
 
 self.config = {
-    virtual_text = { spacing=0, prefix="", format = function(diag) return "●" end },
+    virtual_text = true, -- { spacing=0, prefix="", format = function(diag) return "●" end },
     update_in_insert = false,
     underline = false,
     signs = false,

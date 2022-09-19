@@ -8,15 +8,16 @@ self.colorschemes = {
     forest = function () return require("colorschemes/forest") end,
     gruvbox = function () return require("colorschemes/gruvbox") end,
     paper = function () return require("colorschemes/paper") end,
+    tokyonight_storm = function () return require("colorschemes/tokyonight-storm") end
 }
-self.default = "ppbr"
+self.default = "tokyonight_storm"
 
 function self.setup()
     self.set(self.default)
 end
 
 function self.set(name)
-    scheme = self.colorschemes[name]()
+    local scheme = self.colorschemes[name]()
 
     vim.cmd("colo ".. scheme.base)
     vim.cmd("set background="..scheme.background)

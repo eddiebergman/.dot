@@ -1,6 +1,5 @@
 local self = {}
 local util = require("util")
-local setkey = util.setkey
 
 function self.set_indent_blankline()
 
@@ -65,7 +64,6 @@ function self.setup()
     vim.o.numberwidth = 2
     vim.o.fileencoding = "utf-8"
 
-
     -- Not sure why but it doesn't work when set with vim.o.foldcolumn
     vim.cmd("set foldcolumn=0")
 
@@ -79,6 +77,10 @@ function self.setup()
     -- Close/open all folds
     util.setkey("FF", ":%foldclose!<cr>")
     util.setkey("F<space>", ":%foldopen!<cr>")
+
+    -- Use Alt+j/k for paragraph movemnt
+    vim.api.nvim_set_keymap("n", "<A-j>", "}", {noremap = true})
+    vim.api.nvim_set_keymap("n", "<A-k>", "{", {noremap = true})
 
     -- Activate zenmode
     if vim.fn.exists(":ZenMode") then

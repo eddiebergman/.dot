@@ -1,3 +1,4 @@
+setlocal relativenumber number
 function! FoldOutline(lnum)
     " Marker for first character that isnt some guides or space
     let l:marker = '\v(\s|├|└|│)@!'
@@ -31,7 +32,7 @@ endfunction
 
 setl foldexpr=FoldOutline(v:lnum)
 setl foldtext=FoldTextOutline()
-setl foldmethod=expr
+setl foldmethod=indent
 
 
 " Close all folds

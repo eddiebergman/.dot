@@ -56,8 +56,11 @@ function self.setup()
             null_ls.builtins.diagnostics.flake8.with({ filetypes = { "python" } }),
             pydocstyle().with({ filetypes = { "python" } }),
             null_ls.builtins.code_actions.shellcheck.with({ filetypes = { "sh" } }),
-        }
+        },
+        debug = true
     })
+    -- local pyrate = require("pyrate")
+    -- null_ls.register(pyrate.all())
 end
 
 return self

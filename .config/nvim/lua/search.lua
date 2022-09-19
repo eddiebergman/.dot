@@ -14,7 +14,7 @@ self.keymaps = {
         {'<leader>sb', ':lua require("telescope.builtin").buffers()<CR>'},
 
         -- [s]earch [e]rrors
-        {'<leader>se', ':Telescope diagnostics bufnr=0<CR>'},
+        -- {'<leader>se', ':Telescope diagnostics bufnr=0<CR>'},
 
         -- [s]earch [r]eferences
         {'<leader>sr', ':lua require("search").references()<CR>'},
@@ -24,7 +24,10 @@ self.keymaps = {
 
         -- search files (ctrl-P plugin habit) (search for a file in the workspace)
         {'<c-p>', ':lua require("search").files()<CR>'},
-
+    },
+    v = {
+        -- Search currently highlighted stuff
+        {'s', 'y/<c-r>"<cr>'}
     }
 }
 
