@@ -1,5 +1,5 @@
 local self = {}
-local items= require('py').items
+local items = require('py').items
 
 self.colorschemes = {
 --  name = {background, base_theme}
