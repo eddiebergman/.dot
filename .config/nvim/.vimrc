@@ -118,6 +118,17 @@ command! -nargs=* -complete=shellcmd R
 " Preview (Not working)
 " :command! -complete=file MDpreview
 "            \ exe ':silent ! grip -b -silent ' . expand('%')
+"
+vnoremap <silent> i/ :<c-u>call SelectMatch()<cr>
+onoremap <silent> i/ :call SelectMatch()<cr>
+function! SelectMatch()
+    if search(@/, 'bcW')
+        norm! v
+        call search(@/, 'ceW')
+    else
+        norm! gv
+    endif
+endfunction
 
 " }}}
 

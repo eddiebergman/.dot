@@ -119,7 +119,7 @@ function self.setup()
 
     cmp.setup(cmp_config)
 
-    self.capabilities = require('cmp_nvim_lsp').update_capabilities(
+    self.capabilities = require('cmp_nvim_lsp').default_capabilities(
         vim.lsp.protocol.make_client_capabilities()
     )
 

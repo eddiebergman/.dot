@@ -16,8 +16,11 @@ require('packer').startup(
 
         use 'wbthomason/packer.nvim'
 
+        -- 
+        use "akinsho/toggleterm.nvim"
+
         -- luadev
-        use "folke/lua-dev.nvim"
+        use "folke/neodev.nvim"
 
         -- hop
         use {

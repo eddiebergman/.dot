@@ -174,6 +174,7 @@ screen () {
         xrandr --output $work_right --right-of $work_middle --auto
 
     elif equal $1 "home"; then
+        
         xrandr --output $home_right --left-of $primary --mode 2560x1440
         xrandr --output $home_left --left-of $home_right --auto
 

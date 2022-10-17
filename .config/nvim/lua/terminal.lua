@@ -5,7 +5,7 @@ local self = {}
 local open_term = {
     name = "Terminal",
     cmd = "bo 10sp | term",
-    keymap = "<C-t>"
+    key = "<C-u>"
 }
 
 function self.setup()

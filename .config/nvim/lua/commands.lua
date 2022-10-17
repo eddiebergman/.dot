@@ -31,12 +31,14 @@ function self.register(cmd)
         local mode = "n"
         local key = opts.key
 
+
         -- If key is a table then it includes the mode
         if isinstance(key, "dict") then
             mode = opts.key[0]
             key = opts.key[1]
         end
 
+        print(key, mode, action)
         setkey(mode, key, action)
     end
 end

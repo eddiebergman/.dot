@@ -1,6 +1,8 @@
 local self = {}
 
 local null_ls = require("null-ls")
+local methods = require("null-ls.methods")
+local helpers = require("null-ls.helpers")
 local util = require("util")
 
 local function pydocstyle()
@@ -47,15 +49,37 @@ local function pydocstyle()
 
 end
 
+local function pyupgrade(version)
+    return helpers.make_builtin({
+        name = "pyupgrade",
+        meta = {
+            url = "https://github.com/asottile/pyupgrade",
+            description = "Automatically upgrade python syntax"
+        },
+        method = methods.internal.FORMATTING,
+        filetypes = { "python" },
+        generator_opts = {
+            command = "pyupgrade",
+            args = {
+                "--" .. version .. "-plus"
+            },
+            to_stdin = true,
+        },
+        factory = helpers.formatter_factory
+    })
+end
+
 function self.setup()
     null_ls.setup({
         sources = {
-            null_ls.builtins.formatting.black.with({ filetypes = { "python" } }),
-            null_ls.builtins.formatting.isort.with({ filetypes = { "python" } }),
-            null_ls.builtins.diagnostics.mypy.with({ filetypes = { "python" } }),
-            null_ls.builtins.diagnostics.flake8.with({ filetypes = { "python" } }),
-            pydocstyle().with({ filetypes = { "python" } }),
-            null_ls.builtins.code_actions.shellcheck.with({ filetypes = { "sh" } }),
+            null_ls.builtins.formatting.black,
+            null_ls.builtins.formatting.isort,
+            null_ls.builtins.diagnostics.mypy,
+            null_ls.builtins.diagnostics.flake8,
+            null_ls.builtins.diagnostics.pylint,
+            pydocstyle(),
+            pyupgrade("py37"),
+            null_ls.builtins.code_actions.shellcheck
         },
         debug = true
     })
