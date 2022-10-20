@@ -51,6 +51,12 @@ require('packer').startup(
             "akinsho/bufferline.nvim"
         }
 
+        -- Minimap
+        use {
+            "gorbit99/codewindow.nvim",
+            config = function() require("minimap").setup() end
+        }
+
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true }
