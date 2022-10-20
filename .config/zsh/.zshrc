@@ -281,21 +281,46 @@ alias ctagpython="find -iname '*.py' > tagged_files ; ctags -L tagged_files; rm 
 # Extends some simple functionality to git
 gclone () {
     local repo=$1
-    {
-        local cmd="git@github.com:automl/$1.git"
-        echo "Trying $cmd"
-        # Try automl org first as it's most used
-        git clone "$cmd"
-    } || {
-        # Try my account otherwise
-        local username="$(git config --global user.name)"
-        local cmd="git@github.com:${username}/$1.git"
-        echo "Trying $cmd"
-        git clone "$cmd"
-    } || {
-        # Default to whatever was passed
-        git clone $@
-    }
+    local places=()
+
+    # If there's a `--` in the argument then we just exit
+    # Could handle this but meh, use `git clone` with the args and repo
+    if [[ $repo =~ "--" ]]
+    then
+        echo "Use 'git clone' instead, doesn't handle arguments"
+        return 1
+    fi
+
+    # If there's a '/' in the passed arugment e.g. gclone eddiebergman/myrepo
+    # then we know the org, otherwise, we try automl, automl_private and finally username
+    if [[ $repo =~ \/ ]]
+    then
+        places+=("${repo}.git")
+    else
+        # Re-order however
+        places+=("automl/$1.git")
+        places+=("automl-private/$1.git")
+
+        local username=""
+        username="$(git config --global user.name)"
+
+        places+=("${username}/$1.git")
+    fi
+
+    # Try all the places it could be
+    for place in "${places[@]}"
+    do
+        local link="git@github.com:${place}"
+        echo "Trying ${link}"
+
+        # Exit if successful
+        if git clone "$link"
+        then
+            return 0
+        fi
+    done
+
+    return 1
 }
 
 branches () {
@@ -310,7 +335,8 @@ update() {
     if equal $1 "nvim" || equal $1 "neovim"; then
         cd $dir
         git stash
-        git checkout tags/v0.7.0
+        git fetch
+        git checkout tags/v0.8.0
         git pull
         make clean
         make distclean

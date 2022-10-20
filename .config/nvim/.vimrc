@@ -130,6 +130,12 @@ function! SelectMatch()
     endif
 endfunction
 
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+nnoremap <leader>syn :call SynGroup()<cr>
+
 " }}}
 
 " {{{ Settings
@@ -211,7 +217,6 @@ if (empty($TMUX))
 endif
 " }}}
 
-lua require('settings').setup()
 lua require('lsp.config').setup()
 lua require('debugging').setup()
 lua require('statusline').setup()
@@ -226,8 +231,8 @@ lua require("doc").setup()
 lua require("commands").setup()
 lua require("snippets").setup()
 lua require("symbol_tree").setup()
-lua require("terminal").setup()
 lua require("run").setup()
+lua require('settings').setup()
 
 " Last just to make sure it's king
 lua require('colors').setup()

@@ -16,9 +16,6 @@ require('packer').startup(
 
         use 'wbthomason/packer.nvim'
 
-        -- 
-        use "akinsho/toggleterm.nvim"
-
         -- luadev
         use "folke/neodev.nvim"
 
@@ -114,6 +111,7 @@ require('packer').startup(
                 "lukas-reineke/cmp-under-comparator", -- For deprioritizing __ python
                 'windwp/nvim-autopairs', -- For autopairs on function completions
                 'hrsh7th/cmp-nvim-lsp-signature-help',
+                'davidsierradz/cmp-conventionalcommits',
                 -- 'hrsh7th/cmp-copilot',
             }
         }
@@ -212,7 +210,6 @@ require('packer').startup(
         }
 
         -- Themes
-        use 'nightsense/stellarized'
         use 'sainnhe/everforest'
         use 'morhetz/gruvbox'
         use 'NLKNguyen/papercolor-theme'

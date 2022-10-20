@@ -8,9 +8,9 @@ self.colorschemes = {
     forest = function () return require("colorschemes/forest") end,
     gruvbox = function () return require("colorschemes/gruvbox") end,
     paper = function () return require("colorschemes/paper") end,
-    tokyonight_storm = function () return require("colorschemes/tokyonight-storm") end
+    tokyonight = function () return require("colorschemes/tokyonight") end
 }
-self.default = "tokyonight_storm"
+self.default = "tokyonight"
 
 function self.setup()
     self.set(self.default)
@@ -19,16 +19,21 @@ end
 function self.set(name)
     local scheme = self.colorschemes[name]()
 
-    vim.cmd("colo ".. scheme.base)
-    vim.cmd("set background="..scheme.background)
+    if scheme.setup ~= nil then
+        scheme.setup()
+    end
+    
+    vim.cmd("colo "..name)
 
-    for group, args in items(scheme.highlights) do
-        local strbuf = { "hi "..group }
-        for k, v in pairs(args) do
-            table.insert(strbuf, k..'='..v) end
+    if scheme.highlights ~= nil then
+        for group, args in items(scheme.highlights) do
+            local strbuf = { "hi "..group }
+            for k, v in pairs(args) do
+                table.insert(strbuf, k..'='..v) end
 
-        vim.cmd('hi clear '..group)
-        vim.cmd(table.concat(strbuf, ' '))
+            vim.cmd('hi clear '..group)
+            vim.cmd(table.concat(strbuf, ' '))
+        end
     end
 end
 

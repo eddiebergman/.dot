@@ -25,12 +25,11 @@ function self.register(cmd)
 
     vim.cmd(def)
 
-    if opts.key ~= nil then
-        local action = cmd.name.."<cr>"
+    if cmd.key ~= nil then
+        local action = "<cmd>"..cmd.name.."<cr>"
 
         local mode = "n"
-        local key = opts.key
-
+        local key = cmd.key
 
         -- If key is a table then it includes the mode
         if isinstance(key, "dict") then
@@ -38,7 +37,7 @@ function self.register(cmd)
             key = opts.key[1]
         end
 
-        print(key, mode, action)
+        print(mode, key, action)
         setkey(mode, key, action)
     end
 end

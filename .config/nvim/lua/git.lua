@@ -2,7 +2,6 @@ local self = {}
 
 local util = require('util')
 local commands = require('commands')
-local Terminal = require("toggleterm.terminal").Terminal
 
 local gitdiff = {
     name = "GitMergeResolve",
@@ -10,27 +9,6 @@ local gitdiff = {
 }
 
 
-
-local gitcommit = {
-    name = "Git Commit",
-    cmd = "lua require('git').commit()",
-    key = "<leader>gc"
-}
-
-function self.commit()
-    if util.executable("cz") then
-        local term = Terminal:new({
-            cmd = "git cz",
-            dir = "git_dir",
-            hidden = true,
-            direction = "float",
-            float_opts = { border = "double" },
-        })
-        term:toggle()
-    else
-        vim.api.nvim_exec("Git commit", false)
-    end
-end
 
 function self.setup_gitsigns()
     require('gitsigns').setup {
@@ -114,8 +92,8 @@ end
 
 function self.setup()
     util.setkeys('n', {
-        { '<leader>gp', ':Git push<cr>' },
-        --{ '<leader>gc', ':Git commit<cr>' },
+        { '<leader>gp', ':Git push | Git push --tags<cr>' },
+        { '<leader>gc', ':Git commit<cr>' },
         { '<leader>gs', ':vertical bo Git<cr>' },
         { '<leader>gl', ':vsp | GcLog<cr>' },
         { '<leader>q', ':diffget //2<cr>' },
@@ -123,7 +101,6 @@ function self.setup()
     })
     self.setup_gitsigns()
     commands.register(gitdiff)
-    commands.register(gitcommit)
 end
 
 function self.repo_root()
