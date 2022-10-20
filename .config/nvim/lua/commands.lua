@@ -9,6 +9,11 @@ local self = {}
 function self.register(cmd)
     local opts = cmd.opts or {}
 
+    if cmd.name:match("%W") and not cmd.name:match("^%l") then
+        error("Command name must be alphanumeric and start with Captial letter\n"..vim.inspect(cmd))
+        return
+    end
+
     local parts = {"command!"}
     if opts.bang then
         table.insert(parts, "-bang")
