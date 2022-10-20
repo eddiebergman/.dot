@@ -4,3 +4,4 @@ log
 tags*
 .secret
 .venv
+packer_compiled.lua
