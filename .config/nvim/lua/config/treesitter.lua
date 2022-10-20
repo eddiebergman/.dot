@@ -13,7 +13,12 @@ function M.setup()
     local config = require('nvim-treesitter.configs')
 
     -- Annoyingly this plugin to fit into treesitters module defintion
-    require 'treesitter-context'.setup { enable = true, }
+    require 'treesitter-context'.setup {
+        enable = true,
+        mode = "topline",
+        seperator = "-",
+        zindex = 1,
+    }
 
     -- This is for indent_blankline plugin
     vim.g.indent_blankline_show_current_context = 1

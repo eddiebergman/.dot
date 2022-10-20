@@ -17,6 +17,8 @@ function self.setup()
             hl.Delimiter = { fg = c.comment, bg = c.bg_highlight }
 
             hl.BufferlineFill = { bg=c.bg_dark }
+            hl.NormalFloat = { bg=c.bg_highlight }
+            hl.FloatBorder = { bg=c.bg, fg=c.magenta2 }
 
             hl["@punctuation.bracket"] = { fg = c.comment }
             hl["@punctuation.delimiter"] = { fg = c.cyan }

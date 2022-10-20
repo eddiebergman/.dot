@@ -161,7 +161,7 @@ require('packer').startup(
                 'nvim-treesitter/playground',
                 'nvim-treesitter/nvim-treesitter-refactor',
                 'RRethy/nvim-treesitter-textsubjects',
-                'lewis6991/nvim-treesitter-context',
+                'nvim-treesitter/nvim-treesitter-context',
                 'nvim-treesitter/nvim-treesitter-textobjects',
             },
             run = ':TSUpdate'
