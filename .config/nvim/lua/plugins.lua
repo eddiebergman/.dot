@@ -170,9 +170,6 @@ require('packer').startup(
         -- Luapad for scratch lua
         use 'rafcamlet/nvim-luapad'
 
-        -- User wiki
-        use 'vimwiki/vimwiki'
-
         -- Latex everything plugin
         use {
             'lervag/vimtex',
