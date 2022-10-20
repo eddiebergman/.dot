@@ -7,8 +7,10 @@ function self.setup()
             on_attach = require('lsp.config').capabilities,
             capabilities = require('lsp.config').capabilities,
             single_file_support = true,
-            filetypes = { "python" }
-            -- settings = {},
+            filetypes = { "python" },
+            init_options = {
+                markupKindPreferred = "markdown"
+            }
         })
     end
 

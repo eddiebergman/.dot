@@ -50,8 +50,6 @@ function self.set_indent_blankline()
 end
 
 function self.setup()
-    vim.o.syntax = "on"
-
     vim.o.foldmethod = 'expr'
     vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 

@@ -4,17 +4,17 @@ local _ = require("py")
 
 local normal_keymaps = {
     -- [r]ename
-    {"<leader>r" , "<cmd>lua vim.lsp.buf.rename()<CR>"},
+    { "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>" },
 
     -- [f]ormat
-    {"<leader>f" , "<cmd>lua vim.lsp.buf.formatting()<CR>"},
+    { "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>" },
 
     -- [s]how [d]efintion
-    {"<leader>sd", "<cmd>lua vim.lsp.buf.hover()<CR>"},
+    { "<leader>sd", "<cmd>lua vim.lsp.buf.hover()<CR>" },
 
 
     -- [c]ode [a]ctions
-    {"<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>"},
+    { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>" },
 
     -- [e]rror
     {
@@ -56,18 +56,24 @@ self.config = {
 
 function self.setup()
     util.setkeys("n", normal_keymaps)
+    local above_below_border = { "▁", "▁", "▁", " ", "▔", "▔", "▔", " " }
 
     vim.diagnostic.config(self.config)
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover, { border = "rounded", }
-    )
+    vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+        local f = vim.lsp.with(
+            vim.lsp.handlers.hover, { border = above_below_border, stylize_markdown = false  }
+        )
+        local floating_bufnr, floating_winnr = f(err, result, ctx, config)
+        vim.api.nvim_buf_set_option(floating_bufnr, 'filetype', "markdown")
+        return floating_bufnr, floating_winnr
+    end
 
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help, { border = "rounded" }
+        vim.lsp.handlers.signature_help, { border = above_below_border }
     )
 
-    for module in _.list({"python", "lua", "null_ls", "bash", "rust"}) do
-        require("lsp."..module).setup()
+    for module in _.list({ "python", "lua", "null_ls", "bash", "rust" }) do
+        require("lsp." .. module).setup()
     end
 end
 

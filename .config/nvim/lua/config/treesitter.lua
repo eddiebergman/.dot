@@ -1,7 +1,7 @@
 local setkeys = require('util').setkeys
 
 local M = {
-    languages = { 'lua', 'python', 'query', 'rust', 'json', 'rst', 'markdown' },
+    languages = { 'lua', 'python', 'query', 'rust', 'json', 'rst', 'markdown', 'markdown_inline' },
     keymaps = {
         -- Relies on nvim-treesitter/playground
         { '<leader>sg', '<cmd>TSHighlightCapturesUnderCursor<CR>' }
