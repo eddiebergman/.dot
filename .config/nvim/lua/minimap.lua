@@ -23,7 +23,7 @@ function M.setup()
     commands.register({
         name = "MinimapFocus",
         cmd = "lua require('codewindow').toggle_focus()",
-        key = "<leader>mo"
+        key = "<C-l>"
     })
 end
 
