@@ -42,7 +42,6 @@ function self.register(cmd)
             key = opts.key[1]
         end
 
-        print(mode, key, action)
         setkey(mode, key, action)
     end
 end

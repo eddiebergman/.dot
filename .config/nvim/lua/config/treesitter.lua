@@ -129,7 +129,6 @@ function M.register_highlights()
         opts.default = true
         vim.api.nvim_set_hl(0, group, opts)
     end
-    print("called")
 
     -- Misc {{{
     hl('@comment', { link = 'Comment' })
