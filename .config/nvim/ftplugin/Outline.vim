@@ -1,4 +1,4 @@
-setlocal relativenumber number
+" setlocal relativenumber number
 function! FoldOutline(lnum)
     " Marker for first character that isnt some guides or space
     let l:marker = '\v(\s|├|└|│)@!'
@@ -30,13 +30,13 @@ function! FoldTextOutline()
     return substitute(getline(v:foldstart), '├\|└\|│', '-', 'g')
 endfunction
 
-setl foldexpr=FoldOutline(v:lnum)
-setl foldtext=FoldTextOutline()
-setl foldmethod=indent
+"setl foldexpr=FoldOutline(v:lnum)
+"setl foldtext=FoldTextOutline()
+"setl foldmethod=indent
 
 
 " Close all folds
-nnoremap <buffer> H :%foldclose!<cr>
+"nnoremap <buffer> H :%foldclose!<cr>
 
 " Close current fold
-nnoremap <buffer> h :foldclose<cr>
+"nnoremap <buffer> h :foldclose<cr>
