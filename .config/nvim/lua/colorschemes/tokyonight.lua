@@ -3,7 +3,7 @@ local self = {}
 function self.setup()
     require("tokyonight").setup({
         style = "tokyonight-night",
-        sidebars = { "Outline", "calendar", "Trouble", "neotest-summary", "help" },
+        sidebars = { "Outline", "calendar", "Trouble", "neotest-summary", "help", "Codewindow"},
         hide_inactive_statusline = true,
 
         on_colors = function(colors)
@@ -19,6 +19,8 @@ function self.setup()
             hl.BufferlineFill = { bg=c.bg_dark }
             hl.NormalFloat = { bg=c.bg_highlight }
             hl.FloatBorder = { bg=c.bg, fg=c.magenta2 }
+            hl.CodewindowBorder = { bg=c.bg_dark, fg=c.white }
+            hl.TSType = { fg=c.cyan }
 
             hl["@punctuation.bracket"] = { fg = c.comment }
             hl["@punctuation.delimiter"] = { fg = c.cyan }
