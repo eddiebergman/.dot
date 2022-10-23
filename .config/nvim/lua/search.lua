@@ -4,6 +4,7 @@ local self = {}
 local util = require('util')
 local builtin = require('telescope.builtin')
 local themes = require('telescope.themes')
+local commands = require("commands")
 
 self.keymaps = {
     n = {
@@ -81,6 +82,12 @@ function self.setup()
     for mode, keys in pairs(self.keymaps) do
         util.setkeys(mode, keys)
     end
+
+    commands.register({
+        name = "Buffers",
+        key = "<c-b>",
+        cmd = "Telescope buffers"
+    })
 end
 
 return self
