@@ -89,6 +89,17 @@ function self.setup()
 
     -- Somehow not updating properly from plugins file
     require("config/treesitter").setup()
+
+    vim.api.nvim_create_autocmd(
+        {"CursorMoved"},
+        {
+            desc = "Keep screen centered",
+            pattern = {"*"},
+            command = "normal! zz",
+
+        }
+    )
+
 end
 
 return self
