@@ -175,7 +175,7 @@ screen () {
 
     elif equal $1 "home"; then
         xrandr --output $home_right --left-of $primary --mode 2560x1440
-        xrandr --output $home_left --left-of $home_right --auto --rotate right
+        xrandr --output $home_left --left-of $home_right --auto
 
     elif equal $1 "right" ; then
         xrandr --output $hdmi --right-of $primary --auto
