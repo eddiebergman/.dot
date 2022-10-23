@@ -6,7 +6,7 @@ function self.setup()
         highlight_hovered_item = false,
         show_guides = true,
         auto_preview = false,
-        position = 'left',
+        position = 'right',
         relative_width = true,
         width = 25,
         auto_close = false,
