@@ -1,6 +1,16 @@
 local self = {}
 local util = require("util")
 
+function self.neovide_settings()
+    vim.cmd [[ set guifont=FiraCode\ Nerd\ Font:h14:#e-subpixelalias ]]
+
+    vim.g.neovide_scale_factor = 1 -- Doesnt seem to work
+    vim.g.neovide_fullscreen = false
+    vim.g.neovide_cursor_vfx_mode = "sonicboom"
+    vim.g.neovide_cursor_animation_length = 0.05
+    vim.g.guioptions = "Pd"
+end
+
 function self.set_indent_blankline()
 
     vim.g.indent_blankline_enabled = true
@@ -77,8 +87,8 @@ function self.setup()
     util.setkey("F<space>", ":%foldopen!<cr>")
 
     -- Use Alt+j/k for paragraph movemnt
-    vim.api.nvim_set_keymap("n", "<A-j>", "}", {noremap = true})
-    vim.api.nvim_set_keymap("n", "<A-k>", "{", {noremap = true})
+    vim.api.nvim_set_keymap("n", "<A-j>", "}", { noremap = true })
+    vim.api.nvim_set_keymap("n", "<A-k>", "{", { noremap = true })
 
     -- Activate zenmode
     if vim.fn.exists(":ZenMode") then
@@ -90,15 +100,10 @@ function self.setup()
     -- Somehow not updating properly from plugins file
     require("config/treesitter").setup()
 
-    vim.api.nvim_create_autocmd(
-        {"CursorMoved"},
-        {
-            desc = "Keep screen centered",
-            pattern = {"*"},
-            command = "normal! zz",
-
-        }
-    )
+    print(vim.g.neovide)
+    if vim.g.neovide then
+        self.neovide_settings()
+    end
 
 end
 

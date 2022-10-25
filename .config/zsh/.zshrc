@@ -106,7 +106,7 @@ export PATH="${PATH}:${HOME}/.elan/bin"
 # }}}
 # {{{ Defaults - $VISUAL, $EDITOR, ...
 export VISUAL="nvim"
-export EDITOR="nvim"
+export EDITOR="neovide"
 export VIEWER="zathura"
 # export PAGER="most"
 # }}}
@@ -120,7 +120,6 @@ export PATH="${PATH}:${NPM_PACKAGES}/bin"
 # {{{ Default Commands
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
-alias vim="nvim"
 alias ipython=ipy
 # }}}
 # {{{ Quick files
@@ -431,14 +430,10 @@ work () {
 }
 # }}}
 # {{{ Editors
-v() {
-    if exists ".venv"; then
-        pyshell
-        vim
-    else
-        vim
-    fi
-}
+export NEOVIDE_FRAME="none"
+export NEOVIDE_MULTIGRID=1
+local neovide_cmd="neovide; disown; exit"
+local vim=$neovide_cmd
 # }}}
 # {{{ History
 HISTFILE=~/.histfile
