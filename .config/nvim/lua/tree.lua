@@ -56,7 +56,7 @@ local config = {
     ignore_ft_on_setup = {},
     open_on_tab = false,
     hijack_cursor = true,
-    update_cwd = false,
+    sync_root_with_cwd = false,
     diagnostics = {
         enable = true,
         icons = {
@@ -68,7 +68,7 @@ local config = {
     },
     update_focused_file = {
         enable = true,
-        update_cwd = false,
+        update_root = false,
         ignore_list = {}
     },
     system_open = {
