@@ -2,7 +2,7 @@ local self = {}
 local util = require("util")
 
 function self.neovide_settings()
-    vim.cmd [[ set guifont=FiraCode\ Nerd\ Font:h14:#e-subpixelalias ]]
+    vim.cmd [[ set guifont=FiraCode\ Nerd\ Font:h13]]
 
     vim.g.neovide_scale_factor = 1 -- Doesnt seem to work
     vim.g.neovide_fullscreen = false
@@ -100,7 +100,6 @@ function self.setup()
     -- Somehow not updating properly from plugins file
     require("config/treesitter").setup()
 
-    print(vim.g.neovide)
     if vim.g.neovide then
         self.neovide_settings()
     end

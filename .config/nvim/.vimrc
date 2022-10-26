@@ -231,6 +231,7 @@ lua require("doc").setup()
 lua require("commands").setup()
 lua require("snippets").setup()
 lua require("symbol_tree").setup()
+lua require("python").setup()
 lua require("run").setup()
 lua require('settings').setup()
 
