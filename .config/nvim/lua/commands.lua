@@ -1,7 +1,6 @@
 local py = require("py")
 local util = require("util")
 local isinstance = py.isinstance
-local join = py.join
 local setkey = util.setkey
 
 local self = {}
@@ -14,21 +13,7 @@ function self.register(cmd)
         return
     end
 
-    local parts = {"command!"}
-    if opts.bang then
-        table.insert(parts, "-bang")
-    end
-
-    if opts.complete ~= nil then
-        table.insert(parts, "-complete="..opts.complete)
-    end
-
-    table.insert(parts, cmd.name)
-
-    table.insert(parts, cmd.cmd)
-    local def = join(parts)
-
-    vim.cmd(def)
+    vim.api.nvim_create_user_command(cmd.name, cmd.cmd, opts)
 
     if cmd.key ~= nil then
         local action = "<cmd>"..cmd.name.."<cr>"
