@@ -54,7 +54,7 @@ require('packer').startup(
         -- Minimap
         use {
             "gorbit99/codewindow.nvim",
-            config = function() require("minimap").setup() end
+            config = function() require("minimap").setup(false) end
         }
 
         use {

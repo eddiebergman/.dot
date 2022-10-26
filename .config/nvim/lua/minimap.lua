@@ -37,7 +37,12 @@ function M.exit(close)
     end
 end
 
-function M.setup()
+function M.setup(skip)
+    if skip == false then
+        return
+    end
+
+
     codewindow.setup({
         minimap_width = 20, -- The width of the text part of the minimap
         width_multiplier = 1, -- How many characters one dot represents
@@ -50,7 +55,7 @@ function M.setup()
 
     commands.register({
         name = "MinimapEnter",
-        cmd = "lua require('minimap').enter()",
+        cmd = function (_) M.enter() end,
         key = "<C-l>"
     })
 
