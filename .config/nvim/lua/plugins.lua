@@ -19,6 +19,11 @@ require('packer').startup(
         -- luadev
         use "folke/neodev.nvim"
 
+        use {
+            "startup-nvim/startup.nvim",
+            config = function () require("homescreen").setup(true) end
+        }
+
         -- hop
         use {
             "phaazon/hop.nvim",
@@ -60,6 +65,11 @@ require('packer').startup(
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        }
+
+        use {
+            "natecraddock/workspaces.nvim",
+            config = function() require("workspace").setup() end
         }
 
         use {

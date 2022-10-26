@@ -1,6 +1,7 @@
 local self = {}
 
 local actions = require('telescope.actions')
+local telescope = require("telescope")
 
 self.telescope_config = {
     defaults = {
@@ -56,11 +57,12 @@ self.telescope_config = {
                 ['q'] = actions.close,
             }
         }
-    }
+    },
 }
 
 function self.setup()
-    require('telescope').setup(self.telescope_config)
+    telescope.load_extension("workspaces")
+    telescope.setup(self.telescope_config)
 end
 
 return self
