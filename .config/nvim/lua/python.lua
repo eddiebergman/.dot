@@ -104,6 +104,10 @@ function M.create()
     M.activate()
 end
 
+function M.pip(cmd)
+    M.run("pip "..cmd)
+end
+
 local py = {
     name = "Py",
     cmd = function(e) M.run(e.args) end,
@@ -116,11 +120,20 @@ local deactivate = { name = "PyDeactivate", cmd = function() M.deactivate() end 
 
 local pyvenv = { name = "Pyvenv", cmd = function() M.create() end }
 
+local mypy = {name = "Mypy", cmd = "Py mypy %" }
+
+local run = {name = "PythonRun", cmd = "Py python %"}
+
+local pip = {name = "PythonPip", cmd = function(e) M.pip(e.args) end, opts = { nargs = "+", complete = "shellcmd" }}
+
 function M.setup()
     commands.register(py)
     commands.register(activate)
     commands.register(deactivate)
     commands.register(pyvenv)
+    commands.register(mypy)
+    commands.register(run)
+    commands.register(pip)
 end
 
 return M

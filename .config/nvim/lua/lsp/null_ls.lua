@@ -43,7 +43,7 @@ local function pydocstyle()
             return pydoc.with(
                 {
                     args = { "$FILENAME", "--config=" .. path },
-                    method = null_ls.methods.DIAGNOSTICS_ON_SAVE
+                    method = null_ls.methods.DIAGNOSTICS
                 })
         end
     end
@@ -78,14 +78,14 @@ function self.setup()
         sources = {
             null_ls.builtins.formatting.black,
             null_ls.builtins.formatting.isort,
-            null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
-            null_ls.builtins.diagnostics.flake8.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
-            null_ls.builtins.diagnostics.pylint.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
+            null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS }),
+            null_ls.builtins.diagnostics.flake8.with({ method = null_ls.methods.DIAGNOSTICS }),
+            null_ls.builtins.diagnostics.pylint.with({ method = null_ls.methods.DIAGNOSTICS }),
             pydocstyle(),
             pyupgrade("py37"),
             null_ls.builtins.code_actions.shellcheck
         },
-        debug = true
+        debug = false
     })
     -- local pyrate = require("pyrate")
     -- null_ls.register(pyrate.all())
