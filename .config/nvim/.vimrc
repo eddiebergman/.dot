@@ -232,8 +232,8 @@ lua require("commands").setup()
 lua require("snippets").setup()
 lua require("symbol_tree").setup()
 lua require("python").setup()
-lua require("run").setup()
 lua require('settings').setup()
+lua require("text").setup()
 
 " Last just to make sure it's king
 lua require('colors').setup()

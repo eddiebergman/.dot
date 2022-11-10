@@ -23,8 +23,8 @@ function self.register(cmd)
 
         -- If key is a table then it includes the mode
         if isinstance(key, "dict") then
-            mode = opts.key[0]
-            key = opts.key[1]
+            mode = key[1]
+            key = key[2]
         end
 
         setkey(mode, key, action)
