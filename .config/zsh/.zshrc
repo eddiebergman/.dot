@@ -109,6 +109,7 @@ export PATH="${PATH}:${HOME}/.elan/bin"
 alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 alias ipython=ipy
+alias vim="nvim"
 # }}}
 # {{{ Quick files
 alias evimrc="cd ~/.config/nvim; $EDITOR"
