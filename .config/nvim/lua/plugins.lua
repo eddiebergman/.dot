@@ -16,6 +16,8 @@ require('packer').startup(
 
         use 'wbthomason/packer.nvim'
 
+        use "skywind3000/asyncrun.vim"
+
         -- luadev
         use "folke/neodev.nvim"
 
