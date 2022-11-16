@@ -1,7 +1,7 @@
 export ZDOTDIR="$HOME/.config/zsh"
 
 export VISUAL="nvim"
-export EDITOR="neovide"
+export EDITOR="nvim"
 export VIEWER="zathura"
 
 export NPM_PACKAGES="${HOME}/.npm_packages"
