@@ -2,6 +2,7 @@ local self = {}
 
 local actions = require('telescope.actions')
 local telescope = require("telescope")
+local trouble = require("trouble.providers.telescope")
 
 self.telescope_config = {
     defaults = {
@@ -50,11 +51,13 @@ self.telescope_config = {
         mappings = {
             i = {
                 ['<esc>'] = actions.close,
+                ["<c-l>"] = trouble.open_with_trouble
             },
             n = {
                 ['<s-j>'] = actions.preview_scrolling_down,
                 ['<s-k>'] = actions.preview_scrolling_up,
                 ['q'] = actions.close,
+                ["<c-l>"] = trouble.open_with_trouble
             }
         }
     },
