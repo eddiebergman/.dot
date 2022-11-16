@@ -1,43 +1,37 @@
 local self = {}
 local util = require('util')
+local commands = require("commands")
 local _ = require("py")
 
-local normal_keymaps = {
-    -- [r]ename
-    { "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>" },
 
-    -- [f]ormat
-    { "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>" },
+local format = {
+    name = "Format",
+    cmd = "lua vim.lsp.buf.format({ async = true})",
+    key = "<leader>f",
+}
 
-    -- [s]how [d]efintion
-    { "<leader>sd", "<cmd>lua vim.lsp.buf.hover()<CR>" },
+local rename = {
+    name = "RenameSymbol",
+    cmd = "lua vim.lsp.buf.rename()",
+    key = "<leader>r",
+}
 
+local show_definition = {
+    name = "Definition",
+    cmd = "lua vim.lsp.buf.hover()",
+    key = "<leader>sd",
+}
 
-    -- [c]ode [a]ctions
-    { "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>" },
+local code_action = {
+    name = "CodeActions",
+    cmd =  "lua vim.lsp.buf.code_action()",
+    key = "<leader>ca",
+}
 
-    -- [e]rror
-    {
-        "<leader>e",
-        '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>'
-    },
-
-    -- next [a
-    {
-        "[a",
-        '<cmd>lua vim.lsp.diagnostic.goto_next({ border = "rounded" })<CR>'
-    },
-
-    -- prev ]a
-    {
-        "]a",
-        '<cmd>lua vim.lsp.diagnostic.goto_prev({ border = "rounded" })<CR>'
-    },
-
-    {
-        "<leader>dlsp",
-        "<cmd>lua require('lsp.debug').debug()<CR>"
-    },
+local show_error = {
+    name = "LineError",
+    cmd = 'lua vim.diagnostic.open_float({ border = "rounded" })',
+    key = "<leader>e",
 }
 
 self.config = {
@@ -55,10 +49,13 @@ self.config = {
 }
 
 function self.setup()
-    util.setkeys("n", normal_keymaps)
-    local above_below_border = { "▁", "▁", "▁", " ", "▔", "▔", "▔", " " }
-
     vim.diagnostic.config(self.config)
+
+    for _, cmd in ipairs {format, rename, show_definition, code_action, show_error} do
+        commands.register(cmd)
+    end
+
+    local above_below_border = { "▁", "▁", "▁", " ", "▔", "▔", "▔", " " }
     vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
         local f = vim.lsp.with(
             vim.lsp.handlers.hover, { border = above_below_border, stylize_markdown = false  }
@@ -79,6 +76,5 @@ end
 
 -- We ensure that nvim-cmp is setup and updated capabilities
 self.capabilities = require('completion').capabilities
-
 
 return self
