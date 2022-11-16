@@ -234,7 +234,7 @@ lua require("symbol_tree").setup()
 lua require("python").setup()
 lua require('settings').setup()
 lua require("text").setup()
-lua require("pre-commit").setup()
+lua require("quickfix").setup()
 
 " Last just to make sure it's king
 lua require('colors').setup()
