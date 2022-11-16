@@ -261,7 +261,7 @@ gclone () {
 }
 
 branches () {
-    git checkout "$(git branch | fzf | tr -d '[:space:]')"
+    git checkout "$(git branch -r | fzf | tr -d '[:space:]' | sed 's:^origin/::')"
 }
 
 
@@ -412,3 +412,11 @@ promptinit
 # Autosuggestion complete
 bindkey '^ ' autosuggest-accept
 # }}}
+
+
+code () {
+    local location="$HOME/code"
+    local selection="$(ls $location | fzf)"
+    cd "${location}/${selection}"
+    nvim
+}
