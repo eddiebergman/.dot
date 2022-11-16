@@ -117,10 +117,6 @@ self.highlights = {
     GitSignsChangeNr = { guibg = "NONE", guifg = Add, guisp = Change, gui = "underline"},
     GitSignsDeleteNr = { guibg = "NONE", guifg = Add, guisp = Delete, gui = "underline"},
 
-    GitSignsAddLn = { guibg = NONE, gui = "underline", guisp = Add },
-    GitSignsChangeLn = { guibg = NONE, gui = "underline", guisp = Change },
-    GitSignsDeleteLn = { guifg = Delete, gui = "underline", guisp = Delete },
-
     gitDiff = { guifg = Normal },
     fugitiveHunk = { guifg = Normal },
 
