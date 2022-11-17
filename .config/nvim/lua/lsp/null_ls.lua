@@ -82,7 +82,7 @@ local function pycln()
         configs = { "pyproject.toml" }
     })
 
-    local args = {"-s"}
+    local args = { "-s" }
     if config ~= nil then
         table.insert(args, "--config")
         table.insert(args, config)
@@ -90,7 +90,6 @@ local function pycln()
 
     table.insert(args, "-")
 
-    print(vim.inspect(args))
     return helpers.make_builtin({
         name = "pycln",
         meta = {
@@ -108,17 +107,47 @@ local function pycln()
     })
 end
 
+local function ruff_format()
+    return helpers.make_builtin({
+        name = "ruff",
+        meta = {
+            url = "https://github.com/charliermarsh/ruff/",
+            description = "An extremely fast Python linter, written in Rust.",
+        },
+        method = methods.internal.FORMATTING,
+        filetypes = { "python" },
+        generator_opts = {
+            command = "ruff",
+            args = {
+                "--fix",
+                "-e",
+                "-n",
+                "--stdin-filename",
+                "$FILENAME",
+                "-"
+            },
+            to_stdin = true
+        },
+        factory = helpers.formatter_factory
+    })
+end
+
 function self.setup()
     null_ls.setup({
         sources = {
+            -- formatting
+            pyupgrade("py37"),
             pycln(),
             null_ls.builtins.formatting.black,
             null_ls.builtins.formatting.isort,
-            null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS }),
-            null_ls.builtins.diagnostics.flake8.with({ method = null_ls.methods.DIAGNOSTICS }),
-            null_ls.builtins.diagnostics.pylint.with({ method = null_ls.methods.DIAGNOSTICS }),
+            ruff_format(),
+            -- Diagnostics
+            null_ls.builtins.diagnostics.mypy.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
+            null_ls.builtins.diagnostics.flake8.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
+            null_ls.builtins.diagnostics.pylint.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
+            null_ls.builtins.diagnostics.ruff.with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE }),
             pydocstyle(),
-            pyupgrade("py37"),
+            -- CA
             null_ls.builtins.code_actions.shellcheck
         },
         debug = false
