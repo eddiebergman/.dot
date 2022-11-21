@@ -417,6 +417,13 @@ bindkey '^ ' autosuggest-accept
 code () {
     local location="$HOME/code"
     local selection="$(ls $location | fzf)"
-    cd "${location}/${selection}"
-    nvim
+
+    local chosen="${location}/${selection}"
+    cd "$chosen"
+
+    local venv="${chosen}/.venv"
+    if exists $venv; then
+        pyshell
+    fi
+    $EDITOR
 }
