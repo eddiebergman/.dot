@@ -34,11 +34,12 @@ local show_error = {
     key = "<leader>e",
 }
 
+-- { spacing=0, prefix="", format = function(diag) return "●" end },
 self.config = {
-    virtual_text = true, -- { spacing=0, prefix="", format = function(diag) return "●" end },
+    virtual_text = { severity = vim.diagnostic.severity.ERROR },
     update_in_insert = false,
     underline = false,
-    signs = false,
+    signs = true,
     severity_sort = true,
     float = {
         border = "rounded",
