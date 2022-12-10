@@ -373,9 +373,20 @@ local neovide_cmd="neovide; disown; exit"
 local vim=$neovide_cmd
 # }}}
 # {{{ History
+set H+ # Stops history expansion
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=1000
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+h () {
+    $(history | sed -r "s/^\s+[0-9]+\s+//g" | fzf)
+}
 # }}}
 # }}}
 # {{{ Misc
@@ -389,7 +400,6 @@ alias xterm-kitty="kitty"
 
 # }}}
 
-set H+ # Stops history expansion
 # https://serverfault.com/questions/208265/what-is-bash-event-not-found?newreg=dfc433ccbc3146eeba6ae7f4e31681dd
 
 # Enables command auto-correction
