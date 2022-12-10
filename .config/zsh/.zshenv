@@ -17,7 +17,7 @@ export NEOVIDE_MULTIGRID=1
 # {{{ Python
 # This is put in here so that spawning neovide should know about this
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+command -v pyenv >/dev/null || export PATH="$PATH:$PYENV_ROOT/bin"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
