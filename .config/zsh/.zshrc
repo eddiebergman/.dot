@@ -421,6 +421,12 @@ promptinit
 
 # Autosuggestion complete
 bindkey '^ ' autosuggest-accept
+
+# Find file
+# Usage: ff (file)
+ff() {
+  find . -name "$1"
+}
 # }}}
 
 
