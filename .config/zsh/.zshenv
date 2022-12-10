@@ -65,3 +65,6 @@ alias pyshell='source ./.venv/bin/activate'
 # }}}
 alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake
 
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
+fi
