@@ -443,3 +443,5 @@ code () {
     fi
     $EDITOR
 }
+
+alias fonts="kitty +list-fonts --psnames"
