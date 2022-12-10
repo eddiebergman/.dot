@@ -1,71 +1,47 @@
-local self = {}
-
-local actions = require('telescope.actions')
+-- https://github.com/nvim-telescope/telescope.nvim
+local M = {}
 local telescope = require("telescope")
+local themes = require("telescope.themes")
+local actions = require("telescope.actions")
 local trouble = require("trouble.providers.telescope")
 
-self.telescope_config = {
-    defaults = {
-        vimgrep_arguments = {
-          'rg',
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case'
-        },
-        prompt_prefix = "> ",
-        selection_caret = "> ",
-        entry_prefix = "  ",
-        initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "descending",
-        layout_strategy = "horizontal",
-        layout_config = {
-          horizontal = {
-            mirror = false,
-          },
-          vertical = {
-            mirror = false,
-          },
-        },
-        file_sorter = require'telescope.sorters'.get_fuzzy_file,
-        file_ignore_patterns = { "%.csv", "%.arff", "%.json" },
-        generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-        path_display = { "absolute" },
-        winblend = 0,
-        border = {},
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-        color_devicons = true,
-        use_less = true,
-        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-        file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-        grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-        qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+-- Dropdown list theme using a builtin theme definitions :
+local center_list = themes.get_dropdown({
+    width = 0.5,
+    prompt = " ",
+    previewer = false,
+})
 
-        -- Developer configurations: Not meant for general override
-        buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
-
-        -- mappings (specifically in telescope contexts
-        mappings = {
-            i = {
-                ['<esc>'] = actions.close,
-                ["<c-l>"] = trouble.open_with_trouble
-            },
-            n = {
-                ['<s-j>'] = actions.preview_scrolling_down,
-                ['<s-k>'] = actions.preview_scrolling_up,
-                ['q'] = actions.close,
-                ["<c-l>"] = trouble.open_with_trouble
+-- Any extra configueration of Telescope you may want
+-- :help Telescope.setup
+function M.setup()
+    telescope.setup({
+        defaults = {
+            file_soterer = require("telescope.sorters").get_levenstein_sorter,
+            mappings = {
+                i = {
+                    ["<esc>"] = actions.close,
+                    ["<c-l>"] = trouble.open_with_trouble,
+                    ["<c-j>"] = actions.cycle_history_next,
+                    ["<c-k>"] = actions.cycle_history_prev,
+                },
+                n = {
+                    ["q"] = actions.close,
+                    ["<c-l>"] = trouble.open_with_trouble,
+                    ["<A-j>"] = actions.preview_scrolling_down,
+                    ["<A-k>"] = actions.preview_scrolling_up,
+                    ["<c-j>"] = actions.cycle_history_next,
+                    ["<c-k>"] = actions.cycle_history_prev,
+                }
             }
+        },
+        pickers = {
+            buffers = center_list,
+            find_files = center_list,
+            commands = center_list,
         }
-    },
-}
-
-function self.setup()
-    telescope.load_extension("workspaces")
-    telescope.setup(self.telescope_config)
+    })
+    require("telescope").load_extension("fzf")
 end
 
-return self
+return M

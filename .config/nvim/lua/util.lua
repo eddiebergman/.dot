@@ -1,206 +1,121 @@
-local py = require('py')
-local isinstance = py.isinstance
-
 local M = {}
 
-function M.cmd(str)
-    vim.api.nvim_exec(str, false)
+function M.setkey(opts)
+    vim.validate({
+        key = { opts.key, "string" },
+        cmd = { opts.cmd, { "string", "function" } },
+        mode = { opts.mode, { "string" }, true },
+        opts = { opts.opts, { "table" }, true },
+    })
+    local key = opts.key
+    local cmd = opts.cmd
+    local mode = opts.mode or "n"
+    local extra = opts.opts or { noremap = true }
+    vim.api.nvim_set_keymap(mode, key, cmd, extra)
 end
 
-function M.exec(str)
-    return vim.api.nvim_exec(str, true)
-end
+-- { name: str, cmd: str | func, key: str | {mode, key} }
+function M.command(opts)
+    vim.validate({
+        name = { opts.name, "string" },
+        cmd = { opts.cmd, { "string", "function" } },
+        key = { opts.key, { "string", "table" }, true },
+    })
+    local cmd_opts = opts.opts or {}
 
-function M.system_name()
-    if vim.fn.has("mac") == 1 then
-        return "macOS"
-    elseif vim.fn.has("unix") == 1 then
-        return "Linux"
-    elseif vim.fn.has("win32") then
-        return "Windows"
-    else
-        print("system_name(): Unknown System")
-        return -1
+    if opts.name:match("%W") and not opts.name:match("^%l") then
+        error("Command name must be alphanumeric and start with Captial letter\n" .. vim.inspect(opts))
+        return
     end
-end
 
-function M.get(a, b)
-    if not a == nil then return a else return b end
-end
+    vim.api.nvim_create_user_command(opts.name, opts.cmd, cmd_opts)
 
-function M.os_exec(cmd)
-    local handle = io.popen(cmd .." 2>/dev/null; echo $?")
-    local os_result = handle:read("*all")
+    if opts.key ~= nil then
+        local action = "<cmd>" .. opts.name .. "<cr>"
 
-    -- remove the return code at the end
-    local cmd_result = os_result:gsub("\n(%d+)\n?$", "")
+        local mode = "n"
+        local key = opts.key
 
-    -- match the return code at the end
-    local exit_status = os_result:match("(%d+)\n?$")
-
-    handle:close()
-    return cmd_result, tonumber(exit_status)
-end
-
-function M.strsplit(s, pat)
-  pat = pat or '%s+'
-  local st, g = 1, s:gmatch("()("..pat..")")
-  local function getter(segs, seps, sep, cap1, ...)
-    st = sep and seps + #sep
-    return s:sub(segs, (seps or 0) - 1), cap1 or sep, ...
-  end
-  return function() if st then return getter(st, g()) end end
-end
-
-function M.executable(cmd)
-    return vim.call("executable", cmd)
-end
-
-function M.dump(...)
-    local objects = vim.tbl_map(vim.inspect, {...})
-end
-
-
-function M.contains(ele, lst)
-    if M.isarray(lst) then
-        for v in M.values(lst) do
-            if v == ele then
-                return true end end
-
-        return false
-    else
-        for k in M.keys(lst) do
-            if k == ele then
-                return true end end
-
-        return false
-    end
-end
-
-function M.find(t, pred)
-    if type(t) ~= "table" then
-        error("Only call find on tables")
-    else
-        for k, v in pairs(t) do
-            if pred(v) then return k end
-        end
-        return nil
-    end
-end
-
-function M.index(t, x)
-   return M.find(t, function (v) return v == x end )
-end
-
-function M.setkeys(mode, mappings, buffer)
-    local default_opts = { silent = true, noremap = true }
-
-    buffer = buffer or false
-    if buffer == true then buffer = 0 end -- 0 is current buffer
-
-    -- global mappings
-    if buffer == false then
-        local setkey = vim.api.nvim_set_keymap
-
-        for _, mapping in ipairs(mappings) do
-            local keys = mapping[1]
-            local command = mapping[2]
-            local opts = M.get(mapping[3], default_opts)
-            setkey(mode, keys, command, opts)
+        -- If key is a table then it includes the mode
+        if type(key) == "table" then
+            mode = key[1]
+            key = key[2]
         end
 
-    -- buffer mappings
-    else
-        local setkey = vim.api.nvim_buf_set_keymap
+        M.setkey({ mode = mode, key = key, cmd = action })
+    end
+end
 
-        for _, mapping in ipairs(mappings) do
-            local keys = mapping[1]
-            local command = mapping[2]
-            local opts = M.get(mapping[3], default_opts)
-            setkey(0, mode, keys, command, opts)
+function M.setsign(opts)
+    vim.validate({
+        name = { opts.name, "string" },
+        sign = { opts.sign, "string" },
+        hl = { opts.hl, "string", true }
+    })
+    vim.fn.sign_define(opts.name, {
+        text = opts.sign,
+        texthl = opts.hl or opts.name,
+        numhl = ""
+    })
+end
+
+function M.python_env(opts)
+    -- This will use the following strategies, in order to determine the python env
+    -- 1. VIRTUAL_ENV
+    -- 2. CONDA_DEFAULT_ENV
+    -- 3. If opts.patterns are provided for virtual env names are passed, then search for those
+    --      This will use the `vim.fn.getcwd()` or override with `opts.root`.
+    --      If several matches are found for a pattern, it will take the first, giving priority
+    --      to the first patterns in the list.
+    -- If none of these are found, this will fail and return nil
+
+    local util = require("lspconfig/util")
+    local path = util.path
+    local join = path.join
+
+    local bindir = nil
+
+    -- 1. Use virtualenv if present
+    if vim.env.VIRTUAL_ENV then
+        bindir = join(vim.env.VIRTUAL_ENV, "bin")
+        return { python = join(bindir, "python"), bindir = bindir }
+    end
+
+    -- 2. Use conda env if present
+    if vim.env.CONDA_DEFAULT_ENV then
+        bindir = join(vim.env.CONDA_DEFAULT_ENV, "bin")
+        return { python = join(bindir, "python"), bindir = bindir }
+    end
+
+
+    -- 3. Search for patterns from root or workspace
+    if opts.patterns then
+        -- Find and use virtualenv in workspace directory.
+        local root = opts.root or vim.fn.getcwd()
+        for _, pattern in ipairs(opts.patterns) do
+            local matches = vim.fn.glob(join(root, pattern), true, true)
+            local _, env = next(matches)
+            if env and path.exists(join(env, "python")) then
+                bindir = join(env, "bin")
+            end
+        end
+        if bindir then
+            return { python = join(bindir, "python"), bindir = bindir }
         end
     end
-end
 
-function M.setkey(mode, mapping, action, buffer)
-    -- 2 params (mapping, action) -> setkey("n", mapping, action)
-    if action == nil then
-        action = mapping
-        mapping = mode
-        mode = "n"
+    -- 4. No python env found, try to use system python
+    local pythonpath = vim.fn.exepath("python3") or vim.fn.exepath("python") or nil
+    if pythonpath then
+        return { python = pythonpath, bindir = path.dirname(pythonpath) }
     end
 
-    -- 3 params with 3rd being boolean (mapping, action, buffer)
-    if isinstance(action, "bool") then
-        buffer = action
-        action = mapping
-        mapping = mode
-        mode = "n"
-    end
-
-    M.setkeys(mode, {{mapping, action}}, buffer)
+    return nil
 end
 
--- Checks if a given path exists as a dir or file
-function M.os_exists(path)
-    local _, status = M.os_exec('[ -e "'..path..'" ]')
-    if status == 0 then return true else return false end
-end
-
-function M.isfile(path)
-    local _, status = M.os_exec('[ -f "'..path..'" ]')
-    if status == 0 then return true else return false end
-end
-
-function M.isdir(path)
-    local cmd = '[ -d "'..path..'" ]'
-    local _, status = M.os_exec(cmd)
-    if status == 0 then
-        return true
-    else
-        return false
-    end
-end
-
-function M.joinpath(...)
-    return table.concat({...}, '/')
-end
-
-function M.str_split(s, delim)
-    local items = {}
-    for item in string.gmatch(s, delim) do
-        table.insert(items, item)
-    end
-    return items
-end
-
---  orientation
---
---  Returns the orientation based on a rough hueristic of
---  lines and columns.
---
---  Returns
---  -------
--- 'vertical' | 'horizontal'
---    if (cols /lines) > 2 return 'horizontal' else 'vertical'
-function M.orientation()
-    cols = M.exec("set co")
-    cols = tonumber(string.match(cols, "=(%d+)$"))
-
-    lines = M.exec("set lines")
-    lines = tonumber(string.match(lines, "=(%d+)$"))
-
-    ratio = cols / lines
-    if ratio > 2 then
-        return 'horizontal'
-    else
-        return 'vertical'
-    end
-end
-
-function M.file_exists(path)
-    local f=io.open(path, "r")
-    if f~=nil then io.close(f) return true else return false end
+function M.lsp_root(patterns)
+    local cwd = vim.fn.getcwd()
+    return require("lspconfig").util.root_pattern(unpack(patterns))(cwd)
 end
 
 return M
