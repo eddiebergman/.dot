@@ -5,7 +5,13 @@ set $newshell kitty
 set $browser firefox
 
 # font
-font pango:Fira Code Retina 10
+font pango:Fira Code Nerd Font
+
+# Disable title bars
+default_border pixel 0
+default_floating_border pixel 1
+floating_modifier $mod
+
 # }}}
 # {{{ Startup
 #exec --no-startup-id "workspace 0; $newshell edot; workspace 1"
