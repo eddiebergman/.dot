@@ -17,7 +17,6 @@ local center_list = themes.get_dropdown({
 function M.setup()
     telescope.setup({
         defaults = {
-            file_soterer = require("telescope.sorters").get_levenstein_sorter,
             mappings = {
                 i = {
                     ["<esc>"] = actions.close,
