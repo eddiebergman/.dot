@@ -60,6 +60,19 @@ local function plugins(use)
         config = function() require("config/trouble").setup() end
     })
 
+    -- Symbol outline
+    use({
+        "stevearc/aerial.nvim",
+        config = function() require("config/aerial").setup() end
+    })
+
+    -- TodoComments
+    -- Highlight TODOs, and comments
+    use({
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function() require("config/todo-comments").setup() end
+    })
 
     -- Bufferline
     -- Just a nice looking bufferline
