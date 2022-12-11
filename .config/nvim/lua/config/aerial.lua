@@ -5,7 +5,7 @@ function M.setup()
         {
             -- Priority list of preferred backends for aerial.
             -- This can be a filetype map (see :help aerial-filetype-map)
-            backends = { "lsp" },
+            backends = { "lsp", "treesitter" },
 
             layout = {
                 -- These control the width of the aerial window.
@@ -34,13 +34,13 @@ function M.setup()
             -- Determines how the aerial window decides which buffer to display symbols for
             --   window - aerial window will display symbols for the buffer in the window from which it was opened
             --   global - aerial window will display symbols for the current window
-            attach_mode = "global",
+            attach_mode = "window",
 
             -- List of enum values that configure when to auto-close the aerial window
             --   unfocus       - close aerial when you leave the original source window
             --   switch_buffer - close aerial when you change buffers in the source window
             --   unsupported   - close aerial when attaching to a buffer that has no symbol source
-            close_automatic_events = {},
+            close_automatic_events = { "unfocus" },
 
             -- Keymaps in aerial window. Can be any value that `vim.keymap.set` accepts OR a table of keymap
             -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
@@ -253,14 +253,14 @@ function M.setup()
             lsp = {
                 -- Fetch document symbols when LSP diagnostics update.
                 -- If false, will update on buffer changes.
-                diagnostics_trigger_update = true,
+                diagnostics_trigger_update = false,
 
                 -- Set to false to not update the symbols when there are LSP errors
                 update_when_errors = true,
 
                 -- How long to wait (in ms) after a buffer change before updating
                 -- Only used when diagnostics_trigger_update = false
-                update_delay = 300,
+                update_delay = 100,
             },
 
             treesitter = {
