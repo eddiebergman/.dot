@@ -21,7 +21,15 @@ function M.setup()
     -- M.show_diagnostics_on_hover()
     M.enable_markdown_highlighting_in_lsp_hover()
     -- Just makes the lua lsp a bit smarter
-    require("neodev").setup()
+    require("neodev").setup({
+        library = {
+            vimruntime = true,
+            types = true,
+            plugins = true,
+            -- Manually add the neovim runtime
+            -- [vim.fn.stdpath("config") .. "/lua"] = true,
+        },
+    })
 
     local lsp_servers = require("config/mason").lsp_servers
     for _, server in ipairs(lsp_servers) do
