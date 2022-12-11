@@ -50,11 +50,6 @@ vim.o.showtabline = 0
 vim.cmd([[ set foldopen-=block ]])
 vim.cmd([[ set foldcolumn=0 ]]) -- Not sure why this doesn't work with `vim.o`
 
-local setsign = require("util").setsign
-setsign({ name = 'DiagnosticSignError', sign = '' })
-setsign({ name = 'DiagnosticSignWarn', sign = '' })
-setsign({ name = 'DiagnosticSignHint', sign = '' })
-setsign({ name = 'DiagnosticSignInfo', sign = '' })
 
 vim.cmd([[
     try
@@ -133,6 +128,7 @@ if vim.env.VIRTUAL_ENV == nil and vim.env.CONDA_PYTHON_EXE then
     vim.env.VIRTUAL_ENV = vim.env.CONDA_PYTHON_EXE
 end
 
+require("signs").setup() -- Define signs before we get to lsp
 require("plugins").setup() -- Keep this first
 require("lsp").setup() -- Language smarts
 -- }}}

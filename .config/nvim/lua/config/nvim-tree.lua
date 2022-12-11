@@ -1,33 +1,5 @@
 local M = {}
-
--- https://github.com/nvim-tree/nvim-tree.lua
--- This plugin is for the tree-view which I have mapped to <C-h> since it bumps
--- out from the left
--- Try it out
---
---  <C-h> - Expand tree
---  j / k to move up and down
---  l to expand node or open if file
---  h to collapse section
---  L to open but stay in tree
---  H to collapse all
-
--- 
--- `a` - add a file or directory
---      add a file somewhere 
---      add a directory somewhere by ending it in a slash `/`
---  https://github.com/nvim-tree/nvim-tree.lua/wiki/Recipes#h-j-k-l-style-navigation-and-editing
-
--- `d` - delete a file/directory
---      delete the file you create or 
-
--- Type `/config` to see how these kind of plugins are configured normally
--- and then come back here (<ctrl-o>)
-
--- The other two forms of navigation are bound to `<Ctrl+e>` and `<Ctrl+p>`
--- The first runs `:Telescope buffers` and the second `:Telescope find_files`
--- Use whichever one you like to get back to `init.lua`
-
+local signs = require("signs")
 
 local lib = require("nvim-tree.lib")
 local view = require("nvim-tree.view")
@@ -95,10 +67,10 @@ local config = {
     diagnostics = {
         enable = true,
         icons = {
-            hint = "",
-            info = "",
-            warning = "",
-            error = "",
+            hint = signs.hint,
+            info = signs.info,
+            warning = signs.warn,
+            error = signs.error,
         }
     },
     update_focused_file = {

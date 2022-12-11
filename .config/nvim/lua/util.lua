@@ -46,18 +46,6 @@ function M.command(opts)
     end
 end
 
-function M.setsign(opts)
-    vim.validate({
-        name = { opts.name, "string" },
-        sign = { opts.sign, "string" },
-        hl = { opts.hl, "string", true }
-    })
-    vim.fn.sign_define(opts.name, {
-        text = opts.sign,
-        texthl = opts.hl or opts.name,
-        numhl = ""
-    })
-end
 
 function M.python_env(opts)
     -- This will use the following strategies, in order to determine the python env
@@ -117,5 +105,6 @@ function M.lsp_root(patterns)
     local cwd = vim.fn.getcwd()
     return require("lspconfig").util.root_pattern(unpack(patterns))(cwd)
 end
+
 
 return M

@@ -66,6 +66,13 @@ local function plugins(use)
         config = function() require("config/aerial").setup() end
     })
 
+    -- Comment
+    -- Use for comment blocks and commenting lines
+    use({
+        "numToStr/Comment.nvim",
+        config = function() require("config/comment").setup() end
+    })
+
     -- TodoComments
     -- Highlight TODOs, and comments
     use({
@@ -111,7 +118,7 @@ local function plugins(use)
     -- I.e. pylint, flake8, black ...
     use({
         "jose-elias-alvarez/null-ls.nvim",
-         config = function() require("config/null-ls").setup() end
+        config = function() require("config/null-ls").setup() end
     })
 
     -- Completion
@@ -160,22 +167,28 @@ local function plugins(use)
         "zbirenbaum/copilot.lua",
         event = { "VimEnter" },
         config = function() vim.defer_fn(function() require("copilot").setup({
-            suggestion = {
-                enabled = true,
-                auto_trigger = true,
-                keymap = {
-                    next = "<A-]>",
-                    prev = "<A-{>",
-                },
-            },
-            filetypes = {
-                python = true,
-                lua = true,
-                ["*"] = false
-            }
-        })
+                    suggestion = {
+                        enabled = true,
+                        auto_trigger = true,
+                        keymap = {
+                            next = "<A-]>",
+                            prev = "<A-{>",
+                        },
+                    },
+                    filetypes = {
+                        python = true,
+                        lua = true,
+                        ["*"] = false
+                    }
+                })
             end, 100)
         end
+    })
+
+    -- Nice notifications
+    use({
+        "rcarriga/nvim-notify",
+        config = function() require("config/nvim-notify").setup() end
     })
 
     -- Luapad
@@ -185,6 +198,12 @@ local function plugins(use)
     -- Git integration
     -- Must have
     use("tpope/vim-fugitive")
+
+    -- Multi-cursor
+    use({
+        "mg979/vim-visual-multi",
+        config = function() require("config/multi-cursor").setup() end
+    })
 
     -- Surround text
     -- `ys<motion><surround-symbol>`
