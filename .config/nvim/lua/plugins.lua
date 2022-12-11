@@ -29,6 +29,17 @@ local function plugins(use)
         config = function() require('config/telescope').setup() end
     })
 
+    -- Testing
+    use({
+        'nvim-neotest/neotest',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-neotest/neotest-python",
+        },
+        config = function() require('config/neotest').setup() end
+    })
+
     -- Nvim tree
     -- The side tree view
     use({
