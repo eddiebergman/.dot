@@ -45,7 +45,7 @@ function M.setup()
                         analysis = {
                             autoImportCompletions = true,
                             diagnosticMode = "openFilesOnly",  -- Use "workspace" if you like but may be slow
-                            typeCheckingMode = "off", -- Using Mypy instead, it's better
+                            typeCheckingMode = "basic", -- Using Mypy instead, it's better
                             pythonPath = "python", -- gets replaced below
                         }
                     },
