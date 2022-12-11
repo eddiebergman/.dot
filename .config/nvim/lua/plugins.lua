@@ -33,6 +33,13 @@ local function plugins(use)
         config = function() require('config/telescope').setup() end
     })
 
+    -- Diffview
+    use({
+        'sindrets/diffview.nvim',
+        requires = {"nvim-lua/plenary.nvim"},
+        config = function() require('config/diffview').setup() end
+    })
+
     -- Testing
     use({
         'nvim-neotest/neotest',
