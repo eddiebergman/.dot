@@ -110,6 +110,11 @@ command({ key = "<leader>gl", name = "GitLog", cmd = "vsp | GcLog" })
 command({ key = "gA", name = "GitAddFile", cmd = "Gitsigns stage_buffer" })
 command({ key = "<leader>td", name = "ToggleDeletedGit", cmd = "Gitsigns toggle_deleted" })
 command({ key = "<leader>tl", name = "ToggleLineGit", cmd = "Gitsigns toggle_linehl" })
+command({ key = "<C-t>", name = "TestToggle", cmd = "lua require('neotest').summary.toggle()" })
+command({ key = "t", name = "TestFunction", cmd = "lua require('neotest').run.run()" })
+command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vim.fn.expand('%'))" })
+command({ key = "<leader>s", name = "TestStop", cmd = "lua require('neotest').run.stop()" })
+command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle" })
 -- }}}
 
 -- {{{ Autocommands
