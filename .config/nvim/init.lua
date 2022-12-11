@@ -57,6 +57,8 @@ vim.cmd([[
     catch
 	    colo default
 ]])
+
+vim.api.nvim_set_hl(0, "Folded", {fg = "#fa8f02", bg = "NONE", italic = true})
 -- }}}
 
 -- {{{ Keymaps
