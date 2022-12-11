@@ -3,6 +3,7 @@ local signs = require("signs")
 
 function M.setup()
     require("notify").setup({
+        background_colour = "#000000",
 
         -- Animation style (see below for details)
         stages = "fade_in_slide_out",

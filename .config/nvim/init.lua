@@ -43,22 +43,12 @@ vim.o.wrap = false
 vim.o.foldmarker = "{{{,}}}"
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.o.foldlevel = 99
-vim.o.foldcolumn = '0' -- '0' is not bad
-vim.o.foldenable = false
+vim.o.foldcolumn = '0'
+vim.o.foldenable = true
 vim.o.showtabline = 0
 vim.cmd([[ set foldopen-=block ]])
 vim.cmd([[ set foldcolumn=0 ]]) -- Not sure why this doesn't work with `vim.o`
 
-
-vim.cmd([[
-    try
-        colo tokyonight-storm
-    catch
-	    colo default
-]])
-
-vim.api.nvim_set_hl(0, "Folded", {fg = "#fa8f02", bg = "NONE", italic = true})
 -- }}}
 
 -- {{{ Keymaps
@@ -84,7 +74,7 @@ setkey({ key = "<leader>fme", cmd = ":set foldmethod=expr<CR>" })
 command({ key = "<C-e>", name = "FindBuffer", cmd = "Telescope buffers", })
 command({ key = "<C-h>", name = "ToggleTree", cmd = "NvimTreeToggle", })
 command({ key = "<leader>ev", name = "VIMRC", cmd = "e $MYVIMRC" })
-command({ key = "<C-p>", name = "FindFile", cmd = "Telescope find_files", })
+command({ key = "<C-p>", name = "FindFile", cmd = function() require("telescope.builtin").find_files({ hidden = true }) end, })
 command({ key = "<leader>ss", name = "FindString", cmd = "Telescope live_grep", })
 command({ key = "<C-f>", name = "FindCommand", cmd = "Telescope commands" })
 command({ key = "<c-space>", name = "NextDiagnostic", cmd = "lua vim.diagnostic.goto_next()" })
@@ -112,6 +102,7 @@ command({ key = "t", name = "TestFunction", cmd = "lua require('neotest').run.ru
 command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vim.fn.expand('%'))" })
 command({ key = "<leader>s", name = "TestStop", cmd = "lua require('neotest').run.stop()" })
 command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle" })
+command({ key = "<A-t>", name = "Terminal", cmd = "ToggleTerm" })
 -- }}}
 
 -- {{{ Autocommands
@@ -133,5 +124,13 @@ end
 require("signs").setup() -- Define signs before we get to lsp
 require("plugins").setup() -- Keep this first
 require("lsp").setup() -- Language smarts
+
+-- }}}
+-- {{{ Colors
+-- If using one dark
+vim.cmd("colorscheme onedark")
+vim.api.nvim_set_hl(0, "Folded", { fg = "#fa8f02", bg = "NONE", italic = true })
+
+
 -- }}}
 -- vim:foldmethod=marker

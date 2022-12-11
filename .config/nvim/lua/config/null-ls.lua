@@ -2,6 +2,8 @@ local M = {}
 local builtins = require("null-ls.builtins")
 local diagnostics = builtins.diagnostics
 local formatting = builtins.formatting
+local helpers = require("null-ls.helpers")
+local methods = require("null-ls.methods")
 local util = require("util")
 
 function M.find_local(language)
@@ -20,6 +22,22 @@ function M.find_local(language)
     end
 end
 
+local ruff_fix = helpers.make_builtin({
+    name = "ruff",
+    meta = {
+        url = "https://github.com/charliermarsh/ruff/",
+        description = "An extremely fast Python linter, written in Rust.",
+    },
+    method = methods.internal.FORMATTING,
+    filetypes = { "python" },
+    generator_opts = {
+        command = "ruff",
+        args = { "--fix", "-e", "-n", "--stdin-filename", "$FILENAME", "-" },
+        to_stdin = true
+    },
+    factory = helpers.formatter_factory
+})
+
 function M.setup()
     local python = M.find_local("python")
 
@@ -27,6 +45,7 @@ function M.setup()
         debug = true, -- :NullLsLog to get the log if deubg is on
         sources = {
             diagnostics.ruff.with({ prefer_local = python }), -- python linter
+            ruff_fix.with({ prefer_local = python }), -- python formatter
             diagnostics.mypy.with({ prefer_local = python }), -- python type checking
             formatting.black.with({ prefer_local = python }), -- python formatter
             diagnostics.flake8.with({ -- Flake8 only if `.flake8` found
@@ -37,7 +56,6 @@ function M.setup()
             --formatting.isort.with({ prefer_local = local_binary_dir}), -- Disabled, enable if you like
             --diagnostics.commitlint, -- If using commitizen
             diagnostics.actionlint, -- github action linter
-            diagnostics.yamllint, -- yaml linter
             formatting.yamlfmt, -- yaml formatter
             formatting.clang_format, -- c/c++ formatter
             formatting.jq, -- json formatter

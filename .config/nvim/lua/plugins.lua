@@ -5,6 +5,10 @@ local function plugins(use)
 
     -- https://github.com/topics/neovim-colorscheme?o=desc&s=stars
     use('folke/tokyonight.nvim')
+    use({
+        'navarasu/onedark.nvim',
+        config = function () require("config/onedark").setup() end
+    })
 
     -- Mason
     -- Easy setup of many language specific tools and LSP servers to give "smarts" to the editor
@@ -64,6 +68,12 @@ local function plugins(use)
     use({
         "stevearc/aerial.nvim",
         config = function() require("config/aerial").setup() end
+    })
+
+    -- Terminal
+    use({
+        "akinsho/nvim-toggleterm.lua",
+        config = function() require("config/toggleterm").setup() end
     })
 
     -- Comment
