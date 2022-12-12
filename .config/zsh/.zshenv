@@ -58,7 +58,6 @@ pyvenv () {
 
     pip install --upgrade pip
     pip install wheel
-    pip install "mypy" "flake8" "black" "isort" "pydocstyle[toml]" "jedi-language-server"
 }
 
 alias pyshell='source ./.venv/bin/activate'
