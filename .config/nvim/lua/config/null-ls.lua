@@ -8,7 +8,7 @@ local util = require("util")
 
 function M.check_for(paths)
     return function(_)
-        for path, pattern in ipairs(paths) do
+        for path, pattern in pairs(paths) do
             if util.file_contains(path, pattern) then
                 return true
             end
