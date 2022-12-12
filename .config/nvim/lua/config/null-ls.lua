@@ -6,6 +6,17 @@ local helpers = require("null-ls.helpers")
 local methods = require("null-ls.methods")
 local util = require("util")
 
+function M.check_for(paths)
+    return function(_)
+        for path, pattern in ipairs(paths) do
+            if util.file_contains(path, pattern) then
+                return true
+            end
+        end
+        return false
+    end
+end
+
 function M.find_local(language)
     if language == "python" then
         -- Will attempt to find your python env using VirtualEnv, Conda or virtual env patterns
@@ -44,22 +55,40 @@ function M.setup()
     require("null-ls").setup({
         debug = true, -- :NullLsLog to get the log if deubg is on
         sources = {
-            diagnostics.ruff.with({ prefer_local = python }), -- python linter
-            ruff_fix.with({ prefer_local = python }), -- python formatter
-            diagnostics.mypy.with({ prefer_local = python }), -- python type checking
-            formatting.black.with({ prefer_local = python }), -- python formatter
-            diagnostics.flake8.with({ -- Flake8 only if `.flake8` found
+            diagnostics.ruff.with({
                 prefer_local = python,
-                condition = function(u) return u.root_has_file({ ".flake8" }) end,
+                condition = M.check_for({ ["pyproject.toml"] = "tool.ruff" })
             }),
-            --diagnostics.pylint.with({ prefer_local = local_binary_dir}), -- Disabled, enable if you like
-            --formatting.isort.with({ prefer_local = local_binary_dir}), -- Disabled, enable if you like
-            --diagnostics.commitlint, -- If using commitizen
-            diagnostics.actionlint, -- github action linter
-            formatting.yamlfmt, -- yaml formatter
-            formatting.clang_format, -- c/c++ formatter
-            formatting.jq, -- json formatter
-            formatting.shfmt, -- shell formatter
+            ruff_fix.with({
+                prefer_local = python,
+                condition = M.check_for({ ["pyproject.toml"] = "tool.ruff" })
+            }),
+            diagnostics.mypy.with({
+                prefer_local = python,
+                condition = M.check_for({ ["mypy.ini"] = ".*", ["pyproject.toml"] = "tool.mypy" })
+            }),
+            formatting.black.with({
+                prefer_local = python,
+                condition = M.check_for({ ["pyproject.toml"] = "tool.black" })
+            }),
+            diagnostics.flake8.with({
+                prefer_local = python,
+                condition = M.check_for({ [".flake8"] = ".*" })
+            }),
+            diagnostics.pylint.with({
+                prefer_local = python,
+                codition = M.check_for({ [".pylintrc"] = ".*", ["pyproject.toml"] = "tool.pylint" })
+            }),
+            formatting.isort.with({
+                prefer_local = python,
+                condition = M.check_for({ ["isort.cfg"] = ".*", ["pyproject.toml"] = "tool.isort" })
+            }),
+            diagnostics.commitlint,
+            diagnostics.actionlint,
+            formatting.yamlfmt,
+            formatting.clang_format,
+            formatting.jq,
+            formatting.shfmt,
         },
         temp_dir = "/tmp",
         diagnostics_format = "[#{c}] #{m} (#{s})" -- [code] message (source)
