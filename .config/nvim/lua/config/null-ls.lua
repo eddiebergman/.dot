@@ -77,7 +77,7 @@ function M.setup()
             }),
             diagnostics.pylint.with({
                 prefer_local = python,
-                codition = M.check_for({ [".pylintrc"] = ".*", ["pyproject.toml"] = "tool.pylint" })
+                condition = M.check_for({ [".pylintrc"] = ".*", ["pyproject.toml"] = "tool.pylint" })
             }),
             formatting.isort.with({
                 prefer_local = python,
