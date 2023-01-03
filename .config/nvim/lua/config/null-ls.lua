@@ -83,7 +83,7 @@ function M.setup()
                 prefer_local = python,
                 condition = M.check_for({ ["isort.cfg"] = ".*", ["pyproject.toml"] = "tool.isort" })
             }),
-            diagnostics.commitlint,
+            -- diagnostics.commitlint,
             diagnostics.actionlint,
             formatting.yamlfmt,
             formatting.clang_format,
