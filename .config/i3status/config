@@ -9,7 +9,6 @@ general {
         output_format = "i3bar"
         colors = true
         markup = pango
-        interval = 5
         color_good = '#268bd2'
         color_degraded = '#268bd2'
         color_bad = '#268bd2'
@@ -22,34 +21,33 @@ order += "cpu_usage"
 order += "tztime local"
 
 wireless wlp0s20f3 {
-        format_up = "<span font='Fira Mono 10' foreground='#268bd2' background='#002b36'> Net: %bitrate </span>"
-        format_down = "<span font='Fira Mono 10' foreground='#b58900' background='#002b36'> Disconnected </span>"
+        format_up = "<span foreground='#268bd2' >   %bitrate </span>"
+        format_down = "<span foreground='#b58900' >   off </span>"
 }
 
 battery 1 {
         last_full_capacity = true
-        format = "<span font='Fira Mono 10' foreground='#268bd2' background='#002b36'> Bat: %status %percentage </span>"
+        format = "<span foreground='#268bd2' > %status %percentage </span>"
         format_down = "No Battery"
-        status_chr = ""
-        status_bat = ""
-        status_unk = ""
-        status_full = ""
+        status_chr = ""
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
         path = "/sys/class/power_supply/CMB1/uevent"
         low_threshold = 30
+        integer_battery_capacity = true
 }
 
 tztime local {
-        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> %a %-d %b %H:%M </span>"
+        format = "<span foreground='#268bd2' > %a %-d.%m %H:%M </span>"
 }
 
 cpu_usage {
-        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> CPU: %cpu0 %cpu1 </span>"
+        format = "<span foreground='#268bd2' >  %usage </span>"
 }
 
 volume master {
-        format = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> Vol: %volume </span>"
-        format_muted = "<span foreground='#268bd2' font='Fira Mono 10' background='#002b36'> Vol: (muted) %volume </span>"
+        format = "<span foreground='#268bd2' >  %volume </span>"
+        format_muted = "<span foreground='#268bd2' > %volume </span>"
         device = "pulse"
         mixer = "Master"
-        mixer_idx = 0
-}

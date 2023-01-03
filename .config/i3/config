@@ -8,8 +8,6 @@ set $browser firefox
 font pango:Fira Code Nerd Font
 
 # Disable title bars
-default_border pixel 0
-default_floating_border pixel 1
 floating_modifier $mod
 
 # }}}
@@ -77,6 +75,20 @@ bindcode XF86MonBrightnessUp exec light -U 5
 bindcode XF86MonBrightnessUp exec light -A 5
 
 
+
+# }}}
+# {{{ Workspaces
+set $ws1 "1  "
+set $ws2 "2  "
+set $ws3 "3  "
+set $ws4 "4  "
+set $ws5 "5  "
+set $ws6 "6  "
+set $ws7 "7  "
+set $ws8 "8  "
+set $ws9 "9  "
+set $ws10 "10  "
+
 # Workspaces
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -98,18 +110,6 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
-# }}}
-# {{{ Workspaces
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
 
 # }}}
 # {{{ Resize mode
@@ -142,26 +142,29 @@ mode "resize" {
 # }}}
 # {{{ Colours
 # colour of border, background, text, indicator, and child_border
-client.focused              #2f343f #2f343f #d8dee8 #bf616a #d8dee8
-client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.background           #2f343f
-# }}}
+set $inactive_border #bb9af7 
+client.focused              #2ac3de #222436 #d8dee8 #bf616a #2ac3de
+client.focused_inactive     $inactive_border #222436 #d8dee8 #222436 $inactive_border
+client.unfocused            $inactive_border #222436 #d8dee8 #222436 $inactive_border
+client.urgent               #2ac3de #222436 #d8dee8 #222436 #2ac3de
+client.placeholder          #2ac3de #222436 #d8dee8 #222436 #2ac3de
+client.background           #2ac3de
 # {{{ i3-bar
-# Start i3bar to display a workspace bar (plus the system information i3status
+# Start i3bar24283B  ta display a workspace bar (plus the system information i3status
 # finds out, if available)
+set $bar_bg #1a1b26
 bar {
     position top
-    workspace_min_width 60
+    workspace_min_width 50
+    mode hide
     # strip_workspace_numbers yes
-    separator_symbol "|"
+    separator_symbol "·"
     workspace_buttons yes
+    font pango:FiraCode Nerd font, bold 30
     colors {
-        background #002b36
-        statusline #2f343f
-        separator #b58900
+        background $bar_bg
+        statusline #2ac3d2
+        separator #bb9af7
 
         # orange #cb4b16
         # yellow #b58900
@@ -171,10 +174,10 @@ bar {
         # blue #268bd2
         # background #002b36
         # colour of border, background, and text
-        focused_workspace       #002b36 #002b36 #cb4b16
-        active_workspace         #002b36 #002b36 #b58900
-        inactive_workspace      #002b36 #002b36 #268bd2
-        urgent_workspace       #2f343f #ebcb8b #2f343f
+        focused_workspace       $bar_bg $bar_bg #ff9e64
+        active_workspace         $bar_bg $bar_bg #bb9af7
+        inactive_workspace      $bar_bg $bar_bg #7dcfff
+        urgent_workspace       $bar_bg $bar_bg #f7768e
     }
     id bar-1
     status_command i3status
@@ -186,6 +189,10 @@ bar {
 # https://faq.i3wm.org/question/1228/lock-workspace-to-permanent/index.html
 # }}}
 # }}}
+default_floating_border pixel 1
+default_border pixel 1
+for_window [class=".*"] border pixel 1
+hide_edge_borders both
 exec feh --bg-scale /home/skantify/.config/background.jpg
 exec_always picom
 exec_always bluetoothctl power on
