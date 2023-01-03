@@ -38,6 +38,7 @@ function M.setup()
             buffers = center_list,
             find_files = center_list,
             commands = center_list,
+            -- marks = center_list,
         }
     })
     require("telescope").load_extension("fzf")
