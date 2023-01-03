@@ -69,7 +69,7 @@ function M.setup()
             }),
             formatting.black.with({
                 prefer_local = python,
-                condition = M.check_for({ ["pyproject.toml"] = "tool.black" })
+                -- condition = M.check_for({ ["pyproject.toml"] = "tool.black" })
             }),
             diagnostics.flake8.with({
                 prefer_local = python,
