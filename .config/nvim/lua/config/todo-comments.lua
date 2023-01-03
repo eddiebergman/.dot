@@ -18,6 +18,7 @@ function M.setup()
             PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE", "optimizaton" } },
             NOTE = { icon = " ", color = "hint", alt = { "INFO", "note" } },
             TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+            DOC = { icon = " ", color = "hint", alt = { "doc", "docs" }, signs = false },
             IGNORE = { icon = "! ", color = "warning", alt = { "type", "noqa" }, signs = false },
         },
         gui_style = {
