@@ -1,6 +1,8 @@
 -- {{{ Settings
 vim.cmd([[filetype plugin indent on]])
 
+vim.o.number = true
+vim.o.relativenumber = true
 vim.g.mapleader = ","
 vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
@@ -13,6 +15,8 @@ vim.o.cursorline = true
 vim.o.cursorlineopt = "both"
 vim.o.expandtab = true
 vim.o.fillchars = "fold: ,foldclose: ,foldopen: ,foldsep: ,diff: ,eob: "
+vim.o.list = true
+vim.o.listchars = "tab:▸ ,trail:·,nbsp:␣,extends:❯,precedes:❮"
 vim.o.fixendofline = false
 vim.o.formatoptions = "lnjqr"
 vim.o.guicursor = ""
@@ -21,8 +25,6 @@ vim.o.inccommand = "split"
 vim.o.laststatus = 3
 vim.o.linebreak = true
 vim.o.mouse = "a"
-vim.o.number = false
-vim.o.relativenumber = false
 vim.o.scrolloff = 10
 vim.o.shiftwidth = 0
 vim.o.showmode = false
@@ -104,6 +106,7 @@ command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vi
 command({ key = "<leader>s", name = "TestStop", cmd = "lua require('neotest').run.stop()" })
 command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle" })
 command({ key = "<A-t>", name = "Terminal", cmd = "ToggleTerm" })
+command({ key = "<C-M>", name = "Marks", cmd = "Telescope marks" })
 -- }}}
 
 -- {{{ Autocommands
