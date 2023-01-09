@@ -48,6 +48,7 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldcolumn = '0'
 vim.o.foldenable = true
 vim.o.showtabline = 0
+vim.o.cmdheight = 0
 vim.cmd([[ set foldopen-=block ]])
 vim.cmd([[ set foldcolumn=0 ]]) -- Not sure why this doesn't work with `vim.o`
 
