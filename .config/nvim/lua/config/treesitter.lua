@@ -19,6 +19,8 @@ function M.setup()
             custom_foldtext = true,
         },
 
+        playground = { enable = true },
+
 
         textsubjects = {
             enable = true,

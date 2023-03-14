@@ -21,14 +21,14 @@ function M.setup()
                 i = {
                     ["<esc>"] = actions.close,
                     ["<c-l>"] = trouble.open_with_trouble,
-                    ["<c-j>"] = actions.cycle_history_next,
-                    ["<c-k>"] = actions.cycle_history_prev,
+                    ["<A-j>"] = actions.move_selection_next,
+                    ["<A-k>"] = actions.move_selection_previous,
                 },
                 n = {
                     ["q"] = actions.close,
                     ["<c-l>"] = trouble.open_with_trouble,
-                    ["<A-j>"] = actions.preview_scrolling_down,
-                    ["<A-k>"] = actions.preview_scrolling_up,
+                    ["<A-j>"] = actions.move_selection_next,
+                    ["<A-k>"] = actions.move_selection_previous,
                     ["<c-j>"] = actions.cycle_history_next,
                     ["<c-k>"] = actions.cycle_history_prev,
                 }

@@ -3,15 +3,15 @@ local M = {}
 local actions = require("diffview.actions")
 
 function M.toggle()
-  local lib = require'diffview.lib'
-  local view = lib.get_current_view()
-  if view then
-    -- Current tabpage is a Diffview; close it
-    vim.cmd(":DiffviewClose")
-  else
-    -- No open Diffview exists: open a new one
-    vim.cmd(":DiffviewOpen")
-  end
+    local lib = require 'diffview.lib'
+    local view = lib.get_current_view()
+    if view then
+        -- Current tabpage is a Diffview; close it
+        vim.cmd(":DiffviewClose")
+    else
+        -- No open Diffview exists: open a new one
+        vim.cmd(":DiffviewOpen")
+    end
 end
 
 function M.setup()
@@ -70,12 +70,14 @@ function M.setup()
         },
         file_history_panel = {
             log_options = { -- See ':h diffview-config-log_options'
-                single_file = {
-                    diff_merges = "combined",
-                },
-                multi_file = {
-                    diff_merges = "first-parent",
-                },
+                git = {
+                    single_file = {
+                        diff_merges = "combined",
+                    },
+                    multi_file = {
+                        diff_merges = "first-parent",
+                    },
+                }
             },
             win_config = { -- See ':h diffview-config-win_config'
                 position = "bottom",

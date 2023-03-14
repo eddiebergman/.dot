@@ -6,7 +6,7 @@ M.lsp_servers = {
     "taplo", -- toml
     "esbonio", -- rst docs
     "marksman", -- markdown
-    "sumneko_lua", -- lua
+    "lua_ls", -- lua
     "pyright", -- python
     "jsonls", -- json
     "clangd", -- c/c++

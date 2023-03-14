@@ -4,11 +4,15 @@ local function plugins(use)
     use('wbthomason/packer.nvim')
 
     -- https://github.com/topics/neovim-colorscheme?o=desc&s=stars
-    use('folke/tokyonight.nvim')
+    --use('folke/tokyonight.nvim')
     use({
         'navarasu/onedark.nvim',
         config = function () require("config/onedark").setup() end
     })
+    --use({"sainnhe/gruvbox-material"})
+    --use({"catppuccin/nvim", config = function () require("config/catppuccin").setup() end})
+    --use({"rose-pine/neovim"})
+    use({"nyoom-engineering/oxocarbon.nvim"})
 
     -- Mason
     -- Easy setup of many language specific tools and LSP servers to give "smarts" to the editor
@@ -21,6 +25,15 @@ local function plugins(use)
         },
         config = function() require("config/mason").setup() end
     })
+
+    -- spotify
+    use({
+        "KadoBOT/nvim-spotify",
+        requires = "nvim-telescope/telescope.nvim",
+        config = function() require("config/spotify").setup() end,
+        run = "make"
+    })
+
 
     -- Telescope
     -- The popup window that lets you select files
@@ -116,6 +129,12 @@ local function plugins(use)
         config = function() require("config/lualine").setup() end
     })
 
+    -- Lsp Lines
+    use ({
+       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        config = function() require("config/lsp-lines").setup() end
+    })
+
 
     -- Gitsigns
     -- Nice git utilities for changes to a file
@@ -170,6 +189,7 @@ local function plugins(use)
             "nvim-treesitter/nvim-treesitter-refactor",
             "RRethy/nvim-treesitter-textsubjects",
             "nvim-treesitter/nvim-treesitter-textobjects",
+            "nvim-treesitter/playground",
             {
                 "eddiebergman/nvim-treesitter-pyfold",
                 ft = { "python" }

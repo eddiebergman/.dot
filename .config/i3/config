@@ -50,8 +50,8 @@ bindsym $mod+f fullscreen toggle
 
 bindsym $mod+p move workspace to output primary
 bindsym $mod+o move workspace to output HDMI2
-bindsym $mod+Shift+l move workspace to output left
-bindsym $mod+Shift+h move workspace to output right
+bindsym $mod+Shift+l move workspace to output right
+bindsym $mod+Shift+h move workspace to output left
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed

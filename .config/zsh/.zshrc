@@ -138,7 +138,7 @@ screen () {
     xrandr --auto
     local primary="eDP-1"
     local hdmi="HDMI-1"
-    local home_left="DP-2-9"
+    local home_center="DP-2-9"
     local home_right="HDMI-1"
     local work_middle="DP-2-2"
     local work_right="DP-2-3"
@@ -152,7 +152,7 @@ screen () {
 
     # Disable all monitors
     if equal $1 "off"; then
-        xrandr --output $home_left --off;
+        xrandr --output $home_center --off;
         xrandr --output $home_right --off;
         xrandr --output $work_middle --off;
         xrandr --output $work_right --off;
@@ -162,8 +162,8 @@ screen () {
         xrandr --output $work_right --right-of $work_middle --auto
 
     elif equal $1 "home"; then
-        xrandr --output $home_right --left-of $primary --mode 2560x1440
-        xrandr --output $home_left --left-of $home_right --auto
+        xrandr --output $home_center --right-of $primary --auto
+        xrandr --output $home_right --right-of $home_center --mode 2560x1440
 
     elif equal $1 "right" ; then
         xrandr --output $hdmi --right-of $primary --auto
@@ -359,7 +359,6 @@ work () {
     if equal $mode "asklearn"; then
         cd ${HOME}/code/asklearn/dev/
         pyshell
-        vim
     elif equal $mode "class"; then
         cd ${HOME}/code/automl_class
     else
@@ -441,7 +440,7 @@ code () {
     if exists $venv; then
         pyshell
     fi
-    $EDITOR
 }
 
 alias fonts="kitty +list-fonts --psnames"
+eval "$(hub alias -s)"

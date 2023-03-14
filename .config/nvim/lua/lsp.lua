@@ -6,16 +6,17 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 function M.setup()
     vim.diagnostic.config({
-        virtual_text = { severity = vim.diagnostic.severity.ERROR },
+        virtual_text = false, -- While lsp-lines { severity = vim.diagnostic.severity.ERROR },
         signs = { severity = { max = vim.diagnostic.severity.WARN } },
+        virtual_lines = { only_current_line = true },
         underline = true,
         update_in_insert = false,
         severity_sort = true,
         float = {
-            border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " },
-            source = "always",
-            header = "",
-            prefix = "",
+           border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " },
+           source = "always",
+           header = "",
+           prefix = "",
         }
     })
     -- M.show_diagnostics_on_hover()
@@ -58,9 +59,8 @@ function M.setup()
                     config.settings.python.pythonPath = penv.python
                 end,
                 capabilities = capabilities,
-                on_attach = M.breadcrumbs_attach,
             })
-        elseif server == "sumneko_lua" then
+        elseif server == "lua_ls" then
             lspconfig[server].setup({
                 settings = {
                     Lua = {
@@ -70,7 +70,8 @@ function M.setup()
                         },
                         telemetry = { enable = false },
                     }
-                }
+                },
+                capabilities = capabilities,
             })
         else
             lspconfig[server].setup({
@@ -99,7 +100,7 @@ function M.enable_markdown_highlighting_in_lsp_hover()
         local f = vim.lsp.with(vim.lsp.handlers.hover, {
             border = above_below_border,
             stylize_markdown = false
-        })
+         })
         local floating_bufnr, floating_winnr = f(err, result, ctx, config)
         vim.api.nvim_buf_set_option(floating_bufnr, "filetype", "markdown")
         return floating_bufnr, floating_winnr

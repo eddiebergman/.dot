@@ -21,7 +21,7 @@ vim.o.fixendofline = false
 vim.o.formatoptions = "lnjqr"
 vim.o.guicursor = ""
 vim.o.ignorecase = true
-vim.o.inccommand = "split"
+vim.o.inccommand = "nosplit"
 vim.o.laststatus = 3
 vim.o.linebreak = true
 vim.o.mouse = "a"
@@ -79,16 +79,26 @@ command({ key = "<leader>ev", name = "VIMRC", cmd = "e $MYVIMRC" })
 command({ key = "<C-p>", name = "FindFile", cmd = function() require("telescope.builtin").find_files({ hidden = true }) end, })
 command({ key = "<leader>ss", name = "FindString", cmd = "Telescope live_grep", })
 command({ key = "<C-f>", name = "FindCommand", cmd = "Telescope commands" })
-command({ key = "<c-space>", name = "NextDiagnostic", cmd = "lua vim.diagnostic.goto_next()" })
+command({
+    key = "<c-space>",
+    name = "NextDiagnostic",
+    cmd = function()
+        vim.cmd("normal! zR")  -- Expand folds
+        vim.diagnostic.goto_next({ float=false, wrap=true, })
+    end
+})
 command({ key = "se", name = "LineErrors", cmd = "lua vim.diagnostic.open_float()", })
 command({ key = "<C-d>", name = "DiagnosticsList", cmd = "TroubleToggle workspace_diagnostics", })
+
+command({ key = "cc", name = "RenameSymbol", cmd = "lua vim.lsp.buf.rename()"})
 command({ key = "<leader>f", name = "Format", cmd = "lua vim.lsp.buf.format()" })
-command({ key = "<leader>r", name = "Rename", cmd = "lua vim.lsp.buf.rename()", })
 command({ key = "sd", name = "Definition", cmd = "lua vim.lsp.buf.hover()", })
 command({ key = "gd", name = "GoDefinition", cmd = "Telescope lsp_definitions", })
+command({ key = "gi", name = "GoImplementation", cmd = "Telescope lsp_implementations", })
 command({ key = "sr", name = "ShowReferences", cmd = "Trouble lsp_references" })
 command({ key = "<A-cr>", name = "CodeActions", cmd = "lua vim.lsp.buf.code_action()", })
 command({ key = "<leader>S", name = "SearchSymbolDoc", cmd = "Telescope lsp_workspace_symbols", })
+
 command({ key = "<leader>gs", name = "GitStatus", cmd = "vertical bo Git", })
 command({ key = "<leader>gc", name = "GitCommit", cmd = "Git commit", })
 command({ key = "<leader>gp", name = "GitPush", cmd = "Git push", })
@@ -101,15 +111,29 @@ command({ key = "<C-G>", name = "Diffview", cmd = function() require('config/dif
 command({ key = "<A-g>", name = "DiffHistory", cmd = "DiffviewFileHistory" })
 command({ key = "<leader>td", name = "ToggleDeletedGit", cmd = "Gitsigns toggle_deleted" })
 command({ key = "<leader>tl", name = "ToggleLineGit", cmd = "Gitsigns toggle_linehl" })
+
 command({ key = "<C-t>", name = "TestToggle", cmd = "lua require('neotest').summary.toggle()" })
 command({ key = "t", name = "TestFunction", cmd = "lua require('neotest').run.run()" })
 command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vim.fn.expand('%'))" })
-command({ key = "<leader>s", name = "TestStop", cmd = "lua require('neotest').run.stop()" })
+
 command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle" })
 command({ key = "<A-t>", name = "Terminal", cmd = "ToggleTerm" })
-command({ key = "<C-M>", name = "Marks", cmd = "Telescope marks" })
--- }}}
+command({ key = "<leader>ll", name = "ToggleLspLines", cmd="lua require('lsp_lines').toggle()" })
+command({ key = "<leader>lr", name = "ToggleLspReferences", cmd = function() vim.diagnostic.reset() end})
 
+setkey({ key = "Q", cmd = "@q" })
+setkey({ key = "M", cmd = "mm" })
+setkey({ key = "<C-M>", cmd = "'m"})
+
+vim.api.nvim_set_keymap("n", "<leader>sn", "<Plug>(SpotifySkip)", { silent = true }) -- Skip the current track
+vim.api.nvim_set_keymap("n", "<leader>sp", "<Plug>(SpotifyPause)", { silent = true }) -- Pause/Resume the current track
+vim.api.nvim_set_keymap("n", "<leader>s<C-s>", "<Plug>(SpotifySave)", { silent = true }) -- Add the current track to your library
+vim.api.nvim_set_keymap("n", "<leader>so", ":Spotify<CR>", { silent = true }) -- Open Spotify Search window
+vim.api.nvim_set_keymap("n", "<leader>sd", ":SpotifyDevices<CR>", { silent = true }) -- Open Spotify Devices window
+vim.api.nvim_set_keymap("n", "<leader>sp", "<Plug>(SpotifyPrev)", { silent = true }) -- Go back to the previous track
+vim.api.nvim_set_keymap("n", "<leader>sh", "<Plug>(SpotifyShuffle)", { silent = true }) -- Toggles shuffle mode
+
+-- }}}
 -- {{{ Autocommands
 vim.api.nvim_create_augroup("UserCommands", { clear = true })
 vim.api.nvim_create_autocmd("InsertEnter",
@@ -119,7 +143,6 @@ vim.api.nvim_create_autocmd("InsertLeave",
     { group = "UserCommands", command = "hi CursorLine gui=NONE", }
 )
 -- }}}
-
 -- {{{ Modules
 -- Go before plugins
 if vim.env.VIRTUAL_ENV == nil and vim.env.CONDA_PYTHON_EXE then
@@ -133,9 +156,16 @@ require("lsp").setup() -- Language smarts
 -- }}}
 -- {{{ Colors
 -- If using one dark
-vim.cmd("colorscheme onedark")
-vim.api.nvim_set_hl(0, "Folded", { fg = "#fa8f02", bg = "NONE", italic = true })
+local colorscheme = "oxocarbon"
+vim.g.gruvbox_material_background = "medium"
+vim.g.gruvbox_material_enable_bold = false
+vim.g.gruvbox_material_transparent_background = 0
+vim.g.gruvbox_material_dim_inactive_windows = false
+vim.g.gruvbox_material_diagnostic_virtual_text = 'colored'
+vim.g.gruvbox_material_better_performance = 'colored'
 
+vim.cmd("colorscheme "..colorscheme)
+vim.api.nvim_set_hl(0, "Folded", { fg = "#fa8f02", bg = "NONE", italic = true })
 
 -- }}}
 -- vim:foldmethod=marker

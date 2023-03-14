@@ -145,10 +145,7 @@ function self.setup()
             end,
 
 
-            experimental = {
-                ghost_text = false,
-                native_menu = false,
-            },
+            experimental = { ghost_text = false },
 
             duplicates = {
                 buffer = 1,
@@ -223,12 +220,11 @@ function self.setup()
     )
 
     cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
         sources = { { name = 'buffer' } }
     })
 
     cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
+        view = { entries = "custom" },
         sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
     })
 
