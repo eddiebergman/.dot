@@ -35,11 +35,15 @@ function M.setup()
                     ["p"] = "@parameter.outer",
                     ["af"] = "@function.outer",
                     ["if"] = "@function.inner",
-                    ["ac"] = "@class.outer",
                     ["ic"] = "@class.inner",
+                    ["ac"] = "@class.outer",
                     ["ab"] = "@block.outer",
                     ["ib"] = "@block.inner",
                 },
+                selection_modes = {
+                    ["@function.outer"] = "V",
+                    ["@function.inner"] = "V"
+                }
             },
             swap = {
                 enable = true,
@@ -60,10 +64,13 @@ function M.setup()
             },
             move = {
                 enable = true,
-                goto_next_start = {},
-                goto_next_end = {},
-                goto_previous_start = {},
-                goto_previous_end = { },
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                    ["]f"] = "@function.outer",
+                },
+                goto_previous_start = {
+                    ["[f"] = "@function.outer",
+                },
             },
         },
     })

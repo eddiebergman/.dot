@@ -1,18 +1,64 @@
 local M = {}
 
+local theme_package = "~/.dot/.config/nvim/darkme"
+
 local function plugins(use)
     use('wbthomason/packer.nvim')
 
     -- https://github.com/topics/neovim-colorscheme?o=desc&s=stars
     --use('folke/tokyonight.nvim')
-    use({
-        'navarasu/onedark.nvim',
-        config = function () require("config/onedark").setup() end
-    })
     --use({"sainnhe/gruvbox-material"})
     --use({"catppuccin/nvim", config = function () require("config/catppuccin").setup() end})
     --use({"rose-pine/neovim"})
-    use({"nyoom-engineering/oxocarbon.nvim"})
+    use({ "nyoom-engineering/oxocarbon.nvim" })
+    use({ "rktjmp/lush.nvim" })
+    use({ theme_package })
+    use({
+        "lalitmee/browse.nvim",
+        requires = { "nvim-telescope/telescope.nvim", "stevearc/dressing.nvim" },
+        config = function() require("config/browse").setup() end,
+    })
+
+    -- Persistance
+    -- Session management
+    use({
+        "folke/persistence.nvim",
+        event = "BufReadPre",
+        module = "persistence",
+        config = function() require("persistence").setup() end
+    })
+
+    -- Overseer
+    -- Quick commands to run
+    use({
+        "stevearc/overseer.nvim",
+        config = function() require("config/overseer").setup() end
+    })
+    use({
+        "rcarriga/nvim-notify",
+        config = function() require("config/nvim-notify").setup() end
+    })
+
+
+    -- Harpoon
+    use({
+        "ThePrimeagen/harpoon",
+        config = function() require("config/harpoon").setup() end
+    })
+
+    -- Zen mode
+    -- Focus on one editor
+    use {
+        "folke/zen-mode.nvim",
+        config = function() require("config/zen").setup() end,
+    }
+
+    -- Twilight
+    -- Dim unfocused parts of code
+    use {
+        "folke/twilight.nvim",
+        config = function() require("config/twilight").setup() end,
+    }
 
     -- Mason
     -- Easy setup of many language specific tools and LSP servers to give "smarts" to the editor
@@ -49,7 +95,7 @@ local function plugins(use)
     -- Diffview
     use({
         'sindrets/diffview.nvim',
-        requires = {"nvim-lua/plenary.nvim"},
+        requires = { "nvim-lua/plenary.nvim" },
         config = function() require('config/diffview').setup() end
     })
 
@@ -128,13 +174,6 @@ local function plugins(use)
         },
         config = function() require("config/lualine").setup() end
     })
-
-    -- Lsp Lines
-    use ({
-       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function() require("config/lsp-lines").setup() end
-    })
-
 
     -- Gitsigns
     -- Nice git utilities for changes to a file
@@ -222,12 +261,6 @@ local function plugins(use)
         end
     })
 
-    -- Nice notifications
-    use({
-        "rcarriga/nvim-notify",
-        config = function() require("config/nvim-notify").setup() end
-    })
-
     -- Luapad
     -- Lets you quickly try out some Lua
     use("rafcamlet/nvim-luapad")
@@ -235,12 +268,6 @@ local function plugins(use)
     -- Git integration
     -- Must have
     use("tpope/vim-fugitive")
-
-    -- Multi-cursor
-    use({
-        "mg979/vim-visual-multi",
-        config = function() require("config/multi-cursor").setup() end
-    })
 
     -- Surround text
     -- `ys<motion><surround-symbol>`

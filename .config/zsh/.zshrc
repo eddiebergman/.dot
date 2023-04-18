@@ -347,26 +347,6 @@ clone () {
     mypy --install-types
 }
 # }}}
-# {{{ work
-work () {
-
-    if empty $1; then
-        mode="asklearn"
-    else
-        mode=$1
-    fi
-
-    if equal $mode "asklearn"; then
-        cd ${HOME}/code/asklearn/dev/
-        pyshell
-    elif equal $mode "class"; then
-        cd ${HOME}/code/automl_class
-    else
-        echo "Usage: work [{asklearn, class}]"
-    fi
-
-}
-# }}}
 # {{{ Editors
 local neovide_cmd="neovide; disown; exit"
 local vim=$neovide_cmd
@@ -436,10 +416,42 @@ code () {
     local chosen="${location}/${selection}"
     cd "$chosen"
 
+    local main="${chosen}/main";
+    if exists $main; then
+      cd "$main"
+      chosen="$main"
+    fi
+
     local venv="${chosen}/.venv"
     if exists $venv; then
         pyshell
     fi
+}
+
+wt () {
+    # If we're in one of the branches of the worktree, we can use things as expected
+    if exists "$PWD/.git"; then
+        local selection=$(git worktree list --porcelain | grep worktree | awk '{print $2}' | fzf)
+        if ! empty "$selection"; then
+          cd "$selection"
+        fi
+    # Otherwise, we just select one of the local directores
+    else
+        local selection=$(ls -1A | fzf)
+        if ! empty "$selection"; then
+          cd "$selection"
+        fi
+    fi
+
+    if exists "$PWD/.venv"; then
+        pyshell
+    fi
+}
+
+unalias -m gb
+gb () {
+    git worktree add ../$1
+    cd ../$1
 }
 
 alias fonts="kitty +list-fonts --psnames"

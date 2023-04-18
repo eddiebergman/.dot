@@ -17,6 +17,7 @@ local center_list = themes.get_dropdown({
 function M.setup()
     telescope.setup({
         defaults = {
+            file_ignore_patterns = { ".git/", ".venv*/", "*.svg", "*.png", "*.pdf"},
             mappings = {
                 i = {
                     ["<esc>"] = actions.close,

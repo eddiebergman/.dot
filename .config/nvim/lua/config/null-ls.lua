@@ -53,7 +53,7 @@ function M.setup()
     local python = M.find_local("python")
 
     require("null-ls").setup({
-        debug = true, -- :NullLsLog to get the log if deubg is on
+        debug = false, -- :NullLsLog to get the log if deubg is on
         sources = {
             diagnostics.ruff.with({
                 prefer_local = python,
@@ -65,7 +65,7 @@ function M.setup()
             }),
             diagnostics.mypy.with({
                 prefer_local = python,
-                condition = M.check_for({ ["mypy.ini"] = ".*", ["pyproject.toml"] = "tool.mypy" })
+                condition = function () return false end, --M.check_for({ ["mypy.ini"] = ".*", ["pyproject.toml"] = "tool.mypy" })
             }),
             formatting.black.with({
                 prefer_local = python,

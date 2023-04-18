@@ -1,8 +1,7 @@
 local M = {}
 
 function M.setup()
-    require("lsp_lines").setup()
+    require("twilight").setup({})
 end
-
 
 return M

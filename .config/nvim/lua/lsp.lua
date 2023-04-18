@@ -6,9 +6,8 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 function M.setup()
     vim.diagnostic.config({
-        virtual_text = false, -- While lsp-lines { severity = vim.diagnostic.severity.ERROR },
+        virtual_text = { severity = vim.diagnostic.severity.ERROR },
         signs = { severity = { max = vim.diagnostic.severity.WARN } },
-        virtual_lines = { only_current_line = true },
         underline = true,
         update_in_insert = false,
         severity_sort = true,

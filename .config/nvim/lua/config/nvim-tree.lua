@@ -59,9 +59,6 @@ end
 local config = {
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
-    ignore_ft_on_setup = {},
-    open_on_tab = false,
     hijack_cursor = true,
     sync_root_with_cwd = true,
     diagnostics = {
@@ -93,6 +90,7 @@ local config = {
     },
     renderer = {
         highlight_opened_files = "name",
+        root_folder_label = true,
         icons = {
             show = {
                 git = false,
@@ -110,7 +108,6 @@ local config = {
     },
     view = {
         width = 30,
-        hide_root_folder = true,
         side = 'left',
         mappings = {
             custom_only = false,
