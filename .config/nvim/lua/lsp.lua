@@ -51,7 +51,7 @@ function M.setup()
                     },
                 },
                 before_init = function(_, config)
-                    local penv = require("util").python_env({ patterns = { "venv", ".venv", "env", ".env" } })
+                    local penv = require("util").python_env({ patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" } })
                     if penv == nil then
                         return
                     end
