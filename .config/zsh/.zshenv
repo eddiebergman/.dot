@@ -10,10 +10,6 @@ export PATH="${PATH}:${NPM_PACKAGES}/bin"
 export PATH="${PATH}:${HOME}/usr/bin"
 export PATH="$HOME/.just:$PATH"
 
-export NEOVIDE_FRAME="none"
-export NEOVIDE_MULTIGRID=1
-
-
 # {{{ Python
 # This is put in here so that spawning neovide should know about this
 export PYENV_ROOT="$HOME/.pyenv"

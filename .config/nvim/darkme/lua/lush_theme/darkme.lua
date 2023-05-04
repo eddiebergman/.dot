@@ -299,7 +299,7 @@ local theme = lush(function(injected_functions)
         String { fg = green40 }, --   A string constant: "this is a string"
         Character { fg = orange40 }, --   A character constant: 'c', '\n'
         Number { fg = orange40 }, --   A number constant: 234, 0xff
-        Boolean { fg = orange40 }, --   A boolean constant: TRUE, false
+        Boolean { fg = yellow40 }, --   A boolean constant: TRUE, false
         Float { fg = orange40 }, --   A floating point constant: 2.3e10
 
         Identifier {}, -- (*) Any variable name
@@ -319,7 +319,7 @@ local theme = lush(function(injected_functions)
         -- Macro          { }, --   Same as Define
         -- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
 
-        Type { fg = blue40, gui = "nocombine" }, -- (*) int, long, char, etc.
+        Type { fg = pink, gui = "bold, nocombine" }, -- (*) int, long, char, etc.
         -- StorageClass   { }, --   static, register, volatile, etc.
         -- Structure      { }, --   struct, union, enum, etc.
         -- Typedef        { }, --   A typedef
@@ -391,16 +391,20 @@ local theme = lush(function(injected_functions)
 
         sym"@text.literal"      { fg = teal40 }, -- Comment
         sym"@text.reference"    { fg = yellow40 }, -- Identifier
+        sym"@text.reference.markdown_inline"    { fg = yellow40, gui="italic" }, -- Identifier
+        sym"@text.literal.markdown_inline"    { fg = green40 }, -- Identifier
+        sym"@conceal.markdown_inline"    { fg = gray70 }, -- Identifier
+        sym"@lsp.type.class.markdown" { fg = pink.darken(40) }, --
         -- sym"@text.title"        { }, -- Title
         -- sym"@text.uri"          { }, -- Underlined
         -- sym"@text.underline"    { }, -- Underlined
         sym "@text.todo"         { Todo}, --{  fg = guide, gui = "bold"}, -- Todo
         -- sym"@comment"           { }, -- Comment
-        -- sym"@punctuation"       { }, -- Delimiter
-        sym "@punctuation.bracket" { fg = yellow40.darken(60) }, -- Delimiter
-        sym "@punctuation.delimiter" { fg = yellow40.darken(60) }, -- Delimiter
-        -- sym"@constant"          { }, -- Constant
-        -- sym"@constant.builtin"  { }, -- Special
+        sym"@punctuation"       { fg=pink.darken(40) }, -- Delimiter
+        -- sym "@punctuation.bracket" { fg = yellow40 }, -- Delimiter
+        sym "@punctuation.delimiter" { fg = teal40 }, -- Delimiter
+        sym"@constant"          { fg=orange40 }, -- Constant
+        sym"@constant.builtin.python"  { fg=orange40, gui="italic" }, -- Special
         -- sym"@constant.macro"    { }, -- Define
         -- sym"@define"            { }, -- Define
         -- sym"@macro"             { }, -- Macro
@@ -412,23 +416,27 @@ local theme = lush(function(injected_functions)
         -- sym"@number"            { }, -- Number
         -- sym"@boolean"           { }, -- Boolean
         -- sym"@float"             { }, -- Float
-        sym "@function.builtin" { fg = orange40, gui = "bold" }, -- Special
+        sym "@function.builtin" { fg = orange40, gui = "italic" }, -- Special
         -- sym"@function.macro"    { }, -- Macro
         sym "@function.call" { fg = orange40 }, -- Macro
-        -- sym"@parameter"         { }, -- Identifier
-        sym "@method" { fg = Function.fg.lighten(30), gui = "bold" }, -- Function
-        sym "@function" { fg = Function.fg.lighten(30), gui = "bold" }, -- Function
-        sym "@field" { fg = white }, -- Identifier
+        sym "@parameter"         { fg = white }, -- Identifier
+        sym "@method.call.python" { fg = purple60.lighten(30), gui="bold", nocombine=true },
+        sym "@method" { fg = blue60, gui = "bold" }, -- Function
+        sym "@function" { fg = blue60, gui = "bold" }, -- Function
+        sym "@field" { fg=blue40, gui = "italic", }, -- Identifier
         -- sym"@property"          { }, -- Identifier
-        sym "@constructor" { Type, gui = "nocombine" }, -- Special
-        -- sym"@conditional"       { }, -- Conditional
-        -- sym"@repeat"            { }, -- Repeat
+        sym "@constructor" { Type, gui = "bold" }, -- Special
+        sym"@conditional"       { fg=teal40, gui="italic" }, -- Conditional
+        sym"@repeat"            { fg=teal40, gui="italic" }, -- Repeat
         -- sym"@label"             { }, -- Label
-        -- sym"@keyword"           { }, -- Keyword
-        -- sym"@exception"         { }, -- Exception
-        sym "@variable.builtin" { gui = "bold" }, -- Identifier
+        sym"@keyword"           { fg=teal40, gui="italic" }, -- Keyword
+        sym"@keyword.return"           { fg=teal40, gui="italic" }, -- Keyword
+        sym "@exception"         { fg=red60, gui="italic" }, -- Exception
+        sym "@variable" { fg = white  }, -- Identifier
+        sym "@variable.builtin" { fg=white, gui = "bold" }, -- Identifier
         sym "@operator" { fg = teal40, gui = "nocombine" }, -- Operator
-        -- sym"@type"              { }, -- Type
+        sym"@type"              { fg=yellow40, gui="bold" }, -- Type
+        sym"@type.builtin"              { fg=pink, gui="italic" }, -- Type
         -- sym"@type.definition"   { }, -- Typedef
         -- sym"@storageclass"      { }, -- StorageClass
         -- sym"@structure"         { }, -- Structure
@@ -440,10 +448,10 @@ local theme = lush(function(injected_functions)
         -- sym"@debug"             { }, -- Debug
         -- sym"@tag"               { }, -- Tag
         sym "@text.note" { fg = green40 }, -- Function
-        sym "@method.call" { fg = cyan40 }, -- Function
+        sym "@method.call" { fg = guide }, -- Function
         sym "@string.documentation" { fg = green40.darken(50) }, -- SpecialComment
-        sym "@keyword.function" { fg = teal40, gui = "bold" }, -- SpecialComment
-        sym "@keyword.operator" { fg = teal40 }, -- SpecialComment
+        sym "@keyword.function" { fg = teal40, gui = "italic" }, -- SpecialComment
+        sym "@keyword.operator" { fg = teal40, gui="italic" }, -- SpecialComment
         sym "@text.title" { fg = guide, gui = "italic,bold" }, -- SpecialComment
 
         lualine_a_normal { fg = black, bg = guide },

@@ -49,8 +49,24 @@ vim.o.foldcolumn = '0'
 vim.o.foldenable = true
 vim.o.showtabline = 0
 vim.o.cmdheight = 0
+vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20"
 vim.cmd([[ set foldopen-=block ]])
 vim.cmd([[ set foldcolumn=0 ]]) -- Not sure why this doesn't work with `vim.o`
+
+if vim.g.neovide then
+    vim.o.guifont = "FiraCode Nerd Font:h15:e-subpixelantialias"
+    vim.o.linespace = 5
+    vim.g.neovide_scale_factor = 1.0
+    vim.g.neovide_cursor_animation_length = 0.065
+    local change_scale_factor = function(delta)
+      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+    end
+    vim.keymap.set("n", "<C-+>", function() change_scale_factor(1.25)
+    end)
+    vim.keymap.set("n", "<C-_>", function() change_scale_factor(1/1.25)
+    end)
+
+end
 
 -- }}}
 

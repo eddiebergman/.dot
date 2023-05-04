@@ -97,11 +97,11 @@ chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
 export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
 export PATH="${PATH}:/usr/local/cuda/bin"
 
-# For lutris gaming on linux, required for "import dbus"
-export PATH="${PATH}:/usr/lib/python3/dist-packages"
+# For Neovide
+export PATH="${PATH}:${HOME}/software/neovide"
 
-# For Lean Theorem Prover
-export PATH="${PATH}:${HOME}/.elan/bin"
+# Thunderbitd
+export PATH="${PATH}:${HOME}/software/thunderbird/thunderbird"
 # }}}
 # }}}
 # {{{ Aliases
@@ -110,6 +110,7 @@ alias ls='ls -a --group-directories-first --sort=extension --color=auto'
 alias xclip='xclip -selection clipboard'
 alias ipython=ipy
 alias vim="nvim"
+alias neovide="neovide & disown; exit"
 # }}}
 # {{{ Quick files
 alias evimrc="cd ~/.config/nvim; $EDITOR"
@@ -456,3 +457,8 @@ gb () {
 
 alias fonts="kitty +list-fonts --psnames"
 eval "$(hub alias -s)"
+
+# Set repeat rate for keys
+xset r rate 195 35
+
+export FZF_DEFAULT_OPTS="--bind=alt-j:down,alt-k:up --inline-info"
