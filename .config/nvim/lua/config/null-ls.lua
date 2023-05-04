@@ -20,7 +20,7 @@ end
 function M.find_local(language)
     if language == "python" then
         -- Will attempt to find your python env using VirtualEnv, Conda or virtual env patterns
-        local python_env = util.python_env({ patterns = { "venv", ".venv", "env", ".env" } })
+        local python_env = util.python_env({ patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" } })
         if not python_env then
             return nil
         end
