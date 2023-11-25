@@ -1,7 +1,6 @@
 local M = {}
 local lualine = require("lualine")
 local status = require("nvim-spotify").status
-local theme = require("lush_theme.darkme")
 
 local function show_macro_recording()
     local recording_register = vim.fn.reg_recording()
@@ -10,16 +9,6 @@ local function show_macro_recording()
     else
         return "Recording @" .. recording_register
     end
-end
-
-local function theme_extracter()
-    local tab = {}
-    for _, mode in ipairs({"normal", "insert", "visual", "replace", "command", "terminal", "inactive"}) do
-        tab[mode] = {
-            a = { fg = tostring(theme["lualine_a_".. mode].fg), bg = tostring(theme["lualine_a_".. mode].bg), gui = "bold" },
-        }
-    end
-    return tab
 end
 
 
@@ -62,7 +51,6 @@ function M.setup()
     lualine.setup({
         options = {
             icons_enabled = true,
-            theme = theme_extracter(),
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
             disabled_filetypes = {

@@ -3,6 +3,7 @@ local M = {}
 function M.setup()
     require("overseer").setup({
         task_list = {
+            direction = "bottom",
             bindings = {
                 ["r"] = "<CMD>OverseerQuickAction restart<CR>",
                 ["d"] = "<CMD>OverseerQuickAction dispose<CR>",

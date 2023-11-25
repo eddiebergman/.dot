@@ -63,3 +63,7 @@ alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake
 if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
   source "${VIRTUAL_ENV}/bin/activate"
 fi
+
+# Disable capslock
+xmodmap -e "remove lock = Caps_Lock"
+# xmodmap -e "add lock = Caps_Lock"

@@ -30,18 +30,47 @@ function M.get_diagnostic_text()
     return table.concat(text, " ")
 end
 
-function M.setup()
-    require("nvim-navic").setup({ highlight = true })
-    local winbar_parts = {
-        "%#@constant#%t", -- filename
-        " > ", -- just a seperator
-        "%{%v:lua.require'nvim-navic'.get_location()%}", -- breadcrumbs
-        "%=", -- Seperate
-        "%{%v:lua.require('config/nvim-navic').get_diagnostic_text()%}", -- Diagnostics
-    }
+local icons = {
+    File          = "F ",
+    Module        = " ",
+    Namespace     = " ",
+    Package       = " ",
+    Class         = "C ",
+    Method        = "m ",
+    Property      = " ",
+    Field         = " ",
+    Constructor   = " ",
+    Enum          = "󰕘",
+    Interface     = "󰕘",
+    Function      = "󰊕 ",
+    Variable      = "󰆧 ",
+    Constant      = "󰏿 ",
+    String        = "󰀬 ",
+    Number        = "󰎠 ",
+    Boolean       = "◩ ",
+    Array         = "󰅪 ",
+    Object        = "󰅩 ",
+    Key           = "󰌋 ",
+    Null          = "󰟢 ",
+    EnumMember    = " ",
+    Struct        = "󰌗 ",
+    Event         = " ",
+    Operator      = "󰆕 ",
+    TypeParameter = "󰊄 ",
+}
 
-    vim.o.winbar = table.concat(winbar_parts, "")
-    vim.api.nvim_set_hl(0, "NavicText", { link = "@string.regex" })
+function M.setup()
+    -- require("nvim-navic").setup({ highlight = true, icons=icons })
+    -- local winbar_parts = {
+    --     "%#@constant#%t", -- filename
+    --     " > ", -- just a seperator
+    --     "%{%v:lua.require'nvim-navic'.get_location()%}", -- breadcrumbs
+    --     "%=", -- Seperate
+    --     "%{%v:lua.require('config/nvim-navic').get_diagnostic_text()%}", -- Diagnostics
+    -- }
+    --
+    -- vim.o.winbar = table.concat(winbar_parts, "")
+    -- vim.api.nvim_set_hl(0, "NavicText", { link = "@string.regex" })
 end
 
 return M

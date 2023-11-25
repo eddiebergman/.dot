@@ -33,52 +33,28 @@ function M.find_local(language)
     end
 end
 
-local ruff_fix = helpers.make_builtin({
-    name = "ruff",
-    meta = {
-        url = "https://github.com/charliermarsh/ruff/",
-        description = "An extremely fast Python linter, written in Rust.",
-    },
-    method = methods.internal.FORMATTING,
-    filetypes = { "python" },
-    generator_opts = {
-        command = "ruff",
-        args = { "--fix", "-e", "-n", "--stdin-filename", "$FILENAME", "-" },
-        to_stdin = true
-    },
-    factory = helpers.formatter_factory
-})
-
 function M.setup()
     local python = M.find_local("python")
 
     require("null-ls").setup({
         debug = false, -- :NullLsLog to get the log if deubg is on
         sources = {
-            diagnostics.ruff.with({
-                prefer_local = python,
-                condition = M.check_for({ ["pyproject.toml"] = "tool.ruff" })
-            }),
-            ruff_fix.with({
-                prefer_local = python,
-                condition = M.check_for({ ["pyproject.toml"] = "tool.ruff" })
-            }),
             diagnostics.mypy.with({
                 prefer_local = python,
-                condition = function () return false end, --M.check_for({ ["mypy.ini"] = ".*", ["pyproject.toml"] = "tool.mypy" })
+                condition = function () M.check_for({ ["mypy.ini"] = ".*", ["pyproject.toml"] = "tool.mypy" }) end
             }),
             formatting.black.with({
                 prefer_local = python,
-                -- condition = M.check_for({ ["pyproject.toml"] = "tool.black" })
+                condition = M.check_for({ ["pyproject.toml"] = "tool.black" })
             }),
             diagnostics.flake8.with({
                 prefer_local = python,
                 condition = M.check_for({ [".flake8"] = ".*" })
             }),
-            diagnostics.pylint.with({
-                prefer_local = python,
-                condition = M.check_for({ [".pylintrc"] = ".*", ["pyproject.toml"] = "tool.pylint" })
-            }),
+            -- diagnostics.pylint.with({
+              --   prefer_local = python,
+                -- condition = M.check_for({ [".pylintrc"] = ".*", ["pyproject.toml"] = "tool.pylint" })
+            -- }),
             formatting.isort.with({
                 prefer_local = python,
                 condition = M.check_for({ ["isort.cfg"] = ".*", ["pyproject.toml"] = "tool.isort" })

@@ -38,7 +38,7 @@ function M.setup()
         pickers = {
             buffers = center_list,
             find_files = center_list,
-            commands = center_list,
+            -- commands = center_list,
             -- marks = center_list,
         }
     })

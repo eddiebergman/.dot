@@ -1,18 +1,69 @@
 local M = {}
 
-local theme_package = "~/.dot/.config/nvim/darkme"
+--local theme_package = "~/.dot/.config/nvim/darkme"
+local command = require("util").command
 
 local function plugins(use)
     use('wbthomason/packer.nvim')
 
     -- https://github.com/topics/neovim-colorscheme?o=desc&s=stars
     --use('folke/tokyonight.nvim')
-    --use({"sainnhe/gruvbox-material"})
-    --use({"catppuccin/nvim", config = function () require("config/catppuccin").setup() end})
+    use({ "rebelot/kanagawa.nvim", config = function() require("config/kanagawa").setup() end })
+    use({ "sainnhe/gruvbox-material" })
+    use({ "catppuccin/nvim", config = function() require("config/catppuccin").setup() end })
     --use({"rose-pine/neovim"})
-    use({ "nyoom-engineering/oxocarbon.nvim" })
     use({ "rktjmp/lush.nvim" })
-    use({ theme_package })
+    use {
+        'rmagatti/goto-preview',
+        config = function()
+            require('goto-preview').setup({
+                width = 88,
+                dismiss_on_move = false,
+                stack_floating_preview_windows = false,
+                post_open_hook = function(buf, current_window)
+                    local function tablefind(tab, el)
+                        for index, value in pairs(tab) do
+                            if value == el then
+                                return index
+                            end
+                        end
+                    end
+
+                    local windows = require('goto-preview.lib').windows
+                    local table_index = tablefind(windows, current_window)
+                    if table_index == nil then
+                        table_index = 1
+                    end
+                    local conf = require("goto-preview").conf
+                    local height = conf.height
+                    vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<cmd>q<CR>', { noremap = true, silent = true })
+
+                    -- Move floating window to the right side of editor
+                    local n_columns = vim.api.nvim_get_option('columns')
+                    local row_offset = (table_index - 1) * (height + 1)
+                    vim.api.nvim_win_set_config(0,
+                        { relative = 'editor', anchor = 'NE', row = row_offset, col = n_columns, zindex = 1 })
+                    vim.api.nvim_win_set_option(0, 'number', false)
+                    vim.api.nvim_win_set_option(0, 'relativenumber', false)
+                end
+            })
+        end
+    }
+    use({
+        "IndianBoy42/tree-sitter-just",
+        config = function()
+            require("nvim-treesitter.parsers").get_parser_configs().just = {
+                install_info = {
+                    url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
+                    files = { "src/parser.c", "src/scanner.cc" },
+                    branch = "main",
+                    -- use_makefile = true -- this may be necessary on MacOS (try if you see compiler errors)
+                },
+                maintainers = { "@IndianBoy42" },
+            }
+        end
+    })
+    -- use({ theme_package })
     use({
         "lalitmee/browse.nvim",
         requires = { "nvim-telescope/telescope.nvim", "stevearc/dressing.nvim" },
@@ -201,18 +252,18 @@ local function plugins(use)
     use({
         "hrsh7th/nvim-cmp",
         requires = {
-            "hrsh7th/cmp-nvim-lsp", -- For LSP completions
-            "hrsh7th/cmp-buffer", -- For buffer content completion
-            "hrsh7th/cmp-path", -- For path completion
-            "lukas-reineke/cmp-under-comparator", -- Deprioritize double underscore in python
-            "windwp/nvim-autopairs", -- Autopair brackets on function completion
+            "hrsh7th/cmp-nvim-lsp",                -- For LSP completions
+            "hrsh7th/cmp-buffer",                  -- For buffer content completion
+            "hrsh7th/cmp-path",                    -- For path completion
+            "lukas-reineke/cmp-under-comparator",  -- Deprioritize double underscore in python
+            "windwp/nvim-autopairs",               -- Autopair brackets on function completion
             "hrsh7th/cmp-nvim-lsp-signature-help", -- Signature help as you fill in functions
             "saadparwaiz1/cmp_luasnip",
         },
         config = function() require("config/nvim-cmp").setup() end
     })
 
-    -- Breadcrumbs
+    -- breadcrumbs
     use({
         "SmiteshP/nvim-navic",
         requires = "neovim/nvim-lspconfig",
@@ -228,11 +279,8 @@ local function plugins(use)
             "nvim-treesitter/nvim-treesitter-refactor",
             "RRethy/nvim-treesitter-textsubjects",
             "nvim-treesitter/nvim-treesitter-textobjects",
+            "nvim-treesitter/nvim-treesitter-context",
             "nvim-treesitter/playground",
-            {
-                "eddiebergman/nvim-treesitter-pyfold",
-                ft = { "python" }
-            },
         },
         config = function() require("config/treesitter").setup() end,
         run = ":TSUpdate"
@@ -242,7 +290,9 @@ local function plugins(use)
     use({
         "zbirenbaum/copilot.lua",
         event = { "VimEnter" },
-        config = function() vim.defer_fn(function() require("copilot").setup({
+        config = function()
+            vim.defer_fn(function()
+                require("copilot").setup({
                     suggestion = {
                         enabled = true,
                         auto_trigger = true,
@@ -254,6 +304,8 @@ local function plugins(use)
                     filetypes = {
                         python = true,
                         lua = true,
+                        yaml = true,
+                        markdown = true,
                         ["*"] = false
                     }
                 })

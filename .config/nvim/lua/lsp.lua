@@ -12,10 +12,10 @@ function M.setup()
         update_in_insert = false,
         severity_sort = true,
         float = {
-           border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " },
-           source = "always",
-           header = "",
-           prefix = "",
+            border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " },
+            source = "always",
+            header = "",
+            prefix = "",
         }
     })
     -- M.show_diagnostics_on_hover()
@@ -33,7 +33,6 @@ function M.setup()
 
     local lsp_servers = require("config/mason").lsp_servers
     for _, server in ipairs(lsp_servers) do
-
         -- Special setup for some servers like pyright where I know a bit more
         if server == "pyright" then
             lspconfig[server].setup({
@@ -43,20 +42,42 @@ function M.setup()
                     },
                     python = {
                         analysis = {
+                            autoSearchPaths = true,
                             autoImportCompletions = true,
-                            diagnosticMode = "openFilesOnly",  -- Use "workspace" if you like but may be slow
-                            typeCheckingMode = "basic", -- Using Mypy instead, it's better
-                            pythonPath = "python", -- gets replaced below
+                            diagnosticMode = "openFilesOnly", -- Use "workspace" if you like but may be slow
+                            typeCheckingMode = "basic",   -- Using Mypy instead, it's better
+                            pythonPath = "python",        -- gets replaced below
                         }
                     },
                 },
                 before_init = function(_, config)
-                    local penv = require("util").python_env({ patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" } })
+                    local penv = require("util").python_env({
+                        patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" }
+                    })
                     if penv == nil then
                         return
                     end
                     config.settings.python.pythonPath = penv.python
                 end,
+                capabilities = capabilities,
+            })
+        elseif server == "ruff_lsp" then
+            lspconfig[server].setup({
+                -- Handled by Pyright
+                on_attach = function(client, _)
+                    client.server_capabilities.hoverProvider = false
+                end,
+                commands = {
+                    RuffOrganizeImports = {
+                      function()
+                        vim.lsp.buf.execute_command {
+                          command = 'ruff.applyAutofix',
+                          arguments = { { uri = vim.uri_from_bufnr(0) } },
+                        }
+                      end,
+                      description = 'Ruff: Fix all auto-fixable problems',
+                    },
+                },
                 capabilities = capabilities,
             })
         elseif server == "lua_ls" then
@@ -75,7 +96,6 @@ function M.setup()
         else
             lspconfig[server].setup({
                 capabilities = capabilities,
-                on_attach = M.breadcrumbs_attach,
             })
         end
     end
@@ -98,9 +118,20 @@ function M.enable_markdown_highlighting_in_lsp_hover()
     vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
         local f = vim.lsp.with(vim.lsp.handlers.hover, {
             border = above_below_border,
-            stylize_markdown = false
-         })
+            stylize_markdown = false,
+        })
         local floating_bufnr, floating_winnr = f(err, result, ctx, config)
+        local text = vim.api.nvim_buf_get_lines(floating_bufnr, 0, -1, false)
+        -- Replace all occurences of '&nbsp;&nbsp;&nbsp;&nbsp;' with '* '
+        for i, line in ipairs(text) do
+            text[i] = line:gsub("&nbsp;&nbsp;&nbsp;&nbsp;(%w+):", "* [%1] ")
+            text[i] = text[i]:gsub("&nbsp;", " ")
+            text[i] = text[i]:gsub("\\%[", "[")
+            text[i] = text[i]:gsub("\\%]", "]")
+        end
+        vim.api.nvim_buf_set_option(floating_bufnr, "modifiable", true)
+        vim.api.nvim_buf_set_lines(floating_bufnr, 0, -1, false, text)
+        vim.api.nvim_buf_set_option(floating_bufnr, "modifiable", false)
         vim.api.nvim_buf_set_option(floating_bufnr, "filetype", "markdown")
         return floating_bufnr, floating_winnr
     end

@@ -109,16 +109,6 @@ local config = {
     view = {
         width = 30,
         side = 'left',
-        mappings = {
-            custom_only = false,
-            list = {
-                { key = "l", action = "edit", action_cb = edit_or_open },
-                { key = "L", action = "vsplit_preview", action_cb = vsplit_preview },
-                { key = "h", action = "close_node" },
-                { key = "H", action = "collapse_all" },
-                { key = "t", action = "toggle_git_ignored" }
-            }
-        },
         number = false,
         relativenumber = false,
         signcolumn = "yes"
@@ -202,10 +192,7 @@ local config = {
         --
         -- You will need to insert "your code goes here" for any mappings with a custom action_cb
         vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', 'L', function()
-            local node = api.tree.get_node_under_cursor()
-            -- your code goes here
-        end, opts('vsplit_preview'))
+        vim.keymap.set('n', 'L', api.node.open.vertical, opts('Open: Vertical Split'))
 
         vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
         vim.keymap.set('n', 'H', api.tree.collapse_all, opts('Collapse'))

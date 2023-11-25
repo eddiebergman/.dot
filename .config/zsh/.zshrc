@@ -172,6 +172,9 @@ screen () {
     elif equal $1 "left"; then
         xrandr --output $hdmi --left-of $primary --auto
 
+    elif equal $1 "copy-right"; then
+        xrandr --output $hdmi --same-as $primary --auto
+
     else
         echo $usage
         return 1
@@ -262,7 +265,7 @@ gclone () {
 }
 
 branches () {
-    git checkout "$(git branch -r | fzf | tr -d '[:space:]' | sed 's:^origin/::')"
+    git checkout "$(git branch | fzf | tr -d '[:space:]' | sed 's:^origin/::')"
 }
 
 

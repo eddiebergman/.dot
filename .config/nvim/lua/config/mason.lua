@@ -8,6 +8,7 @@ M.lsp_servers = {
     "marksman", -- markdown
     "lua_ls", -- lua
     "pyright", -- python
+    "ruff_lsp", -- python
     "jsonls", -- json
     "clangd", -- c/c++
 }
