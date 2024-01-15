@@ -266,7 +266,7 @@ command({ key = "<C-t>", name = "TestToggle", cmd = "lua require('neotest').summ
 command({ key = "t", name = "TestFunction", cmd = "lua require('neotest').run.run()" })
 command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vim.fn.expand('%'))" })
 
-command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle" })
+command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle right" })
 command({ key = "<A-t>", name = "Terminal", cmd = "ToggleTerm" })
 command({ key = "<leader>lr", name = "ToggleLspReferences", cmd = function() vim.diagnostic.reset() end })
 
@@ -304,15 +304,7 @@ command({ key = "<C-f>", name = "RunCmd", cmd = "OverseerRun" })
 command({ key = "<C-x>", name = "ToggleOverseer", cmd = "OverseerToggle" })
 
 
-vim.api.nvim_set_keymap("n", "<leader>sn", "<Plug>(SpotifySkip)", { silent = true })     -- Skip the current track
-vim.api.nvim_set_keymap("n", "<leader>sp", "<Plug>(SpotifyPause)", { silent = true })    -- Pause/Resume the current track
-vim.api.nvim_set_keymap("n", "<leader>s<C-s>", "<Plug>(SpotifySave)", { silent = true }) -- Add the current track to your library
-vim.api.nvim_set_keymap("n", "<leader>so", ":Spotify<CR>", { silent = true })            -- Open Spotify Search window
-vim.api.nvim_set_keymap("n", "<leader>sd", ":SpotifyDevices<CR>", { silent = true })     -- Open Spotify Devices window
-vim.api.nvim_set_keymap("n", "<leader>sp", "<Plug>(SpotifyPrev)", { silent = true })     -- Go back to the previous track
-vim.api.nvim_set_keymap("n", "<leader>sh", "<Plug>(SpotifyShuffle)", { silent = true })  -- Toggles shuffle mode
-
-vim.api.nvim_set_keymap("n", "S", "ys", { silent = true })  -- Toggles shuffle mode
+vim.api.nvim_set_keymap("n", "S", "ysiw", { silent = true })
 vim.api.nvim_set_keymap("x", "gc", "<Plug>comment_toggle_linewise_visual", { silent = true })
 
 

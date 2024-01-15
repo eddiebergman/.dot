@@ -106,7 +106,7 @@ export PATH="${PATH}:${HOME}/software/thunderbird/thunderbird"
 # }}}
 # {{{ Aliases
 # {{{ Default Commands
-alias ls='ls -a --group-directories-first --sort=extension --color=auto'
+alias ll='ls -lA --group-directories-first --color=auto'
 alias xclip='xclip -selection clipboard'
 alias ipython=ipy
 alias vim="nvim"
@@ -415,7 +415,7 @@ ff() {
 
 code () {
     local location="$HOME/code"
-    local selection="$(ls $location | fzf)"
+    local selection="$(/bin/ls -1 $location | fzf)"
 
     local chosen="${location}/${selection}"
     cd "$chosen"

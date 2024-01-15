@@ -1,6 +1,5 @@
 local M = {}
 local lualine = require("lualine")
-local status = require("nvim-spotify").status
 
 local function show_macro_recording()
     local recording_register = vim.fn.reg_recording()
@@ -70,7 +69,7 @@ function M.setup()
             lualine_a = { 'mode', recording_mode },
             lualine_b = { 'branch', 'diff', 'diagnostics' },
             lualine_c = { 'filename' },
-            lualine_x = { lsp_progress, 'filetype', status.listen },
+            lualine_x = { lsp_progress },
             lualine_y = { 'progress' },
             lualine_z = { 'location' }
         },

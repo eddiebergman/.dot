@@ -13,6 +13,7 @@ local function plugins(use)
     use({ "catppuccin/nvim", config = function() require("config/catppuccin").setup() end })
     --use({"rose-pine/neovim"})
     use({ "rktjmp/lush.nvim" })
+    --use({"luk400/vim-jukit"})
     use {
         'rmagatti/goto-preview',
         config = function()
@@ -122,15 +123,6 @@ local function plugins(use)
         },
         config = function() require("config/mason").setup() end
     })
-
-    -- spotify
-    use({
-        "KadoBOT/nvim-spotify",
-        requires = "nvim-telescope/telescope.nvim",
-        config = function() require("config/spotify").setup() end,
-        run = "make"
-    })
-
 
     -- Telescope
     -- The popup window that lets you select files
