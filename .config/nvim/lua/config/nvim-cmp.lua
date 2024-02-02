@@ -1,6 +1,5 @@
 local self = {}
 local cmp = require('cmp')
-local luasnip = require('luasnip')
 
 local function has_words_before()
     if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
@@ -16,6 +15,7 @@ end
 ---@param dir number 1 for forward, -1 for backward; defaults to 1
 ---@return boolean true if a jumpable luasnip field is found while inside a snippet
 local function jumpable(dir)
+    local luasnip = require('luasnip')
     local win_get_cursor = vim.api.nvim_win_get_cursor
     local get_current_buf = vim.api.nvim_get_current_buf
 
@@ -131,6 +131,7 @@ local kind_icons = {
 }
 
 function self.setup()
+    local luasnip = require('luasnip')
     cmp.setup(
         {
             snippet = {

@@ -96,12 +96,12 @@ chk () { echo "$(cksum <<< $1)" | cut -f 1 -d ' ' }
 # {{{ Path
 export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
 export PATH="${PATH}:/usr/local/cuda/bin"
-
-# For Neovide
+export PATH="${PATH}:/${HOME}/npm/bin"
 export PATH="${PATH}:${HOME}/software/neovide"
-
-# Thunderbitd
+export PATH="${HOME}/software/neovim/bin:${PATH}"
 export PATH="${PATH}:${HOME}/software/thunderbird/thunderbird"
+export PATH="${PATH}:${HOME}/software/lua-language-server/bin/lua-language-server"
+export PATH="${PATH}:${HOME}/software/just"
 # }}}
 # }}}
 # {{{ Aliases
@@ -126,6 +126,7 @@ alias pytesth="pytest --cov-report html; firefox htmlcov/index.html"
 # {{{ Utility
 # {{{ Screen
 # Assumes two monitors
+
 screen () {
 
     local usage="Usage: screen {off, work, home, left, right}"
@@ -358,8 +359,8 @@ local vim=$neovide_cmd
 # {{{ History
 set H+ # Stops history expansion
 HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=1000
+HISTSIZE=50000
+SAVEHIST=10000
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
@@ -367,8 +368,12 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 
-h () {
-    $(history | sed -r "s/^\s+[0-9]+\s+//g" | fzf)
+hist () {
+    command=$(history | tac | fzf | sed -r "s/^\s+[0-9]+\s+//g")
+    if ! empty $command; then
+        echo "\033[1mRunning: $command\033[0m"
+        eval $command
+    fi
 }
 # }}}
 # }}}
@@ -465,3 +470,7 @@ eval "$(hub alias -s)"
 xset r rate 195 35
 
 export FZF_DEFAULT_OPTS="--bind=alt-j:down,alt-k:up --inline-info"
+
+export NVM_DIR="$HOME/software/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

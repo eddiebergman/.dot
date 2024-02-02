@@ -8,126 +8,54 @@ local function plugins(use)
 
     -- https://github.com/topics/neovim-colorscheme?o=desc&s=stars
     --use('folke/tokyonight.nvim')
+    -- use({ "sainnhe/gruvbox-material" })
+    -- use({ "catppuccin/nvim", config = function() require("config/catppuccin").setup() end })
     use({ "rebelot/kanagawa.nvim", config = function() require("config/kanagawa").setup() end })
-    use({ "sainnhe/gruvbox-material" })
-    use({ "catppuccin/nvim", config = function() require("config/catppuccin").setup() end })
-    --use({"rose-pine/neovim"})
-    use({ "rktjmp/lush.nvim" })
-    --use({"luk400/vim-jukit"})
-    use {
-        'rmagatti/goto-preview',
-        config = function()
-            require('goto-preview').setup({
-                width = 88,
-                dismiss_on_move = false,
-                stack_floating_preview_windows = false,
-                post_open_hook = function(buf, current_window)
-                    local function tablefind(tab, el)
-                        for index, value in pairs(tab) do
-                            if value == el then
-                                return index
-                            end
-                        end
-                    end
+    use({ "stevearc/oil.nvim", config = function() require("config/oil").setup() end })
 
-                    local windows = require('goto-preview.lib').windows
-                    local table_index = tablefind(windows, current_window)
-                    if table_index == nil then
-                        table_index = 1
-                    end
-                    local conf = require("goto-preview").conf
-                    local height = conf.height
-                    vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<cmd>q<CR>', { noremap = true, silent = true })
-
-                    -- Move floating window to the right side of editor
-                    local n_columns = vim.api.nvim_get_option('columns')
-                    local row_offset = (table_index - 1) * (height + 1)
-                    vim.api.nvim_win_set_config(0,
-                        { relative = 'editor', anchor = 'NE', row = row_offset, col = n_columns, zindex = 1 })
-                    vim.api.nvim_win_set_option(0, 'number', false)
-                    vim.api.nvim_win_set_option(0, 'relativenumber', false)
-                end
-            })
-        end
-    }
+    use(
+        {
+            "rcarriga/nvim-dap-ui",
+            requires = { {"mfussenegger/nvim-dap", module = "dap"}, },
+            config = function() require("config/dap").setup() end,
+            event = "FileType python",
+        }
+    )
+    use ({ "neovim/nvim-lspconfig", config = function() require("lsp").setup() end })
     use({
-        "IndianBoy42/tree-sitter-just",
-        config = function()
-            require("nvim-treesitter.parsers").get_parser_configs().just = {
-                install_info = {
-                    url = "https://github.com/IndianBoy42/tree-sitter-just", -- local path or git repo
-                    files = { "src/parser.c", "src/scanner.cc" },
-                    branch = "main",
-                    -- use_makefile = true -- this may be necessary on MacOS (try if you see compiler errors)
-                },
-                maintainers = { "@IndianBoy42" },
-            }
-        end
+      "luckasRanarison/nvim-devdocs",
+      cmd = "DevdocsOpen",
+      config = function() require("config/devdocs").setup() end
     })
-    -- use({ theme_package })
     use({
-        "lalitmee/browse.nvim",
-        requires = { "nvim-telescope/telescope.nvim", "stevearc/dressing.nvim" },
-        config = function() require("config/browse").setup() end,
+        "m4xshen/hardtime.nvim",
+        event = "InsertEnter",
+        requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+        config = function() require("config/hardtime").setup() end
     })
 
-    -- Persistance
-    -- Session management
-    use({
-        "folke/persistence.nvim",
-        event = "BufReadPre",
-        module = "persistence",
-        config = function() require("persistence").setup() end
-    })
-
-    -- Overseer
-    -- Quick commands to run
-    use({
-        "stevearc/overseer.nvim",
-        config = function() require("config/overseer").setup() end
-    })
     use({
         "rcarriga/nvim-notify",
+        event = "VimEnter",
         config = function() require("config/nvim-notify").setup() end
     })
 
 
     -- Harpoon
-    use({
-        "ThePrimeagen/harpoon",
-        config = function() require("config/harpoon").setup() end
-    })
-
-    -- Zen mode
-    -- Focus on one editor
-    use {
-        "folke/zen-mode.nvim",
-        config = function() require("config/zen").setup() end,
-    }
-
-    -- Twilight
-    -- Dim unfocused parts of code
-    use {
-        "folke/twilight.nvim",
-        config = function() require("config/twilight").setup() end,
-    }
+    use({"ThePrimeagen/harpoon", cmd= {"HarpoonMark", "HarpoonView"}, config = function() require("config/harpoon").setup() end })
 
     -- Mason
     -- Easy setup of many language specific tools and LSP servers to give "smarts" to the editor
     use({
         "williamboman/mason.nvim",
-        requires = {
-            "williamboman/mason-lspconfig.nvim",
-            "neovim/nvim-lspconfig",
-            "jayp0521/mason-null-ls.nvim",
-        },
-        config = function() require("config/mason").setup() end
+        requires = { { "williamboman/mason-lspconfig.nvim" } },
     })
 
     -- Telescope
     -- The popup window that lets you select files
     use({
         'nvim-telescope/telescope.nvim',
+        event = "VimEnter",
         requires = {
             'nvim-lua/plenary.nvim',
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -138,6 +66,7 @@ local function plugins(use)
     -- Diffview
     use({
         'sindrets/diffview.nvim',
+        cmd = "Diffview",
         requires = { "nvim-lua/plenary.nvim" },
         config = function() require('config/diffview').setup() end
     })
@@ -145,50 +74,32 @@ local function plugins(use)
     -- Testing
     use({
         'nvim-neotest/neotest',
+        cmd = "Neotest",
         requires = {
             'nvim-lua/plenary.nvim',
-            "antoinemadec/FixCursorHold.nvim",
-            "nvim-neotest/neotest-python",
+            { "antoinemadec/FixCursorHold.nvim", after = "neotest" },
+            { "nvim-neotest/neotest-python", opt = true  },
         },
         config = function() require('config/neotest').setup() end
     })
 
-    -- Nvim tree
-    -- The side tree view
-    use({
-        'kyazdani42/nvim-tree.lua',
-        requires = "kyazdani42/nvim-web-devicons",
-        config = function() require("config/nvim-tree").setup() end
-    })
-
     -- Neodev
     -- Editor smartness when editing your nvim files
-    use("folke/neodev.nvim")
-
-    -- Trouble
-    -- A nice diagnostics and sidepane that goes well with Telescope
     use({
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
-        config = function() require("config/trouble").setup() end
-    })
-
-    -- Symbol outline
-    use({
-        "stevearc/aerial.nvim",
-        config = function() require("config/aerial").setup() end
-    })
-
-    -- Terminal
-    use({
-        "akinsho/nvim-toggleterm.lua",
-        config = function() require("config/toggleterm").setup() end
+        "folke/neodev.nvim",
+        after = "nvim-lspconfig",
+        config = function ()
+            require("neodev").setup({
+                library = { plugins = { "nvim-dap-ui" }, type = true }
+            })
+        end
     })
 
     -- Comment
     -- Use for comment blocks and commenting lines
     use({
         "numToStr/Comment.nvim",
+        event = "BufRead",
         config = function() require("config/comment").setup() end
     })
 
@@ -196,24 +107,19 @@ local function plugins(use)
     -- Highlight TODOs, and comments
     use({
         "folke/todo-comments.nvim",
+        event = "BufRead",
         requires = "nvim-lua/plenary.nvim",
         config = function() require("config/todo-comments").setup() end
-    })
-
-    -- Bufferline
-    -- Just a nice looking bufferline
-    use({
-        "akinsho/bufferline.nvim",
-        config = function() require("config/bufferline").setup() end
     })
 
     -- Lualine
     -- Just a nice looking tabline
     use({
         "nvim-lualine/lualine.nvim",
+        event = "VimEnter",
         requires = {
-            "arkav/lualine-lsp-progress",
-            { 'kyazdani42/nvim-web-devicons', opt = true },
+            { "arkav/lualine-lsp-progress", after = "lualine.nvim" },
+            { 'kyazdani42/nvim-web-devicons' },
         },
         config = function() require("config/lualine").setup() end
     })
@@ -222,21 +128,8 @@ local function plugins(use)
     -- Nice git utilities for changes to a file
     use({
         "lewis6991/gitsigns.nvim",
+        event = "BufRead",
         config = function() require("config/gitsigns").setup() end
-    })
-
-    -- Ident-Blankline
-    -- Gives the indent lines
-    use({
-        "lukas-reineke/indent-blankline.nvim",
-        config = function() require("config/indent-blankline").setup() end
-    })
-    -- Null-ls
-    -- Allows linters/checkers/tools to hook into neovims lsp system
-    -- I.e. pylint, flake8, black ...
-    use({
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function() require("config/null-ls").setup() end
     })
 
     -- Completion
@@ -244,35 +137,26 @@ local function plugins(use)
     use({
         "hrsh7th/nvim-cmp",
         requires = {
-            "hrsh7th/cmp-nvim-lsp",                -- For LSP completions
-            "hrsh7th/cmp-buffer",                  -- For buffer content completion
-            "hrsh7th/cmp-path",                    -- For path completion
-            "lukas-reineke/cmp-under-comparator",  -- Deprioritize double underscore in python
-            "windwp/nvim-autopairs",               -- Autopair brackets on function completion
-            "hrsh7th/cmp-nvim-lsp-signature-help", -- Signature help as you fill in functions
-            "saadparwaiz1/cmp_luasnip",
+            { "hrsh7th/cmp-nvim-lsp" },                -- For LSP completions
+            { "hrsh7th/cmp-buffer", },                  -- For buffer content completion
+            { "hrsh7th/cmp-path" }, -- For path completion
+            { "lukas-reineke/cmp-under-comparator", after="nvim-cmp"},  -- Deprioritize double underscore in python
+            { "windwp/nvim-autopairs", after = "nvim-cmp" },               -- Autopair brackets on function completion
+            { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp"  }, -- Signature help as you fill in functions
+            { "saadparwaiz1/cmp_luasnip" },
+            { "L3MON4D3/LuaSnip",  }, -- Signature help as you fill in functions
         },
         config = function() require("config/nvim-cmp").setup() end
     })
-
-    -- breadcrumbs
-    use({
-        "SmiteshP/nvim-navic",
-        requires = "neovim/nvim-lspconfig",
-        config = function() require("config/nvim-navic").setup() end
-    })
-
 
     -- Treesitter
     -- Language aware syntax tree and associated plugins
     use({
         "nvim-treesitter/nvim-treesitter",
+        event = "VimEnter",
         requires = {
-            "nvim-treesitter/nvim-treesitter-refactor",
-            "RRethy/nvim-treesitter-textsubjects",
-            "nvim-treesitter/nvim-treesitter-textobjects",
-            "nvim-treesitter/nvim-treesitter-context",
-            "nvim-treesitter/playground",
+            {"nvim-treesitter/nvim-treesitter-textobjects", after="nvim-treesitter"},
+            { "nvim-treesitter/nvim-treesitter-context", module="treesitter-context" },
         },
         config = function() require("config/treesitter").setup() end,
         run = ":TSUpdate"
@@ -281,7 +165,7 @@ local function plugins(use)
     -- Copilot
     use({
         "zbirenbaum/copilot.lua",
-        event = { "VimEnter" },
+        after = { "nvim-cmp" },
         config = function()
             vim.defer_fn(function()
                 require("copilot").setup({
@@ -305,10 +189,6 @@ local function plugins(use)
         end
     })
 
-    -- Luapad
-    -- Lets you quickly try out some Lua
-    use("rafcamlet/nvim-luapad")
-
     -- Git integration
     -- Must have
     use("tpope/vim-fugitive")
@@ -320,9 +200,6 @@ local function plugins(use)
 
     -- Smarter repeats with `.`
     use("tpope/vim-repeat")
-
-    -- Snippets
-    use("L3MON4D3/LuaSnip")
 end
 
 function M.setup()

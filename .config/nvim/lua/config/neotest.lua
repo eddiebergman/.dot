@@ -13,12 +13,14 @@ function M.setup()
     require("neotest").setup(
         {
             adapters = {
-                require("neotest-python")({
-                    args = { "--log-level", "DEBUG", "-v" },
-                    runner = "pytest",
-                    python = M.python(),
-                })
-
+                function ()
+                    vim.cmd("PackerLoad neotest-python")
+                    return require("neotest-python")({
+                        args = { "--log-level", "DEBUG", "-v" },
+                        runner = "pytest",
+                        python = M.python(),
+                    })
+                end
             },
             benchmark = {
                 enabled = true

@@ -2,8 +2,8 @@
 vim.cmd([[filetype plugin indent on]])
 
 
-vim.o.number = false
-vim.o.relativenumber = false
+vim.o.number = true
+vim.o.relativenumber = true
 vim.g.mapleader = ","
 vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
@@ -26,17 +26,17 @@ vim.o.inccommand = "nosplit"
 vim.o.laststatus = 3
 vim.o.linebreak = true
 vim.o.mouse = "a"
-vim.o.scrolloff = 10
+vim.o.scrolloff = 5
 vim.o.shiftwidth = 0
 vim.o.showmode = false
 vim.o.signcolumn = "yes:1"
 vim.o.smartcase = true
 vim.o.smartindent = true
 vim.o.autoindent = true
-vim.o.spelloptions = "noplainbuffer"
+vim.o.spelloptions = "camel"
 vim.o.splitbelow = true
 vim.o.splitright = true
-vim.o.switchbuf = "useopen"
+vim.o.switchbuf = "uselast"
 vim.o.tabstop = 2
 vim.o.textwidth = 120
 vim.o.undodir = vim.fn.expand("~/.cache/nvim/undodir")
@@ -105,16 +105,21 @@ setkey({ mode = "t", key = "jk", cmd = "<c-\\><c-n>" })
 setkey({ key = "<leader>fmm", cmd = ":set foldmethod=marker<CR>" })
 setkey({ key = "<leader>fmi", cmd = ":set foldmethod=indent<CR>" })
 setkey({ key = "<leader>fme", cmd = ":set foldmethod=expr<CR>" })
+setkey({ key = "<leader>,", cmd = ":Telescope<CR>" })
 command({ key = "<C-e>", name = "FindBuffer", cmd = "Telescope buffers", })
 command({ key = "<C-k>", name = "Commands", cmd = "Telescope commands" })
-command({ key = "<C-h>", name = "ToggleTree", cmd = "NvimTreeToggle", })
+command({ key = "<C-h>", name = "ToggleOil", cmd = "Oil --float", })
 command({ key = "<leader>ev", name = "VIMRC", cmd = "e $MYVIMRC" })
 command({
     key = "<C-p>",
     name = "FindFile",
     cmd = function() require("telescope.builtin").find_files({ hidden = true }) end,
 })
-command({ key = "<leader>ss", name = "FindString", cmd = "Telescope live_grep", })
+command({
+    key = "<leader>ss",
+    name = "FindString",
+    cmd = function() require("telescope.builtin").live_grep({ disable_coordinates = true }) end
+})
 command({
     key = "<c-space>",
     name = "NextDiagnostic",
@@ -260,35 +265,57 @@ command({ key = "<A-g>", name = "DiffHistory", cmd = "DiffviewFileHistory" })
 command({ key = "<leader>td", name = "ToggleDeletedGit", cmd = "Gitsigns toggle_deleted" })
 command({ key = "<leader>tl", name = "ToggleLineGit", cmd = "Gitsigns toggle_linehl" })
 command({ key = "<leader>gb", name = "GitBranches", cmd = "Telescope git_branches" })
-vim.api.nvim_set_keymap("n", "<leader>gB", ":Git checkout -b ", { silent = True} )
+vim.api.nvim_set_keymap("n", "<leader>gB", ":Git checkout -b ", { silent = True })
 
-command({ key = "<C-t>", name = "TestToggle", cmd = "lua require('neotest').summary.toggle()" })
-command({ key = "t", name = "TestFunction", cmd = "lua require('neotest').run.run()" })
-command({ key = "T", name = "TestFile", cmd = "lua require('neotest').run.run(vim.fn.expand('%'))" })
+command({
+    key = "<C-t>",
+    name = "TestToggle",
+    cmd = function ()
+        vim.cmd("PackerLoad neotest")
+        require('neotest').summary.toggle()
+    end
+})
+command({
+    key = "t",
+    name = "TestFunction",
+    cmd = function()
+        vim.cmd("PackerLoad neotest")
+        require('neotest').run.run()
+    end
+})
+command({
+    key = "T",
+    name = "TestFile",
+    cmd = function()
+        vim.cmd("PackerLoad neotest")
+        require('neotest').run.run(vim.fn.expand('%'))
+    end
+})
+command(
+    {
+        key = "<leader>D",
+        name = "TestDebug",
+        cmd = function()
+            vim.cmd("normal! zRzz")                          -- Expand folds and center
+            require("dapui").open()                          -- Open the UI if it's not open
+            require("neotest").run.run({ strategy = "dap" }) -- and go!
+        end
+    }
+)
 
-command({ key = "<C-s>", name = "Symbols", cmd = "AerialToggle right" })
+command({
+    key = "<C-s>",
+    name = "Symbols",
+    cmd = function() require("telescope.builtin").lsp_document_symbols() end
+})
 command({ key = "<A-t>", name = "Terminal", cmd = "ToggleTerm" })
 command({ key = "<leader>lr", name = "ToggleLspReferences", cmd = function() vim.diagnostic.reset() end })
 
-command({
-    key = "<leader>b",
-    name = "BrowseBookmarks",
-    cmd = function() require("browse").browse() end
-})
-command({
-    key = "<leader>w",
-    name = "BrowseWeb",
-    cmd = function() require("browse").input_search() end,
-})
-command({
-    key = "<leader>dd",
-    name = "BrowseDevDocs",
-    cmd = function() require("browse.devdocs").search_with_filetype() end,
-})
+command({ key = "<leader>dd", name = "BrowseDevDocs", cmd = "DevdocsOpen" })
 
 command({ key = "Z", name = "Zen", cmd = "ZenMode" })
-command({ key = "M", name = "HarpoonMark", cmd = function() require("harpoon.mark").add_file() end })
-command({ key = "mm", name = "HarpoonView", cmd = function() require("harpoon.ui").toggle_quick_menu() end })
+command({ key = "M", name = "HarpoonMark", cmd = "HarpoonMark" })
+command({ key = "mm", name = "HarpoonView", cmd = "HarpoonView" })
 
 command({ key = "<leader>1", name = "HarpoonNav1", cmd = function() require("harpoon.ui").nav_file(1) end })
 command({ key = "<leader>2", name = "HarpoonNav2", cmd = function() require("harpoon.ui").nav_file(2) end })
@@ -309,6 +336,13 @@ vim.api.nvim_set_keymap("x", "gc", "<Plug>comment_toggle_linewise_visual", { sil
 
 
 
+vim.api.nvim_create_augroup("UserLocList", { clear = true })
+vim.api.nvim_create_autocmd("FileType",
+    { group = "UserLocList", pattern="qf", command = "nnoremap <buffer> j j<cr>zRzt<c-w>p", }
+)
+vim.api.nvim_create_autocmd("FileType",
+    { group = "UserLocList", pattern="qf", command = "nnoremap <buffer> k k<cr>zRzt<c-w>p", }
+)
 -- }}}
 -- {{{ Autocommands
 vim.api.nvim_create_augroup("UserCommands", { clear = true })
@@ -336,13 +370,12 @@ end
 
 require("signs").setup()   -- Define signs before we get to lsp
 require("plugins").setup() -- Keep this first
-require("lsp").setup()     -- Language smarts
 
 -- }}}
 -- {{{ Colors
 -- If using one dark
 --local colorscheme = "gruvbox-material"
-local colorscheme = "gruvbox-material"
+local colorscheme = "kanagawa-wave"
 -- Gruvbox
 vim.g.gruvbox_material_background = 'hard'
 vim.g.gruvbox_material_foreground = 'material'
@@ -357,26 +390,37 @@ vim.g.gruvbox_material_better_performance = true
 vim.g.gruvbox_material_ui_contrast = 'high'
 vim.g.gruvbox_material_menu_selection_background = "red"
 
--- Get color of current background
-local normal_bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
-local normal_fg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "fg")
-local guide = "#d02670"
-
 -- Set highlight of FloatBoard
 vim.cmd("colorscheme " .. colorscheme)
+
+local normal_bg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
+local normal_fg = vim.fn.synIDattr(vim.fn.hlID("Normal"), "fg")
+local visual_bg = vim.fn.synIDattr(vim.fn.hlID("Visual"), "bg")
+local comment = vim.fn.synIDattr(vim.fn.hlID("Comment"), "fg")
+local float_border_bg = vim.fn.synIDattr(vim.fn.hlID("FloatBorder"), "bg")
+local guide = "#d02670"
+vim.api.nvim_set_hl(0, "SignColumn", { bg = normal_bg })
+vim.api.nvim_set_hl(0, "GitSignsAdd", { bg = normal_bg, fg = "#76846a" })
+vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = normal_bg, fg = "#c34043" })
+vim.api.nvim_set_hl(0, "GitSignsChange", { bg = normal_bg, fg = "#dca561" })
+vim.api.nvim_set_hl(0, "LineNr", { bg = normal_bg, fg = comment })
 -- vim.api.nvim_set_hl(0, "FloatBorder", { bg = normal_bg, fg = guide })
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = normal_bg, fg = normal_fg })
--- vim.api.nvim_set_hl(0, "Folded", { bg = normal_bg, fg = guide, italic = false })
-vim.api.nvim_set_hl(0, "Folded", { bg = normal_bg, fg = guide, italic = false })
-vim.api.nvim_set_hl(0, "SignColumn", { bg = normal_bg })
-vim.api.nvim_set_hl(0, "SpellBad", { sp = "#a832a2", undercurl = true })
+vim.api.nvim_set_hl(0, "Folded", { bg = normal_bg, fg = "#ff9e3b", italic = false })
+vim.api.nvim_set_hl(0, "FloatTitle", { bg = float_border_bg, fg = guide, italic = false, bold=true })
+vim.api.nvim_set_hl(0, "TelescopeTitle", { fg = guide, italic = false, bold=true })
+-- vim.api.nvim_set_hl(0, "FloatBorder", { bg = normal_bg, fg = guide, italic = false })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = normal_bg, fg = normal_fg, italic = false })
+-- vim.api.nvim_set_hl(0, "SignColumn", { bg = normal_bg })
+-- vim.api.nvim_set_hl(0, "SpellBad", { sp = "#a832a2", undercurl = true })
+-- vim.api.nvim_set_hl(0, "WinSeparator", { bg = normal_bg, fg = guide, italic = false })
+-- vim.api.nvim_set_hl(0, "MsgArea", { bg = normal_bg, fg = guide, italic = false })
+
 
 -- vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = guide })
 
 -- Get the highlight for visual selection
-local visual_bg = vim.fn.synIDattr(vim.fn.hlID("Visual"), "bg")
 -- vim.api.nvim_set_hl(0, "TreesitterContext", { bg = visual_bg })
-print(normal_bg)
 
 -- Set the winsep border highlight
 -- vim.api.nvim_set_hl(0, "WinSep", { bg = normal_bg, fg = guide })

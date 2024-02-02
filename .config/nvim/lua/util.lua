@@ -57,6 +57,7 @@ function M.python_env(opts)
     --      to the first patterns in the list.
     -- If none of these are found, this will fail and return nil
 
+    vim.cmd("PackerLoad nvim-lspconfig")
     local util = require("lspconfig/util")
     local path = util.path
     local join = path.join

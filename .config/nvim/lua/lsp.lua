@@ -1,10 +1,27 @@
 local M = {}
-local lspconfig = require("lspconfig")
+M.lsp_servers = {
+    "bashls", -- bash
+    "yamlls", -- yaml
+    "taplo", -- toml
+    "esbonio", -- rst docs
+    "marksman", -- markdown
+    "lua_ls", -- lua
+    "pyright", -- python
+    "ruff_lsp", -- python
+    "jsonls", -- json
+    "clangd", -- c/c++
+}
 
 local above_below_border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " }
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 function M.setup()
+    require("mason").setup({
+        PATH = "append" -- Ensure we prefer local binaries where possible
+    })
+    require("mason-lspconfig").setup({ ensure_installed = M.lsp_servers })
+    local lspconfig = require("lspconfig")
+
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
     vim.diagnostic.config({
         virtual_text = { severity = vim.diagnostic.severity.ERROR },
         signs = { severity = { max = vim.diagnostic.severity.WARN } },
@@ -19,20 +36,20 @@ function M.setup()
         }
     })
     -- M.show_diagnostics_on_hover()
-    M.enable_markdown_highlighting_in_lsp_hover()
+    -- M.enable_markdown_highlighting_in_lsp_hover()
     -- Just makes the lua lsp a bit smarter
-    require("neodev").setup({
-        library = {
-            vimruntime = true,
-            types = true,
-            plugins = true,
+    -- vim.cmd("PackerLoad neodev.nvim")
+    -- require("neodev").setup({
+      --   library = {
+        --     vimruntime = true,
+          --   types = true,
+            -- plugins = true,
             -- Manually add the neovim runtime
             -- [vim.fn.stdpath("config") .. "/lua"] = true,
-        },
-    })
+        -- },
+    -- })
 
-    local lsp_servers = require("config/mason").lsp_servers
-    for _, server in ipairs(lsp_servers) do
+    for _, server in ipairs(M.lsp_servers) do
         -- Special setup for some servers like pyright where I know a bit more
         if server == "pyright" then
             lspconfig[server].setup({
@@ -82,15 +99,7 @@ function M.setup()
             })
         elseif server == "lua_ls" then
             lspconfig[server].setup({
-                settings = {
-                    Lua = {
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                            checkThirdParty = false
-                        },
-                        telemetry = { enable = false },
-                    }
-                },
+                settings = { Lua = { telemetry = { enable = false } } },
                 capabilities = capabilities,
             })
         else
