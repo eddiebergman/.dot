@@ -30,6 +30,8 @@ export PATH="${PATH}:${HOME}/.cargo/bin"
 export FZF_DEFAULT_OPTS="--bind=alt-j:down,alt-k:up --inline-info"
 
 # alias
+alias luamake=/home/skantify/software/lua-language-server/3rd/luamake/luamake
+alias pyshell='source ./.venv/bin/activate'
 alias ll='ls -lA --group-directories-first --color=auto'
 alias xclip='xclip -selection clipboard'
 alias ipython=ipy
@@ -183,8 +185,47 @@ fast_keys () {
 }
 fast_keys
 
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+command -v pyenv >/dev/null || export PATH="$PATH:$PYENV_ROOT/bin"
+
+pip () {
+    if emptyvar $VIRTUAL_ENV
+    then
+        echo 'No VIRTUAL_ENV set, activate with `pyshell` first?'
+    else
+        uv pip "$@"
+    fi
+}
+
+ipy () {
+    if emptyvar $VIRTUAL_ENV
+    then
+        $(pyenv which ipython)
+    else
+        $VIRTUAL_ENV/bin/ipython
+    fi
+}
+
+pyvenv () {
+    if exists '.venv'
+    then
+        echo '.venv already exists'
+        return 1
+    fi
+
+    if ! emptyvar $VIRTUAL_ENV
+    then
+        deactivate
+    fi
+
+    echo "Using $(python -V) located at $(which python)"
+    uv venv --seed .venv
+    source './.venv/bin/activate'
+}
+
 
 export NVM_DIR="$HOME/software/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "$HOME/.cargo/env"
