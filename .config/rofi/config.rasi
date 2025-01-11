@@ -1,6 +1,6 @@
 configuration {
     modi: "combi";
-    combi-modi: "window,windowcd,drun,run";
+    combi-modi: "run,drun";
 }
 
 * {
@@ -139,3 +139,6 @@ configuration {
     margin:     0px 0.3em 0em 0em ;
     text-color: @normal-foreground;
 }
+//@theme "/home/skantify/.local/share/rofi/themes/squared-material-red.rasi"
+//@theme "/home/skantify/.local/share/rofi/themes/nord-twoLines.rasi"
+@theme "/home/skantify/.local/share/rofi/themes/squared-material-red.rasi"

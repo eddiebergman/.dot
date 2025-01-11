@@ -79,6 +79,7 @@ function M.setup()
             buffers = M.layout_1(),
             find_files = M.layout_1(),
             lsp_document_symbols = M.layout_1({ ignore_symbols = { "variable" } }),
+            lsp_references = M.layout_1(),
             help_tags = M.layout_1(),
             commands = M.layout_1(),
             highlights = M.layout_1(),

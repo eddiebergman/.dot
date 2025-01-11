@@ -5,7 +5,7 @@ set $newshell kitty
 set $browser firefox
 
 # font
-font pango:Fira Code Nerd Font
+font pango:Hack
 
 # Disable title bars
 floating_modifier $mod
@@ -32,15 +32,22 @@ exec "setxkbmap -option 'grp:alt_shift_toggle'"
 # }}}
 # {{{ Keymaps
 bindsym $mod+Return exec "kitty"
+bindsym $mod+v exec "kitty"
 bindsym $mod+d exec "rofi -show"
 bindsym $mod+c exec "neovide --frame none --multigrid"
 bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 bindsym $mod+Shift+c reload
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+
+bindsym $mod+Left resize shrink width 15 px or 15 ppt
+bindsym $mod+Up resize grow height 15 px or 15 ppt
+bindsym $mod+Down resize shrink height 15 px or 15 ppt
+bindsym $mod+Right resize grow width 15 px or 15 ppt
 
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down

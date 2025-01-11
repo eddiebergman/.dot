@@ -1,5 +1,0 @@
-HOSNAME="myhost"
-USERNAME="skantify"
-export HOSTNAME
-export USERNAME
-

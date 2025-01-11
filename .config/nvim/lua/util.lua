@@ -6,15 +6,40 @@ function M.setkey(opts)
         cmd = { opts.cmd, { "string", "function" } },
         mode = { opts.mode, { "string" }, true },
         opts = { opts.opts, { "table" }, true },
+        buf = { opts.buf, { "boolean" }, true },
     })
     local key = opts.key
     local cmd = opts.cmd
+    local buflocal = opts.buf or false
     local mode = opts.mode or "n"
-    local extra = opts.opts or { noremap = true, silent=true }
-    vim.api.nvim_set_keymap(mode, key, cmd, extra)
+    local extra = opts.opts or { noremap = true, silent = true }
+    local ft = opts.ft or nil
+
+    -- Bit ugly but meh
+    if ft ~= nil then
+        vim.api.nvim_create_autocmd("FileType",
+            {
+                pattern = opts.ft,
+                callback = function()
+                    if buflocal then
+                        vim.api.nvim_buf_set_keymap(0, mode, key, cmd, extra)
+                    else
+                        vim.api.nvim_set_keymap(mode, key, cmd, extra)
+                    end
+                end
+            }
+        )
+    else
+        if buflocal then
+            print(mode, key, cmd, vim.inspect(extra))
+            vim.api.nvim_buf_set_keymap(0, mode, key, cmd, extra)
+        else
+            vim.api.nvim_set_keymap(mode, key, cmd, extra)
+        end
+    end
 end
 
--- { name: str, cmd: str | func, key: str | {mode, key} }
+-- { name: str, cmd: str | func, key: str | {mode, key}, ft:  }
 function M.command(opts)
     vim.validate({
         name = { opts.name, "string" },
@@ -42,10 +67,9 @@ function M.command(opts)
             key = key[2]
         end
 
-        M.setkey({ mode = mode, key = key, cmd = action })
+        M.setkey({ mode = mode, key = key, cmd = action, ft = opts.ft })
     end
 end
-
 
 function M.python_env(opts)
     -- This will use the following strategies, in order to determine the python env
@@ -106,7 +130,6 @@ function M.lsp_root(patterns)
     local cwd = vim.fn.getcwd()
     return require("lspconfig").util.root_pattern(unpack(patterns))(cwd)
 end
-
 
 function M.file_contains(file, pattern)
     local f = io.open(file, "r")

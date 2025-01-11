@@ -98,10 +98,16 @@ export PATH="${PATH}:${HOME}/.local/bin:${HOME}/.gem/ruby/2.7.0/bin"
 export PATH="${PATH}:/usr/local/cuda/bin"
 export PATH="${PATH}:/${HOME}/npm/bin"
 export PATH="${PATH}:${HOME}/software/neovide"
-export PATH="${HOME}/software/neovim/bin:${PATH}"
+export PATH="${PATH}:${HOME}/software/tree-sitter"
+export PATH="${HOME}/software/neovim/bin:${PATH}"  # Done in .zprofile
 export PATH="${PATH}:${HOME}/software/thunderbird/thunderbird"
 export PATH="${PATH}:${HOME}/software/lua-language-server/bin/lua-language-server"
 export PATH="${PATH}:${HOME}/software/just"
+export PATH="${PATH}:${HOME}/software/zig/zig-nightly"
+export PATH="${PATH}:${HOME}/software/zls/zig-out/bin"
+export PATH="${PATH}:${HOME}/software/godot"
+export PATH="${PATH}:${HOME}/software/zig"
+export PATH="${PATH}:${HOME}/.cargo/bin"
 # }}}
 # }}}
 # {{{ Aliases
@@ -143,7 +149,7 @@ screen () {
     local home_center="DP-2-9"
     local home_right="HDMI-1"
     local work_middle="DP-2-2"
-    local work_right="DP-2-3"
+    local work_right="HDMI-1"
 
     # Home laptop and work laptop mark them reads them differently sometimes
     # This is for my personal laptop
@@ -160,8 +166,8 @@ screen () {
         xrandr --output $work_right --off;
 
     elif equal $1 "work" ; then
-        xrandr --output $work_middle --right-of $primary --auto
-        xrandr --output $work_right --right-of $work_middle --auto
+      xrandr --output "HDMI-1" --right-of "eDP-1" --mode "2560x1440" --rotate inverted
+      xrandr --output "DP-2-2" --right-of "HDMI-1" --mode "2560x1440"
 
     elif equal $1 "home"; then
         xrandr --output $home_center --right-of $primary --auto
@@ -215,8 +221,8 @@ decompress () {
 }
 # }}}
 # {{{ Wacom
-wacomscreen () { 
-    xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1" 
+wacomscreen () {
+    xsetwacom --set "Wacom Intuos S Pen stylus" MapToOutput HEAD-"$1"
 }
 # }}}
 # {{{ Git
@@ -422,6 +428,11 @@ code () {
     local location="$HOME/code"
     local selection="$(/bin/ls -1 $location | fzf)"
 
+    # If there was no selection, then exit
+    if empty $selection; then
+        return 1
+    fi
+
     local chosen="${location}/${selection}"
     cd "$chosen"
 
@@ -435,42 +446,22 @@ code () {
     if exists $venv; then
         pyshell
     fi
-}
 
-wt () {
-    # If we're in one of the branches of the worktree, we can use things as expected
-    if exists "$PWD/.git"; then
-        local selection=$(git worktree list --porcelain | grep worktree | awk '{print $2}' | fzf)
-        if ! empty "$selection"; then
-          cd "$selection"
-        fi
-    # Otherwise, we just select one of the local directores
-    else
-        local selection=$(ls -1A | fzf)
-        if ! empty "$selection"; then
-          cd "$selection"
-        fi
-    fi
-
-    if exists "$PWD/.venv"; then
-        pyshell
-    fi
-}
-
-unalias -m gb
-gb () {
-    git worktree add ../$1
-    cd ../$1
+    nvim;
 }
 
 alias fonts="kitty +list-fonts --psnames"
 eval "$(hub alias -s)"
 
 # Set repeat rate for keys
-xset r rate 195 35
+fast_keys () {
+  xset r rate 195 35
+}
+fast_keys
 
 export FZF_DEFAULT_OPTS="--bind=alt-j:down,alt-k:up --inline-info"
 
 export NVM_DIR="$HOME/software/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"

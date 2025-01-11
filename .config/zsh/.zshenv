@@ -17,13 +17,12 @@ command -v pyenv >/dev/null || export PATH="$PATH:$PYENV_ROOT/bin"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-
 pip () {
     if emptyvar $VIRTUAL_ENV
     then
         echo 'No VIRTUAL_ENV set, activate with `pyshell` first?'
     else
-        python -m pip "$@"
+        uv pip "$@"
     fi
 }
 
@@ -49,11 +48,8 @@ pyvenv () {
     fi
 
     echo "Using $(python -V) located at $(which python)"
-    python -m venv .venv
+    uv venv --seed .venv
     source './.venv/bin/activate'
-
-    pip install --upgrade pip
-    pip install wheel
 }
 
 alias pyshell='source ./.venv/bin/activate'
@@ -65,5 +61,6 @@ if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
 fi
 
 # Disable capslock
-xmodmap -e "remove lock = Caps_Lock"
+# xmodmap -e "remove lock = Caps_Lock"
 # xmodmap -e "add lock = Caps_Lock"
+. "$HOME/.cargo/env"

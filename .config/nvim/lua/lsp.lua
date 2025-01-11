@@ -1,4 +1,5 @@
 local M = {}
+
 M.lsp_servers = {
     "bashls", -- bash
     "yamlls", -- yaml
@@ -7,147 +8,184 @@ M.lsp_servers = {
     "marksman", -- markdown
     "lua_ls", -- lua
     "pyright", -- python
-    "ruff_lsp", -- python
+    "ruff", -- python
     "jsonls", -- json
     "clangd", -- c/c++
+    "zls", -- zig
+    -- Handled by rustaceanvim
+    -- "rust-analyzer", -- rust
 }
 
-local above_below_border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " }
+function M.register_lsp_keys(args)
+    local telescope = require("telescope.builtin")
+    local opts = { buffer = true, silent = true }
+
+    vim.keymap.set("n", "cc", function()
+        vim.lsp.buf.rename()
+    end, opts)
+    vim.keymap.set("n", "sd", function()
+        vim.lsp.buf.hover()
+    end, opts)
+    vim.keymap.set("n", "gd", function()
+        vim.lsp.buf.definition()
+    end, opts)
+    vim.keymap.set("n", "gl", function()
+        telescope.lsp_definitions({ jump_type = "vsplit" })
+    end, opts)
+    vim.keymap.set("n", "se", function()
+        vim.diagnostic.open_float()
+    end, opts)
+    vim.keymap.set("n", "sr", function()
+        telescope.lsp_references()
+    end, opts)
+    if vim.bo.filetype == "rust" then
+        vim.keymap.set("n", "<A-cr>", ":RustLsp codeAction<cr>", opts)
+    else
+        vim.keymap.set("n", "<A-cr>", function()
+            vim.lsp.buf.code_action()
+        end, opts)
+    end
+    vim.keymap.set("i", "<C-h>", function()
+        vim.lsp.buf.signature_help()
+    end, opts)
+    vim.keymap.set("n", "gi", function()
+        telescope.lsp_implementations()
+    end, opts)
+    vim.keymap.set("n", "<leader>ti", function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end, opts)
+    vim.keymap.set("n", "<leader>td", function()
+        vim.diagnostic.setqflist()
+    end, opts)
+end
+
+M.diagnostic_config = {
+    virtual_text = {
+        severity = { vim.diagnostic.severity.ERROR },
+        suffix = "",
+        prefix = "",
+        hl_mode = "blend",
+    },
+    signs = {
+        severity = { max = vim.diagnostic.severity.ERROR },
+        text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = "",
+            [vim.diagnostic.severity.INFO] = " ",
+        },
+    },
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        border = "none", -- { " ", " ", " ", " ", " ", "─", " ", " " },
+        padding = { 0, 0 },
+        source = "always",
+        header = "",
+        format = function(diagnostic)
+            if diagnostic.message == nil then
+                return " No Message "
+            end
+            local msg = diagnostic.message
+            if diagnostic.code == nil then
+                return " " .. msg .. " "
+            end
+            return " [" .. diagnostic.code .. "] " .. msg .. " "
+        end,
+        suffix = "",
+        prefix = "",
+    },
+}
 
 function M.setup()
-    require("mason").setup({
-        PATH = "append" -- Ensure we prefer local binaries where possible
-    })
-    require("mason-lspconfig").setup({ ensure_installed = M.lsp_servers })
     local lspconfig = require("lspconfig")
-
+    vim.diagnostic.config(M.diagnostic_config)
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    vim.diagnostic.config({
-        virtual_text = { severity = vim.diagnostic.severity.ERROR },
-        signs = { severity = { max = vim.diagnostic.severity.WARN } },
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-        float = {
-            border = { "▔", "▔", "▔", " ", "▁", "▁", "▁", " " },
-            source = "always",
-            header = "",
-            prefix = "",
-        }
+    require("mason").setup({
+        PATH = "append", -- Ensure we prefer local binaries where possible
     })
-    -- M.show_diagnostics_on_hover()
-    -- M.enable_markdown_highlighting_in_lsp_hover()
-    -- Just makes the lua lsp a bit smarter
-    -- vim.cmd("PackerLoad neodev.nvim")
-    -- require("neodev").setup({
-      --   library = {
-        --     vimruntime = true,
-          --   types = true,
-            -- plugins = true,
-            -- Manually add the neovim runtime
-            -- [vim.fn.stdpath("config") .. "/lua"] = true,
-        -- },
-    -- })
 
-    for _, server in ipairs(M.lsp_servers) do
-        -- Special setup for some servers like pyright where I know a bit more
-        if server == "pyright" then
-            lspconfig[server].setup({
-                settings = {
-                    pyright = {
-                        disableOrganizeImports = true, -- Will use ruff instead
-                    },
-                    python = {
-                        analysis = {
-                            autoSearchPaths = true,
-                            autoImportCompletions = true,
-                            diagnosticMode = "openFilesOnly", -- Use "workspace" if you like but may be slow
-                            typeCheckingMode = "basic",   -- Using Mypy instead, it's better
-                            pythonPath = "python",        -- gets replaced below
-                        }
-                    },
-                },
-                before_init = function(_, config)
-                    local penv = require("util").python_env({
-                        patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" }
-                    })
-                    if penv == nil then
-                        return
-                    end
-                    config.settings.python.pythonPath = penv.python
-                end,
-                capabilities = capabilities,
-            })
-        elseif server == "ruff_lsp" then
-            lspconfig[server].setup({
-                -- Handled by Pyright
-                on_attach = function(client, _)
-                    client.server_capabilities.hoverProvider = false
-                end,
-                commands = {
-                    RuffOrganizeImports = {
-                      function()
-                        vim.lsp.buf.execute_command {
-                          command = 'ruff.applyAutofix',
-                          arguments = { { uri = vim.uri_from_bufnr(0) } },
-                        }
-                      end,
-                      description = 'Ruff: Fix all auto-fixable problems',
-                    },
-                },
-                capabilities = capabilities,
-            })
-        elseif server == "lua_ls" then
-            lspconfig[server].setup({
-                settings = { Lua = { telemetry = { enable = false } } },
-                capabilities = capabilities,
-            })
-        else
-            lspconfig[server].setup({
-                capabilities = capabilities,
-            })
-        end
-    end
-end
-
-function M.breadcrumbs_attach(client, bufnr)
-    if client.server_capabilities.documentSymbolProvider then
-        require("nvim-navic").attach(client, bufnr)
-    end
-end
-
-function M.show_diagnostics_on_hover()
+    local lsp_augroup = vim.api.nvim_create_augroup("LspGroup", {})
     vim.api.nvim_create_autocmd(
-        "CursorHold",
-        { callback = function() vim.diagnostic.open_float() end }
+        "LspAttach",
+        { callback = M.register_lsp_keys, group = lsp_augroup }
     )
-end
 
-function M.enable_markdown_highlighting_in_lsp_hover()
-    vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-        local f = vim.lsp.with(vim.lsp.handlers.hover, {
-            border = above_below_border,
-            stylize_markdown = false,
-        })
-        local floating_bufnr, floating_winnr = f(err, result, ctx, config)
-        local text = vim.api.nvim_buf_get_lines(floating_bufnr, 0, -1, false)
-        -- Replace all occurences of '&nbsp;&nbsp;&nbsp;&nbsp;' with '* '
-        for i, line in ipairs(text) do
-            text[i] = line:gsub("&nbsp;&nbsp;&nbsp;&nbsp;(%w+):", "* [%1] ")
-            text[i] = text[i]:gsub("&nbsp;", " ")
-            text[i] = text[i]:gsub("\\%[", "[")
-            text[i] = text[i]:gsub("\\%]", "]")
-        end
-        vim.api.nvim_buf_set_option(floating_bufnr, "modifiable", true)
-        vim.api.nvim_buf_set_lines(floating_bufnr, 0, -1, false, text)
-        vim.api.nvim_buf_set_option(floating_bufnr, "modifiable", false)
-        vim.api.nvim_buf_set_option(floating_bufnr, "filetype", "markdown")
-        return floating_bufnr, floating_winnr
-    end
+    require("mason-lspconfig").setup({
+        handlers = {
+            function(server_name)
+                lspconfig[server_name].setup({ capabilities = capabilities })
+            end,
+        },
+    })
 
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help, { border = above_below_border }
-    )
+    -- Setup some custom LSP
+    -- lspconfig.tsserver.setup({ capabilities = capabilities })
+    -- lspconfig.tailwindcss.setup({ capabilities = capabilities })
+    lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        settings = {
+            Lua = {
+                diagnostics = { globals = { "vim" } },
+                telemetry = { enable = false },
+            },
+        },
+    })
+    lspconfig.ruff.setup({
+        on_attach = function(client, _)
+            -- Handled by Pyright
+            client.server_capabilities.hoverProvider = false
+
+            -- Apply ruff auto fix on save
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                callback = function()
+                    vim.lsp.buf.code_action({
+                        apply = true,
+                        filter = function(action)
+                            return action.title == "Ruff: Fix All"
+                        end,
+                    })
+                end,
+            })
+        end,
+        before_init = function(_, config)
+            local penv = require("util").python_env({
+                patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" },
+            })
+            if penv == nil then
+                return
+            end
+            config.settings.interpreter = penv.python
+        end,
+    })
+    lspconfig.zls.setup({
+        capabilities = capabilities,
+        settings = { zls = { enable_build_on_save = false } },
+    })
+    lspconfig.pyright.setup({
+        settings = {
+            pyright = { disableOrganizeImports = true },
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    autoImportCompletions = true,
+                    diagnosticMode = "openFilesOnly", -- Use "workspace" if you like but may be slow
+                    typeCheckingMode = "basic", -- Using Mypy instead, it's better
+                    pythonPath = "python", -- gets replaced below
+                },
+            },
+        },
+        before_init = function(_, config)
+            local penv = require("util").python_env({
+                patterns = { "venv", ".venv", "env", ".env", ".eddie-venv" },
+            })
+            if penv == nil then
+                return
+            end
+            config.settings.python.pythonPath = penv.python
+        end,
+    })
 end
 
 return M
