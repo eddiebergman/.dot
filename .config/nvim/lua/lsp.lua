@@ -59,13 +59,15 @@ function M.register_lsp_keys(args)
     end, opts)
 end
 
+local virtual_text = {
+    severity = { vim.diagnostic.severity.ERROR },
+    suffix = "",
+    prefix = "",
+    hl_mode = "blend",
+}
+
 M.diagnostic_config = {
-    virtual_text = {
-        severity = { vim.diagnostic.severity.ERROR },
-        suffix = "",
-        prefix = "",
-        hl_mode = "blend",
-    },
+    virtual_text = false,
     signs = {
         severity = { max = vim.diagnostic.severity.ERROR },
         text = {

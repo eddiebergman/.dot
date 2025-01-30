@@ -46,7 +46,6 @@ vim.o.foldtext = "getline(v:foldstart)"
 vim.o.foldcolumn = "0"
 vim.o.foldenable = false
 vim.o.showtabline = 0
-vim.o.cmdheight = 1
 vim.o.display = "lastline"
 vim.o.guicursor = "n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20"
 vim.cmd([[ set foldopen-=all ]])
@@ -84,16 +83,14 @@ setkey({ mode = "v", key = "q", cmd = "<esc>" })
 setkey({ mode = "t", key = "jk", cmd = "<c-\\><c-n>" })
 
 -- Visiual
-setkey({ mode = "v", key = "<A-j>", cmd = "xp`[V`]" })
-setkey({ mode = "v", key = "<A-k>", cmd = "xkP`[V`]" })
 setkey({ mode = "v", key = ">", cmd = ">gv" })
 setkey({ mode = "v", key = "<", cmd = "<gv" })
 
 -- Normal
 setkey({ key = "H", cmd = "^" })
 setkey({ key = "L", cmd = "$" })
-setkey({ key = "<A-k>", cmd = "<C-u>zz" })
-setkey({ key = "<A-j>", cmd = "<C-d>zz" })
+setkey({ key = "<A-k>", cmd = "{zz" })
+setkey({ key = "<A-j>", cmd = "}zz" })
 setkey({ key = "[f", cmd = "[fzt" })
 setkey({ key = "]f", cmd = "]fzt" })
 setkey({ key = "[[", cmd = "[[zt" })
@@ -134,11 +131,6 @@ command({
     end,
 })
 
-command({
-    key = "<C-d>",
-    name = "DiagnosticsList",
-    cmd = "TroubleToggle workspace_diagnostics",
-})
 command({
     key = "<leader>sg",
     name = "ShowHighlight",

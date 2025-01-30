@@ -161,6 +161,11 @@ local function plugins(use)
                     DapUIType = { fg = "love", italic = false },
                     DapUIFrameName = { fg = "subtle", italic = false },
 
+                    DiagnosticUnderlineError = { fg = "love", style = "underline" },
+                    DiagnosticUnderlineWarn = { fg = "gold", style = "underline" },
+                    DiagnosticUnderlineInfo = { fg = "foam", style = "underline" },
+                    DiagnosticUnderlineHint = { fg = "iris", style = "underline" },
+
                     NvimDapVirtualText = {
                         fg = "foam",
                         bg = "foam",
@@ -226,6 +231,18 @@ local function plugins(use)
                     return newVirtText
                 end,
             })
+        end,
+    })
+    use({
+        "yetone/avante.nvim",
+        run = "make",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+        },
+        config = function()
+            require("config/avante").setup()
         end,
     })
     use({
@@ -380,6 +397,15 @@ local function plugins(use)
     -- Git integration
     -- Must have
     use("tpope/vim-fugitive")
+
+    -- Git conflict resolution
+    use({
+        "akinsho/git-conflict.nvim",
+        tag = "v2.1.0",
+        config = function()
+            require("git-conflict").setup()
+        end,
+    })
 
     -- Surround text
     -- `ys<motion><surround-symbol>`

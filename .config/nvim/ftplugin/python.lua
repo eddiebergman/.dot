@@ -1,5 +1,5 @@
-local setkey = require("utils").setkey
-local command = require("utils").command
+local setkey = require("util").setkey
+local command = require("util").command
 
 setkey({ key = "<C-t>", cmd = "maA  # type: ignore<esc>`a" })
 setkey({
