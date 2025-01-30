@@ -1,0 +1,147 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  // Things I probably want to toggle often
+  "show_inline_completions": false,
+  "show_completions_on_input": true,
+  // rest
+  "experimental.theme_overrides": {
+    "title_bar.background": "#191920bb",
+    "status_bar.background": "#191920bb",
+    "toolbar.background": "#191920bb",
+    "editor.document_highlight.bracket_background": "#191920bb"
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "toolbar": {
+    "selections_menu": false,
+    "breadcrumbs": true,
+    "quick_actions": false
+  },
+  "scrollbar": {
+    "show": "never"
+  },
+  "show_completion_documentation": true,
+  "auto_signature_help": true,
+  "wrap_guides": [],
+  "expand_excerpt_lines": 1,
+  "inline_completions_disabled_in": [],
+  "active_pane_modifiers": {
+    "magnification": 1.0,
+    "inactive_opacity": 0.5,
+    "border_size": 1.0
+  },
+  "command_aliases": {
+    "W": "w",
+    "Wq": "wq",
+    "Q": "q"
+  },
+  "cursor_blink": false,
+  "indent_guides": {
+    "enabled": false,
+    "line_width": 1,
+    "active_line_width": 2,
+    "coloring": "fixed",
+    "background_coloring": "disabled"
+  },
+  "git": {
+    "git_gutter": "hide",
+    "gutter_debounce": null,
+    "inline_blame": { "enabled": false }
+  },
+  "gutter": {
+    "runnables": false,
+    "line_numbers": false,
+    "code_actions": false,
+    "folds": false
+  },
+  "autosave": "on_focus_change",
+  "languages": {
+    "Python": {
+      "language_servers": ["pyright", "ruff"],
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true,
+            "source.fixAll.ruff": true
+          }
+        },
+        {
+          "language_server": { "name": "ruff" }
+        }
+      ]
+    },
+    // https://zigtools.org/zls/editors/zed/
+    "Zig": {
+      "language_servers": ["zls"],
+      "format_on_save": "language_server",
+      "code_actions_on_format": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+      }
+    }
+  },
+  "lsp": {
+    "zls": {
+      "binary": { "path": "/home/skantify/code/zls/zig-out/bin/zls" }
+      // "binary": { "path": "/home/skantify/.zvm/bin/zls" }
+    },
+    "pyright": {
+      "settings": { "python": { "pythonPath": ".venv/bin/python" } }
+    }
+  },
+  "confirm_quit": true,
+  // relative line numbers
+  "project_panel": {
+    "button": false,
+    "default_width": 240
+  },
+  "chat_panel": {
+    "button": "never"
+  },
+  "notification_panel": { "button": false },
+  "relative_line_numbers": true,
+  "when_closing_with_no_tabs": "close_window",
+  "auto_update": true,
+  "current_line_highlight": "all",
+  "terminal": {
+    "cursor_shape": "bar",
+    "button": false,
+    "toolbar": { "breadcrumbs": false },
+    "dock": "right",
+    "blinking": "off",
+    "line_height": "standard"
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "show_user_picture": false,
+  "outline_panel": {
+    "button": false,
+    "auto_fold_dirs": true
+  },
+  "soft_wrap": "editor_width",
+  "assistant": {
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-4o-mini"
+    },
+    "version": "2",
+    "button": false
+  },
+  "vim_mode": true,
+  "theme": "Carbonfox",
+  "ui_font_size": 15,
+  "buffer_font_size": 18,
+  "buffer_font_family": "FiraCode NF",
+  "buffer_font_weight": 400,
+  "buffer_line_height": "standard"
+}

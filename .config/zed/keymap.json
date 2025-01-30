@@ -1,0 +1,190 @@
+// Zed keymap
+
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  // Most menus
+  {
+    "bindings": {
+      "alt-j": "menu::SelectNext",
+      "alt-k": "menu::SelectPrev"
+    }
+  },
+  // Most menus
+  {
+    "bindings": {
+      "alt-j": "menu::SelectNext",
+      "alt-k": "menu::SelectPrev"
+    }
+  },
+  // Side things to move windows
+  {
+    "context": "Dock",
+    "bindings": {
+      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-n": "editor::ToggleLineNumbers"
+    }
+  },
+  // Terminal
+  {
+    "context": "Terminal",
+    "bindings": {
+      "alt-j": ["workspace::SendKeystrokes", "down"],
+      "alt-k": ["workspace::SendKeystrokes", "up"],
+      "ctrl-/": "workspace::ToggleRightDock",
+      "ctrl-t": "task::Spawn"
+    }
+  },
+  // File Tree
+  {
+    "context": "ProjectPanel && !editing",
+    "bindings": {
+      "ctrl-h": "workspace::ToggleLeftDock",
+      "l": "project_panel::Open",
+      "h": "project_panel::CollapseSelectedEntry",
+      "H": "project_panel::CollapseAllEntries",
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "y": "project_panel::Copy",
+      "x": "project_panel::Cut",
+      "p": "project_panel::Paste"
+    }
+  },
+  // Generally, in a Pane
+  {
+    "context": "Pane && (!Terminal || ProjectSearchBar)",
+    "bindings": {
+      "ctrl-o": "pane::GoBack",
+      "ctrl-i": "pane::GoForward",
+      "ctrl-/": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    // Random specific panes (Importantly, no input)
+    "context": "EmptyPane || KeyContextView || Diagnostics || (Terminal && DECPNM)",
+    "bindings": {
+      "Q": "pane::CloseAllItems",
+      ":": "command_palette::Toggle"
+    }
+  },
+  {
+    // Assistant View
+    "context": "ContextEditor > Editor",
+    "bindings": {
+      "ctrl-w w": "pane::CloseActiveItem",
+      "ctrl-w ctrl-w": "pane::CloseActiveItem",
+      "ctrl-t": "assistant::NewContext"
+    }
+  },
+  // Editor
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-q": "pane::CloseAllItems",
+      "ctrl-o": "pane::GoBack",
+      "ctrl-b": "editor::CopyPermalinkToLine",
+      "ctrl-/": "terminal_panel::ToggleFocus" // overwrite defaults (precedence fighting)
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert && !VimWaiting",
+    "bindings": {
+      "j k": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting",
+    "bindings": {
+      "ctrl-.": "assistant::QuoteSelection"
+    }
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions) && !VimWaiting",
+    "bindings": {
+      "alt-j": "editor::ContextMenuNext",
+      "alt-k": "editor::ContextMenuPrev"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
+    "bindings": {
+      // This is specifically for multibuffer view
+      "enter": "editor::OpenExcerpts",
+      "ctrl-s": "editor::OpenExcerptsSplit",
+      // Normal mode
+      ", t i": "editor::ToggleInlayHints",
+      "alt-enter": "editor::ToggleCodeActions",
+      ", f": "editor::Format",
+      "H": "vim::FirstNonWhitespace",
+      "L": "vim::EndOfLine",
+      "space": "editor::ToggleFoldRecursive",
+      "ctrl-h": "project_panel::ToggleFocus",
+      "ctrl-l": "workspace::ToggleRightDock",
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-a": "assistant::NewContext",
+      "ctrl-t": "task::Spawn",
+      "R": "editor::Rename",
+      "s r": ["buffer_search::Deploy", { "replace_enabled": true }],
+      ", space": ["workspace::SendKeystrokes", "escape"],
+      ", d": [
+        "workspace::SendKeystrokes",
+        ": v s p enter : d i a g n o s t i c s enter"
+      ],
+      "s s": "workspace::NewSearch",
+      "Q": "pane::CloseAllItems",
+      "ctrl-n": "editor::ToggleLineNumbers",
+      // https://github.com/zed-industries/zed/issues/7274#issuecomment-2061714373
+      // I don't tend to use ctrl-shift so it's a good target
+      //
+      // zz'ing movement
+      //      Paging
+      "ctrl-shift-alt-j": "vim::PageDown",
+      "ctrl-shift-alt-k": "vim::PageUp",
+      "alt-j": ["workspace::SendKeystrokes", "ctrl-shift-alt-j z z"],
+      "alt-k": ["workspace::SendKeystrokes", "ctrl-shift-alt-k z z"],
+      //      Diagnostics ( the `}` is just `shift-]`
+      "ctrl-} d": "editor::GoToDiagnostic",
+      "ctrl-{ d": "editor::GoToPrevDiagnostic",
+      "] d": ["workspace::SendKeystrokes", "ctrl-} d z z"],
+      "[ d": ["workspace::SendKeystrokes", "ctrl-{ d z z"],
+      // Go X
+      //
+      "g r": "editor::FindAllReferences",
+      "g s": "outline::Toggle",
+      "g l": "editor::GoToDefinitionSplit",
+      // Show error, show docs
+      "s e": "editor::Hover",
+      "s d": "editor::Hover",
+      //
+      "alt-l": "vim::SelectLargerSyntaxNode",
+      "alt-h": "vim::SelectSmallerSyntaxNode"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "alt-l": "vim::SelectLargerSyntaxNode",
+      "alt-h": "vim::SelectSmallerSyntaxNode",
+      "s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
+    }
+  }
+]
